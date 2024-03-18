@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+
+  --tp-base-background-color: hsla(230, 5%, 90%, 1);
+  --tp-base-shadow-color: hsla(0, 0%, 0%, 0.1);
+  --tp-button-background-color: hsla(230, 7%, 75%, 1);
+  --tp-button-background-color-active: hsla(230, 7%, 60%, 1);
+  --tp-button-background-color-focus: hsla(230, 7%, 65%, 1);
+  --tp-button-background-color-hover: hsla(230, 7%, 70%, 1);
+  --tp-button-foreground-color: hsla(230, 10%, 30%, 1);
+  --tp-container-background-color: hsla(230, 15%, 30%, 0.2);
+  --tp-container-background-color-active: hsla(230, 15%, 30%, 0.32);
+  --tp-container-background-color-focus: hsla(230, 15%, 30%, 0.28);
+  --tp-container-background-color-hover: hsla(230, 15%, 30%, 0.24);
+  --tp-container-foreground-color: hsla(230, 10%, 30%, 1);
+  --tp-groove-foreground-color: hsla(230, 15%, 30%, 0.1);
+  --tp-input-background-color: hsla(230, 15%, 30%, 0.1);
+  --tp-input-background-color-active: hsla(230, 15%, 30%, 0.22);
+  --tp-input-background-color-focus: hsla(230, 15%, 30%, 0.18);
+  --tp-input-background-color-hover: hsla(230, 15%, 30%, 0.14);
+  --tp-input-foreground-color: hsla(230, 10%, 30%, 1);
+  --tp-label-foreground-color: hsla(230, 10%, 30%, 0.7);
+  --tp-monitor-background-color: hsla(230, 15%, 30%, 0.1);
+  --tp-monitor-foreground-color: hsla(230, 10%, 30%, 0.5);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+[data-theme="dark"] {
+  display: none;
+}
+
+html {
+  box-sizing: border-box;
+  scroll-padding-top: 6rem;
+}
+
+video {
+  background-color: #fff !important;
+}
+
+html * {
+  box-sizing: inherit;
+  margin: 0;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+html *::before,
+html *::after {
+  box-sizing: inherit;
+}
+
+body {
+  position: relative;
+  background-color: hsl(0, 0%, 93%);
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+}
+
+html,
+body {
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+}
+
+img,
+svg {
+  flex: none;
+}
+
+pre > code {
+  display: grid;
+}
+
+code:where(:not(pre) > code) {
+  padding: 2px;
+  background-color: hsl(0, 0%, 87%);
+  border-radius: 2px;
+}
+
+.absolute-full {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.scroll-outer {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate3d(-50%, 0, 0);
+  --depth: 14.7;
+  --card-width: 300px;
+  --card-height: 450px;
+  height: var(--card-height);
+  user-select: none;
+}
+
+.scroll-wrapper {
+  position: relative;
+  width: var(--card-width);
+  height: var(--card-height);
+  margin: auto;
+  zoom: 0.7;
+}
+
+.scroll {
+  position: absolute;
+  top: 0;
+  left: calc(var(--card-height) * var(--depth) * -0.5 + var(--card-width) / 2);
+  width: calc(var(--card-height) * var(--depth));
+  height: calc(var(--card-height) * var(--depth));
+}
+
+.scroll-item {
+  position: absolute;
+  top: 0;
+  left: calc(50% - var(--card-width) / 2);
+  transform: rotate(var(--rotate)) translateZ(0);
+  transform-origin: 50% calc(50% * var(--depth));
+}
+
+.scroll-item-inner {
+  position: relative;
+  display: block;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: 20px;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.scroll-item-inner-media {
+  position: absolute;
+  width: 100%;
+  height: auto;
+}
