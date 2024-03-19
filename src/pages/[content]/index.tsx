@@ -31,6 +31,25 @@ export default function PostPage({ content }: { content: Post }) {
         <meta property="og:title" content={frontmatter.title} />
         <meta property="og:description" content={frontmatter.description} />
       </Head>
+      <nav className="fixed 74:hidden bottom-0 p-4 left-1/2 transform -translate-x-1/2 z-20 w-[min(800px,_100vw)]">
+        <div className="flex items-center px-2 h-[48px] bg-neutral-100 bg-opacity-95 backdrop-blur-sm rounded-md shadow-md">
+          <NextLink
+            className="flex items-center gap-2 text-xs font-semibold"
+            href="/"
+          >
+            <div
+              className="w-6 h-6"
+              style={{
+                backgroundImage: "url(/logo.png)",
+                backgroundColor: "rgb(243 243 243)",
+                backgroundBlendMode: "darken",
+                backgroundSize: "100% 100%",
+              }}
+            />
+            设计垂点
+          </NextLink>
+        </div>
+      </nav>
       <nav className="fixed hidden 74:flex flex-col justify-between top-16 bottom-20 pl-6 max-w-44 text-gray-600">
         <h2>
           <NextLink
@@ -40,7 +59,7 @@ export default function PostPage({ content }: { content: Post }) {
             <div
               className="w-12 h-12"
               style={{
-                backgroundImage: "url(/logo-2.png)",
+                backgroundImage: "url(/logo.png)",
                 backgroundColor: "hsl(0, 0%, 93%)",
                 backgroundBlendMode: "darken",
                 backgroundSize: "100% 100%",
@@ -68,7 +87,9 @@ export default function PostPage({ content }: { content: Post }) {
           }).format(new Date(frontmatter.editedAt))}
           <span className="ml-4">{frontmatter.author}</span>
         </div>
-        <h1 className="mb-8 font-semibold text-4xl">{frontmatter.title}</h1>
+        <h1 className="mb-8 font-semibold text-3xl md:text-4xl">
+          {frontmatter.title}
+        </h1>
         <PostContent
           components={{
             h2: H2 as any,

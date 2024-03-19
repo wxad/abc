@@ -1,3 +1,4 @@
+import Cover2023 from "@/components/2023Cover"
 import CarouselCover from "@/components/CarouselCover"
 import NextLink from "next/link"
 
@@ -12,17 +13,27 @@ const posts = [
     author: "Aragakey.",
     children: <CarouselCover />,
   },
+  {
+    title: "2023：面对自我的提问与面对自我的回答",
+    slug: "2023",
+    description:
+      "记录了我于 2023 一整年间，断断续续自说自话的一些文字。我喜欢，并且需要用文字的形式梳理思绪。",
+    publishedAt: "2023-12-31",
+    editedAt: "2023-12-31",
+    author: "Aragakey.",
+    children: <Cover2023 />,
+  },
 ]
 
 const Home = () => {
   return (
-    <div className="m-auto px-16 max-w-[1088px]">
-      <div className="mb-16 py-12">
+    <div className="m-auto px-4 md:px-16 max-w-[1088px]">
+      <div className="mb-8 py-6 md:mb-16 md:py-12">
         <h1 className="flex flex-col items-center text-sm text-gray-600 font-semibold opacity-80">
           <div
             className="w-12 h-12"
             style={{
-              backgroundImage: "url(/logo-2.png)",
+              backgroundImage: "url(/logo.png)",
               backgroundColor: "hsl(0, 0%, 93%)",
               backgroundBlendMode: "darken",
               backgroundSize: "100% 100%",
@@ -31,7 +42,9 @@ const Home = () => {
           设计垂点
         </h1>
         <div className="mt-4 text-center font-sm text-gray-500">
-          过设计点 A，作业务目标 BC 的思考辅助垂线。它们的交点即设计垂点。
+          过设计点 A，作业务目标 BC 的思考辅助垂线。
+          <br className="md:hidden" />
+          它们的交点即设计垂点。
         </div>
       </div>
       <div className="">
@@ -40,11 +53,17 @@ const Home = () => {
             return (
               <div
                 key={index}
-                className={`flex items-center mb-16 pb-16 border-b-[1px] border-dashed border-gray-300 ${
-                  index % 2 ? "flex-row-reverse" : "flex-row"
+                className={`flex flex-col-reverse items-center mb-16 pb-16 border-b-[1px] border-dashed border-gray-300 ${
+                  index % 2 ? "md:flex-row-reverse" : "md:flex-row"
                 }`}
               >
-                <div className="flex-1 pr-16 border-r-[1px] border-dashed border-gray-300">
+                <div
+                  className={`flex-1 min-w-0 border-dashed border-gray-300 ${
+                    index % 2
+                      ? "md:pl-16 md:border-l-[1px]"
+                      : "md:pr-16 md:border-r-[1px]"
+                  }`}
+                >
                   <div className="mb-6 font-mono text-gray-500">
                     {new Intl.DateTimeFormat("zh-CN", {
                       month: "long",
@@ -55,14 +74,14 @@ const Home = () => {
                   </div>
                   <NextLink
                     href={slug}
-                    className="block mb-8 font-semibold text-3xl hover:text-blue-500 transition-all"
+                    className="block mb-8 font-semibold text-2xl md:text-3xl hover:text-blue-500 transition-all"
                   >
                     {title}
                   </NextLink>
                   <div className="text-sm text-gray-500">{description}</div>
                   <NextLink
                     href={slug}
-                    className="inline-flex items-center mt-32 gap-2 text-sm text-gray-600 hover:text-blue-500 font-medium hover:underline hover:decoration-dotted hover:decoration-current hover:underline-offset-4 transition-all"
+                    className="inline-flex items-center mt-8 md:mt-32 gap-2 text-sm text-gray-600 hover:text-blue-500 font-medium hover:underline hover:decoration-dotted hover:decoration-current hover:underline-offset-4 transition-all"
                   >
                     阅读文章
                     <svg
@@ -80,7 +99,13 @@ const Home = () => {
                     </svg>
                   </NextLink>
                 </div>
-                <div className="flex-1 px-16">{children}</div>
+                <div
+                  className={`flex-1 min-w-0 w-full pb-8 max-w-[450px] md:pb-0 md:max-w-[initial] md:w-auto ${
+                    index % 2 ? "md:pr-16" : "md:pl-16"
+                  }`}
+                >
+                  {children}
+                </div>
               </div>
             )
           }
