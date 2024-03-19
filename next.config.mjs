@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "export",
+  basePath: "/abc",
   reactStrictMode: true,
   swcMinify: true,
   experimental: {

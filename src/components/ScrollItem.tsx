@@ -569,6 +569,7 @@ const ScrollItem = memo(
         data-index={index}
         data-rotate={deg}
         style={{
+          // @ts-ignore
           "--rotate": `${deg}deg`,
         }}
       >

@@ -71,6 +71,7 @@ const CarouselDemo = ({
       })
 
       paneRef.current.on("change", (ev) => {
+        // @ts-ignore
         paramsRef.current[ev.target.label] = ev.value
       })
 
@@ -292,6 +293,7 @@ const CarouselDemo = ({
       <div ref={paneWrapper} className="absolute top-[4px] right-[4px]" />
       <div
         className="relative w-full h-[300px] touch-none overflow-hidden"
+        // @ts-ignore
         {...bindDrag()}
       >
         <div className="scroll-outer">
