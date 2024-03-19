@@ -100,7 +100,7 @@ const Home = () => {
                   </NextLink>
                 </div>
                 <div
-                  className={`flex-1 min-w-0 w-full pb-8 max-w-[450px] md:pb-0 md:max-w-[initial] md:w-auto ${
+                  className={`flex-1 min-w-0 w-full pb-8 max-w-[300px] md:pb-0 md:max-w-[initial] md:w-auto ${
                     index % 2 ? "md:pr-16" : "md:pl-16"
                   }`}
                 >

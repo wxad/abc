@@ -12,6 +12,12 @@ export default function App({ Component, pageProps }: AppProps) {
         />
         <meta name="renderer" content="webkit" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <title>设计垂点</title>
+        <link
+          rel="icon"
+          href="https://assets.vercel.com/image/upload/front/favicon/vercel/favicon.ico"
+          type="image/x-icon"
+        />
       </Head>
       <Component {...pageProps} />
     </div>
