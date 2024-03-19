@@ -40,7 +40,7 @@ export default function PostPage({ content }: { content: Post }) {
             <div
               className="w-6 h-6"
               style={{
-                backgroundImage: "url(/logo.png)",
+                backgroundImage: "url(logo.png)",
                 backgroundColor: "rgb(243 243 243)",
                 backgroundBlendMode: "darken",
                 backgroundSize: "100% 100%",
@@ -73,7 +73,7 @@ export default function PostPage({ content }: { content: Post }) {
             <div
               className="w-12 h-12"
               style={{
-                backgroundImage: "url(/logo.png)",
+                backgroundImage: "url(logo.png)",
                 backgroundColor: "hsl(0, 0%, 93%)",
                 backgroundBlendMode: "darken",
                 backgroundSize: "100% 100%",
