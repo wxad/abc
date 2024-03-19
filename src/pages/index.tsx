@@ -33,7 +33,7 @@ const Home = () => {
           <div
             className="w-12 h-12"
             style={{
-              backgroundImage: "url(abc/logo.png)",
+              backgroundImage: "url(/abc/logo.png)",
               backgroundColor: "hsl(0, 0%, 93%)",
               backgroundBlendMode: "darken",
               backgroundSize: "100% 100%",
