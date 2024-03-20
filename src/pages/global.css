@@ -64,7 +64,7 @@ html *::after {
 
 body {
   position: relative;
-  background-color: hsl(0, 0%, 93%);
+  background-color: hsl(0, 0%, 96%);
   font-size: 13px;
   -webkit-font-smoothing: antialiased;
 }
