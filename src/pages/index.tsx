@@ -11,6 +11,7 @@ const posts = [
     publishedAt: "2024-03-16",
     editedAt: "2024-03-16",
     author: "Aragakey.",
+    authorLink: "https://twitter.com/jiangyijie27",
     children: <CarouselCover />,
   },
   {
@@ -21,6 +22,7 @@ const posts = [
     publishedAt: "2023-12-31",
     editedAt: "2023-12-31",
     author: "Aragakey.",
+    authorLink: "https://twitter.com/jiangyijie27",
     children: <Cover2023 />,
   },
 ]
@@ -76,7 +78,18 @@ const Home = () => {
       </div>
       <div className="">
         {posts.map(
-          ({ title, description, children, slug, editedAt, author }, index) => {
+          (
+            {
+              title,
+              description,
+              children,
+              slug,
+              editedAt,
+              author,
+              authorLink,
+            },
+            index
+          ) => {
             return (
               <div
                 key={index}
@@ -97,7 +110,9 @@ const Home = () => {
                       year: "numeric",
                       day: "numeric",
                     }).format(new Date(editedAt))}
-                    <span className="ml-4">{author}</span>
+                    <a className="ml-4" target="_blank" href={authorLink}>
+                      {author}
+                    </a>
                   </div>
                   <NextLink
                     href={slug}

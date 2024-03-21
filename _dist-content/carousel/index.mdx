@@ -4,6 +4,7 @@ description: "我们将通过文字和交互式 demo 穿插的方式，一起思
 publishedAt: "2024-03-16"
 editedAt: "2024-03-16"
 author: "Aragakey."
+authorLink: "https://twitter.com/jiangyijie27"
 ---
 
 import Carousel from "@/components/Carousel"
@@ -58,7 +59,7 @@ amplitude = power * velocity
 
 重点是我们要清楚，这是一种本末倒置，因为：
 
-> 时间是物体运动的结果，而非原因。 —— Aragakey.
+> 时间是物体运动的结果，而非原因。
 
 这里，实际上我需要的是很简单的衰减函数：
 
@@ -70,6 +71,10 @@ f(x) = (amplitude - amplitude * e) ^ (-x / timeConstant)
 
 1. 振幅 `amplitude`：表示振动的最大幅度或强度，它实际上就是我上面提到的 `amplitude = power * velocity`；
 2. 时间常数 `timeConstant`：表示振幅衰减的速度，它决定了振幅随着时间的推移而减小的速度。
+
+实际上底数也是可以改变的，它也会影响振幅的衰减速度，当底数越大时，函数的值会越接近极限值。从图形上来看，整个曲线就会越“陡峭”。这里我取了自然对数 `e`。我们可以理解为，`timeConstant` 控制的是曲线在宽度（x 轴）上的变化，而底数 `e` 控制的是曲线在（y 轴）上的变化。
+
+这里没有同时对两个参数做调整，因为两个参数对结果而言是类似的。
 
 假设已经得到 `amplitude = 100`，当 `timeConstant = 180` 时，将会得到下面的曲线：
 
