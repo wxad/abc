@@ -35,9 +35,7 @@ const Home = () => {
           <div
             className="relative w-12 h-12 74:top-1 74:mr-2 74:w-10 74:h-10 opacity-80"
             style={{
-              backgroundImage: "url(/abc/logo.png)",
-              backgroundColor: "hsl(0, 0%, 96%)",
-              backgroundBlendMode: "darken",
+              backgroundImage: "url(/abc/logo.webp)",
               backgroundSize: "100% 100%",
             }}
           />
@@ -110,8 +108,12 @@ const Home = () => {
                       year: "numeric",
                       day: "numeric",
                     }).format(new Date(editedAt))}
-                    <a className="ml-4" target="_blank" href={authorLink}>
-                      {author}
+                    <a
+                      className="ml-4 hover:text-blue-500 hover:underline hover:decoration-dotted hover:decoration-current hover:underline-offset-4 transition-all"
+                      target="_blank"
+                      href={authorLink}
+                    >
+                      @{author}
                     </a>
                   </div>
                   <NextLink

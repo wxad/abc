@@ -289,10 +289,10 @@ const CarouselDemo = ({
   )
 
   return (
-    <div className="flex items-end h-[380px]">
+    <div className="flex items-end h-[360px]">
       <div ref={paneWrapper} className="absolute top-[4px] right-[4px]" />
       <div
-        className="relative w-full h-[300px] touch-none overflow-hidden"
+        className="relative w-full h-[290px] touch-none overflow-hidden"
         // @ts-ignore
         {...bindDrag()}
       >

@@ -31,8 +31,8 @@ export default function PostPage({ content }: { content: Post }) {
         <meta property="og:title" content={frontmatter.title} />
         <meta property="og:description" content={frontmatter.description} />
       </Head>
-      <nav className="fixed 74:hidden bottom-0 p-4 left-1/2 transform -translate-x-1/2 z-20 w-[min(800px,_100vw)]">
-        <div className="flex items-center justify-between px-4 h-[48px] bg-neutral-100 bg-opacity-95 backdrop-blur-sm rounded-md shadow-md">
+      <nav className="fixed 74:hidden bottom-0 py-6 px-4 left-1/2 transform -translate-x-1/2 z-20 w-[min(800px,_100vw)]">
+        <div className="flex items-center justify-between px-4 h-[48px] bg-neutral-100 bg-opacity-90 backdrop-blur-sm rounded-xl shadow-md">
           <NextLink
             className="flex items-center gap-2 text-xs font-semibold opacity-80"
             href="/"
@@ -40,9 +40,7 @@ export default function PostPage({ content }: { content: Post }) {
             <div
               className="w-6 h-6"
               style={{
-                backgroundImage: "url(logo.png)",
-                backgroundColor: "hsl(0, 0%, 96%)",
-                backgroundBlendMode: "darken",
+                backgroundImage: "url(logo.webp)",
                 backgroundSize: "100% 100%",
               }}
             />
@@ -73,9 +71,7 @@ export default function PostPage({ content }: { content: Post }) {
             <div
               className="w-12 h-12"
               style={{
-                backgroundImage: "url(logo.png)",
-                backgroundColor: "hsl(0, 0%, 96%)",
-                backgroundBlendMode: "darken",
+                backgroundImage: "url(logo.webp)",
                 backgroundSize: "100% 100%",
               }}
             />
@@ -99,7 +95,13 @@ export default function PostPage({ content }: { content: Post }) {
             year: "numeric",
             day: "numeric",
           }).format(new Date(frontmatter.editedAt))}
-          <span className="ml-4">{frontmatter.author}</span>
+          <a
+            className="ml-4 hover:text-blue-500 hover:underline hover:decoration-dotted hover:decoration-current hover:underline-offset-4 transition-all"
+            target="_blank"
+            href={frontmatter.authorLink}
+          >
+            @{frontmatter.author}
+          </a>
         </div>
         <h1 className="mb-8 font-semibold text-3xl md:text-4xl">
           {frontmatter.title}
