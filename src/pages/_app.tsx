@@ -19,6 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
           type="image/x-icon"
         />
       </Head>
+      {/* @ts-ignore */}
       <Component {...pageProps} />
     </div>
   )
