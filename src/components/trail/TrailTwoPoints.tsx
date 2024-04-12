@@ -90,7 +90,9 @@ const Trail = ({ showHeart = false }: { showHeart?: boolean }) => {
           className="absolute top-[-7px] -left-2 w-4 h-4 bg-white border border-neutral-300 rounded-full cursor-grab hover:shadow-lg touch-none"
           // @ts-ignore
           {...bindDrag()}
-        />
+        >
+          <div className="absolute -top-4 -left-4 w-12 h-12" />
+        </div>
       </div>
     </DemoBox>
   )
