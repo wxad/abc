@@ -1,8 +1,20 @@
 import Cover2023 from "@/components/2023Cover"
 import CarouselCover from "@/components/CarouselCover"
+import TrailCover from "@/components/trail/TrailCover"
 import NextLink from "next/link"
 
 const posts = [
+  {
+    title: "用 react-spring 设计有“惯性“的交互动画",
+    description:
+      "最近我为设计垂点的链接文字加入了一个交互动画。思考一个有趣的交互动画并且将它实现，是一件让人快乐的事。",
+    slug: "trail",
+    publishedAt: "2024-04-16",
+    editedAt: "2024-04-16",
+    author: "Aragakey.",
+    authorLink: "https://twitter.com/jiangyijie27",
+    children: <TrailCover />,
+  },
   {
     title: "转盘交互动画：以关键参数，细化我们的感受",
     slug: "carousel",

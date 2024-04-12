@@ -1,0 +1,117 @@
+---
+title: "用 react-spring 设计有“惯性“的交互动画"
+description: "最近我为设计垂点的链接文字加入了一个交互动画，其实现来源于 2023 朋友圈广告年度评选项目中的爱心动画设计。思考一个有趣的交互动画并且将它实现，是一件让人快乐的事。"
+slug: "trail"
+publishedAt: "2024-04-16"
+editedAt: "2024-04-16"
+author: "Aragakey."
+authorLink: "https://twitter.com/jiangyijie27"
+---
+
+import TrailLink from "@/components/trail/TrailLink"
+import TrailHeart from "@/components/trail/TrailHeart"
+import TrailTwoPoints from "@/components/trail/TrailTwoPoints"
+
+最近我为设计垂点的链接文字加入了一个交互动画。在鼠标 hover 时，链接的顶部会出现一个提供预览的气泡卡片。你可以在下面的示例中体验一下。如果你是在移动端阅读就没有办法看到了，我目前只打算为 `mouse` 事件做相关的逻辑。
+
+<TrailLink />
+
+我认为这个动画的交互反馈是有趣的。有趣的核心在于：
+
+1. **实时**：根据鼠标的位置，卡片的位置和旋转角度都会实时响应；
+2. **惯性**：鼠标移动得或快或慢，卡片的旋转角度就会有不同的变化速度。
+
+这个动画的实现来源于我在 [2023 朋友圈广告年度评选(https://wxa.wxs.qq.com/wxad-design/yijie/bm23-abc.webp)](https://mp.weixin.qq.com/promotion/res/htmledition/best-moments-2023-demo/index.html) 中设计的爱心动画。你可以在这个链接中一边操作转盘，一边感受一下爱心的位置变化。也可以在下面简化过的示例中直接使用手指或鼠标拖拽体验一下：
+
+<TrailHeart />
+
+两个动画都是使用了 `react-spring` 的 `useTrail` 钩子实现。我们具体来看一下细节。
+
+## 惯性是 useTrail 的核心特性
+
+`useTrail` 的原理是通过插值器来计算每个元素在过程中的值。插值器根据动画的进度（0 到 1）和元素的索引，计算出不同时间点的值。
+
+> `useTrail` has an identical API signature to useSprings the difference is the hook automatically orchestrates the springs to stagger one after the other.
+
+上面这段话摘自官方文档。不论是官方文档还是社区内不多的文章里，`useTrail` 往往被用来实现多个元素的顺序或延时动画。
+
+然后，`useTrail` 的应用就会和 **多个元素** 挂钩——只有多个元素的动画，才会用它；如果不存在多个元素，就不用它。可是，如果只是为了实现多个元素动画，完全可以用其他更简单、直观的方案，可能 CSS 就能满足需求。
+
+结果就是，当我想要设计一个带有惯性的动画时，我第一时间没有想到最好的实现方法。如何做延迟？还是调时间？我忽略了：惯性才是 useTrail 的核心特性。
+
+## 不是 2 个元素，而是同个元素的 2 个端点
+
+要实现惯性效果，我们确实用 `useTrail` 创建了 2 个元素。
+
+1. 把第 1 个元素的 `tension` 设置得较大，这是为了让它的运动尽可能跟手；
+2. 把第 2 个元素的 `tension` 设置得较小（或者 `friction` 较大），这是为了让它的运动变得迟钝。
+
+```tsx
+const fast = { tension: 1500, friction: 40 }
+const slow = { mass: 2.6, tension: 400, friction: 50 }
+
+const [, api] = useTrail(2, (i) => ({
+  x: 0,
+  config: i === 0 ? fast : slow,
+}))
+```
+
+我们将得到下面这样的效果：
+
+<TrailTwoPoints />
+
+接着，我们将这 2 个元素作为同个元素的 2 个端点，第 1 个元素代表爱心的底端，第 2 个元素代表爱心的顶端。通过 `Math.atan2` 计算出两点间的夹角，作为爱心旋转的角度即可。
+
+```tsx
+const [, api] = useTrail(2, (i) => ({
+  x: 0,
+  config: i === 0 ? fast : slow,
+  onChange(result) {
+    if (i === 0) {
+      bottomX.current = result.value.x
+    } else {
+      topX.current = result.value.x
+      const y = 72
+
+      let rotate =
+        90 - (Math.atan2(y, topX.current - bottomX.current) * 180) / Math.PI
+    }
+  },
+}))
+```
+
+<TrailTwoPoints showHeart />
+
+控制动画的关键参数，主要是第 2 个点的 `mass` 和 `tension`。
+
+## 文字链接 Hover 交互动画
+
+理解了 `useTrail` 和惯性的关系，接着我们来看一下文字链接的交互实现。也非常简单，主要利用 `createPortal` 在 `body` 上创建元素。如果你动手写过一个 `Popover` 组件就很简单。
+
+然后，我们通过 `onMouseEnter`、`onMouseMove`、`onMouseLeave` 三个事件的配合：
+
+1. `onMouseEnter`：立即更新 portal 的位置，通过链接的 `getBoundingClientRect()` 和 `window.scrollY` 的关系，同时设置 `opacity` 和 `scale` 属性；
+2. `onMouseMove`：利用 `useTrail` 更新 2 个端点的位置；
+3. `onMouseLeave`：重置 `opacity` 和 `scale` 属性。
+
+其实都是一些简单的计算。只要细心地处理就好。代码就不贴了。
+
+## 工具库和所谓的最佳实践
+
+首先说一下我所使用的 JS 库。
+
+第一，是 JS 运动库。其实我一般不使用 `react-spring`。我最喜欢的动画库是 `popmotion`，它是 `framer-motion` 的底层库。但我不喜欢用后者。正是因为 `popmotion` 的简单纯粹，我可以以任何想要的方式使用它。
+
+第二，是手势库。我推荐 `@use-gesture`。
+
+之前有同事说，他准备做一个动画，问我使用什么库做的，而实际上他对想要做出的效果并没有任何想法。这让我觉得奇怪。因为工具库只能充当帮手的角色，主要还是要依靠自己的想法。将 React 生态和动画库结合，以自己的喜好选择实现的方法。这本身非常有趣。继而不断地打磨，不断地优化写法。这一整个过程，就是寻找 **最佳实践** 的过程。
+
+从前我以为，一些技术问题都会有一个所谓的最佳实践，它们存在于 stack overflow 上，存在于网上，存在于开源库中——一定有个地方存在能够指导自己的标准答案。这时的我就像那位同事一样，其实还没有开始思考，或是已经提前地放弃了思考。
+
+**最佳实践源于对自己实现方式的追求。** 它在对自我的不断试错和优化中形成。
+
+然后，我就有了喜欢的库，和不喜欢的库。我开始建立擅长的方式。
+
+我今天看到了一个很喜欢的词来形容 design engineer 的职责，not a designer or a developer, but a **builder**。所谓 build，就是实现。我们需要花时间去思考细节，然后实现。如果我是一个 builder，我就不可能是一个只做 coding 的 developer 或一个只做 prototyping 的 designer。
+
+并不存在一个最佳实践作为标准答案能帮助到我。不要相信所谓的最佳实践。只有自己的经验才是最佳实践。对最佳实践没有追求的人，所完成的任何事都只能是将就与妥协。

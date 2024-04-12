@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html lang="zh-cmn-Hans">
       <Head></Head>
-      <body>
+      <body className="scrollbar-custom">
         <div
           className="pointer-events-none fixed inset-0 mix-blend-hard-light"
           style={{
