@@ -5,7 +5,7 @@ import NextLink from "next/link"
 
 const posts = [
   {
-    title: "用 react-spring 设计有“惯性“的交互动画",
+    title: "用 react-spring 设计有“惯性”的交互动画",
     description:
       "最近我为设计垂点的链接文字加入了一个交互动画。思考一个有趣的交互动画并且将它实现，是一件让人快乐的事。",
     slug: "trail",
