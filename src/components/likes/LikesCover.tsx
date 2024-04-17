@@ -8,32 +8,21 @@ const CarouselCover = () => {
           backgroundImage: "url(/abc/grid.svg)",
         }}
       >
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 translate-y-10 w-[200px] h-0.5 bg-neutral-200 rounded-sm">
-          <div
-            className="absolute bottom-[20px] left-[-40px] w-[80px] h-[72px] touch-none select-none origin-bottom"
-            style={{
-              animation: "traildot 4s ease both infinite",
-            }}
-          >
-            <div
-              className="absolute-full origin-bottom"
-              style={{
-                backgroundImage:
-                  "url(https://wxa.wxs.qq.com/wxad-design/yijie/bm-heart-huixin.webp)",
-                backgroundSize: "100% 100%",
-                filter: "grayscale(1)",
-                opacity: 0.8,
-                animation: "trailHeart 4s ease both infinite",
-              }}
-            />
-          </div>
-          <div
-            className="absolute top-[-7px] left-[-8px] w-4 h-4 bg-neutral-300 border-2 border-white rounded-full touch-none"
-            style={{
-              animation: "traildot 4s ease both infinite",
-            }}
+        <video
+          className="absolute top-1/2 left-1/2 transform-gpu -translate-x-1/2 -translate-y-1/2 w-1/2 outline -outline-offset-4 outline-4 outline-white overflow-hidden mix-blend-darken grayscale"
+          autoPlay
+          preload="auto"
+          x-webkit-airplay="true"
+          webkit-playsinline="true"
+          playsInline
+          muted
+          loop
+        >
+          <source
+            src="https://wxa.wxs.qq.com/wxad-design/yijie/bm-24version-green-un.mp4"
+            type="video/mp4"
           />
-        </div>
+        </video>
       </div>
     </div>
   )
