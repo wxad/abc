@@ -1,9 +1,21 @@
 import Cover2023 from "@/components/2023Cover"
 import CarouselCover from "@/components/CarouselCover"
 import TrailCover from "@/components/trail/TrailCover"
+import LikesCover from "@/components/likes/LikesCover"
 import NextLink from "next/link"
 
 const posts = [
+  {
+    title: "我做的点赞/投票动画集合",
+    description:
+      "好像在工作的这些年中，我做的最多的动画就是点赞或按钮动画。那就简单地整一个集合吧。",
+    slug: "likes",
+    publishedAt: "2024-04-30",
+    editedAt: "2024-04-30",
+    author: "Aragakey.",
+    authorLink: "https://twitter.com/jiangyijie27",
+    children: <LikesCover />,
+  },
   {
     title: "用 react-spring 设计有“惯性”的交互动画",
     description:

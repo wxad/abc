@@ -230,7 +230,22 @@ export const A = ({
                   transition: ".3s ease transform",
                 }}
               >
-                <img className="absolute-full" src={img} alt="" />
+                {img.includes("mp4") ? (
+                  <video
+                    className="absolute-full"
+                    preload="auto"
+                    x-webkit-airplay="true"
+                    webkit-playsinline="true"
+                    playsInline
+                    muted
+                    loop
+                    autoPlay
+                  >
+                    <source src={img} type="video/mp4" />
+                  </video>
+                ) : (
+                  <img className="absolute-full" src={img} alt="" />
+                )}
               </div>
             </div>,
             document.body

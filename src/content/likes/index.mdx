@@ -1,19 +1,142 @@
 ---
-title: "这些年做的点赞动画集合"
+title: "我做的点赞/投票动画集合"
 description: "好像在工作的这些年中，我做的最多的交互式动画就是点赞或按钮动画。那就简单地整一个集合吧。"
 slug: "likes"
-publishedAt: "2024-04-16"
-editedAt: "2024-04-16"
+publishedAt: "2024-04-30"
+editedAt: "2024-04-30"
 author: "Aragakey."
 authorLink: "https://twitter.com/jiangyijie27"
 ---
 
 import LikeBM24 from "@/components/likes/LikeBM24"
+import LikeBM24Curve from "@/components/likes/LikeBM24Curve"
+import LikeBM24Mask from "@/components/likes/LikeBM24Mask"
+import LikeBM2404 from "@/components/likes/LikeBM2404"
+import LikeBM2404Compare from "@/components/likes/LikeBM2404Compare"
+import LikeBM23Heart from "@/components/likes/LikeBM23Heart"
+import LikeBM22 from "@/components/likes/LikeBM22"
+import LikeBM21 from "@/components/likes/LikeBM21"
+import LikeBM20 from "@/components/likes/LikeBM20"
+import LikeBM19 from "@/components/likes/LikeBM19"
+import LikeBM18 from "@/components/likes/LikeBM18"
+import LikeBM17 from "@/components/likes/LikeBM17"
+import LikeBMV1 from "@/components/likes/LikeBMV1"
+import LikeWxad from "@/components/likes/LikeWxad"
 
 好像在工作的这些年中，我做的最多的交互式动画就是点赞或按钮动画。那就简单地整一个集合吧。
 
-因为涉及到比较多的技术栈（甚至 React/Vue 都有）和实现方法了，所以都以 APNG 的方式展现，并且简单地梳理一下设计细节与它们背后的技术手段。
+因为涉及到比较多的技术栈（甚至 React/Vue 都有）和实现方法，所以都以视频的方式展现，并且简单地梳理一下设计细节与它们背后的实现手段。
 
-## 23 评选
+## 榜单 v3
+
+<LikeBM2404 />
+
+1. 爱心与圆形背景会分别执行一个 `0.7s` 的 `scale` 动画，后者会延迟 `0.1s` 执行。爱心与背景被分层，像是前者的运动带动了后者，从而会让整体更显动感；
+2. 最底层为多个彩色爱心向外旋转扩散。
+
+```css
+@keyframes bouncy {
+  0% {
+    scale: 1;
+  }
+  25% {
+    scale: 0.9;
+  }
+  50% {
+    scale: 1.35;
+  }
+  75% {
+    scale: 0.78;
+  }
+  100% {
+    scale: 1;
+  }
+}
+```
+
+<LikeBM2404Compare />
+
+## 评选 23
 
 <LikeBM24 />
+
+1. 向上加速运动，爱心旋转 `18deg`，类 `ease-in` 曲线；
+2. 撞击卡片后继续向上位移 `60px`，爱心旋转 `0deg`，最终运动到顶点，类 `ease-out` 曲线；
+3. 开始下落，向下加速运动，爱心旋转 `-26deg`，类 `ease-in` 曲线。
+
+爱心轨迹分为三个阶段的连接成为完整连贯的动画。
+
+<LikeBM24Curve />
+
+其他的一些细节：
+
+1. 爱心先放大至 `1.2` 倍，再缩小至 `0.6` 倍，这样会更有撞击感，就像你挥拳一样，会先收拳发力，就是这样的感觉；
+2. 蒙版的设置实际上是一个很大的圆形，这样在整个运动过程中，爱心都会在蒙版的内部，无需额外的处理。
+
+<LikeBM24Mask />
+
+## 榜单 v2
+
+<LikeBM23Heart />
+
+这个是在把榜单从 vue 彻底改为 react 的过程中顺手重新实现的。很显然，它参考于 Twitter 的动画。
+
+## 评选 22
+
+<LikeBM22 />
+
+投票与阿心 lottie 动画均由其他项目成员完成。这一年在投票动画上我参与比较少（不过我也实现了令自己满意的[其他动画(https://wxa.wxs.qq.com/wxad-design/yijie/bm22-steps.mp4)](https://mp.weixin.qq.com/promotion/res/htmledition/best-moments-2022-demo/index.html) 😁）。
+
+## 评选 21
+
+<LikeBM21 />
+
+算是 22 年的退化版。数字部分的蒙版是通过 svg 实现的。由于 CSS 中的 `mask` 属性只支持图片，因此 SVG 就变得很有用了。甚至可以直接将 CSS 动画写在 SVG 里，这样就实现了一个 **矢量的、动态的、可编程的蒙版图片**。这让我对 SVG 的认知又丰富了一些，当时非常兴奋。
+
+```xml
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 265 68">
+  <style type="text/css">
+    #thePolyline {animation:x 0.7s linear both;}
+  </style>
+  <polyline id="thePolyline" points="..." />
+</polyline>
+</svg>
+```
+
+这里还有一些细节。如不同位数的数字的延时处理、不同进位动画的延时处理等，不详细讲了。
+
+## 评选 20
+
+<LikeBM20 />
+
+这一年，设计师围绕多色心形进行设计。投票动画比较简单。
+
+## 评选 19
+
+<LikeBM19 />
+
+这一年的评选是设计与开放时间最长的一次。设计师为每一个广告都制作了一个精美的 [lottie 动画(https://wxa.wxs.qq.com/wxad-design/yijie/2019-40hearts-5.mp4)](https://dondon.design/TOP-10-2018-2020)。整体动效干脆利落，突出 lottie 动画的创意。
+
+## 榜单 v1
+
+<LikeBMV1 />
+
+氛围是一个包含 19 个 path 的 svg，通过整体的 svg 放大，加上每个 path 的单独运动，形成一个整体的氛围动画。
+
+## 评选 18
+
+<LikeBM18 />
+
+2018 年的主题是 “矩形” 。可以 [去看看这个人的网站(https://wxa.wxs.qq.com/wxad-design/bms/don.webp)](https://dondon.design/TOP-10-2018-2020) 了解更多 18-20 评选的设计细节。
+
+## 评选 17
+
+<LikeBM17 />
+
+时间来到第一年评选。投票按钮在 `active` 状态下被挤压，松手后向左右两边散射氛围圆点。从现在的眼光看 2017 年的 web 设计与开发，一切都那样充满希望。
+
+## 官网
+
+<LikeWxad />
+
+官网帮助中心文章有无帮助的按钮反馈。通过 svg 变形及抬头、摇头，构成完整的动画。现在看还是很有趣的。
