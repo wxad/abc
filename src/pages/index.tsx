@@ -2,9 +2,21 @@ import Cover2023 from "@/components/2023Cover"
 import CarouselCover from "@/components/CarouselCover"
 import TrailCover from "@/components/trail/TrailCover"
 import LikesCover from "@/components/likes/LikesCover"
+import GenCover from "@/components/generative/GenCover"
 import NextLink from "next/link"
 
 const posts = [
+  // {
+  //   title: "欢迎，这是我的 CSS 生成世界，再见。",
+  //   slug: "generative",
+  //   description:
+  //     "在 2019 年第四届 CSS 大会上，一位名为 yuanchuan 的分享者，花了 10 分钟的时间差点让我睡着。但是在这之后的时间里，我被他的 CSS 艺术世界深深地震撼，直到今天也是。",
+  //   publishedAt: "2024-06-02",
+  //   editedAt: "2024-06-02",
+  //   author: "Aragakey.",
+  //   authorLink: "https://twitter.com/jiangyijie27",
+  //   children: <GenCover />,
+  // },
   {
     title: "我做的点赞/投票动画集合",
     description:

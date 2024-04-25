@@ -244,7 +244,7 @@ export const A = ({
                     <source src={img} type="video/mp4" />
                   </video>
                 ) : (
-                  <img className="absolute-full" src={img} alt="" />
+                  <img className="absolute-full object-cover" src={img} alt="" />
                 )}
               </div>
             </div>,

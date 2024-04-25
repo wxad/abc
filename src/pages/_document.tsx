@@ -1,4 +1,5 @@
 import { Html, Head, Main, NextScript } from "next/document"
+import Script from "next/script"
 
 export default function Document() {
   return (
@@ -14,6 +15,7 @@ export default function Document() {
         />
         <Main></Main>
         <NextScript />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/css-doodle/0.39.0/css-doodle.min.js"></script>
       </body>
     </Html>
   )

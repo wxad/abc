@@ -67,6 +67,8 @@ body {
   background-color: hsl(0, 0%, 96%);
   font-size: 13px;
   -webkit-font-smoothing: antialiased;
+  font-family: "PingFang SC", system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 html,
@@ -183,7 +185,8 @@ code:where(:not(pre) > code) {
 }
 
 @keyframes traildot {
-  0%, 100% {
+  0%,
+  100% {
     transform: translate3d(0, 0, 0);
   }
   50% {
@@ -192,13 +195,15 @@ code:where(:not(pre) > code) {
 }
 
 @keyframes trailHeart {
-  0%, 50%, 100% {
+  0%,
+  50%,
+  100% {
     transform: rotate(0deg);
   }
   20% {
     transform: rotate(-20deg);
   }
-  70%{
+  70% {
     transform: rotate(20deg);
   }
 }

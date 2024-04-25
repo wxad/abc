@@ -15,39 +15,48 @@ const Demo = (props: {}) => {
     <DemoBox className="py-10 text-center">
       <div className="flex items-center justify-center gap-4 text-xs text-neutral-400">
         <div>
-          <video
-            className="w-[150px] outline -outline-offset-4 outline-4 outline-white overflow-hidden rounded-xl mix-blend-darken"
-            ref={video1Ref}
-            preload="auto"
-            x-webkit-airplay="true"
-            webkit-playsinline="true"
-            playsInline
-            muted
-            loop
-          >
-            <source
-              src="https://wxa.wxs.qq.com/wxad-design/yijie/bm-24version-green-un.mp4"
-              type="video/mp4"
-            />
-          </video>
+          <div className="relative w-[150px] h-[150px] overflow-hidden rounded-xl mix-blend-darken">
+            <video
+              className="absolute-full"
+              ref={video1Ref}
+              preload="auto"
+              x-webkit-airplay="true"
+              webkit-playsinline="true"
+              playsInline
+              muted
+              loop
+              autoPlay
+            >
+              <source
+                src="https://wxa.wxs.qq.com/wxad-design/yijie/bm-24version-green-un.mp4"
+                type="video/mp4"
+              />
+            </video>
+            <div className="absolute-full border-4 border-white" />
+          </div>
           朋友圈榜单
         </div>
+
         <div>
-          <video
-            className="w-[150px] outline -outline-offset-4 outline-4 outline-white overflow-hidden rounded-xl mix-blend-darken"
-            ref={video2Ref}
-            preload="auto"
-            x-webkit-airplay="true"
-            webkit-playsinline="true"
-            playsInline
-            muted
-            loop
-          >
-            <source
-              src="https://wxa.wxs.qq.com/wxad-design/yijie/bm-24version-orange.mp4"
-              type="video/mp4"
-            />
-          </video>
+          <div className="relative w-[150px] h-[150px] overflow-hidden rounded-xl mix-blend-darken">
+            <video
+              className="absolute-full"
+              ref={video2Ref}
+              preload="auto"
+              x-webkit-airplay="true"
+              webkit-playsinline="true"
+              playsInline
+              muted
+              loop
+              autoPlay
+            >
+              <source
+                src="https://wxa.wxs.qq.com/wxad-design/yijie/bm-24version-orange.mp4"
+                type="video/mp4"
+              />
+            </video>
+            <div className="absolute-full border-4 border-white" />
+          </div>
           视频号榜单
         </div>
       </div>
