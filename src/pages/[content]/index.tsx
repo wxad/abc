@@ -15,6 +15,7 @@ import {
   Strong,
   Pre,
   BlockQuote,
+  Img,
 } from "@/components/MdxComponents"
 
 export default function PostPage({ content }: { content: Post }) {
@@ -117,6 +118,7 @@ export default function PostPage({ content }: { content: Post }) {
             code: Code as any,
             strong: Strong as any,
             blockquote: BlockQuote as any,
+            img: Img as any,
           }}
         />
       </div>

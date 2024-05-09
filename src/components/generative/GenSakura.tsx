@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { Link, useDoodle } from "./commons"
 
-const GenSakura = () => {
+const Gen = () => {
   const size = 400
   const html = `
   <css-doodle>
@@ -61,9 +61,9 @@ const GenSakura = () => {
           />
         )}
       </div>
-      <Link href="https://codepen.io/aragakey/pen/JVKBmm">Sakura</Link>
+      <Link href="https://codepen.io/aragakey/full/JVKBmm">Sakura</Link>
     </div>
   )
 }
 
-export default GenSakura
+export default Gen

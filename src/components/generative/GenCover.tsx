@@ -8,7 +8,7 @@ const Cover = () => {
           backgroundImage: "url(/abc/grid.svg)",
         }}
       >
-        <img src="" />
+        <img src="https://wxa.wxs.qq.com/wxad-design/yijie/yijie-railway.webp" className="absolute-full mix-blend-luminosity" />
       </div>
     </div>
   )

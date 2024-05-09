@@ -1,7 +1,7 @@
 ---
-title: "欢迎，这是我的 CSS 生成世界，再见。"
+title: "我的 CSS 生成艺术世界"
 slug: "generative"
-description: "在 2019 年第四届 CSS 大会上，一位名为 yuanchuan 的分享者，花了 10 分钟的时间差点让我睡着。但是在这之后的时间里，我被他的 CSS 艺术世界深深地震撼，直到今天也是。"
+description: "在 2019 年第四届 CSS 大会上，一位名为 yuanchuan 的分享者花了 10 分钟的时间差点让我睡着。但是在这之后的时间里，我被他的 CSS 艺术世界深深地震撼，直到今天也是。"
 publishedAt: "2024-06-02"
 editedAt: "2024-06-02"
 author: "Aragakey."
@@ -9,6 +9,27 @@ authorLink: "https://twitter.com/jiangyijie27"
 ---
 
 import GenSakura from "@/components/generative/GenSakura"
+import GenCuteFaces from "@/components/generative/GenCuteFaces"
+import GenBorder from "@/components/generative/GenBorder"
+import GenChinesePattern from "@/components/generative/GenChinesePattern"
+import GenGradientAlphabet from "@/components/generative/GenGradientAlphabet"
+import GenGradients from "@/components/generative/GenGradients"
+import GenGradients1 from "@/components/generative/GenGradients1"
+import GenGradients2 from "@/components/generative/GenGradients2"
+import GenGradients3 from "@/components/generative/GenGradients3"
+import GenCandy from "@/components/generative/GenCandy"
+import GenViews from "@/components/generative/GenViews"
+import GenYuanxiao from "@/components/generative/GenYuanxiao"
+import GenLalaland from "@/components/generative/GenLalaland"
+import GenRi from "@/components/generative/GenRi"
+import GenGridFlowers from "@/components/generative/GenGridFlowers"
+import GenFlowers from "@/components/generative/GenFlowers"
+import GenFallingFlowers from "@/components/generative/GenFallingFlowers"
+import GenI from "@/components/generative/GenI"
+import GenUnicodes from "@/components/generative/GenUnicodes"
+import GenSenLin from "@/components/generative/GenSenLin"
+import GenSun from "@/components/generative/GenSun"
+import GenRailway from "@/components/generative/GenRailway"
 
 在 2024 年的现在，我决定去回顾自己和 CSS 生成艺术的缘分。人变得越来越年长的证据之一，就是喜欢回忆过去。即便现在越来越少地创作了，但我知道自己还是会回到那个世界的，因为我深深热爱它，因为我的 vocation 仍然是成为一名 creative coder。
 
@@ -22,27 +43,49 @@ import GenSakura from "@/components/generative/GenSakura"
 
 我将 yuanchuan 老师视为我眼前的一座山，迫不及待地想要挑战一下。但我又踌躇于自己的艺术天分，毕竟也没有接受过任何艺术教育。
 
-犹豫是无用的。当天晚上我就回到电脑前，立马开始阅读 `<css-doodle />` 的 API。当晚，我就创作出了一幅简单的作品，令自己欣喜若狂：
+犹豫是无用的。大会结束后我回到电脑前，立马开始阅读 `<css-doodle />` 的 API。当晚，我就创作出了一幅简单的作品，令自己欣喜若狂：
 
 <GenSakura />
 
 能在一次技术大会上有这样的收获，我觉得自己实在是太幸运了。至今为止好像从来没有如同那天一样，对技术那般憧憬热爱过。此刻回想，我心里瞬然充满感动。谢谢 yuanchuan 老师。
 
-一句话来解释的话：生成艺术（Generative Art）指 **全部或部分使用自动创作系统创造的艺术**。
+在这之后，我又在 codepen 发布了《日本·中国の文樣事典》：
+
+<GenChinesePattern />
+
+令我意外的是，yuanchuan 老师关注到了我的作品，并在 Twitter 上转发。我没有做任何的推广，也还未被官方 pick。直到今天我也想不明白他是怎么看到这个作品的。那天真如同做梦一般，我实在太开心、太开心了 —— “**你关注的 @yuanchuan23 也关注了你！**”
+
+<img
+  className="block mb-4 mx-auto max-w-full w-[400px]"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/Frame-1303098189.webp"
+  alt="你关注的@yuanchuan23也关注了你！"
+/>
+
+那么，一句话来解释的话：生成艺术（Generative Art）指 **全部或部分使用自动创作系统创造的艺术**。
 
 生成艺术仅仅是创意编程（Creative Coding）的一个分支。创意编程的世界很广阔，包括 AR、VR、3D、平面、游戏等等。也有一些培训机构在给年龄更小的开发者们整一些所谓的创意编程教学活动。而更多的人接触到这个概念是因为他们的大学有一门专门学习 Processing 的课程（我也是后来才知道身边的设计师如此幸福，居然接受过这样的教育）。
 
 ## 这没有用，所以没有意义？
 
-在大会的提问环节里，一位同学请教 yuanchuan 老师，大概意思是：“我和大家都很惊叹你美丽的艺术和代码，但是在国内这样的环境下，怎样能在工作中产生价值呢？”
+在大会的提问环节里，一位同学很委婉地问 yuanchuan 老师，大概意思是：“我和大家都很惊叹你美丽的艺术和代码，但是在国内这样的环境下，怎样能在工作中产生价值呢？”
 
 他说，工作的事交给工作，这个是我当作爱好，当作休闲的产物。
 
-老实说，我当时也有这样的疑问。而直到前几年（2022），我才真正地意识到，这个问题实在太好笑了。我在和你说令我内心喜悦的东西，你却问我这个东西有没有用。你既无法感同身受我的快乐，也在说：你认可这件事的前提是对你足够有用。
+老实说，我当时也有这样的疑问，yuanchuan 老师的回答可以说直接无视了这个问题。而直到前几年（2022），我才真正地意识到这个问题实在太好笑了。因为我在和你说让我开心的东西，你却问我这个东西有没有用。也就是说，你既无法感同身受我的快乐，也在说：你认可一件事的标准，是它对你是否足够有用。
 
-之前我们组组织了一场以“美”为主题的读书会。兴之所至，我去看了一个美学原理的大学课程，老师说学生们一个普遍的问题是，我学美学有什么用？能让我提高审美吗？能让我买到更好看的衣服吗？不好意思都不能，这些都不是美学要探讨的问题。学生们就会问，那我学这个有什么用？ 其实你问出这个问题，就已经预设了它没有用。即便老师讲出了三四点用处，你也很难认同。
+之前我们组组织了一场以“美”为主题的读书会。兴之所至，我去看了中央民族大学杨宁老师的美学原理课程。老师说学生们一个普遍的问题是，我学美学有什么用？能让我提高审美吗？能让我买到更好看的衣服吗？不好意思都不能，这些都不是美学要探讨的问题。学生们就会问，那我学这个有什么用？ 其实你问出这个问题，就已经预设了它没有用。即便老师讲出了三四点用处，你也很难认同。
 
-人总是以对自己的实用性作为判断一件事的标准，称其为“有用、有意义”。如果想要否认一件事的价值，你自然可以找出许多个理由。但我们需要什么时候都做一个裁判吗？生活明明更多时候，更像是村上春树笔下的“旋转木马上的鏖战”。与其追问一件事为何如是、与其总是像叼着哨的裁判一样主持正义，不如尽可能地发现其背后的闪光，想想所谓“有用”的衡量标尺是否唯一 —— 毕竟，能让自己快乐，不就是最大的“有用”吗？
+人总是以对自己的实用性作为判断一件事的标准，称其为“有用、有意义”。如果想要否认一件事的价值，你自然可以找出许多个理由。但我们需要什么时候都做一个裁判吗？生活明明更多时候，更像是村上春树笔下的“旋转木马上的鏖战”。与其追问一件事为何如是、与其总是像叼着哨的裁判一样主持正义，不如尽可能地发现其背后的闪光，想想所谓“有用”的衡量标尺是否唯一。
+
+这样的价值观，完全是我个人生活与工作的缩影。
+
+> 他们一面讲要追求个人，一面讲积极进取，不宜固步自封。我问界限何在，无人能辨。  
+> 他们一面说需独立思考，一面说前提是收集足够的有效信息。我问何谓足够、之数几何，无人知晓。  
+> 浮世与浪漫，本在一纸之隔。然而纸之所在，好像不可得见，亦不可得着。  
+> 我想，只消指那雪是白云揉碎、看那水是月光如绸。只消赏那枫叶如火、繁花如烟就好。倒也不用如醉如醒。  
+> —— Aragakey.
+
+现实与浪漫，本就矛盾又和谐。它们是一种平衡，却不要摆到一个台面上讨论。现实、浪漫、浮世，这三者一定存在界限，即便难分难辨。我狭隘的浪漫主义问我，我的内心是否温热，我的生命是否值得，我是否在追求快乐，而不是让社会标准问自己是否有用。
 
 ## 什么是设计，什么是实现？
 
@@ -56,7 +99,7 @@ import GenSakura from "@/components/generative/GenSakura"
 
 —— 在一个开发者的技术答辩中，**设计是工程系统的设计，实现是页面的展示结果**。
 
-那么，什么是生成艺术的设计和实现？当我们在讨论生成艺术作品的设计的时候，我们讨论的是什么？我将通过下面的文字简单阐述一下我的生成艺术价值观。
+那么，什么是生成艺术的设计和实现？当我们在讨论生成艺术作品的设计的时候，我们讨论的是什么？我将通过下面的文字简单阐述一下我眼中的生成艺术内核。
 
 ## 用代码绘画，通常是一种逆向的过程
 
@@ -80,14 +123,170 @@ import GenSakura from "@/components/generative/GenSakura"
 
 生成艺术需要我们建立一个具有一定规则的“自动创作系统”，通过这个盒子，最终创造出图案。
 
-![asd](https://www.notion.so/256807d094b8447980b9b0879dffb0c2?pvs=4#761665c1d1de425ab98c6252c346b48b)
+![歌曲可视化](https://wxa.wxs.qq.com/wxad-design/yijie/soundscapeart.webp)
+
+这位艺术家将一些歌曲可视化为色彩丰富、长短不一的几何图形。他是怎么做的呢？他为不同的音高、长短等等建立了一套规则：
+
+![歌曲可视化规则](https://wxa.wxs.qq.com/wxad-design/yijie/revamp-_Recovered__key_1704x.webp)
+
+以这样一套规则，每首歌曲都被“转译”为了一幅独一无二的画。这一个个几何图形不再没有意义，而是变成了独特的符号，与那首歌曲微妙地关联在一起。这就是一种生成艺术。
+
+再比如，下面这幅平平无奇的画。
+
+![The Beach](https://wxa.wxs.qq.com/wxad-design/yijie/thebeach.webp)
+
+它来源于 Conditional Design 的一个叫 The Beach 的 workshop：今天天气非常好，你想去海滩晒日光浴。那么，你会找一个最空旷的地方，然后在这片区域的中间躺下。每一个点的绘制过程都遵守这个规则。
+
+知道这个绘制过程之前，这些点不过是随意地被画在那里。但是这个规则让这些点变得有了意义，也有趣了一些。
+
+所以，“用代码画画”不一定是一个逆向的过程。恰恰相反，我和设计师一样，都在完成是一个正向的过程，只是我们创作的方向是不同的，更不必说方式上的不同。
+
+现在再看，什么是设计，什么是实现？当我们在评价一幅生成艺术作品时，可能说它的配色可以再斟酌一下，可能说它的动画可以再慢一点。要清楚，其实这些都是在评价它的实现，而不是它的设计。之所以说可惜，是因为这些评价跳过了对于那个黑盒的理解。是因为颜色可以改，动画可以慢，而 **生成艺术的灵魂，全在那个生成随机与秩序的黑盒**。
 
 ## 三个维度
 
+设计生成艺术的核心，在于设计那个黑盒的规则。我自己总结了三个维度：**结果**，**模式**，**想法**。
+
+1. 一幅作品，我们最先看到的是结果；
+2. 结果是由一套模式渲染输出的；
+3. 而在模式的背后，是以创作者的想法为根本构建出的。
+
+在 CSS 生成艺术中，渲染靠的就是浏览器；构建靠的是 `<css-doodle />` 库。
+
+比如创作这样一幅简单的作品：
+
+<GenCuteFaces />
+
+第一步，要思考的是，我要生成什么样的脸？我希望嘴型可能是圆的、方的、三角的、开心的、难过的；眼睛、鼻子等等有高有低、有大有小。这是 **想法**。
+
+第二步，我需要构建一套能应用这些规则的系统，这就要靠 `<css-doodle />`。下面是对随机变量的一部分定义。
+
+```js
+--eye-size: @r(7, 14)%; // 眼睛的尺寸在 7% - 14% 间随机
+--eye-y: @r(55, 65)%;  // 眼睛离上面的距离在 55% - 65% 间随机
+--eye-left-x: @r(20, 30)%;  // 左眼离左边的距离在 20% - 30% 间随机
+--eye-right-x: @r(70, 90)%; // 右眼离左边的距离在 70% - 90% 间随机
+--blush-color: rgba(249, 151, 152, @r(.1, .9)); // 红晕的 alpha 通道值在 0.1 - 0.9 间随机
+--blush-size: calc(@r(0, 5)% + var(--eye-size)); // 红晕的大小，是在眼睛大小的基础上，再随机加个 0 - 0.5%
+--blush-y: @r(80, 85)%; // 红晕离上面的距离在 80% - 85% 间随机
+```
+
+这是 **模式** 的建立。
+
+第三步，通过浏览器对代码的解析，最终渲染到页面上，成为 **结果**。
+
+对于 web 端而言，大部分的创作者都会使用 `processing` 或者 `p5.js` 作为他们的模式建立工具。你可以在 openprocessing 上看到许多优秀案例。尽管工具、机制各不相同，但本质都在于结果、模式、思想的组合。
+
+因此，你可能对工具不感兴趣、也不想要理解技术，这完全没有关系。而如果可以不仅仅对作为 **结果** 的图像进行评价，或者，生成艺术作品能在 **模式**和 **思想** 上对你有所帮助和启发的话，就太好了。
+
+陶艺家安田猛说，陶艺创作有三个重点，想法（intention）、材料（material）和工具（tool）。要我来说，生成艺术也是这样。
+
 ## 乐趣一：随机与秩序
 
-## 乐趣二：以一个概念开始，以一点技术开始
+通过以上的文字我们很容易得出：随机与秩序是生成艺术的乐趣核心。这就像我们做陶艺，却不是做一个形状确定的陶器。瓶口、瓶身的大小，每一处的深浅都随机产生于拉坯过程中。但这份随机又是需要一定的约束的，不可能完全没有规则。
 
-## 乐趣三：以另一个视角，重新审视 CSS
+调整这个系统，赋予随机一定的秩序。每一次的结果都是全新的，刷新一下浏览器，我就会得到一次独一无二的结果。同时这个过程中也会发生一些意想不到的错误和惊喜，每一次的错误也可能是无心插柳。
 
-## 乐趣四：拥抱限制，享受属于 CSSer 的小角落
+和上面《Cute Faces》类似的，下面的《Views》指定了太阳、山、树的一些随机的位置与尺寸，虽然是随机的，但都控制在一定的范围内。随着每次刷新，九个视图都会相应变化。
+
+<GenViews />
+
+比如我最满意的《今年元夜时》，本来是打算中秋节画的，结果拖到了元宵节。孔明灯的位置是随机的，但数量又要控制得当，不能太多太少。这就是随机与秩序的结合：
+
+<GenYuanxiao />
+
+最后再看一个最近的（由于这个 DOM 比较多，我就直接插入一张图片在这里了）：
+
+<GenFallingFlowers />
+
+## 乐趣二：重新审视 CSS：它不再只是实现工具
+
+在以上的内容中，我阐述了随机、秩序、概念带给我的乐趣，而几乎没有说具体的实现过程与工具本身。现在，CSS 终于要出场了。
+
+yuanchuan 老师的分享中，真正令我打开新世界大门的一瞬间，是当我看到他用 `border-style` 属性演示的、实际上非常简单的例子：
+
+<GenBorder />
+
+对于一个前端开发者而言，`border-style` 这个属性不常用，`double` 或 `dotted` 这些关键字根本就用不上，因为设计师的设计稿里不存在。我不仅是说，我通常作为“实现者”的角色，已经被“有没有用”的标注所束缚。更重要的是，我对于 CSS 的认知，也被限制在了“实现”的范畴：边框的属性，就是用来调整边框的，yuanchuan 老师居然用它来画图案！
+
+当时，yuanchuan 老师是信手逐行地手写出这个例子的，他一会儿改变下尺寸、一会儿调整下配色。他告诉我：**原来描述元素样式的属性，也能成为图案；原来我最擅长的实现工具，也是创作工具**！就是在这一时刻，我看到了 CSS 的新世界。我才意识到自己的狭隘：yuanchuan 老师最开始在讲怎么画一个点、一条线、一个三角形，他在讲创作手段，而我却把它们视为陈词滥调的实现技巧。
+
+在所有 CSS 创作手段中，我最常用、最中意的就是 `background`，因为它足够丰富。我会单纯使用 `background` 练手：
+
+<GenGradientAlphabet />
+
+上面的字母都是仅使用 `background` 这一种属性绘制出来的。当时这个作品还被
+
+回想我过去看过的许多介绍 CSS 属性（特别是 `background` `filter` 这种和表现强相关的属性）的文章，写的人是从实现的角度出发，读的人也是这样。我读这些文章就像读 API 文档一样。因此，我很容易就会得出：这个属性不值得学习。因为从实现的角度来讲，**还不如切一张图呢**。
+
+这些文章没什么意义，它们教不会我什么。这就是我所说的需要重新审视 CSS，就比如重新审视 `background` 这一属性。我在面试的时候和开发者交流，有时候会问他们最近关注到 CSS 什么新东西？有几个会说 `background` 的渐变，认为这很有意思，然而他们的实践却非常有限，这让我觉得可惜。
+
+我并不是说我们都要成为 one div 大师，但我会问自己：要怎样才能证明自己真的擅长 CSS 呢？如果我真的掌握了 `background`，那我就有本事画出来。
+
+<GenGradients />
+
+<GenGradients3 />
+
+<GenGradients2 />
+
+<GenGradients1 />
+
+<GenCandy />
+
+<GenRailway />
+
+除了 `background` 之外，我还想拿 Unicode 来举例子。对于 Unicode 的应用同样来源于 yuanchuan 老师，我只不过是在重复他的创作。他在那次大会上展示了[这张图(https://wxa.wxs.qq.com/wxad-design/yijie/yuanchuan-text-shadow-4.webp)](https://github.com/yuanchuan/talk/blob/gh-pages/generative-art-with-css/assets/images/text-shadow-4.png)，我仍然记得当时全场掌声雷动，大家连连发出赞叹。其中一个原因就是，**这竟然是用括号画出来的！字符也能画画！**
+
+最开始，我会用字母 i 做一些练习：
+
+<GenI />
+
+或者像这样：
+
+<GenUnicodes />
+
+<GenSenLin />
+
+重新审视 Unicode，字符本身不也是一种图案吗？比如，下面的《La La Land》中人物和小猫是用 🕺，💃 和 🐈 画的，加上 `text-shadow` 就能得到一个纯色的图形。能不能用其他方式画出来呢？能，但一切将失去意义。
+
+<GenLalaland />
+
+再比如，下面的《日》，太阳旁边的海鸥是用两片括号实现的。
+
+<GenRi />
+
+下面的花朵，是在 🌸 和 🌼 上通过 `mask` 一个 `radial-gradient` 实现的：
+
+<GenGridFlowers />
+
+类似地，除了 🌸 和 🌼 还有 ✿、❁、❀、❃、❊：
+
+<GenFlowers />
+
+重新审视 CSS：我真的擅长 CSS 吗？如果有本事的话，就画出来。
+
+## 乐趣三：拥抱限制，享受属于 CSSer 的小角落
+
+如我所说，如果你想认识生成艺术，更推荐去学习 `processing` 或者 `p5`。因为它们的发明本身，就是为了让 web 开发者更方便地创作生成艺术。而它们又是基于 JavaScript 的库，CSS 甚至不是编程语言。
+
+为什么要用 CSS？CSS 明明有很多缺陷，也不适合，为什么值得呢？CSS 哪里招人喜欢呢？为什么 yuanchuan 老师要基于 CSS 开发一个 `<css-doodle />` 来做这码事？
+
+这些问题的回答，和这篇文章中大部分问题的回答一样，都是：**因为我喜欢**。以及，**因为我能**。如果非要回答的话，我可能会说，因为 CSS 不是编程语言，足够简单。我并不因为 `p5` 更强大就去选择它。我这样的做法也很正常，就像我喜欢的一位摄影师说，如果他的镜头拍不到，他不会换一个镜头，他会选择不拍 —— 如果 CSS 做不到，那我就不做了。因为，**限制也是 CSS 乐趣的一大部分～**
+
+<img
+  className="block mb-4 mx-auto max-w-full w-[400px]"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/css-limit.webp"
+  alt="限制也是 CSS 乐趣的一大部分～"
+/>
+
+回头我们再看 Diana Smith。我说，她用 CSS 去逆向地创作艺术作品，正因如此我可能无法理解她的乐趣是什么。但是，事实是我也本不需要理解和共情，因为世界上本不存在百分之百的理解。我只要知道她以此为乐就行。
+
+CSS 生成艺术也是这样，使用 CSS 会面临许多问题。但这是属于我的工具，是我最擅长的工具，仅此而已。
+
+<GenSun />
+
+## 最后
+
+感谢 yuanchuan 老师。因为自己这两年越来越懒惰，好久都没有和他联系。最后，即便已经说了许多次 —— 我能幸运地做到这些真的是因为他，他的那次演讲，以及他的 `<css-doodle />`。他一直会是我眼前的那座高山。
+
+欢迎，这是我的 CSS 生成艺术世界，再见。

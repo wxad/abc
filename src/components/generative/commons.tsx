@@ -6,7 +6,12 @@
  */
 import { useEffect, useRef, useState } from "react"
 
-const useDoodle = (maxWidth: number) => {
+const useDoodle = (
+  maxWidth: number,
+  options?: {
+    update?: boolean
+  }
+) => {
   const ref = useRef<HTMLDivElement>(null)
   const [scale, setScale] = useState(1)
   const [inView, setInView] = useState(false)
@@ -32,12 +37,14 @@ const useDoodle = (maxWidth: number) => {
 
     observer.observe(ref.current)
 
-    timer.current = window.setInterval(() => {
-      const doodles = [...ref.current.querySelectorAll("css-doodle")] as any[]
-      doodles.forEach((doodle) => {
-        doodle.update()
-      })
-    }, 2000)
+    if (options?.update !== false) {
+      timer.current = window.setInterval(() => {
+        const doodles = [...ref.current.querySelectorAll("css-doodle")] as any[]
+        doodles.forEach((doodle) => {
+          doodle.update()
+        })
+      }, 3000)
+    }
 
     return () => {
       observer.disconnect()

@@ -244,7 +244,11 @@ export const A = ({
                     <source src={img} type="video/mp4" />
                   </video>
                 ) : (
-                  <img className="absolute-full object-cover" src={img} alt="" />
+                  <img
+                    className="absolute-full object-cover"
+                    src={img}
+                    alt=""
+                  />
                 )}
               </div>
             </div>,
@@ -332,5 +336,14 @@ export const BlockQuote = ({
     >
       {children}
     </blockquote>
+  )
+}
+
+export const Img = ({ src, alt }: { src: string; alt: string }) => {
+  return (
+    <>
+      <img className="block mb-4 max-w-full" src={src} alt={alt} />
+      <span className="block text-xs text-center text-neutral-400">{alt}</span>
+    </>
   )
 }
