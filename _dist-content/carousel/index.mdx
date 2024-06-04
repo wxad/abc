@@ -5,7 +5,7 @@ slug: "carousel"
 publishedAt: "2024-03-16"
 editedAt: "2024-03-16"
 author: "Aragakey."
-authorLink: "https://twitter.com/jiangyijie27"
+authorLink: "https://codepen.io/aragakey"
 ---
 
 import Carousel from "@/components/Carousel"
@@ -25,7 +25,7 @@ import Carousel from "@/components/Carousel"
 
 ## 横移和旋转是什么关系？
 
-转盘要跟着手指旋转，一种做法是通过手指初始位置的 `[x1, y2]` 与移动过程中的实时位置 `[x2, y2]` 计算出夹角角度。这里为了方便，我直接使用了 x 轴的位移量去映射角度的变化。因此，我需要一个比例系数 `x:deg`。
+转盘要跟着手指旋转，一种做法是通过手指初始位置的 `[x1, y1]` 与移动过程中的实时位置 `[x2, y2]` 计算出夹角角度。这里为了方便，我直接使用了 x 轴的位移量去映射角度的变化。因此，我需要一个比例系数 `x:deg`。
 
 1. 如果值太大，转盘会变得 **迟钝**；
 2. 如果值太小，转盘会变得 **灵敏**；
@@ -143,7 +143,7 @@ f(x) = (amplitude - amplitude * e) ^ (-x / timeConstant)
 
 ## 结语
 
-通过这篇文章我们看到，轮盘动画的背后，存在着数个关键参数。理解这些参数，不（仅）是为了理解实现原理本身，而是为了在改变这些参数的过程中，寻求简单的“对”或“不对”之间的具体差异，更是为了细化对交互动画的具体感受。
+通过这篇文章我们看到，转盘动画的背后，存在着数个关键参数。理解这些参数，不（仅）是为了理解实现原理本身，而是为了在改变这些参数的过程中，寻求简单的“对”或“不对”之间的具体差异，更是为了细化对交互动画的具体感受。
 
 > Analyzing and making sense of design details beyond just "it feels nice" helps nurture taste, amplify level of execution, and grow appreciation for how hard the pursuit of excellence is. —— [Invisible Details of Interaction Design(https://wxa.wxs.qq.com/wxad-design/yijie/invisible-abc.webp)](https://rauno.me/craft/interaction-design)
 

@@ -10,11 +10,11 @@ const posts = [
     title: "我的 CSS 生成艺术世界",
     slug: "generative",
     description:
-      "在 2019 年第四届 CSS 大会上，一位名为 yuanchuan 的分享者花了 10 分钟的时间差点让我睡着。但是在这之后的时间里，我被他的 CSS 艺术世界深深地震撼，直到今天也是。",
+      "在 2019 年第五届 CSS 大会上，一位名为 yuanchuan 的分享者花了 10 分钟的时间差点让我睡着。但是在这之后的时间里，我被他的 CSS 艺术世界深深地震撼，直到今天也是。",
     publishedAt: "2024-06-02",
     editedAt: "2024-06-02",
     author: "Aragakey.",
-    authorLink: "https://twitter.com/jiangyijie27",
+    authorLink: "https://codepen.io/aragakey",
     children: <GenCover />,
   },
   {
@@ -25,7 +25,7 @@ const posts = [
     publishedAt: "2024-04-30",
     editedAt: "2024-04-30",
     author: "Aragakey.",
-    authorLink: "https://twitter.com/jiangyijie27",
+    authorLink: "https://codepen.io/aragakey",
     children: <LikesCover />,
   },
   {
@@ -36,7 +36,7 @@ const posts = [
     publishedAt: "2024-04-16",
     editedAt: "2024-04-16",
     author: "Aragakey.",
-    authorLink: "https://twitter.com/jiangyijie27",
+    authorLink: "https://codepen.io/aragakey",
     children: <TrailCover />,
   },
   {
@@ -47,7 +47,7 @@ const posts = [
     publishedAt: "2024-03-16",
     editedAt: "2024-03-16",
     author: "Aragakey.",
-    authorLink: "https://twitter.com/jiangyijie27",
+    authorLink: "https://codepen.io/aragakey",
     children: <CarouselCover />,
   },
   {
@@ -58,7 +58,7 @@ const posts = [
     publishedAt: "2023-12-31",
     editedAt: "2023-12-31",
     author: "Aragakey.",
-    authorLink: "https://twitter.com/jiangyijie27",
+    authorLink: "https://codepen.io/aragakey",
     children: <Cover2023 />,
   },
 ]

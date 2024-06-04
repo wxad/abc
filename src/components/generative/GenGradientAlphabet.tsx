@@ -6,7 +6,7 @@ const Gen = () => {
     <div className="my-16">
       <div className="mx-auto max-w-[280px] mb-2">
         <img
-          src="https://wxa.wxs.qq.com/wxad-design/yijie/gradient-alphabet.webp"
+          src="https://wxa.wxs.qq.com/wxad-design/yijie/aragakey-gradient-alphabet.webp"
           loading="lazy"
         />
       </div>
