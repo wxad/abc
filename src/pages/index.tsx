@@ -3,9 +3,20 @@ import CarouselCover from "@/components/CarouselCover"
 import TrailCover from "@/components/trail/TrailCover"
 import LikesCover from "@/components/likes/LikesCover"
 import GenCover from "@/components/generative/GenCover"
+import FmCover from "@/components/fm/FmCover"
 import NextLink from "next/link"
 
 const posts = [
+  {
+    title: "Functional Motion：UI 组件库的动效设计细节",
+    slug: "functional-motion",
+    description: "功能优先的动效设计。you see, fun is in functional.",
+    publishedAt: "2024-06-06",
+    editedAt: "2024-06-06",
+    author: "Aragakey.",
+    authorLink: "https://codepen.io/aragakey",
+    children: <FmCover />,
+  },
   {
     title: "我的 CSS 生成艺术世界",
     slug: "generative",

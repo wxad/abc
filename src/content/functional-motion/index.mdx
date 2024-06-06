@@ -1,0 +1,238 @@
+---
+title: "Functional Motion：UI 组件库的动效设计细节"
+description: "功能优先的动效设计。you see, fun is in functional."
+slug: "functional-motion"
+publishedAt: "2024-06-06"
+editedAt: "2024-06-06"
+author: "Aragakey."
+authorLink: "https://codepen.io/aragakey"
+---
+
+import FunctionalMotion from "@/components/fm/FunctionalMotion"
+import Slider from "@/components/fm/Slider"
+import Sonner from "@/components/fm/Sonner"
+import SonnerAnimationDemo from "@/components/fm/SonnerAnimationDemo"
+import SonnerExpandDemo from "@/components/fm/SonnerExpandDemo"
+import Checkboxes from "@/components/fm/Checkboxes"
+import CheckboxDemo from "@/components/fm/CheckboxDemo"
+import SwitchDemo from "@/components/fm/SwitchDemo"
+import DialogOld from "@/components/fm/DialogOld"
+import DialogNew from "@/components/fm/DialogNew"
+import DialogSpatial from "@/components/fm/DialogSpatial"
+import Drawer from "@/components/fm/Drawer"
+import AlertDemo from "@/components/fm/AlertDemo"
+import TagDemo from "@/components/fm/TagDemo"
+import NavigationMenu from "@/components/fm/NavigationMenu"
+
+在 WWDC18 [Designing Fluid Interfaces(https://wxa.wxs.qq.com/wxad-design/yijie/1_EZJGlfbTCPSEq7Exwjla1Q.webp)](https://developer.apple.com/videos/play/wwdc2018/803/) 上，Apple 的设计师展示了许多移动端的动效设计建议，但在具体实现上却没有给出太多的细节。作为一个 UI 的开发者，受此分享的巨大影响，我一直保持对动效设计具体的思考。
+
+前段时间，我尝试为一些桌面端的 UI 组件添加或修改动效，它们来源于我个人，因此最后也不能说完成了一个系统的总结。不过，我认为这些尝试是富有细节、有意思、有意义的，因此我将它们整理成了这篇文章。
+
+我将它们统称为 Functional Motion —— 功能优先的动效设计。
+
+<FunctionalMotion />
+
+## 层叠式排列：Message / Dialog / Drawer
+
+作为全局展示操作反馈的信息，Message 会从屏幕顶部滑入。当有多个 Message 先后出现时，我们先前采用的设计一直是向下推移之前的 Message。这样的设计源于 ant design。
+
+![ant design message](https://wxa.wxs.qq.com/wxad-design/yijie/ant-design-message.webp)
+
+为了避免整个屏幕都堆满了 Message，我们将展示上限设定为 3 个。当超过 3 个时，最先的 Message 会被移除。然而如此的规避手段好像算不上一种设计上的解决方案 —— 即便用户确实不太可能连续唤出那么多 Message。
+
+受到 iOS 锁屏页的通知折叠的启发（当然还有来自 Vercel 的 Emil Kowalski 大神所开发的 Sonner 组件的直接影响......），我认为在多个 Message 下加入层叠的设计，确实是一种兼顾优雅和保持功能性的解决方案：
+
+<SonnerAnimationDemo />
+
+当鼠标移入时，所有 Message 将会展开，这是功能性上的保证。过去，实际上我们监听了鼠标移入时，Message 将不会消失。然而这个逻辑并没有在任何 UI 的变化上得到表达，用户并不能感知到这个逻辑的存在。当他鼠标移入到一个 Message 上时，他并不知道这个 Message 到底会不会消失。
+
+现在，用户看到所有 Message 的展开，就明确了这个逻辑的存在。因此，我认为这是一个更好的功能性上的设计，它让组件和用户的沟通更加明确可靠：
+
+<SonnerExpandDemo />
+
+最后，Message 从上方出现时，用户还能 **以拖拽的方式向上滑动** 来关闭它。这是一个符合空间一致性（spatial consistency）的很自然的设计。我们并不需要一个额外的按钮，因此这算是一个有趣的彩蛋。一旦用户发现了，他就会立刻适应这个小功能。
+
+我们可以连续点击下面的按钮，体验一下完整的交互：
+
+<Sonner />
+
+---
+
+对于 Dialog 组件，可能会产生 Dialog 嵌套 Dialog 的用法，我在这里并不打算讨论这样的用法是否合理，但过去确实出现过这样的情况。在设计上，我们也没有对此进行过考量，UI 上就会表现成这样：
+
+<DialogOld />
+
+现在，通过层叠，Dialog 的前后关系就会更加清晰：
+
+<DialogNew />
+
+---
+
+同样地，Drawer 也可以拥有合理的多层表现：
+
+<Drawer />
+
+## 优雅的下拉导航：NavigationMenu
+
+下拉导航 NavigationMenu 是指鼠标移入头部 Navigation 时会展开显示更多导航层级的下拉菜单的组件。比如 Apple 官网的头部：
+
+![Apple 头部导航](https://wxa.wxs.qq.com/wxad-design/yijie/apple-navigation-menu.webp)
+
+在实际业务中，一般不会使用这么重的整块下拉的形式，而是类似于 Popover 弹窗的形式。
+
+具体的动效设计点是：在 Popover 已经显示的情况下，如果继续移入到其他导航上，Popover 并不会消失，而是将其中的内容替换为新的内容。这样的设计避免了多个 Popover 的出现、消失，及其带来的 UI 重叠：
+
+<NavigationMenu />
+
+这里的动效考虑的核心是 **hover 态是一个令人不安全的状态**，它是临时的。在这个状态下，用户移动鼠标会变得小心翼翼。在上面的设计中，Popover 的 hover 区域实际从一个导航项扩展到了整个导航栏，用户不需要担心鼠标的移动可能导致 Popover 的消失，取而代之的只是其中内容的变换。
+
+## 状态合并：Slider
+
+在 Slider 的设计中，Tooltip 会出现在当前操作的滑块上方。在双滑块的情况下，我希望两个 Tooltip 同时显示，不仅仅是当前操作的滑块上，帮助用户明确范围：
+
+<Slider value={[10, 80]} tooltipVisible />
+
+这就遇到了一个问题：当两个滑块距离过近时，两个 Tooltip 会重叠在一起：
+
+<Slider value={[40, 50]} tooltipVisible />
+
+因此，在 Tooltip 重叠时，我会将它们合二为一；而当空间足够时，两者再会分开。我们可以在下面的示例中直接拖拽体验：
+
+<Slider value={[40, 50]} tooltipVisible combine />
+
+## 细致的交互反馈：Checkbox / Switch
+
+通常来说，我们对桌面端 UI 组件所考虑的交互状态有：hover 悬停态 和 active 激活态。对于像 Checkbox 这样会变化选中态的组件，就会对应两套 hover 和 active 态。
+
+在这一次的 Checkbox 设计中，我在此基础上加入了 **长按** 态（200ms）：
+
+<Checkboxes />
+
+如果用户很快地点击并松手，则 Checkbox 会直接变为已选中态；如果用户 active 的时间超过了 200ms 而后松手，则组件也会对此做出响应。以下是一个动态的演示：
+
+<CheckboxDemo />
+
+用户以不同的方式操作组件，都会得到一个可预期的交互反馈。同样的考量，在 Switch 组件上也有体现：
+
+<SwitchDemo />
+
+之所以要给 active 态一个 200ms 的延迟，是因为当用户快速操作的时候，UI 的变化不应该太过频繁，它应该是快速、直截的。反之，当用户 active 了足够多的时间，UI 应该对此做出响应，“奖励”用户。
+
+还有一个细节就是对于 active 态的判断应该同时判断 hover 态，否则，用户在鼠标移开后，组件仍然会保持 active 态的样式，这是不符合预期的。这里不再演示，即：
+
+```css
+/* active 态应以 hover 为前提 */
+:hover:active {
+}
+```
+
+综合以上几点设计思路，去考量更多的组件，比如 Radio、Button，都可以得到类似的有趣的设计。
+
+## 添加和删除的细节：Alert / Tag
+
+对于添加和删除动画来说，有以下几个原则是需要注意的：
+
+1. 添加或删除的元素自身不应该有任何尺寸上的变化，否则将会是一种视觉上的干扰；
+2. 动画的透明度与位移应该是不同步的。具体而言，在添加时，透明度应该是后变化的；在删除时，透明度应该是先变化的；
+3. 添加和删除动画并不是必须的，如果所牵涉到的元素过多，则可能显得过于繁琐。
+
+具体而言，下面的动画是存在问题的。可以注意到，在添加时，元素自身的尺寸发生了变化（或者说 **元素自身尺寸一定是会变化的，但是不能让用户看见**）；在删除时，由于透明度和位移是同步的，因此造成了 **UI 上的重叠**。
+
+<AlertDemo sync />
+
+一个理想的添加或删除动画应该是这个样子的：
+
+<AlertDemo />
+
+```css
+/* 添加 */
+transition: 0.3s all ease 0.2s, 0.3s ease opacity;
+
+/* 删除 */
+transition: 0.3s all ease, 0.3s ease opacity 0.2s;
+```
+
+这很好理解也非常简单，显得有些理所当然。而正因如此非常容易被忽略。
+
+对于 Tag 组件的添加或删除动画，也是同样的原则。不过 Tag 可能存在多行排列的情况，这和单行单列的动画是不同的。如何处理多行的添加或删除动画？
+
+首先，正如第 3 条原则所述，我们可能并不需要动画，因为用户并不需要明确每一个 Tag 的位置关系。如果确实需要，那么可以依靠 View Transitions API 实现：
+
+<TagDemo />
+
+需要注意的是，View Transitions API 目前（2024.06.06）只在 Chrome 和 Edge 上支持，因此在其他浏览器上会有兼容性问题。即便如此也是可以使用的，因为多行动画在大部分情况都不是必须的，尤其是在 TreeSelect 这样的组件中。
+
+## 空间的一致与不一致：Dialog
+
+所谓的空间一致性（spatial consistency），看起来是理所当然的：一个 Drawer 从左侧拉出，那么它就会从左侧收回；一个 Message 从上方滑入，那么它就会从上方滑出 —— 不然呢？
+
+然而，实际上可以刻意地利用空间不一致来暗示一些信息。比如，Dialog 从上方出现，如果点击“取消”则回上方，这是一致性，暗示为返回操作；如果点击“确认”向下方消失，暗示为前进操作。
+
+<DialogSpatial />
+
+**—— 为什么表达返回与前进是上下运动而不是左右运动？**
+
+1. Dialog 与 Message 同为弹出层，两者运动方式保持一致和谐；
+2. 弹出层作为在页面上更高一级的空间，要覆盖当前空间的行为，上下运动更有覆盖之意，返回和前进操作则是一种反馈上的暗示。而左右则太强调返回与前进，失去了空间覆盖的表意。
+
+**—— 为什么 Dialog 不从点击位置放大显示（like Ant Design or T Design）？**
+
+从起点运动的合理性在于连接，让用户认识因为自己的点击行为而出现的。
+而这样的连接形式可能会过重，特别是距离比较远的时候，这可能会造成过多修饰。
+
+## Functional Motion 设计原则
+
+常规来说，这一部分应该置于文章的最前面。但我认为比起阅读文字，实际的设计更易被直接理解。事实上我确实做了非常多的文字工作，只是我并不推荐阅读。
+
+### 价值一：服务功能
+
+在 B 端系统中，你的任务可能是复杂而多线程的。动效帮助你保持不间断的操作体验，帮助你更好地完成任务。
+
+无论是细微的状态更新还是较大的界面变化，动效的作用是吸引你的注意力，继而尊重这份注意力，把你从一个任务的起始地，顺利地领到这个任务的目的地 —— 从此处到那处、从这一步到下一步、从开始到结束。
+
+**动效，是为了连接。**
+
+### 价值二：解释结构
+
+在 B 端系统中，你的界面可能是交叠而多层级的。动效帮助你清晰地知道自己身处在哪，以更顺畅地决策下一步的操作。
+
+通过在空间上一致或有意不一致的表现，动效的作用是阐释元素之间的层级与空间关系：它们在哪里、从哪来到哪去，以及你可以怎样再找到它们。
+
+### 价值三：表达产品
+
+你所看到的界面，是由设计与工程团队合力出品的。动效帮助产品在体验上更有吸引力，因为你所体验的，是我们精心打造的，而不是机器。
+
+**一份好的体验，是因为动效没有独立于 UI、功能或结构之外**（动效并不是组件设计的扩展项，而是组件完整设计中的一环）。一份好的体验，是这一切同时设计得足够完整和合理之后，自然达成的一个结果。
+
+对于一个 UI 设计语言来说，把 functional 做好，就会自然地达成 fun 的结果。
+
+对 B 端系统来说，一个 ‘fun’ 的体验，不代表我们需要绚丽的特效，而是要让你的使用过程尽可能的高效、清晰、轻松，确保你与我们互动的过程是愉悦的且富有成果的。
+
+—— you see, **fun is in functional**.
+
+### 原则一：明确而可靠
+
+1. 当操作界面时，你的交互是可预期的，你可以自信地完成任务；
+2. 对于在表现上类似的元素，我们需要维持运动方式的一致性，因为一致性是具有语义的。当元素传达相同的含义或执行相同的功能时，使用相同的动作，反之亦然。
+
+### 原则二：懂得分寸的
+
+1. 动效在大部分情况需要是敏捷的，帮助你保持流畅，增加对于变化的感知速度；
+2. 动效需要是有意义的，不做过多的修饰而大张旗鼓地吸引你的注意力；
+3. 如果你开启了减弱动效模式（prefers-reduced-motion），那么动效则会尽可能关闭。
+
+### 原则三：自然有活力
+
+组件服务于功能的同时，也拥有符合真实世界认知的性质。自然体现在：
+
+1. 收起与展开的行为应该是符合预期的，对于不受影响的元素，应保持它们的状态不变；
+2. 对于同一种类的物体，尺寸越大、距离越长，那么他的运动时间越长，否则在快慢的感知上会有不稳定、不统一的差异；
+3. 我们所使用的运动曲线，是基于弹簧运动模型的物理曲线。弹簧运动并不意味着任何时候都要“弹”（Springs don't need to be springy all the time）。
+
+## 最后
+
+Functional Motion 的意思是功能优先的动效。也就说，任何一个元素运动本身都在服务某一个或多个点。以这样的方式思考具体的设计是非常有趣的。
+
+还有一些具体设计，没有在这篇文章中细说了，例如对 duration 和 easing 选择的思考（以及对 ease-in-out 曲线的批判）。确实也没有完成一个系统的总结，但已经足够了。
+
+<FunctionalMotion />

@@ -22,7 +22,7 @@ export const H2: React.FC<{ children: string }> = ({
 export const H3 = ({ children, ...otherProps }: { children: string }) => {
   const id = getId(children)
   return (
-    <h3 id={id} {...otherProps}>
+    <h3 id={id} className="text-xl mt-12 mb-4 font-medium" {...otherProps}>
       {children}
     </h3>
   )
@@ -346,4 +346,8 @@ export const Img = ({ src, alt }: { src: string; alt: string }) => {
       <span className="block text-xs text-center text-neutral-400">{alt}</span>
     </>
   )
+}
+
+export const Hr = () => {
+  return <hr className="my-8 border-t border-dashed border-neutral-300" />
 }

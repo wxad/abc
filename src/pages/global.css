@@ -207,3 +207,15 @@ code:where(:not(pre) > code) {
     transform: rotate(20deg);
   }
 }
+
+@keyframes aduiCheckboxIndicatorScale {
+  0% {
+    transform: scale(1, 1);
+  }
+  60% {
+    transform: scale(1.05, 1.05);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}

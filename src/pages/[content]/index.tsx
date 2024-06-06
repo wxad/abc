@@ -16,6 +16,7 @@ import {
   Pre,
   BlockQuote,
   Img,
+  Hr,
 } from "@/components/MdxComponents"
 
 export default function PostPage({ content }: { content: Post }) {
@@ -90,6 +91,9 @@ export default function PostPage({ content }: { content: Post }) {
         </div>
       </nav>
       <div className="m-auto max-w-[800px] ">
+        {frontmatter.cover ? (
+          <img src={frontmatter.cover} alt="" className="block mb-8 w-full" />
+        ) : null}
         <div className="mb-8 font-mono text-gray-500">
           {new Intl.DateTimeFormat("zh-CN", {
             month: "long",
@@ -119,6 +123,7 @@ export default function PostPage({ content }: { content: Post }) {
             strong: Strong as any,
             blockquote: BlockQuote as any,
             img: Img as any,
+            hr: Hr as any,
           }}
         />
       </div>
