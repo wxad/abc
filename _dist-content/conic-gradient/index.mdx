@@ -1,0 +1,237 @@
+---
+title: "用 framer-motion 实现优雅的 conic-gradient 旋转动画"
+description: "随着今年微信广告榜单页面的升级，我和设计师一起完成了基于 conic-gradient 的旋转动画。这篇文章中，我将分享使用 framer-motion 逐步优化的过程。"
+slug: "conic-gradient"
+publishedAt: "2024-06-21"
+editedAt: "2024-06-21"
+author: "Aragakey."
+authorLink: "https://codepen.io/aragakey"
+---
+
+import ConicGradientDemo from "@/components/conic/ConicGradientDemo"
+import ConicAngle1 from "@/components/conic/ConicAngle1"
+import ConicAngle4 from "@/components/conic/ConicAngle4"
+import ConicRotate from "@/components/conic/ConicRotate"
+import ConicFigmaToCode from "@/components/conic/ConicFigmaToCode"
+import ConicFigmaToCodeNatural from "@/components/conic/ConicFigmaToCodeNatural"
+import ConicSwitch0 from "@/components/conic/ConicSwitch0"
+import ConicRotateDemo from "@/components/conic/ConicRotateDemo"
+
+随着今年微信广告榜单页面的升级，我和设计师一起完成了基于 `conic-gradient` 的旋转动画。这篇文章中，我将分享使用 framer-motion 逐步优化的过程，其中包含了：
+
+1. **如何绘制**：画对 Figma 中的 “Angular Fill”；
+2. **如何旋转**：让 `conic-gradient` 转起来；
+3. **如何加速和切换**：使用 framer-motion 的数个方法控制动画速度，以在切换时展现光线流转的效果。
+
+下面是完整演示（是 demo，不是上线效果），你可以点击上方的 Tab 进行切换：
+
+<ConicGradientDemo />
+
+## 如何绘制
+
+直接从 Figma 中的 “Angular Fill” 导出 CSS 的 `conic-gradient` 代码，是有问题的。这*不完全算是* Figma 的 bug。比如下面的 fill 导出代码后完全对不上：
+
+<ConicFigmaToCode />
+
+问题有 2 个：
+
+1. 渐变开始与结束的衔接：Figma 中是自然的，而 Web 中不自然；
+2. 渐变的形状：Figma 中是椭圆形的渐变，而 Web 中变为了正圆形。
+
+具体的代码如下：
+
+```css
+/* 导出这么多位的小数点 ?! */
+div {
+  background: conic-gradient(
+    from 180deg at 50% 49.9%,
+    #08cc64 8.704102858901024deg,
+    #17e879 90deg,
+    #08cc64 160.429208278656deg,
+    #08cc64 176.39445662498474deg,
+    #09d669 193.76951694488525deg,
+    #77ff6e 299.3333888053894deg,
+    #31df67 317.59665727615356deg,
+    #08cc64 335.3943371772766deg,
+    #00c566 350.5913472175598deg
+  );
+}
+```
+
+1. 渐变开始与结束的衔接：代码只提供到了 `350deg` 而没有 `360deg` 的色值。整个过渡就不可能自然，因为过渡在 `350deg` 时就结束了；
+2. 渐变的形状：CSS 中的 `conic-gradient` 只能绘制正圆形的渐变，这不是 Figma 的问题，是 CSS 的限制，所以我才说：这*不完全算是* Figma 的 bug。
+
+### 头尾衔接
+
+解决思路很简单，我们需要提供一个 `360deg` 的色值，让渐变自然衔接。然而设计师并不是从 `0deg` 开始绘制渐变的，比如上面 `#08cc64 8deg`。只能说因为 Figma 和 Web 的兼容性在这里还是太多问题了。
+
+一种方法是计算出 `0deg`/`360deg` 时的色值，但这太麻烦了，而且按照百分比计算出的色值可能无法对应上 Figma 中的视觉效果。
+
+第二种方法就是，把第一个点强行变为 `0deg`，这样就同时确定了首尾的色值，然后改变一下 `from 180deg`，使光源的位置相对应地偏移即可。
+
+比如，如果 Figma 中导出的代码是：
+
+```css
+div {
+  background: conic-gradient(
+    from 180deg at 50% 49.9%,
+    #08cc64 8deg,
+    #00c566 350deg
+  );
+}
+```
+
+我们就这样转换：
+
+```css
+div {
+  background: conic-gradient(
+    // 光源位置由 180deg 相应移动到 180 - 8 = 172deg
+    from 172deg at 50% 49.9%,
+    // 将第一个点从 8deg 强行变为 0deg
+    #08cc64 0deg,
+    // 其他点相对应地偏移 8deg
+    #00c566 342deg,
+    // 添加结束点
+    #08cc64 360deg
+  );
+}
+```
+
+于是，我们就解决了渐变衔接不自然的问题：
+
+<ConicFigmaToCodeNatural />
+
+### 透视角度
+
+不论是 CSS 中的 `conic-gradient` 还是 canvas 中的 `createConicGradient()` 方法，尽管能改变中心的位置，但都只能绘制正圆形的渐变。这样的渐变类似于一种俯视的角度：
+
+<ConicAngle1 />
+
+设计师在 Figma 中可以通过直接拉伸为椭圆形就行。而在 CSS 中其实也很简单，就是通过 `scale` 来实现拉伸即可。
+
+如果一个 `100px × 100px` 的元素有一个 `主轴:次轴 = 4:1` 的椭圆形 `conic-gradient`：
+
+```css
+div {
+  width: 50px;
+  height: 100px;
+  tranform: scaleX(4);
+}
+```
+
+<ConicAngle4 />
+
+至此，我们才终于画对了 Figma 中的 “Angular Fill”。
+
+## 如何旋转
+
+直接粗暴地旋转元素是不行的，让 `conic-gradient` 旋转，自然不是让整个图像旋转，而是要让光源的角度发生变化。前者是改变 `rotate`，后者是改变 `conic-gradient(from 180deg ...)` 中 `180deg` 的值：
+
+<ConicRotate />
+
+光源的角度变化，有一点感觉了，然而这样还不足够。每一个过渡色的位置，甚至是色值都需要变化，以达到视觉上较好的效果。最终设计师总共打了 12 个点，然后我再将这 12 个点依次用上面的方法转换为 `conic-gradient` 的代码，这其中我和设计师的工作量都比较大。
+
+![Figma 打点](https://wxa.wxs.qq.com/wxad-design/yijie/conic-figma-3.webp)
+
+借助 framer-motion 底层的 popmotion，即便是字符串，我也可以很方便实现 12 个点的过渡。由于设计师打的点又不是等距的，因此又花了非常多的时间微调每个点的偏移量：
+
+```js
+animate({
+  to: [
+    "conic-gradient(...)",
+    "conic-gradient(...)",
+    "conic-gradient(...)",
+    "conic-gradient(...)",
+    "conic-gradient(...)",
+    "conic-gradient(...)",
+    "conic-gradient(...)",
+    "conic-gradient(...)",
+    "conic-gradient(...)",
+    "conic-gradient(...)",
+    "conic-gradient(...)",
+  ],
+  duration: 16000,
+  // 设计师打的点又不是等距的，因此又花了非常多的时间微调每个点的偏移量
+  offset: [0, 0.06, 0.09, 0.13, 0.2, 0.35, 0.45, 0.55, 0.65, 0.84, 1],
+  ease: linear,
+  repeat: Infinity,
+  onUpdate: (v) => {
+    // 在这里设置 style.background
+  },
+})
+```
+
+## 如何加速和切换
+
+在页面中，用户会通过 Tab 在朋友圈榜单和视频号榜单之间切换。我在这里的设计目标是：当用户点击切换时，将原先匀速的旋转动画加速再恢复到匀速，以让光线加速流转，类似于延时影片中的效果。
+
+由于涉及到颜色的变化，同时我们打的 12 个点本身就是不等距的，这时候再要加速度，我觉得会不太好处理。因此我在今年 3 月第一版上线的切换效果是将两个动画叠在一起，让背后的动画初始旋转 `-50deg`。在用户点击时，两个动画的容器同时旋转 `50deg`，从而看起来像是流转了：
+
+<ConicSwitch0 />
+
+这样的效果其实目的已经达到了，但是毕竟不够优雅。在前后两层不透明度的变化时，画面还是比较乱的。
+
+回过头来看，我们要做的，就好像是在一个匀速摇摆的秋千背后，稍微推一把。基础思路是 hack 进 popmotion 的 `animate` 的每一帧，然后对每一帧的值进行微调。而 framer-motion 的 `useAnimationFrame` 就是这样一个 hook。
+
+在用 framer-motion 来简单地改写整个动画之前，我们先试试让一个匀速旋转的图标加速：
+
+```jsx
+const rotate = useMotionValue(0)
+const velocityValue = useMotionValue(0)
+const velocityFactor = useVelocity(velocityValue)
+
+useAnimationFrame((_, delta) => {
+  let newRotate =
+    rotate.get() + (delta / 16000) * 360 + velocityFactor.get() / 4
+  if (newRotate > 360) {
+    newRotate = newRotate - 360
+  }
+  rotate.set(newRotate)
+  backgroundProgress.set(newRotate / 360)
+})
+
+// 点击事件
+const handleSwitch = () => {
+  animate(velocityValue, velocityValue.get() + 4, {
+    type: "keyframes",
+    duration: 1.7,
+    ease: [0.43, 0.35, 0.2, 0.95],
+  })
+}
+
+return <motion.div style={{ rotate }} />
+```
+
+主要的代码就是上面这些。驱动动画的值是 `velocityValue`。每一次点击，我让这个值增加 `4`，由它计算出的 `velocityFactor` 就是在每一帧中要去增加的值。
+
+原理非常简单。实际上直接用 popmotion 自己写也是可以的。至于为什么是增加 `4`，以及时间为什么是 `1.7`，曲线为什么是 `[0.43, 0.35, 0.2, 0.95]`，这些问题就要依靠每个人的 sense 了。
+
+你可以点击下面的按钮看看效果。
+
+<ConicRotateDemo />
+
+把上面的逻辑应用到背景动画中，我这里使用了 `useTransform` 做两个 `motionValue` 的转换：
+
+```jsx
+const bg = useTransform(
+  // 0 - 1
+  progress,
+  [0, 0.06, 0.09, 0.13, 0.2, 0.35, 0.45, 0.55, 0.65, 0.84, 1],
+  // conic-gradients
+  ["conic-gradient(...)", "conic-gradient(...)"],
+  {
+    clamp: false,
+  }
+)
+```
+
+就得到了我们最终的效果：
+
+<ConicGradientDemo />
+
+## 最后
+
+在整个动画的实现中，我们用到了 6 个 framer-motion 中的方法或 hook：`animate`，`motion`，`useAnimationFrame`，`useMotionValue`，`useTransform`，`useVelocity`。
+
+即便看起来很多，它们所服务的目的却非常好理解。API 只是实现目的的手段 。最佳实践永远源于个人的追求，而非工具的限制。
