@@ -4,10 +4,22 @@ import TrailCover from "@/components/trail/TrailCover"
 import LikesCover from "@/components/likes/LikesCover"
 import GenCover from "@/components/generative/GenCover"
 import ConicCover from "@/components/conic/ConicCover"
+import CircularCover from "@/components/circular/CircularCover"
 import FmCover from "@/components/fm/FmCover"
 import NextLink from "next/link"
 
 const posts = [
+  {
+    title: "画出完美的文字圆形环绕 UI",
+    description:
+      "2024 年 7 月 5 日是微信广告十周年的日子。做了一些围绕“文字圆形环绕”（实在不知道如何取名）的 UI 及过渡。当时做得不够好，我在这里完善一下。",
+    slug: "circular-text",
+    publishedAt: "2024-07-09",
+    editedAt: "2024-07-09",
+    author: "Aragakey.",
+    authorLink: "https://codepen.io/aragakey",
+    children: <CircularCover />,
+  },
   {
     title: "用 framer-motion 实现优雅的 conic-gradient 旋转动画",
     description:

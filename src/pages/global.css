@@ -2,6 +2,90 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "gilroyBold";
+  src: url("https://wxa.wxs.qq.com/wxad-design/fonts/gilroy-bold-webfont.eot");
+  src: url("https://wxa.wxs.qq.com/wxad-design/fonts/gilroy-bold-webfont.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://wxa.wxs.qq.com/wxad-design/fonts/gilroy-bold-webfont.woff2")
+      format("woff2"),
+    url("https://wxa.wxs.qq.com/wxad-design/fonts/gilroy-bold-webfont.woff")
+      format("woff"),
+    url("https://wxa.wxs.qq.com/wxad-design/fonts/gilroy-bold-webfont.ttf")
+      format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "gilroysemibold";
+  src: url("https://wxa.wxs.qq.com/wxad-design/fonts/gilroy-semibold-webfont.eot");
+  src: url("https://wxa.wxs.qq.com/wxad-design/fonts/gilroy-semibold-webfont.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://wxa.wxs.qq.com/wxad-design/fonts/gilroy-semibold-webfont.woff2")
+      format("woff2"),
+    url("https://wxa.wxs.qq.com/wxad-design/fonts/gilroy-semibold-webfont.woff")
+      format("woff"),
+    url("https://wxa.wxs.qq.com/wxad-design/fonts/gilroy-semibold-webfont.ttf")
+      format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "abchanel-corpo";
+  font-display: swap;
+  src: url("https://fonts.chanel.cn/k/29d2ee826a834270fc144dccbb2359ae46f53c3b-l.woff2")
+      format("woff2"),
+    url("https://fonts.chanel.cn/k/29d2ee826a834270fc144dccbb2359ae46f53c3b-d.woff")
+      format("woff"),
+    url("https://fonts.chanel.cn/k/29d2ee826a834270fc144dccbb2359ae46f53c3b-a.otf")
+      format("opentype");
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "abchanel-corpo";
+  font-display: swap;
+  src: url("https://fonts.chanel.cn/k/64b14ed9188172fd562480b882a998c1cb8e8eb2-l.woff2")
+      format("woff2"),
+    url("https://fonts.chanel.cn/k/64b14ed9188172fd562480b882a998c1cb8e8eb2-d.woff")
+      format("woff"),
+    url("https://fonts.chanel.cn/k/64b14ed9188172fd562480b882a998c1cb8e8eb2-a.otf")
+      format("opentype");
+  font-style: normal;
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "abchanel-corpo";
+  font-display: swap;
+  src: url("https://fonts.chanel.cn/k/4557ee3c5c7e229667c02c3e802771f4feae8659-l.woff2")
+      format("woff2"),
+    url("https://fonts.chanel.cn/k/4557ee3c5c7e229667c02c3e802771f4feae8659-d.woff")
+      format("woff"),
+    url("https://fonts.chanel.cn/k/4557ee3c5c7e229667c02c3e802771f4feae8659-a.otf")
+      format("opentype");
+  font-style: normal;
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "abchanel-corpo";
+  font-display: swap;
+  src: url("https://fonts.chanel.cn/k/1b32c8a567ffef9b4919d90a39670b0f25b146bc-l.woff2")
+      format("woff2"),
+    url("https://fonts.chanel.cn/k/1b32c8a567ffef9b4919d90a39670b0f25b146bc-d.woff")
+      format("woff"),
+    url("https://fonts.chanel.cn/k/1b32c8a567ffef9b4919d90a39670b0f25b146bc-a.otf")
+      format("opentype");
+  font-style: normal;
+  font-weight: 200;
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -218,4 +302,62 @@ code:where(:not(pre) > code) {
   100% {
     transform: scale(1, 1);
   }
+}
+
+.animate-text {
+  opacity: 0;
+  font-size: 50px;
+  letter-spacing: 1px;
+  font-weight: 900;
+}
+.animate-text span {
+  display: inline-block;
+  position: relative;
+  -webkit-background-clip: text;
+  color: transparent;
+  line-height: 1.5;
+}
+.animate-text span:nth-of-type(odd) .bullet {
+  bottom: 0;
+  transform: scale(0) rotate(-60deg);
+}
+.animate-text span:nth-of-type(even) .bullet {
+  top: 0;
+  transform: scale(0) rotate(60deg);
+}
+.animate-text .driver {
+  position: absolute;
+  top: calc(50% - 8px);
+  left: -2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+}
+.animate-text .driver-dash {
+  position: absolute;
+  top: calc(100% - 14px);
+  left: -5px;
+  width: 2px;
+  height: 2px;
+  border-radius: 2px;
+  opacity: 0;
+}
+.animate-text .bullet {
+  position: absolute;
+  left: -10px;
+  transform-origin: 0 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 6px;
+  opacity: 0;
+}
+
+.circular-text-char {
+  position: absolute !important;
+  top: 50%;
+  left: 50%;
+  line-height: 1;
+  transform: translate(-50%, -50%)
+    rotate(calc(var(--inner-angle) * var(--char-index)))
+    translateY(var(--radius));
 }

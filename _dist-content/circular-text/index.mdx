@@ -1,0 +1,108 @@
+---
+title: "画出完美的文字圆形环绕 UI"
+description: "2024 年 7 月 5 日是微信广告十周年的日子。做了一些围绕“文字圆形环绕”（实在不知道如何取名）的 UI 及过渡。当时做得不够好，我在这里完善一下。"
+slug: "circular-text"
+publishedAt: "2024-07-09"
+editedAt: "2024-07-09"
+author: "Aragakey."
+authorLink: "https://codepen.io/aragakey"
+---
+
+import CircularTextDemo from "@/components/circular/CircularTextDemo"
+import CircularTen from "@/components/circular/CircularTen"
+import CircularPerfect from "@/components/circular/CircularPerfect"
+
+2024 年 7 月 5 日是 [微信广告十周年(https://wxa.wxs.qq.com/wxad-design/yijie/wxad-decennial.webp)](https://mp.weixin.qq.com/promotion/res/htmledition/wxad-decennial-monitor/index.html) 的日子。做了一些围绕“文字圆形环绕”（实在不知道如何取名）的 UI 及过渡。我沿用了之前做的一个文字环绕动画的 demo，稍作了修改。
+
+这一版的实现方式确实存在一些展示的问题。可能是因为在团队中提了所谓的敏捷开发，时间越来越紧迫，我没有来得及优化。敏捷开发变成紧迫开发，这是我所不愿意接受的。敏捷开发应该是快速验证，而不是设置死线。
+
+不管怎样，现在终于有了时间，我决定边写这篇文章，边尝试优化。也就是说在开始写的此时此刻，我并没有完成具体的优化。这样的过程正是我所享受的。我喜欢以这样的方式思考具体的细节，帮助自己完善 UI。
+
+## 等宽版本的实现
+
+之前做的一个 Demo 长这个样子：
+
+<CircularTextDemo />
+
+很显然地，遇到标点符号时，字符间的空隙就会变得不均匀。这是因为每一个字符的宽度都是相同的，以实现围绕成一个完整的圆的效果。实现方法大概如下：
+
+```css
+<div
+  style={{
+    "--char-count": texts.length,
+    "--font-size": 2,
+    // 设置字符宽度，用来计算圆形的半径
+    "--character-width": 1.5,
+    // 计算每个字符的旋转角度，即圆形被分割成的角度
+    "--inner-angle": "calc((360 / var(--char-count)) * 1deg)",
+    // 计算半径
+    "--radius": "calc((var(--character-width) / sin(var(--inner-angle))) * -1ch",
+    transform: `
+      translate(-50%, -50%)
+      rotate(calc(var(--inner-angle) * var(--char-index)))
+      translateY(var(--radius))
+    `
+  }}
+/>
+```
+
+这次我就直接用了这个方案去实现下面的 UI：
+
+<CircularTen />
+
+如果说要实现完整的圆，所以字符的宽度就必须是相同的，这还可以理解。但针对上面的 UI，等宽的做法确实不够好。
+
+我们很容易地得出比使用等宽字体更合适的做法：
+
+1. 渲染每个字符的时候，计算出字符的宽度；
+2. 根据字符的宽度来计算旋转角度；
+3. 根据半径和角度决定字符的位置。
+
+## 最终实现
+
+一开始自然想到通过 `canvas` 的 `measureText` 方法来计算。但实际上没必要，用 CSS 还方便做一些过渡效果：
+
+<CircularPerfect />
+
+在上面的 demo 中，我默认将 name 设置为 `bilibili`。可以看到，字符间的空隙和宽度都和谐了许多。你可以调整上方 demo 中的参数，来看看具体的效果。
+
+具体逻辑懒得解释了，有一些细节：
+
+1. 由于使用的是自定义字体，因此文字的宽度可能是会变化的。如何获取变化的时机呢？这里就需要用到 `ResizeObserver` 了。然而给每一个文字都加上 `ResizeObserver` 有点没必要，因此可以使用 `inline-block` 布局，只监听父元素的变化。
+2. 文字的总宽度和周长的关系是比较好计算的。而圆圈的 `stroke-dasharray` 还需要在文字的左右两侧留出一些 `padding`，这个 padding 的就算就要考虑第一个文字和最后一个文字的宽度。
+
+
+核心代码：
+
+```tsx
+const refresh = () => {
+  let texts: HTMLDivElement[] = []
+  if (resizeWrapper.current) {
+    texts = [
+      ...resizeWrapper.current.querySelectorAll("[data-role='text']"),
+    ] as HTMLDivElement[]
+  }
+
+  widths.current = texts.map((text) => text.getBoundingClientRect().width)
+  const radius = 32
+  const circle = 2 * Math.PI * radius
+  const start = 0
+  let current = start
+  const positions = []
+
+  texts.forEach((_, index) => {
+    const width = widths.current[index]
+    const gap = params.gap
+
+    const angle = (current / circle) * 360
+
+    const x = Math.sin((angle * Math.PI) / 180) * radius
+    const y = -Math.cos((angle * Math.PI) / 180) * radius
+    positions.push({ angle, x, y })
+
+    current += width / 2 + widths.current[index + 1] / 2 + gap
+  })
+
+  setPositions(positions)
+}
+```
