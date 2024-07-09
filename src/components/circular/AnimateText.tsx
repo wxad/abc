@@ -21,7 +21,7 @@ export interface IAnimateText extends React.HTMLAttributes<HTMLDivElement> {
   // bullet 第二过渡色
   bulletColor2?: string
   // charProps
-  charProps?: IBaseObject
+  charProps?: React.HTMLAttributes<HTMLDivElement>
   // charIndexOffset
   charIndexOffset?: number
   // onlySpread
@@ -100,6 +100,7 @@ const AnimateText: React.FC<IAnimateText> = ({
                   }, 0)
                 }
               },
+              // @ts-ignore
               ...(props || {}),
             })
           }
@@ -335,6 +336,7 @@ const AnimateText: React.FC<IAnimateText> = ({
               key={index}
               style={{
                 zoom: size / 50,
+                // @ts-ignore
                 "--char-index": index + charIndexOffset,
                 ...charStyle,
               }}
@@ -349,6 +351,7 @@ const AnimateText: React.FC<IAnimateText> = ({
             key={index}
             style={{
               zoom: size / 50,
+              // @ts-ignore
               "--char-index": index + charIndexOffset,
               ...charStyle,
             }}
