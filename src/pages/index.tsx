@@ -6,6 +6,7 @@ import GenCover from "@/components/generative/GenCover"
 import ConicCover from "@/components/conic/ConicCover"
 import CircularCover from "@/components/circular/CircularCover"
 import FmCover from "@/components/fm/FmCover"
+import FontFamilyCover from "@/components/font-family/FontFamilyCover"
 import NextLink from "next/link"
 
 const posts = [
@@ -95,6 +96,17 @@ const posts = [
     author: "Aragakey.",
     authorLink: "https://codepen.io/aragakey",
     children: <Cover2023 />,
+  },
+  {
+    title: "我们认真地想了想 font-family",
+    description:
+      "一个设计团队，存在一些需要标准化的课题。字体，也许是其中最为基础的一环。",
+    slug: "font-family",
+    publishedAt: "2016-09-26",
+    editedAt: "2016-09-26",
+    author: "Aragakey.",
+    authorLink: "https://codepen.io/aragakey",
+    children: <FontFamilyCover />,
   },
 ]
 

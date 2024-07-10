@@ -1,0 +1,233 @@
+---
+title: "我们认真地想了想 font-family"
+description: "一个设计团队，存在一些需要标准化的课题。字体，也许是其中最为基础的一环。"
+slug: "font-family"
+publishedAt: "2016-09-26"
+editedAt: "2016-09-26"
+author: "Aragakey."
+authorLink: "https://codepen.io/aragakey"
+---
+
+## 问题
+
+字体，往往是一个对于设计师和开发者都缺乏足够认知的知识点。对于设计师而言，不清楚各平台的差异，对文字的把控就无从谈起；对于开发者，`font-family` 属性在每一个项目中的值也许都不同，并且同一个项目里出现多种回退方案，显得十分不专业。
+
+最近，我们在对 [微信广告官网-优秀案例页(https://wxa.wxs.qq.com/wxad-design/yijie/wxad-cover-from-don.webp)](https://ad.weixin.qq.com/case) 进行重构，越发意识到了这个问题需要标准化。
+
+## 人家是怎么做的？
+
+豆瓣和知乎的基础设置都非常简单，后者多了一个 `Helvetica Neue`：
+
+```css
+/* 豆瓣 */
+font: 12px Helvetica, Arial, sans-serif;
+```
+
+```css
+/* 知乎 */
+font-family: 12px Helvetica Neue, Helvetica, Arial, sans-serif;
+```
+
+Github 在两个月前修改了一次字体，我们一直没有细究过他们的改变：
+
+```css
+/* Github */
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+  Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+```
+
+Github 的字体列表多达 10 种，使用了 `-apple-system ` 和 `BlinkMacSystemFont` 这两个属性值，但其没有对中文做任何考虑。
+
+于是我们找到了对中文有考虑的国内网站简书 ，同样有数十种设置：
+
+```css
+/* 简书 */
+font-family: -apple-system, "Helvetica Neue", Arial, "PingFang SC",
+  "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB",
+  "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+```
+
+简书的排列是有一些杂乱的。中英文混合的顺序，也许是考虑到苹方的英文更优秀。另外，简书也使用了属性值 `-apple-system` ，但并没有出现 `BlinkMacSystemFont`。
+
+---
+
+相比于知乎与豆瓣简单的设置，Github 与简书较为“完备”，然而前者欠缺中文，后者则稍为杂乱。相同的是，两者都使用了 `-apple-system` 这一属性值，它似乎代表着页面将使用“系统字体”渲染。
+
+使用“系统字体”以标准化字体方案，对我们来说，或许是一个很好的出发点。
+
+## 什么是系统字体？
+
+系统字体（System Font），并非指一个操作系统自带的任何字体，它仅指系统 UI 在不经额外设置的情况下，使用的默认字体，叫 native UI font 或许更合适。
+
+如今，Apple 在 macOS Sierra 上的系统字体已经是今年 WWDC 上发布的新字体 San Francisco；Google 自家的 Roboto 在 Android、Chrome OS 和 Material Design 的运用上已很成熟，并且一直在保持更新；同样地，Microsoft 的设计语言 Metro，在 Windows Phone、Windows 8 及 Windows 10（当然还有 Xbox…）上得到充分展现，而这也离不开他们为此设计的字体 Segoe；还有我们或许闻所未闻的火狐家的 Firefox OS 也有自己的系统字体 Fira Sans。
+
+这还只是英文字体的一方面，中文字体在各系统下也同样纷杂。既然如此，我们为什么还要选择系统字体呢？
+
+![各系统字体预览（非渲染后截图）](https://wxa.wxs.qq.com/wxad-design/yijie/font-family-0.webp)
+
+## 为什么是系统字体？
+
+我们所要完成的 “Web 端字体 统一化、标准化”，并非是要让字体在所有浏览环境下都完全一样，实际上也不可能，代价亦过高。用英文说的话，我们的出发点是 platform-specific，而非 browser-specific。选择系统字体作为标准化方案的准则 —— 如果说要类比的话，更像是 Normalize 之于 CSS Reset 那样 —— 保留差异、优化样式。
+
+### 1. 安全第一
+
+降低风险，注意安全。
+
+### 2. 原生体验
+
+我们希望用户浏览系统其他 App，和浏览我们页面的体验是一致的、连贯的。谁也不想在 macOS 上看到微软雅黑，…对吧？
+
+### 3. 内容与 UI 强联结
+
+我们在微信 WebView 中浏览页面时，页面的 title，以及状态栏运营商、时间所使用的都是系统字体。如果页面性质不是 H5 运营活动，我们不希望页面的字体太突兀或个性化，而是与系统 UI 保持强联结，成为统一的整体。
+
+## 完整的字体方案
+
+先看结论，这是我们最终的 font-family 方案：
+
+```css
+font-family:
+  /* 西文 */ -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu,
+  "Helvetica Neue", Helvetica, Arial, /* 中文 */ "PingFang SC", "Hiragino Sans GB",
+  "Microsoft YaHei UI", "Microsoft YaHei", "Source Han Sans CN", sans-serif;
+```
+
+从西文到中文，以下是具体解释：
+
+### 1. -apple-system, BlinkMacSystemFont
+
+这两个值是特殊供 iOS 和 macOS(OS X) 使用的属性值，前者只被 Safari 识别，后者只被 Chrome 识别。也就是说它们是 Webkit 私有属性，或许有朝一日 会升级为标准化的 `font: system`，这就要看 W3C 未来的发展了。
+
+这两个值强大的地方就在于，其会根据系统版本的不同，渲染出不同的字体，具体渲染结果如下：
+
+![-apple-system, BlinkMacSystemFont 渲染结果](https://wxa.wxs.qq.com/wxad-design/yijie/font-family-1.webp)
+
+EI Capitan 以上的系统版本，当字号小于 20px 时，浏览器会渲染字体 SF UI Text；反之则为 SF UI Display。这一个细节切换是浏览器自动完成的。这是 San Francisco 之所以优秀的很重要的一处体现。
+
+Display 与 Text 的最大区别是字间距。顾名思义，Display 适用于大字号的展示，字间距较小；Text 适用于小字号的排版，字间距则较大：
+
+![同一字号下 Display vs Text ，橘色为 Display、蓝色为 Text](https://wxa.wxs.qq.com/wxad-design/yijie/font-family-2.webp)
+
+如果你对 Display 与 Text 的更多区别感兴趣，可以看 https://developer.apple.com/videos/wwdc2016，本文不再展开。
+
+在 OS X Yosemite(10.10) 上，浏览器会渲染字体 Helvetica Neue ；更早的 Mavericks(10.9) 上，则为 Lucida Grande。同样地，iOS 9 及以上，则为 San Francisco；iOS 8 则为 Helvetica Neue。
+
+-apple-system 属性的变体实际多达 12 种，如 -apple-system-headline, -apple-system-footnote。浏览器既会在字号，也会在字重、行高上自动地附以样式。不过，我们往往需要更加定制化的样式，因此这些变体是用不上了。
+
+### 2. "Segoe UI", Roboto, Ubuntu
+
+西文字体的第二梯队：
+
+1. `"Segoe UI"` 对应的是 Windows 和 Windows Phone；
+2. `Roboto` 对应的是 Google 家的 Android 和 Chrome OS'；
+3. `Ubuntu` 对应的是 Linux。
+
+### 3. "Helvetica Neue" , Helvetica, Arial
+
+西文字体的最终 fallback：
+
+1. `"Helvetica Neue"` 对应的是 OS X pre-EI Capitan，实际上它位置靠后的更重要原因是，它在非 EI Capitan 的机器上是一个比较常见的字体；
+2. `Helvetica` 是世界通用的经典无衬线体；
+3. `Arial` 是 Windows 3.1 开始就一直随视窗系统分发的字体，作为最后的回退方案。
+
+与拥有 31 种字体家族的 Helvetica 相比， Helvetica Neue 则多达 51 种，Arial 就不提了... 另外，Arial 的 “R”，“t” 等字形 广受诟病，因此我们做出了这样的排序方案。
+
+![Helvetica 与 Arial 的比较](https://wxa.wxs.qq.com/wxad-design/yijie/font-family-3.webp)
+
+### 4. "PingFang SC", "Hiragino Sans GB"
+
+1. `"PingFang SC"` 即苹方，是 OS X EI Capitan(10.11) 上 的系统中文字体。值得一提的是，EI Capitan 上 Chrome 默认的中文字体渲染是 ST Heiti(华文黑体)，而非作为系统 UI 字体的苹方；
+2. `"Hiragino Sans GB"` 即冬青黑体，是我们整个 fallback list 中唯一不是系统字体的字体。加入冬青黑体是因为考虑到无论是在 Mac 还是 Windows 上，冬青黑体的表现都会比微软雅黑优秀。而自 10.6 开始，OS X 就系统自带了冬青黑体，因此将其置于微软雅黑之前。
+
+### 5. "Microsoft YaHei UI", "Microsoft YaHei", "Source Han Sans CN"
+
+中文字体的第二梯队：
+
+1. `"Microsoft YaHei UI"` 即 微软雅黑 UI ，随 Windows 8.1 一同发布，相较于微软雅黑，其对英文、数字的笔画做了一定修改；
+2. `"Microsoft YaHei"` 即微软雅黑，随 Windows Vista 一同发布，是 Vista 至 Windows 8 的系统字体（Windows 8.1 改用 “微软雅黑 Light”）；
+3. `"Source Han Sans CN"` 即思源黑体，是大部分 Android 的系统中文字体。
+
+![雅黑 UI 与 旧雅黑的数字对比](https://wxa.wxs.qq.com/wxad-design/yijie/font-family-4.webp)
+
+### 6. sans-serif
+
+中文字体的最终 fallback，无衬线体，与中文字体的黑体相对应。
+
+---
+
+其实，我们使用系统字体规范 `font-family` 的思路很简单 —— 从西文到中文，分别对各平台作一个最基础的降级：
+
+![font-family 结论拆解](https://wxa.wxs.qq.com/wxad-design/yijie/font-family-5.webp)
+
+### 为什么不针对 Linux 显式设置中文字体？
+
+我们在一台 Linux 系统下测试的结果是，中文字体为 Droid Sans Fallback，而非 WenQuanYi Micro Hei(文泉驿微米黑)。后者是基于 Droid Sans Fallback 所作补充和优化的字体。虽有一些 讨论 建议使用文泉驿，亦有建议考虑 Linux 用户的行为而不设置。总而言之现阶段我们的测试能力有限，且对 Linux 的认识太少太少，因此暂不设置。
+
+## 测试结果
+
+![部分机型、系统测试结果](https://wxa.wxs.qq.com/wxad-design/yijie/font-family-6.webp)
+
+测试的大部分结果，与我们预想的一样。不过我们也明白，标准化需要更多的测试过程。
+
+Vivo X7 使用的中文字体实际上是华文黑体，是系统特殊定制的；另外，也许因机型问题，LG LTE 8 的整个字体渲染都非常奇怪，英文与中文我们都无法确定究竟是什么字体。
+
+## 一些问题
+
+### 1. 不声明不就是系统字体吗？
+
+不声明字体时，浏览器渲染的是 默认字体，不一定是 系统字体。比如 macOS ，Chrome 默认渲染华文黑体（ST Heiti），而非系统字体 苹方（PingFang SC）；Windows 7，浏览器默认渲染中易宋体（Simsun），而非系统字体微软雅黑（Microsoft YaHei）。
+
+我们标准化的核心思路是使用系统 UI 字体。
+
+显式地声明字体，更重要的是 保证页面样式的安全与可控。比如，我们为 Android 声明英文字体 Roboto 与中文字体思源黑，是因为 Android 机型百(luan)家(cheng)争(yi)鸣(tuo)。实际上，即使如此，正如我们的测试结果所示，我们还是不能保证所有 Android 机器都”正确“渲染。因此我们更认为这样有必要。
+
+### 2. 写得越多就一定越好吗？
+
+回头看知乎的 `font-family`：
+
+```css
+/* 知乎 */
+font-family: 12px Helvetica Neue, Helvetica, Arial, sans-serif;
+```
+
+写得越多显得越专业吗？恐怕不是的。也许正是因为经过了思考，知乎才对字体做了删减 —— 中文字体只做了最基本的 sans-serif 限制。即使在 Windows 7 上，这套 font-family 的渲染是 Arial 和 中易宋体（Simsun），即使在 macOS 上英文字体也没有使用最新的 San Francisco，不过 它真的足够安全。
+
+我们在安全的基础上，考虑到业务需求，尽量优化各平台的显示效果。其实，如果是一篇长篇文章，像知乎那样，使用默认的华文黑体是可以的，但是考虑到 微信广告 的品牌形象，我们认为，苹方更适合。
+
+因此，我们不敢以“好”、“坏”来评价每个项目的字体设置 —— 应用场景不同罢了。
+
+### 3. 对于设计团队的意义是什么？
+
+对于设计师而言：
+
+1. 设计师了解各平台的字体分布、了解字体选择的限制，以及用户在该平台的基本体验；
+2. 在实现设计稿时，能根据所针对的平台，调整设计稿所用的字体，保持设计稿字体与用户所见最终效果的一致。
+
+对于开发者而言：
+
+1. 保证各项目字体样式的标准统一；
+2. 对字体样式的调试有更清楚地把控。
+
+## 下一步是什么？
+
+在对字体做了最基础的字体设置之后，我们也想在部分场景做更多的定制化。首先我们瞄准的目标就是集合较小的数字。
+
+![对数字进行字体筛选](https://wxa.wxs.qq.com/wxad-design/yijie/font-family-7.webp)
+
+因此，我们做了这样一个页面预览不同场景下字体的显示效果：
+
+![数字字体测试](https://wxa.wxs.qq.com/wxad-design/yijie/font-family-8.webp)
+
+你也许会立马想到， Google Fonts 或者 Adobe Typekit 不就可以筛选字体吗？实际上，我们更想要的是通过这一个页面同时预览不同场景下的表现。
+
+我们希望这个页面在未来会有更多的作用，也希望未来能够不止在数字，也在更多的场景中，做更多的事。
+
+---
+
+我们会对标准化的字体方案进行更多的测试与修改，也许会随着各系统的更迭，加入为 Firefox OS 考虑的 `Fira Sans`，或是 KDE 家的 `Oxygen`，GNOME 的 `Cantarell`，甚至删除一些过时的字体 。这便是我们现阶段解决方案的一个缺点 —— 未来是不确定的。
+
+因此我们希望 `font: system` 属性能有标准化的那天。当然，真到了那天，事情估计也不会变得更简单。
+
+---
+
+\*20240710：我以前写得真的好认真啊。以前做的事也是那么认真。
