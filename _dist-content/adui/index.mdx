@@ -322,32 +322,33 @@ import { Icon } from "adui";
 
 Webpack 思路：
 
-1. JS 文件首先经过 `babel-loader`；
-2. 编写 `adui-icon-loader`，该 loader 用 `@babel/traverse` 分析 ast 提取所有用到的图标名称，写入到 `adui-icon-reduced.js` 临时文件。在这一步需注意 React 16 与 React 17 的 runtime 语法不同，前者为 `React.createElement(Icon, { icon: "add" })`，后者为 `_jsx(Icon, {icon: "add"})`；
+首先，JS 文件首先经过 `babel-loader`；
 
-   ```js
-   // adui-icon-loader.js 核心代码
-   module.exports = function (source) {
-     // 1. 处理自定义配置
-     var options = loaderUtils.getOptions(this)
+接着，编写 `adui-icon-loader`，该 loader 用 `@babel/traverse` 分析 ast 提取所有用到的图标名称，写入到 `adui-icon-reduced.js` 临时文件。在这一步需注意 React 16 与 React 17 的 runtime 语法不同，前者为 `React.createElement(Icon, { icon: "add" })`，后者为 `_jsx(Icon, {icon: "add"})`；
 
-     // 2. 转换 source 为 ast
-     var ast = parser.parse(source, {
-       sourceType: "module",
-       plugins: ["dynamicImport"],
-     })
+```js
+// adui-icon-loader.js 核心代码
+module.exports = function (source) {
+  // 1. 处理自定义配置
+  var options = loaderUtils.getOptions(this)
 
-     // 3. 分析 ast 语义
-     traverse(ast, {
-       CallExpression: function (path) {},
-     })
+  // 2. 转换 source 为 ast
+  var ast = parser.parse(source, {
+    sourceType: "module",
+    plugins: ["dynamicImport"],
+  })
 
-     // 转换 ast 导出
-     return core.transformFromAstSync(ast).code
-   }
-   ```
+  // 3. 分析 ast 语义
+  traverse(ast, {
+    CallExpression: function (path) {},
+  })
 
-3. 编写 `adui-icon-plugin`，在整个构建周期中，负责文件创建、替换、修改、删除等操作。
+  // 转换 ast 导出
+  return core.transformFromAstSync(ast).code
+}
+```
+
+最后，编写 `adui-icon-plugin`，在整个构建周期中，负责文件创建、替换、修改、删除等操作。
 
 Vite 的思路也是一样的，而且更为简单。
 
