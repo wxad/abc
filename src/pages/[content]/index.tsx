@@ -92,7 +92,7 @@ export default function PostPage({ content }: { content: Post }) {
       </nav>
       <div className="m-auto max-w-[800px] ">
         {frontmatter.cover ? (
-          <img src={frontmatter.cover} alt="" className="block mb-8 w-full" />
+          <img src={frontmatter.cover} alt="" className="block mb-8 w-full rounded-lg shadow-lg" />
         ) : null}
         <div className="mb-8 font-mono text-gray-500">
           {new Intl.DateTimeFormat("zh-CN", {

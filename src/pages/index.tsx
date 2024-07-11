@@ -7,9 +7,20 @@ import ConicCover from "@/components/conic/ConicCover"
 import CircularCover from "@/components/circular/CircularCover"
 import FmCover from "@/components/fm/FmCover"
 import FontFamilyCover from "@/components/font-family/FontFamilyCover"
+import AduiCover from "@/components/adui/AduiCover"
 import NextLink from "next/link"
 
 const posts = [
+  {
+    title: "微信广告设计语言 AD UI 的实践之路",
+    description: "我对设计语言的价值观，主要分为设计、组件、效能、流程这四个方面。我将从这四个方面阐述我对设计语言的理解，以及我的具体工作。",
+    slug: "adui",
+    publishedAt: "2024-07-10",
+    editedAt: "2024-07-10",
+    author: "Aragakey.",
+    authorLink: "https://codepen.io/aragakey",
+    children: <AduiCover />,
+  },
   {
     title: "画出完美的文字圆形环绕 UI",
     description:

@@ -119,7 +119,9 @@ export const A = ({
   }, [isClient])
 
   useEffect(() => {
-    setIsClient(true)
+    if (img) {
+      setIsClient(true)
+    }
   }, [])
 
   const updatePortalStyle = () => {
@@ -138,6 +140,9 @@ export const A = ({
   }
 
   const handleMouseEnter: React.MouseEventHandler<HTMLAnchorElement> = (e) => {
+    if (!isClient) {
+      return
+    }
     if (!outerRef.current) {
       return
     }
@@ -170,12 +175,18 @@ export const A = ({
   }
 
   const handleMouseMove: React.MouseEventHandler<HTMLAnchorElement> = (e) => {
+    if (!isClient) {
+      return
+    }
     api.start({
       mouseX: e.clientX,
     })
   }
 
   const handleMouseLeave = () => {
+    if (!isClient) {
+      return
+    }
     portalStyleRef.current = {
       ...portalStyleRef.current,
       opacity: 0,

@@ -1,0 +1,542 @@
+---
+title: "微信广告设计语言 AD UI 的实践之路"
+description: "我对设计语言的价值观，主要分为设计、组件、效能、流程这四个方面。我将从这四个方面阐述我对设计语言的理解，以及我的具体工作。"
+slug: "adui"
+publishedAt: "2024-07-10"
+editedAt: "2024-07-10"
+author: "Aragakey."
+authorLink: "https://codepen.io/aragakey"
+cover: "https://wxa.wxs.qq.com/wxad-design/yijie/adui-cover-3.webp"
+---
+
+import Checkboxes from "@/components/fm/Checkboxes"
+import DialogSpatial from "@/components/fm/DialogSpatial"
+import Select from "@/components/fm/Select"
+import BadSlider from "@/components/fm/BadSlider"
+import Slider from "@/components/fm/Slider"
+import CheckboxDemo from "@/components/fm/CheckboxDemo"
+import SwitchDemo from "@/components/fm/SwitchDemo"
+import ColorpodLogo from "@/components/fm/ColorpodLogo"
+
+在至今为止的前半段职业生涯中，我和团队中的其他设计师一起，花了许多心思于微信广告的后台系统设计语言 —— [AD UI(https://wxa.wxs.qq.com/wxad-design/yijie/adui-cover.webp)](https://wxad.design/adui)。
+
+去负责设计语言，对于一个开发者而言，是看着平常、却不可多得的重要项目。我想要在这篇文章中梳理一下我作为开发负责人的历程：关于我从哪里开始，关于如果可能的话，还想往哪里去。
+
+## 从零开始
+
+在开始设计语言（或说组件库）的项目前，我们的界面设计是这样的：
+
+![旧版界面](https://wxa.wxs.qq.com/wxad-design/yijie/adui-image-0.webp)
+
+![旧版界面](https://wxa.wxs.qq.com/wxad-design/yijie/adui-image-1.webp)
+
+各种功能、信息之间没有清晰的分级，一切都是平的。经过了多年以后，我们的组件才变成这样：
+
+![AD UI Components](https://wxa.wxs.qq.com/wxad-design/yijie/aduiunivers-test-ver-7-1.png)
+
+由于我并不负责 UI 设计，如果你对设计语言的 UI 设计感兴趣，也可以去看看 [这个人的文章(https://wxa.wxs.qq.com/wxad-design/bms/don.webp)](https://dondon.design/AD-UI)。
+
+在工程上，当时的组件设计同界面设计一样，都是非常混乱的。
+
+我对设计语言的价值观，主要分为设计、组件、效能、流程这四个方面。我将从这四个大方面阐述我对设计语言的理解，以及我的具体工作。
+
+## 设计：字体标准化
+
+我们以系统字体的方案对字体方案做了标准化。最终的回退方案是：
+
+```css
+font-family:
+  /* 西文 */ -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu,
+  "Helvetica Neue", Helvetica, Arial, /* 中文 */ "PingFang SC", "Hiragino Sans GB",
+  "Microsoft YaHei UI", "Microsoft YaHei", "Source Han Sans CN", sans-serif;
+```
+
+在现在所有的微信广告系统中，我们仍然延用了这一套字体方案。
+
+![系统字体](https://wxa.wxs.qq.com/wxad-design/yijie/font-family-0.webp)
+
+![对数字进行字体筛选](https://wxa.wxs.qq.com/wxad-design/yijie/font-family-7.webp)
+
+要写出这一条 CSS 规则，确实经历了一些过程。对更多过程的阐述，可以阅读 [《我们认真地想了想 font-family》(https://wxa.wxs.qq.com/wxad-design/yijie/ff-cover.webp)](https://wxad.design/abc/font-family)。
+
+当时我在腾讯内部 KM 发布这篇文章时，也直接推动了 KM 平台自身的字体方案更新。让更多的设计师与开发者关注到这样一个看似简单、细微的问题，也是我的小贡献了。
+
+<img
+  className="block my-8 w-full outline -outline-offset-8 outline-8 outline-white overflow-hidden rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/km-cover.webp"
+/>
+
+## 设计：动效规范 Functional Motion
+
+对动效的迭代，我们也经历了几个阶段。为了缩减篇幅，这里只说最终阶段吧。我将它们统称为 Functional Motion —— 功能优先的动效设计。
+
+<img
+  className="block my-8 w-full outline -outline-offset-8 outline-8 outline-white overflow-hidden rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/fm_aragakey.gif"
+/>
+
+### 1. 动效价值
+
+首先，我梳理了动效所存在的问题。在这个阶段，我虽然还没有明确要做什么，但基本明确了要避免什么。
+
+<img
+  className="block max-w-[400px] mx-auto my-8 w-full overflow-hidden rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/adui-image-3.gif"
+/>
+
+随后，我提出了动效的价值观：
+
+1. **服务功能**  
+    在 B 端系统中，你的任务可能是复杂而多线程的。动效帮助你保持不间断的操作体验，帮助你更好地完成任务。  
+    无论是细微的状态更新还是较大的界面变化，动效的作用是吸引你的注意力，继而尊重这份注意力，把你从一个任务的起始地，顺利地领到这个任务的目的地 —— 从此处到那处、从这一步到下一步、从开始到结束。
+   动效，是为了连接。
+2. **解释结构**  
+   在 B 端系统中，你的界面可能是交叠而多层级的。动效帮助你清晰地知道自己身处在哪，以更顺畅地决策下一步的操作。  
+   通过在空间上一致或有意不一致的表现，动效的作用是阐释元素之间的层级与空间关系 —— 它们在哪里、从哪来到哪去，以及你可以怎样再找到它们。
+3. **表达产品**  
+   你所看到的界面，是由设计与工程团队合力出品的。动效帮助产品在体验上更有吸引力 —— 你所体验的，是我们精心打造的，而不是机器。  
+   一份好的体验，是因为动效没有独立于 UI、功能或结构之外（动效并不是组件设计的扩展项，而是组件完整设计中的一环）。一份好的体验，是这一切同时设计得足够完整和合理之后，自然达成的一个结果。  
+   对于 One Design 来说，把 functional 做好，就会自然地达成 fun 的结果。  
+   对 B 端系统来说，一个 ‘fun’ 的体验，不代表我们需要绚丽的特效，而是要让你的使用过程尽可能的高效、清晰、轻松，确保你与我们互动的过程是愉悦的且富有成果的。  
+   —— you see, fun is in functional.
+
+### 2. 核心特质
+
+1. 明确而可靠；
+2. 懂得分寸的；
+3. 自然有活力。
+
+---
+
+**明确而可靠**：当操作界面时，你的交互是可预期的，你可以自信地完成任务：
+
+<Checkboxes />
+
+---
+
+**明确而可靠**：对于在表现上类似的元素，我们需要维持运动方式的一致性，因为一致性是具有语义的。当元素传达相同的含义或执行相同的功能时，使用相同的动作，反之亦然：
+
+<DialogSpatial />
+
+---
+
+**懂得分寸的**：动效在大部分情况需要是敏捷的，帮助你保持流畅，增加对于变化的感知速度：
+
+<Select />
+
+---
+
+**懂得分寸的**：动效需要是有意义的，不做过多的修饰而大张旗鼓地吸引你的注意力：
+
+<BadSlider />
+
+<Slider value={[40, 50]} tooltipVisible combine />
+
+---
+
+**“自然”**，则是动效中最有特色的部分。在前期讨论中，我和设计师们很快达成了对自然的一致认可。然而，我们所说的自然，可能包含不同的意思：流畅不卡顿，符合认知，契合整个业务场景，模拟现实等等。
+
+<img
+  className="block mx-auto my-8 w-full rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/adui-ziran.webp"
+/>
+
+随后，我们更具体地将自然收拢为：**物理性**。
+
+我将物理性中的质量、弹性、阻尼、惯性、加速等属性，转化为了交互或 UI 变量：长按 / 短按，大尺寸 / 小尺寸，长距离 / 短距离，错误反馈 / 成功反馈等。**从属性到设计，最终构成了体验。**
+
+<img
+  className="block mx-auto my-8 w-full rounded-xl grayscale"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/adui-ziran-1.png"
+/>
+
+这真的挺有趣的。比如我将长按和短按的交互区别，映射到是否应该使用具有回弹的物理曲线：
+
+<CheckboxDemo />
+
+<SwitchDemo />
+
+比如，小尺寸的元素的运动时间应该更短，因为它们的视觉重量更轻；比如，错误反馈应该回弹，因为其具有更大的“质量”；再比如对于 Tab 切换，如果是长距离的切换，则应该使用具有回弹的物理曲线。
+
+关键在于，如何界定距离是长是短？—— 答案是 350px。
+
+1. 参考屏幕尺寸 1920×1080，21.5 英寸 ，为统计下用户使用最多的屏幕尺寸；
+2. 计算 PPI = 102.46；
+3. 对于台式电脑或笔记本电脑的屏幕，一般距离为 50cm；
+4. 一般来说，中心视觉的范围约为视野 10°（百度百科），外围视觉则延伸到大约 170°；
+5. 也就是说距离 50cm 的屏幕，中心视觉范围约为 2×50×tan(10°÷2) = 8.75cm；
+6. 对于 PPI = 102.46 的屏幕，中心视觉范围约为 8.75×102.46 ÷ 2.54 = 354.5px；
+7. 我们大致地取到 350px。
+
+<img
+  className="block mt-8 mb-2 w-full outline -outline-offset-8 outline-8 outline-white overflow-hidden rounded-xl grayscale"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/tabs-bounce-9877.gif"
+/>
+
+<img
+  className="block mb-8 w-full outline -outline-offset-8 outline-8 outline-white overflow-hidden rounded-xl grayscale"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/tabs-base-9824.gif"
+/>
+
+对更多细节的展示，可以阅读 [《Functional Motion：UI 组件库的动效设计细节》(https://wxa.wxs.qq.com/wxad-design/yijie/fm-cover.png)](https://wxad.design/abc/functional-motion)。
+
+---
+
+对于组件的开发，我们经历了以下几个阶段：
+
+1. 阶段一：野蛮发展的 git submodule。从前，组件库代码只是一个 git submodule，每次更新都需要手动拉取，且依赖包需要手动安装；
+2. 阶段二：扩充完备的 React Class Component；
+3. 阶段三：React Function Component + TypeScript。
+
+组件，当然是最为核心的开发内容。然而事到如今，即便像 `Table`、`DatePicker` 这样的组件确实花了非常、非常多的时间，但又觉得在如今这个年代重提难免又有些过时，比如内部驱动与外部控制、比如 Class Component 的开发历史。
+
+## 组件：linear() 物理曲线
+
+承接上文的 Functional Motion，对于有回弹的动效，我使用了 CSS `linear()` function 来模拟物理曲线。对于存在兼容性问题的浏览器，我使用了 `cubic-bezier()` 来做回退。
+
+```scss
+--adui-motion-ease-bounce: cubic-bezier(0.36, 1.46, 0.38, 1.01);
+--adui-motion-ease-bounce: linear(
+  0,
+  0.002,
+  0.008,
+  0.018,
+  0.032 2%,
+  0.072,
+  0.129 4.3%,
+  0.186 5.3%,
+  0.257 6.5%,
+  0.551 10.9%,
+  0.675 12.8%,
+  0.791,
+  0.885 16.8%,
+  0.926,
+  0.963,
+  0.995,
+  1.023,
+  1.048,
+  1.068,
+  1.084,
+  1.097 25%,
+  1.103,
+  1.108,
+  1.112,
+  1.114,
+  1.115,
+  1.115,
+  1.113,
+  1.111 31.1%,
+  1.104 32.5%,
+  1.094 34.1%,
+  1.04 41.2%,
+  1.027,
+  1.017 44.9%,
+  1.007,
+  0.999,
+  0.993,
+  0.989 53.4%,
+  0.987 56.4% 59.9%,
+  0.998 73.1%,
+  1.001 80.4%,
+  1.002 87.4%,
+  1
+);
+```
+
+## 组件：充分利用 SCSS 特性
+
+由于组件的多状态，我们在 SCSS 中使用了大量的 `mixin` 和 `function`。比如 `Button` 的样式由以下的代码驱动：
+
+```scss
+@mixin base-type($type) {
+  @if $type != "normal" {
+    .#{$prefix}-left-icon,
+    .#{$prefix}-rightIcon {
+      fill: #fff;
+    }
+  } @else {
+    .#{$prefix}-left-icon,
+    .#{$prefix}-rightIcon {
+      fill: var(--gray-800);
+    }
+  }
+  color: map.get($colors, #{$type}#{-text});
+  background-color: map.get($colors, #{$type}#{-bg});
+  @if $type != "normal" {
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 4px 0 rgba(0, 0, 0, 0.1),
+      0 0 0 1px map.get($colors, #{$type}#{-bg});
+  } @else {
+    box-shadow: map.get($colors, normal-border);
+  }
+}
+```
+
+## 组件：键盘可访问性
+
+AD UI 在键盘可访问性上做了很多优化工作：
+
+<img
+  className="block mx-auto my-8 max-w-[600px] w-full outline -outline-offset-8 outline-8 outline-[#fcfcfc] overflow-hidden rounded-xl grayscale"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/adui-keyboard.gif"
+/>
+
+## 效能：打包优化专项
+
+### 1. 基础的 ES Module + CommonJS 打包；
+
+早期工程项目只提供了 CommonJS 的打包，因为还需考虑 IE11 的兼容性。之后，我们补充了 ES Tree Shaking：
+
+<img
+  className="block mx-auto my-8 max-w-[600px] w-full outline -outline-offset-8 outline-8 outline-[#fcfcfc] overflow-hidden rounded-xl grayscale"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/adui-package-0.png"
+/>
+
+在补充完基础的 ES Tree Shaking 之后，打包体积从 `660.31kb` 降为 `484.02kb`，然而 `Icon` 组件的体积非常大，占到了总包的 59%.
+
+### 2. Icon 按需：Webpack/Vite 插件自动化 shaking
+
+`Icon` 不能被 Shake 掉，是因为我在设计时，实际把所有图标放在一个资源文件中管理。行业内通常的做法是将每一个图标分拆成单独的组件，优点在于能利用 Tree Shaking，但对于我而言不希望发生 break changes，并且单独使用组件非常不方便，也不能利用 TypeScript 的自动参数提示。
+
+```tsx
+import { IconAdd, IconCancel } from "adui";
+
+<IconAdd />
+<IconCancel />
+```
+
+直到今天，我还是认为上面的写法是一种不足够优雅的妥协。而我还是希望：
+
+```tsx
+import { Icon } from "adui";
+
+<Icon icon="add" />
+<Icon icon="cancel" />
+```
+
+我的目标是：在保证 API 优势的前提下，结合 Webpack/Vite 生态，进行编译时语义分析，动态地将没有用到的图标资源剥离出打包结果：
+
+<img
+  className="block mx-auto my-8 w-full outline -outline-offset-8 outline-8 outline-[#fcfcfc] overflow-hidden rounded-xl grayscale"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/adui-icon-webpack.webp"
+/>
+
+Webpack 思路：
+
+1. JS 文件首先经过 `babel-loader`；
+2. 编写 `adui-icon-loader`，该 loader 用 `@babel/traverse` 分析 ast 提取所有用到的图标名称，写入到 `adui-icon-reduced.js` 临时文件。在这一步需注意 React 16 与 React 17 的 runtime 语法不同，前者为 `React.createElement(Icon, { icon: "add" })`，后者为 `_jsx(Icon, {icon: "add"})`；
+
+   ```js
+   // adui-icon-loader.js 核心代码
+   module.exports = function (source) {
+     // 1. 处理自定义配置
+     var options = loaderUtils.getOptions(this)
+
+     // 2. 转换 source 为 ast
+     var ast = parser.parse(source, {
+       sourceType: "module",
+       plugins: ["dynamicImport"],
+     })
+
+     // 3. 分析 ast 语义
+     traverse(ast, {
+       CallExpression: function (path) {},
+     })
+
+     // 转换 ast 导出
+     return core.transformFromAstSync(ast).code
+   }
+   ```
+
+3. 编写 `adui-icon-plugin`，在整个构建周期中，负责文件创建、替换、修改、删除等操作。
+
+Vite 的思路也是一样的，而且更为简单。
+
+最终，对于这个项目，`Icon` 的体积从 `287.96kb` 降为 `8.08kb`，缩小 97.1%。
+
+<img
+  className="block mx-auto my-8 max-w-[300px] w-full overflow-hidden"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/adui-compile.gif"
+/>
+
+### 3. CSS 按需：Vite 插件自动化 shaking
+
+AD UI 的每个组件都会默认引入样式文件：
+
+```tsx
+// Button.tsx
+import "./style"
+
+const Button = () => {}
+
+export default Button
+```
+
+Vite 与 Webpack 的表现不一致。在 Vite 中，样式会作为副作用被全量引入。最终 CSS 的体积超过 `200kb`：
+
+<img
+  className="block mx-auto my-8 max-w-[500px] w-full overflow-hidden"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/adui-vite-css.png"
+/>
+
+有了 `Icon` 的经验，同时也参考社区 `lodash` 按需插件的启发后，需要在构建时，把统一的一行引用改为四行的单独引用：
+
+```tsx
+import { Button, Icon } from "adui"
+
+⬇️
+
+import Button from "adui/es/button"
+import Icon from "adui/es/icon"
+import "adui/es/button/style"
+import "adui/es/icon/style"
+```
+
+核心代码的思路和 `Icon` 类似，不同的需要修改源文件的 ast，最后编译输出。最终 CSS 的体积从 `200kb` 降为 `21.21kb`。
+
+### 4. 底层升级：有状态组件全面迁移 Function Component
+
+最后一点，再进行了函数式组件的重构升级。
+
+通过在编译后，函数式组件会省去 class 组件中的一些辅助函数，使得整个编译包会比之前小 6%。
+
+```js
+function _classCallCheck(instance, Constructor) {}
+function _defineProperties(target, props) {}
+function _createClass(Constructor, protoProps, staticProps) {}
+function _possibleConstructorReturn(self, call) {}
+function _assertThisInitialized(self) {}
+function _getPrototypeOf(o) {}
+function _inherits(subClass, superClass) {}
+function _setPrototypeOf(o, p) {}
+```
+
+## 流程：Figma D2C 专项
+
+做设计语言，或者做 B 端 UI 的开发，永远都绕不开 D2C 这个领域。我在这个领域的工作，主要是在 Figma 中进行的。这件事靠谱的最主要原因是 Figma 的组件系统和 React Props 是有一些类似的。尤其是当 Figma 引入了 Auto Layout 之后，更是如此。
+
+而我刚开始尝试的时候，实际上 Figma 还没有 Auto Layout。当时为了解决布局问题。当时我提出一套布局规范，其强迫设计师重新命名 Frame 成 `Container`，才能在代码中正确地解析出 Flex 布局。我认为这确实说明 Figma 的开发者实际上在和我思考类似的问题。
+
+![一开始提出的布局规范](https://wxa.wxs.qq.com/wxad-design/yijie/adui-figma-layout.png)
+
+随着 2020 年末 Auto Layout 的普及，基于 Figma 的完整解决思路得以成型。类比 Webflow 这样的工具所需的核心功能：
+
+1. 账户管理 —— Figma 自带；
+2. 协同工作 —— Figma 自带；
+3. 参数配置 —— Figma Components；
+4. 布局拖拽 —— Figma Auto Layout；
+5. 代码导出 —— Figma 插件。
+
+我的工作内容则为：
+
+1. 初期推进：推进、梳理组件系统，完善代码 Props 与 Figma Props 的对应关系；
+2. 中期攻克：梳理 Figma Auto Layout 规则，进行代码转换；
+3. 开发插件：完成 Figma 插件开发，实现代码导出。
+
+最终的效果：
+
+![基于 Figma 的 D2C](https://wxa.wxs.qq.com/wxad-design/yijie/adui-figma.gif)
+
+从单一的组件，到非常完整的页面，设计师在使用了 Auto Layout 后，我只需要调整一点点地方，就可以完整地实现导出。
+
+我的职责好像从前端重构变成了优化 Figma 布局。
+
+当然，这时候导出的代码质量还是不够好，要么是内联样式，要么是随机的类名：
+
+```tsx
+<div className="frame_67111766">
+  <div className="frame_67111767">
+    <span className="text_67111768">{user.name}</span>
+    <div className="frame_74712515">
+      <span className="text_67111769">AppID:</span>
+      <span className="text_74712514">{user.appid}</span>
+    </div>
+  </div>
+</div>
+```
+
+这也成为了我为什么向团队引入原子类的重要的原因之一，具体会在下面的原子类专项中继续阐述。
+
+而现在（2024.07.11）Figma 已经发布了 **用 AI 自动 Auto Layout** 以及 **Dev Mode 接入组件库代码** 的功能！感慨如果现在还在做设计语言相关的工作，我一定会继续优化这个流程。
+
+正是因为 Figma 在自己的生态中不断发展和设计语言的联系，我才越来越认定 D2C 是一个正确的命题。而今，随着如 Vercel 的 V0 这样的 AI 工具的不断涌现，我认为设计语言的开发重心一定还是 D2C。
+
+## 流程：Figma 拷贝样式插件
+
+能导出的，我们就导出。不能导出的，也要尽可能提效。我做了[一个 Figma 处理样式、并拷贝出来的插件(https://s3-alpha-sig.figma.com/plugins/849480985478663675/6343/ce3c3277-2ab6-45ee-b72d-4527125f50ef-cover?Expires=1721606400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=lJ2l8JV2jbXRh5hYUzu9bf2MrzFtnTZAQRQ2~iq4Yd4SB3yjP5FNsabLBvqjS0B1pCDwXdQ8Yf9CfNfZm4Jv~XLj8~fDq4fhO-75WX3trpekAR-~U7hRNfnT5fkvbHyA-i0SX2H-Mq5UrbyIgFZym~TF2bam6YHF19wxCHwDx91QOAMcJ3iRRE8CPKn~qAEV~nANCZ-O2tVjvnY2VGDLSGWbVfRiaR9dWqFlVpf1TcegKCL~QMRnVS60M~8SokjZx6wUxMQgz2Wvw-sOfwGTurpnJz0sddNViyDyNHRRyi9SstncBAcTdWr7jTdtkDKzS~EdvoojJQPj9p~Il16m0w\_\_)](https://www.figma.com/community/plugin/849480985478663675/copy-css-react-tailwind-style)。即便到现在 Figma Dev Mode 还是不好用，所生成的样式质量还是很低。
+
+插件的功能丰富全面，支持：
+
+1. 💅 快捷复制 CSS / React inline CSS；
+2. 🗑️ 删除 `absolute`，`font-family` 等无用规则；
+3. 🦄 CSS 变量替换；
+4. 👨‍👨‍👧‍👧 个性化规范配置。
+
+![Copy CSS + React Style](https://wxa.wxs.qq.com/wxad-design/yijie/figma-copy-32485.gif)
+
+现在，这个插件在社区中已被 5.5k 人使用。也曾有人在社区中对我表示感谢：
+
+> I'm a React.js Developer this is a lifesaver for me. Thanks a lot 💙😍
+
+可是我应该不会再更新了...原因不仅仅是因为现在不做设计语言了，更重要的是，我还是比较看好 Figma Dev Mode 的发展的。文章最后我也会谈一下关于 Figma 的一些观点。
+
+## 流程：原子类专项
+
+在真正为团队 [引入原子类](https://wxad.design/adui/docs/acss/start) 之前，我还是 [做了充分的输入和思考](https://honored-meteor-e9c.notion.site/AD-UI-2-0-83846eb2730c49b48416bd72bbac8b09) 的。最终认为，原子类确实非常适合我们团队：
+
+1. **更完整的设计规范，规范地应用**：以原子类的方式重新梳理现有设计规范，也同时约束了业务工程的不规范使用。比如 `w-3` 的类名是不生效的，因为设计规范中不存在这个尺寸的定义。
+   理想的原子类通过设计规范衍生和开发流程发布。正是因为我们是设计团队，我们通过设计规范，就能更好地利用原子类：
+   ![原子类设计规范](https://wxa.wxs.qq.com/wxad-design/yijie/adui-atom-0.webp)
+2. **Figma 生态**：提高代码质量与可维护性，这当然是非常重要的。随机类名和内联样式都缺乏组织，不易加工和维护，这是 D2C 发展的下一步：
+   ![Figma D2C](https://wxa.wxs.qq.com/wxad-design/yijie/adui-atom-1.webp)
+3. **推动业务工程技术栈**：CSS 体积得到优化，`300kb` 缩小至 `18kb`。如下左图所示，在我们的业务工程中，原先我们一个 JS 对应一个 CSS 文件：
+   ![CSS 体积](https://wxa.wxs.qq.com/wxad-design/yijie/adui-atom-2.webp)
+
+## 玩具：色板生成 ColorPod
+
+我和设计师很早就开始尝试做图表的配色方案。我们尝试为数据可视化提供有效的基础色彩方案，为数据浏览创造更好的体验：
+
+![Colorpod](https://wxa.wxs.qq.com/wxad-design/yijie/adui-colorpod.gif)
+
+设计师起了一个名，叫 [ColorPod(https://wxa.wxs.qq.com/wxad-design/yijie/colorpod-cover.png)](https://wxad.design/colorpod/)。我做了一个简单的 logo 动画：
+
+<ColorpodLogo />
+
+现在，这个工具已经交给团队内的其他同事维护，加入了许多 features，甚至还有 AI，不变的是名字还是叫 ColorPod。
+
+## 玩具：React Sketchapp
+
+早期我和设计师接触到 React Sketchapp，觉得用代码作为 source of truth 管理设计资产是一件值得尝试的事情。于是我们就把 AD UI 接入了。
+
+下面的录屏是设计师在手动修改代码，然后在 Sketch 中预览的过程。2024 年的我看到这个录屏，想象 2018 年（应该是）的时候，这个设计师当时应该玩得挺开心的。
+
+![AD UI + React Sketchapp](https://wxa.wxs.qq.com/wxad-design/yijie/adui-react-sketchapp.gif)
+
+后来我还基于它做了一个 Sketch Plugin。从数据来源（当时是 Google Sheets）一键生成我们组的周报，省去了同事排版的烦恼：
+
+![React Sketchapp 周报](https://wxa.wxs.qq.com/wxad-design/yijie/sketch-report.gif)
+
+当然，我们的 AD UI 工作流最后也没有优化下去，就像 React Sketchapp 也没有发展下去，就像 Sketch 自身都快发展不下去。
+
+我觉得说 React Sketchapp 是玩具，说我们喜欢玩，这些都没错。但是我想念那种一起玩的感觉。有人陪你玩，才会做出有意思的好东西。
+
+## 一些话题
+
+### 设计语言确实是 Design Engineer（UX Engineer）的天职
+
+我更偏向于称 AD UI 为设计语言，而非组件库。一个很重要的原因是，设计语言就应该孵化自设计团队，这才是正确的方向。如同我在原子类专项中所说，思考的路径应该是 **先设计后工程**。
+
+同样地，比如我们经常需要评估，哪些组件属于基础组件，哪些属于业务组件（或说区块）？应当由谁来评估？—— 我认为是设计团队。还是因为先设计后工程。
+
+Design Engineer 必须从设计团队、设计规范出发，才能够更好地帮助设计语言落地。
+
+### D2C 仍然是一条正确的道路
+
+随着 AI 的发展，目前常见的 D2C 方式是和 AI 工具通过自定义的 DSL 沟通。通过 AI 的自然语言理解，加上 DSL 的规范，可以实现相对准确的 D2C。不对，这已经不是 D2C 了，是 T2C（Text2Code）。
+
+加之 Figma Dev Mode 的发展，我非常看好 Figma 在设计语言这一领域的发展，因为 Figma 拥有设计语言。相比 Vercel 的 V0，如何用自己团队的设计语言生成 UI 代码，一直是一个未解决的问题。但 Figma 做这件事，就有可能。
+
+### 组件库开发的上限
+
+如果单说组件的开发（或 UI 的开发），上限是存在的，而且不高。这背后更重要的问题是：UI 本身是没有意义的。我们作为工程师，经常容易陷入 UI 本身 —— 我们的工作完全就是打造正确的 UI。然而 UI 本身并没有有意义。有意义的是 UI 背后的业务逻辑，以及其 UI 背后的用户体验。
+
+组件库需要摆在其服务的业务中被衡量，唯此才能解决更高维度的问题。

@@ -6,9 +6,9 @@ const Item = ({ show, forward }: { show: boolean; forward?: boolean }) => {
   const lastShow = useRef(false)
 
   useEffect(() => {
-    if (show) {
-      wrapper.current!.style.transform = "translate3d(0, -56px, 0)"
-      wrapper.current!.style.transition = ""
+    if (show && wrapper.current) {
+      wrapper.current.style.transform = "translate3d(0, -56px, 0)"
+      wrapper.current.style.transition = ""
     }
 
     setTimeout(() => {
@@ -26,8 +26,10 @@ const Item = ({ show, forward }: { show: boolean; forward?: boolean }) => {
       }
 
       lastShow.current = show
-      wrapper.current!.style.transform = transformValue
-      wrapper.current!.style.transition = ".5s ease all"
+      if (wrapper.current) {
+        wrapper.current.style.transform = transformValue
+        wrapper.current.style.transition = ".5s ease all"
+      }
     }, 50)
   }, [show])
 
