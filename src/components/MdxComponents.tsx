@@ -353,7 +353,12 @@ export const BlockQuote = ({
 export const Img = ({ src, alt }: { src: string; alt: string }) => {
   return (
     <>
-      <img className="block mb-4 max-w-full" src={src} alt={alt} />
+      <img
+        className="block mb-4 max-w-full"
+        src={src}
+        alt={alt}
+        loading="lazy"
+      />
       <span className="block text-xs text-center text-neutral-400">{alt}</span>
     </>
   )

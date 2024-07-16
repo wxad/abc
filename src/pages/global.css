@@ -370,7 +370,62 @@ code:where(:not(pre) > code) {
   0% {
     transform: translate3d(0, 0, 0);
   }
-  80%, 100% {
+  80%,
+  100% {
     transform: translate3d(-350px, 0, 0);
+  }
+}
+
+@property --wipe-in {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@property --wipe-out {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+.wipe-out-animation {
+  animation: 500ms ease both wxadFadeOut;
+}
+
+@keyframes wxadFadeOut {
+  100% {
+    opacity: 0;
+  }
+  0% {
+    opacity: 1;
+  }
+}
+
+.wipe-in-animation {
+  animation: 550ms ease both wipe-in 50ms;
+  -webkit-mask: linear-gradient(
+    90deg,
+    transparent calc(var(--wipe-in) - 50%),
+    black var(--wipe-in),
+    black 100%
+  );
+  mix-blend-mode: initial;
+}
+
+@keyframes wipe-out {
+  from {
+    --wipe-out: 0%;
+  }
+  to {
+    --wipe-out: 150%;
+  }
+}
+
+@keyframes wipe-in {
+  from {
+    --wipe-in: 100%;
+  }
+  to {
+    --wipe-in: 0%;
   }
 }

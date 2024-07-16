@@ -1,0 +1,597 @@
+---
+title: "回顾：制作微信广告官网"
+description: "微信广告官网是一个非常完整的项目。我将总结自己在设计、前端及支撑其内容的后台系统上的工作，全面地回顾官网的开发历程。"
+slug: "wxad"
+publishedAt: "2024-07-16"
+editedAt: "2024-07-16"
+author: "Aragakey."
+authorLink: "https://codepen.io/aragakey"
+cover: "https://wxa.wxs.qq.com/wxad-design/yijie/wxad-cover-inner.png"
+---
+
+import WxadZDemo from "@/components/wxad/WxadZDemo"
+import WxadYDemo from "@/components/wxad/WxadYDemo"
+import WxadMotionBasic from "@/components/wxad/WxadMotionBasic"
+import WxadSvg0 from "@/components/wxad/WxadSvg0"
+import WxadSvg1 from "@/components/wxad/WxadSvg1"
+
+不知道对于别人是怎样的感受，但对我来说，以 9 年的尺度回顾自己在团队内的工作，实在纠结。
+
+[微信广告官网](https://ad.weixin.qq.com/case) 是一个非常完整的项目，并且在设计团队中完全闭环。其开发任务包含了前端、后端及内容中台。我将尽可能地全面梳理自己在所有方面的工作，以一个个独立的功能、技术或需求的方式。
+
+## 设计：基础过渡动效
+
+在 2023 年，我在设计师的帮助下重新制定了官网的过渡动效规范。它包含：
+
+1. 基础原则
+2. 页面转场
+3. 元素出场
+4. 时间与曲线
+
+### 过渡的意义
+
+过渡（Transitions）是连接页面与页面 或 元素与元素之间的短动画。  
+它们是用户体验（UX）的基础，因为它们可以帮助用户去理解。
+
+好的过渡设计让体验变得**有质量、有表达** —— 这与过渡本身的复杂、绚丽程度没有直接关系。  
+因我们的目标不是让过渡本身去表达。
+
+### 从微信广告官网 - 设计关键词出发
+
+1. 流畅自然，保持克制
+   流畅自然：摒除复杂的运动形式，以正确统一的规则，使 UI 更流畅；  
+   保持克制：继承自设计关键词克制，概括 **独特、简洁、干净、谦虚** 的态度。
+2. 缓解用户感受到的加载时间
+   过渡不能加快加载时间，但能“掩盖”加载时间。  
+   我们认为，站点内的**跳转**，应尽量成为**转场** —— 将“页面 A 跳转到了页面 B”，转变为“页面 A 转场到了页面 B”。  
+   保持体验连续性的同时，将加载时间掩盖到过渡之中。
+3. 交代页面/元素的关系
+   过渡帮助用户去理解。它们是迅速的、不突兀的。  
+   更重要地，它们为用户承上启下，阐明一个操作前后的关系、连接发生的原因与结果。
+
+---
+
+我们将过渡分为：
+
+1. Z 轴关系：表达页面转场逻辑；
+2. Y 轴关系：表达元素出场逻辑。
+
+### 页面转场：Z 轴关系
+
+页面转场我们使用蒙版的方式，将下一个页面在 Z 轴上覆盖在当前页面上。蒙版的透明色到实色的过渡区间占页面宽度的 50%，这也让整个过渡显得足够优雅：
+
+![页面转场](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-z.gif)
+
+在实现上，通常页面间过渡反而会增加用户的等待时间。因为很多页面为了看起来优雅，需要先将页面渐隐，然后再加载下一个页面，在完成加载后最终将下一个页面渐显。
+
+相比这种原始的做法，我通过 `View Transitions API` 的应用，得以将加载和过渡同时进行：
+
+```css
+::view-transition-old(root) {
+  animation: 500ms ease both wxadFadeOut;
+  transform-origin: 50% 35px;
+  mix-blend-mode: initial;
+}
+
+::view-transition-new(root) {
+  animation: 550ms ease both wxadWipeIn 50ms;
+  mix-blend-mode: initial;
+}
+```
+
+下一个问题是如何实现 mask 动画？CSS 是无法实现 mask 属性的 keyframes 的，但我们也可以通过新的 `@property` 的方式，注册一个 CSS 自定义属性来实现：
+
+```css
+@property --wipe-in {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+::view-transition-new(root) {
+  animation: 550ms ease both wxadWipeIn 50ms;
+  -webkit-mask: linear-gradient(
+    90deg,
+    transparent calc(var(--wipe-in) - 50%),
+    black var(--wipe-in),
+    black 100%
+  );
+}
+
+@keyframes wipe-in {
+  from {
+    --wipe-in: 100%;
+  }
+  to {
+    --wipe-in: 0%;
+  }
+}
+```
+
+通过对自定义属性的动画，就可以实现 mask 动画了。你可以在下面的 Demo 中看到这个效果：
+
+<WxadZDemo />
+
+### 元素出场：Y 轴关系
+
+形式上强调形状、曲线上强调减速，是我们过渡的差异化。
+
+比如，在元素出场时，我们采用的是蒙版从中心放大，主体物缩小的方式。在 Y 轴运动的原则上，镜头拉远，画布从局部扩大、完整，强调了形状的变化，突出了作为主体物的图片、视频：
+
+<WxadYDemo />
+
+比如，对于弹窗，我们不再采用中心放大的方式，而是以 Y 轴运动的方式从上方滑出：
+
+![dialog](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-dialog.gif)
+
+以及，搜索框、下拉框等更多弹出场景：
+
+![search](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-search.gif)
+
+### 时间与曲线
+
+我们看到过太多基础的原则。例如 `100ms` 是最快，`200ms` 是基本，`300ms` 以上是较慢。然而我们又看到了太多贝塞尔曲线的应用不当的例子。
+
+运动时间与贝塞尔曲线需同时考虑，抛开一个去单谈另一个是没有意义的。我们选定的分别是：`0.8s` 和 `(0.16, 0.9, 0.21, 0.98)`：
+
+<img
+  className="block m-auto my-2 w-[400px] max-w-full"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/wxad-cubic.png"
+  loading="lazy"
+/>
+
+1. 在前 50% 的时间，动画完成 95%。这意味着在 0.4s 时已接近完成，保证元素出现得不缓慢；
+2. 在后 50% 的时间，动画完成剩余的 5%。这意味着有 0.4s 缓冲减速，用以营造优雅的感受。
+
+我对这样的动画曲线从来有着特别的偏好。一方面明白这是一个容易显得拖沓的曲线，但另一方面，只要使用合理，它就是精致的。这份偏好可能起始于更早的对 [凯迪拉克 H5](https://wxa.wxs.qq.com/wxad-design/yijie/cadillac.mp4) 的打磨：
+
+## 设计：Banner 动画
+
+在较早期的时候，我负责过帮助中心 Banner 动画部分的设计与实现：
+
+<img
+  className="block -mt-1 mb-3 max-w-full"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/wxad-banner-1x.gif"
+  alt="官网 Banner"
+  loading="lazy"
+  style={{
+    clipPath: "inset(5% 1px round 12px)",
+  }}
+/>
+
+以及服务商官网的 Banner 动画：
+
+<img
+  className="block -my-6 md:-my-12 max-w-full"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/agency-banner-1x.gif"
+  alt="官网 Banner"
+  loading="lazy"
+  style={{
+    clipPath: "inset(15% 1px round 12px)",
+  }}
+/>
+
+具体而言，其中包含了以下实现手段：
+
+### 1. 基础的位移旋转缩放拉伸、不透明度
+
+<WxadMotionBasic />
+
+### 2. SVG 绘制
+
+<WxadSvg0 />
+
+### 3. SVG 变形
+
+<WxadSvg1 />
+
+---
+
+细节不再详细说明。
+
+## 布局：流体与响应式布局
+
+### 1. 最佳实践：流体 + 响应式布局
+
+![breakpoints](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-breakpoints.webp)
+
+对于官网这样 breakpoints 很多的站点，存在一个在设计上容易忽略的问题 —— 断点的衔接。比如两个断点分别是 `960px` 和 `1280px`，那么 `961px` 就会以 `1280px` 的样式展示（假设以桌面端优先设计）。这会导致：
+
+1. 在 `1280px` 下合理的字号、间距等排版，在 `961px` 时会不合适；
+2. 断点间变化时，是不流畅的。
+
+理想的情况应该是像下面这样，即便在 `961px - 1280px` 的过程中没有产生断点，但字号、间距、宽高等属性会适当地变化。即便 `960px` 时发生了布局的改变，但能够保证整个过程中的布局都是和谐的：
+
+![理想的情况](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-breakpoints-0.png)
+
+这是我认为的页面适配的最佳实践，即 **流体 + 响应式布局**。
+
+### 2. 用 px 做流体布局
+
+现代开发中，我们通常使用 `em`，`rem` 或 `%` 等相对单位做流体布局。它们或相对于元素的 `font-size`，或相对于父元素的 `width`，这对于设计师而言是一个不太直观的概念，增加了设计的成本。我们更习惯用 `px`，即便 `px` 实质是一个相对单位，但在设计过程中我们把它当作绝对单位来用。
+
+其实我们要解决的问题很简单。我们要做的就是在屏幕 `961px - 1280px` 的区间，做元素 `100px - 200px` 的线性变化：
+
+<img
+  className="block mx-auto my-8 max-w-[500px] w-full overflow-hidden"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/wxad-breakpoints-1.png"
+/>
+
+转为 CSS 实现：
+
+```scss
+div {
+  @media (min-width: 960px) {
+    width: calc(100px + (200 - 100) * (100vw - 960px) / (1280 - 960));
+  }
+  @media (max-width: 960px) {
+    width: 100px;
+  }
+  @media (min-width: 1280px) {
+    width: 200px;
+  }
+}
+```
+
+### 3. SCSS 方案
+
+```scss
+/*
+ * Remove the unit of a length
+ * @param $number - Number to remove unit from
+ * @return {Number} - Unitless number
+ */
+@function strip-unit($number) {
+  @if type-of($number) == "number" and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+  @return $number;
+}
+
+/*
+ * Generate several media-query declaration blocks
+ * @param $property - Property to be declared
+ * @param $min - Minimum value
+ * @param $from - Width starting flow
+ * @param $max - Maximum value
+ * @param $to - Width stopping flow
+ */
+@mixin flow($property, $min, $from, $max, $to) {
+  @media (min-width: $from) {
+    #{$property}: calc(
+      #{$min} + (#{strip-unit($max)} - #{strip-unit($min)}) * (
+          100vw - #{$from}
+        ) / (#{strip-unit($to)} - #{strip-unit($from)})
+    );
+  }
+
+  @media (max-width: $from) {
+    #{$property}: $min;
+  }
+
+  @media (min-width: $to) {
+    #{$property}: $max;
+  }
+}
+```
+
+最终，我只需要这样写：
+
+```scss
+div {
+  @include flow(width, 100px, 960px, 200px, 1280px);
+}
+```
+
+![流体 + 响应式](https://wxa.wxs.qq.com/wxad-design/yijie/flow-9326.gif)
+
+![流体 + 响应式](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-flow-example.gif)
+
+这套方案也使用到了我们的 B 端产品中：
+
+![流体 + 响应式](https://wxa.wxs.qq.com/wxad-design/yijie/responsive-13705.gif)
+
+### 4. 原子类方案
+
+后来团队内开始使用原子类，我也将这个方案转为了原子类实现。我的目标是，既然原子类名本身就带了断点和尺寸的描述，如 `className="500:text-20 700:text-30"`，那我就可以直接在运行时修改样式了。所以就有了下面的小工具。
+
+## 工具：原子类流动组件 Flow
+
+[Flow](https://wxad.design/flow) 是一个基于原子类的流动组件，你只需关心各断点下的样式，Flow 会帮助你让它们在断点间平滑地过渡。
+
+在设计组件时，我的理想方式是：
+
+```tsx
+<Flow as="div" className="500:text-20 700:text-30" />
+```
+
+HTML 渲染结果：
+
+```tsx
+<div className="font-size_20-30_500-700" />
+```
+
+自动生成的样式：
+
+```css
+.font-size_20-30_500-700 {
+  font-size: clamp(20px, 5vw - 5px, 30px);
+}
+```
+
+在只有两个断点的情况下，`<Flow />` 会直接以新的类名替换两个断点类名，因使用 `clamp` 就可以完成流动的效果。
+
+我还将工具可视化了一下，可以直接在网页内编辑并导出：
+
+![<flow />](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-flow.gif)
+
+在具体实现上，则是用 `styleSheet.cssRules` 来动态生成样式，并且避免生成重复的类名。核心代码如下：
+
+```tsx
+const properties: Set<keyof typeof PROPERTIES> = new Set()
+responsives.forEach((o) => {
+  const p = o.split(":")[1].split("-")[0] as keyof typeof PROPERTIES
+  properties.add(p)
+})
+
+Object.keys(rulesExtracted).forEach((key) => {
+  if (styleSheet?.cssRules) {
+    const rules = [...styleSheet.cssRules]
+    const found = rules.find((o) => o.cssText.includes(key))
+    if (!found) {
+      rulesExtracted[key].forEach((r) => {
+        styleSheet?.insertRule(r, 0)
+      })
+    }
+  }
+})
+```
+
+---
+
+关于页面适配的话题就说到这。页面适配是一个可以很复杂的话题 —— 从最简单粗暴的 Rem 等比放大，到我认为的流动 + 响应式的最佳实践。然而要做到这点却需要非常非常大的设计与开发投入。正因如此，这件事的投入产出比会受到挑战。如何在有限的资源下做到最好，是需要结合具体业务思考的问题。同时，也要思考不断迭代工具和合作流程。
+
+## 案例页：容器过渡动画
+
+我将案例列表跳转详情页的过程，重新设计为容器过渡动画。经过了以下的打磨过程：
+
+![优化前](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-cases-before.gif)
+
+每一次的跳转，会拉取案例详情的接口。在优化前，因为使用了 `<Suspense />` 每一次跳转一定会产生一个 loading。即便前端资源已经缓存，但接口请求也会造成 UI 闪烁。
+
+受到 Apple Store 的打开动画影响，我的优化目标是：**通过优雅的容器过渡，将加载时间掩盖到过渡动画中**。
+
+在当时我进行优化时，`View Transitions API` 还尚未存在。不过，即便通过这个方式，以下的打磨过程也几乎难以舍去。
+
+### 神奇移动
+
+![神奇移动](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-cases-0.gif)
+
+神奇移动这一版的问题在于：
+
+1. 没有表达外层和详情的关系，不切实际；
+2. 不足够表达当前卡片和其他卡片的前后景关系；
+3. 图片的边缘切割感非常明显。
+
+### 容器放大
+
+由于每一个案例的图片尺寸是不固定的。需要计算挺多小学数学问题：在卡片内缩放多少？在卡片内上下还是左右裁切？裁切多少？运动到 Banner 放大多少？位移多少？运动到 Banner 裁切多少？原本上下裁切的会不会变成左右裁切？
+
+全程都使用 `transform` 是为了避免 layout 重绘，提高性能。但因此，计算就会变得麻烦。不过是值得的：
+
+![容器放大](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-cases-2.gif)
+
+运动元素分为 4 层：
+
+1. 背景层（radius & shadow）单独位移 + 缩放；
+2. 图片父级位移 + 缩放；
+3. 图片自身缩放；
+4. 图片白色蒙版缩放。
+
+细节是：页面所有其他元素做退场，卡片缩小；收回路径：先运动到 hover 位置（-7px），再归零。
+
+在移动端的设计上，图片是撑满的，容器的感受更加直观：
+
+![移动端容器放大](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-cases-3.gif)
+
+## 案例页：轮播动画
+
+在最初设计案例页的轮播动画时，随着左右手机位移到页面中心时，随着手机对文字的遮盖，抓好时机，正好将文字渐隐渐显：
+
+![最初轮播设计](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-bm-5.gif)
+
+但我和设计师共同认为手机位移不必要。一是距离可能太大，二是露出了背后的元素或遮盖了文字。
+
+最终的设计：
+
+![最终轮播设计](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-bm-6.gif)
+
+为了实现这点，我将每个文字都单独包裹。具体不再说明。
+
+## 案例页：其他交互动画
+
+在首页动画上，我叠加了多层动画。首先是入场动画。
+
+### 入场
+
+![入场动画](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-bm-0.gif)
+
+### 鼠标交互
+
+![鼠标交互](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-bm-1.gif)
+
+### 滚动交互
+
+![滚动交互](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-bm-2.gif)
+
+---
+
+为了叠加上面的入场、鼠标交互、滚动交互的多层动画，DOM 结构分为 5 层：
+
+1. 入场  
+   元素：视频；行为：缩小。
+2. 入场  
+   视频蒙版；行为：放大。
+3. 鼠标交互  
+   整体包一层；行为：响应鼠标，按深度 x, y 移动。
+4. 鼠标交互  
+   整体再包一层；行为：响应鼠标，3% 边缘移动。
+5. 滚动交互  
+   整体再再包一层；行为：响应滚动，按深度视差。
+
+### 其他鼠标交互
+
+在官网的多处 Banner 设计中，可以将元素的排列看作是有前后景关系的。将尺寸大的元素视为前景，跟随鼠标位移的幅度小于尺寸小的元素：
+
+![鼠标跟随](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-bm-3.gif)
+
+还可以将后景元素反方向运动，也是和谐的：
+
+![鼠标跟随](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-bm-4.gif)
+
+为了足够平滑和优雅，不能监听鼠标移动，实时地设置元素的样式。这里我使用 `tension` 为 280，`friction` 为 60 的 spring 动画，以保证元素的运动是平滑的。
+
+## 文档页：反馈动画
+
+<img
+  className="block m-auto my-2 max-w-full"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/bm-ad.gif"
+  loading="lazy"
+  style={{
+    clipPath: "inset(1px)",
+  }}
+/>
+
+## 文档页：富文本编辑器组件 wxad-tiptap
+
+为了驱动官网的文章内容，我们开发了一个内部的 CMS 系统。作为我们内容维护的后台。为了编辑这些文章内容，就需要一个编辑器。对于编辑器的开发，我们经历了几个阶段，才最终定型。
+
+### 阶段一：markdown
+
+最初，我们使用 markdown 作为文章的编辑方式。开发简单，结构清晰，但对于非技术人员来说，markdown 的语法并不足够可视化。特别是当文章中包含表格时：
+
+<img
+  className="block m-auto my-4 w-[500px] max-w-full"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/wxad-tiptap-0.png"
+  loading="lazy"
+/>
+
+另一个问题是无法满足组件的扩充需求，比如折叠面板。markdown 的语法并不是不能扩展，markdown-it 也提供了很多插件。但去扩充语法糖不是一种可持续的维护手段，而且更加不利于非技术人员的使用。
+
+### 阶段二：markdown + 字段配置组件
+
+我们不想扩展 markdown 语法糖，也不想用难以规范的富文本。因此，我们将编辑器扩展为模块拼接的方式。文章中可以插入一块 markdown 模块，也可以在 markdown 模块后插入一个折叠面板的模块。通过预设好的字段，去编辑折叠面板：
+
+<img
+  className="block m-auto my-4 w-[500px] max-w-full"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/wxad-tiptap-1.png"
+  loading="lazy"
+/>
+
+我们以这个方案跑了一段时间。我认为这个方案非常棒，因为它保留了 markdown 语法，同时组件化足够自由。
+
+然而，这个方案还是存在问题：
+
+1. 没有通用性，解析规则是特殊的；
+2. 既不结构化，也不可视化。
+
+好像是同时抛弃了 markdown 的简洁和富文本的可视化。
+
+### 阶段三：富文本编辑器 wxad-tiptap
+
+![wxad-tiptap](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-tiptap-cover.png)
+
+为什么不用富文本，然后去约束格式呢？既然我们是由设计规范驱动的站点。
+
+于是经过了：
+
+1. 对 Markdown、Notion、石墨、语雀这样的产品做比较；
+2. 对富文本编辑器 L0、L1、L2 三阶段进行学习；
+3. 比较 Draft / Editor.js / Quill / ProseMirror / Tiptap 等开源方案。
+
+技术选型 Tiptap：
+
+1. 样式定义高度自由；
+2. 本身基于 prosemirror，API 丰富，进行 2.5 次开发；
+3. 虽然在 @2 还在 beta 版本；虽然文档也不够全，但社区维护力度可信；
+4. markdown 快捷键支持好；
+5. 编辑器可自我嵌套；
+6. 可以实现实时协作。
+
+我最终基于 Tiptap，开发了我们的富文本编辑器组件 wxad-tiptap。它包含了以下特点：
+
+### 完整的交互状态：选中、hover、拖拽
+
+1. 我对折叠面板、表格等组件的选中做了特殊的处理。在这些组件中，选中的不再是文本，而是面板或单元格；
+2. 拖拽、删除、添加等操作都经过了最直观、全面的可视化设计。
+
+![完整的交互状态：选中、hover、拖拽](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-tiptap-0.gif)
+
+### 功能丰富的图片组件
+
+为了方便录入同事在编辑器内对图片操作，我提供了标注、宽度、比例等调整功能。为了做到流动布局的相对计算，又做了一堆酣畅淋漓的小学数学计算：
+
+<img
+  className="block m-auto my-4 w-[600px] max-w-full"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/imagemath-4439.gif"
+  loading="lazy"
+  style={{
+    clipPath: "inset(1px)",
+  }}
+/>
+
+### 表格的响应式变换
+
+复杂的表格在移动端难以阅读。我们想到在移动端将表格转为折叠面板的方式：
+
+![表格的响应式变换](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-tiptap-table.png)
+
+### 业务定制组件
+
+基于 Tiptap 的插件机制，我们页完全开放给业务方接入自定义组件：
+
+![业务定制组件](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-tiptap-case.png)
+
+---
+
+即便是基于开源方案的封装，对第一次接触 Prosemirror 的我而言，开发过程也不轻松。
+
+现在，wxad-tiptap 在微信广告官网、腾讯广告官网、投放平台文档、微信广告协议等业务中被使用。
+
+## 工具：CMS 系统
+
+负责为官网编辑、输送内容的 CMS 系统，在我们团队内部是非常重要的。
+
+实际上它不仅承载着文档，还有案例，及所有官网需要用到的动态内容。有的使用富文本编辑器，有的则是配置化的表单。不同的内容，以不同的方式维护数据。
+
+比如对于案例，我们的录入方式是左侧表单，右侧预览：
+
+![案例录入](https://wxa.wxs.qq.com/wxad-design/renqiang/content-edit-final-2.gif)
+
+### 模板配置功能
+
+每一个板块，所配置的表单字段都不同。如果每次都要开发，就非常不敏捷，因此我们开发了模板配置功能。管理员可以配置模板，以快速制定该板块的表单规则：
+
+![模板配置](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-acms.gif)
+
+组件可以拖拽、相互嵌套，以实现更复杂的数据结构。
+
+由于整个 CMS 系统由我们组内闭环，所涉及到的前端、后台、数据库的开发任务非常挺复杂。而我则主要负责前端的搭建。
+
+## 玩具：走查工具 Pixie
+
+官网的设计稿往往包含多个 breakpoints，而且数量比较多：
+
+![breakpoints](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-breakpoints.webp)
+
+设计师走查自然不便。因此我做了一个小工具 [Pixie](https://wxad.design/pixie)，方便设计师以设计稿左右比对，其交互方式参考于 [Squoosh](https://squoosh.app)：
+
+![pixie](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-pixie.gif)
+
+设计走查是一个比较大的话题，与走查这件事相关的思考维度可以有很多。腾讯内部其实也发展了一些更加强大的走查工具，联动 tapd、企业微信等生态。当然我们要明白，走查这个问题的根本在于为什么需要走查，以及如何做到不需要走查。这才是身为 Design Engineer（UX Engineer）的真正命题。
+
+## 最后
+
+整个官网的构建过程涉及到了非常多的方面。设计与开发，工具与玩具，框架与组件，页面与动画，布局与交互，文档与 CMS，走查与优化。面对这些方面的交叉，我总是尽力表达自己的想法，尽可能地发挥自己的能力。这个项目，在团队内多年闭环，有太多细节我无法一一展示。
+
+我明白自己的能力有限，对许多话题，页只是浅尝辄止。但在回顾完的现在来看，我和团队一起走过了足够长的路了，这条路是一条足够自由的路。因此我觉得这个项目对我而言足够了。

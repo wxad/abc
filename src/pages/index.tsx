@@ -8,12 +8,45 @@ import CircularCover from "@/components/circular/CircularCover"
 import FmCover from "@/components/fm/FmCover"
 import FontFamilyCover from "@/components/font-family/FontFamilyCover"
 import AduiCover from "@/components/adui/AduiCover"
+import WxadCover from "@/components/wxad/WxadCover"
 import NextLink from "next/link"
 
 const posts = [
+  // {
+  //   title: "回顾：朋友圈广告的形态思考与尝试",
+  //   description: "",
+  //   slug: "bm",
+  //   publishedAt: "2024-07-13",
+  //   editedAt: "2024-07-13",
+  //   author: "Aragakey.",
+  //   authorLink: "https://codepen.io/aragakey",
+  //   children: <WxadCover />,
+  // },
+  // {
+  //   title: "回顾：制作朋友圈广告年度评选与榜单",
+  //   description: "",
+  //   slug: "bm",
+  //   publishedAt: "2024-07-13",
+  //   editedAt: "2024-07-13",
+  //   author: "Aragakey.",
+  //   authorLink: "https://codepen.io/aragakey",
+  //   children: <WxadCover />,
+  // },
   {
-    title: "微信广告设计语言 AD UI 的实践之路",
-    description: "我对设计语言的价值观，主要分为设计、组件、效能、流程这四个方面。我将从这四个方面阐述我对设计语言的理解，以及我的具体工作。",
+    title: "回顾：制作微信广告官网",
+    description:
+      "微信广告官网是一个非常完整的项目。我将总结自己在设计、前端及支撑其内容的后台系统上的工作，全面地回顾官网的开发历程。",
+    slug: "wxad",
+    publishedAt: "2024-07-16",
+    editedAt: "2024-07-16",
+    author: "Aragakey.",
+    authorLink: "https://codepen.io/aragakey",
+    children: <WxadCover />,
+  },
+  {
+    title: "回顾：制作微信广告设计语言 AD UI",
+    description:
+      "我对设计语言的价值观，主要分为设计、组件、效能、流程这四个方面。我将从这四个方面阐述我对设计语言的理解，以及我的具体工作。",
     slug: "adui",
     publishedAt: "2024-07-10",
     editedAt: "2024-07-10",
