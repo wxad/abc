@@ -9,6 +9,7 @@ import FmCover from "@/components/fm/FmCover"
 import FontFamilyCover from "@/components/font-family/FontFamilyCover"
 import AduiCover from "@/components/adui/AduiCover"
 import WxadCover from "@/components/wxad/WxadCover"
+import BmCover from "@/components/bm/BmCover"
 import NextLink from "next/link"
 
 const posts = [
@@ -22,16 +23,16 @@ const posts = [
   //   authorLink: "https://codepen.io/aragakey",
   //   children: <WxadCover />,
   // },
-  // {
-  //   title: "回顾：制作朋友圈广告年度评选与榜单",
-  //   description: "",
-  //   slug: "bm",
-  //   publishedAt: "2024-07-13",
-  //   editedAt: "2024-07-13",
-  //   author: "Aragakey.",
-  //   authorLink: "https://codepen.io/aragakey",
-  //   children: <WxadCover />,
-  // },
+  {
+    title: "回顾：制作朋友圈广告年度评选",
+    description: "回顾：制作朋友圈广告年度评选",
+    slug: "bm",
+    publishedAt: "2024-07-22",
+    editedAt: "2024-07-22",
+    author: "Aragakey.",
+    authorLink: "https://codepen.io/aragakey",
+    children: <BmCover />,
+  },
   {
     title: "回顾：制作微信广告官网",
     description:

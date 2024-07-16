@@ -1,0 +1,207 @@
+---
+title: "回顾：制作朋友圈广告年度评选"
+description: "回顾：制作朋友圈广告年度评选"
+slug: "bm"
+publishedAt: "2024-07-22"
+editedAt: "2024-07-22"
+author: "Aragakey."
+authorLink: "https://codepen.io/aragakey"
+cover: "https://wxa.wxs.qq.com/wxad-design/yijie/bm-cover-abc.webp"
+---
+
+import Carousel from "@/components/Carousel"
+import LikeBM24 from "@/components/likes/LikeBM24"
+
+朋友圈广告年度评选，是由微信广告官方发起的广告创意评选活动，TOP 10 由大众投票产生。每一年，该活动通过 H5、公众号、视频号等渠道，完成评选流程，用户作为评委，最终将获得一张 “评委卡”。
+
+自 2017 年开始至去年 2023 年，我担任该活动的开发负责人，和设计师已经一起打造了 7 个作品。如果你对 2018 - 2020 年的视觉设计感兴趣，可以去看看 [这个人(https://wxa.wxs.qq.com/wxad-design/bms/don.webp)](https://dondon.design/TOP-10-2018-2020)。
+
+先前，我回顾了一些 [点赞/投票动画集合](https://wxad.design/abc/likes)，它们大部分就来源于这项活动。现在，我想以每年的方式一一回顾，分享一些感受。
+
+## 2023
+
+可点击 [Demo 链接](https://mp.weixin.qq.com/promotion/res/htmledition/best-moments-2023-demo/index.html) 在移动端体验活动。
+
+---
+
+2023 年，呼...又是一回酣畅淋漓的赶工。每一年的时间当然都是紧张的，但这一年确实是历史上最紧迫的一次，也许没有之一。
+
+因为有同事的协助，这一年没有负责评委卡生成部分的工作。我所负责的其他部分，都用力做出了令自己满意的结果。今年活动数据也史无前例的好看，这一年真好。
+
+### 转盘交互动画
+
+开了这个站的第一篇文章，就写了 [转盘交互动画：以关键参数，细化我们的感受](https://wxad.design/abc/carousel)。在这篇文章中我讨论了 4 个关键问题。
+
+<Carousel />
+
+转盘动画的背后，存在着数个关键参数。理解这些参数，不（仅）是为了理解实现原理本身，而是为了在改变这些参数的过程中，寻求简单的“对”或“不对”之间的具体差异，更是为了细化对交互动画的具体感受。
+
+文章发布在腾讯内部，荣幸入选了 2023 年腾讯知点设计通道的优秀文章。自然也是唯一一篇由 UI 开发岗撰写的参选文章。
+
+![腾讯知点设计通道优秀文章](https://wxa.wxs.qq.com/wxad-design/yijie/abc-bm-0.webp)
+
+### 爱心惯性动画
+
+使用 `react-spring` 的具体实现可阅读 [这篇文章](https://wxad.design/abc/trail)。
+
+<img
+  className="block m-auto my-4 w-[200px] max-w-full rounded-lg"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/abc-bm-1.gif"
+  loading="lazy"
+/>
+
+### 点赞动画
+
+具体细节可阅读 [这篇文章](https://wxad.design/abc/likes)。
+
+<LikeBM24 />
+
+## 2022
+
+可点击 [Demo 链接](https://mp.weixin.qq.com/promotion/res/htmledition/best-moments-2022-demo/index.html) 在移动端体验活动。
+
+---
+
+2022 年，我个人最大的也可能是唯一的亮点就是生成评委卡的动画。不过，光是这个动画，就让我感到很满足了。
+
+### 设计目标
+
+这一年我们的目标：
+
+1. 设计目标：尝试新玩法、局部有亮点；创意主题侧重“沟通交流”；
+2. 评委卡目标：升级生成的仪式感；加强情感体验、专属感；
+3. 具体实现：生成过程的强化。
+
+要做到过渡是 **有趣的，且有秩序的**。要保证元素不能显得杂乱，时间不能显得冗长。
+
+就像乐高积木一样，完成后的乐高模型可能会被遮挡或隐藏，但组装的过程和体验将一直留在人们的记忆中，成为一种有价值的体验和回忆。
+
+### 元素层级解构
+
+<img
+  className="block m-auto my-4 w-[150px] max-w-full rounded-lg"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/abc-bm-2.webp"
+  loading="lazy"
+/>
+
+在拿到设计稿后，在我心中已经结构出了下面的层级关系（当然我必须做出这个酷炫的动画示意）：
+
+<img
+  className="block m-auto my-4 max-w-full rounded-lg"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/pers-8982.gif"
+  loading="lazy"
+  style={{
+    clipPath: "inset(1px round 12px)",
+  }}
+/>
+
+我是这样组织动画的：
+
+### 第一步：开场
+
+1. 背景 ❤ 首次交换位置
+2. 卡片背面 ❤ 出现
+3. 主色为蓝色，开始绘制基本信息
+
+<img
+  className="block m-auto my-4 max-w-full rounded-lg"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/step-1-9098.gif"
+  loading="lazy"
+  style={{
+    clipPath: "inset(2px round 12px)",
+  }}
+/>
+
+### 第二步：卡片主要文字
+
+1. 随着卡片的摆动，背景 ❤ 变化位置与大小
+2. 随着文字的出现，百分比与进度条开始增长
+
+<img
+  className="block m-auto my-4 max-w-full rounded-lg"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/step-2-9100.gif"
+  loading="lazy"
+  style={{
+    clipPath: "inset(2px round 12px)",
+  }}
+/>
+
+### 第三步：卡片次要文字
+
+1. 随着卡片的摆动，背景 ❤ 变化位置与大小
+2. 随着文字的出现，投票数开始增长
+
+<img
+  className="block m-auto my-4 max-w-full rounded-lg"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/step-3-9102.gif"
+  loading="lazy"
+  style={{
+    clipPath: "inset(2px round 12px)",
+  }}
+/>
+
+### 第四步：创意图片
+
+1. 背景 ❤ 飞出，为完成做准备
+2. 创意图片依序从三个方向出现，保证每张展现
+3. 别针从下方飞入，完成固定
+
+<img
+  className="block m-auto my-4 max-w-full rounded-lg"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/step-4-9099.gif"
+  loading="lazy"
+  style={{
+    clipPath: "inset(2px round 12px)",
+  }}
+/>
+
+### 第五步：完成
+
+1. 卡片归位
+2. 背景 ○ 从中心放大、背景 ❤ 出现
+3. IP 与橙色 ❤ 一同飞入
+
+<img
+  className="block m-auto my-4 max-w-full rounded-lg"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/step-5-9101.gif"
+  loading="lazy"
+  style={{
+    clipPath: "inset(2px round 12px)",
+  }}
+/>
+
+### 完整动画
+
+<img
+  className="block m-auto my-4 max-w-full rounded-lg"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/all-steps-9114.gif"
+  loading="lazy"
+  style={{
+    clipPath: "inset(2px round 12px)",
+  }}
+/>
+
+1. 生成时间：近 5 秒，耗时很多但不能感到冗长 -> 突出趣味和专属感；
+2. 运动元素：近 30 个，元素很多但不要感到杂乱 -> 建立秩序感。
+
+<img
+  className="block m-auto my-4 max-w-full rounded-lg mix-blend-darken"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/abc-bm-3.webp"
+  loading="lazy"
+/>
+
+## 2021
+
+2021 这一年，在投票动画的细节上下了一点功夫。
+
+## 最后
+
+回顾这些作品时，我就在想，我总是享受我们设计团队主导的活动，[AD UI](https://wxad.design/abc/adui) 也好、[官网](https://wxad.design/abc/wxad) 也好，和其他业务项目就是让我感到不同。我将自己的想法和偏好融入了这些作品，它们携带着我的思想，替我表达。
+
+我享受和设计师合作的创作过程。我们职责互补，但不模糊。我们忘却时间，将对个人实现的追求托付于我们的作品。我仍然记得 2019 年拿到设计稿时，看到设计师为每一支广告都制作了一个精美的心动动画，我大半夜坐在电脑前，真的感到太美、太开心了。我理解我的设计师伙伴。
+
+我这个人很简单，只想要做优雅和精致的 UI。我很庆幸遇到这样适配自己特长的项目。
+
+每一年年末，朋友圈广告年度评选如约而至。每一次都有挑战。对我来说，这是最具有影响力的项目。也有过觉得自己的能力不足，偷偷掉眼泪的时候（2018 年？）。每一次的完满结束，就像是给一年的工作结了一个好尾。
+
+—— 真是一个充满美好的项目。

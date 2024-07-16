@@ -99,7 +99,7 @@ const CheckboxLong = () => {
 
 const Demo = (props: {}) => {
   return (
-    <DemoBox className="py-16">
+    <DemoBox className="py-16 overflow-hidden">
       <div className="flex items-center justify-center gap-16 text-sm scale-110">
         <CheckboxShort />
         <CheckboxLong />

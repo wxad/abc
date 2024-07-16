@@ -4,7 +4,7 @@ import Checkbox from "./Checkbox"
 
 const Demo = (props: {}) => {
   return (
-    <DemoBox className="py-16">
+    <DemoBox className="py-16 overflow-hidden">
       <div className="flex items-center justify-center gap-4 text-sm scale-110">
         <div className="font-medium text-neutral-600">未选中：</div>
         <Checkbox>常态</Checkbox>
