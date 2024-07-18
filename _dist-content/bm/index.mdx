@@ -11,6 +11,13 @@ cover: "https://wxa.wxs.qq.com/wxad-design/yijie/bm-cover-abc.webp"
 
 import Carousel from "@/components/Carousel"
 import LikeBM24 from "@/components/likes/LikeBM24"
+import Bm22Design from "@/components/bm/Bm22Design"
+import Bm21Avatar from "@/components/bm/Bm21Avatar"
+import Bm21Vote from "@/components/bm/Bm21Vote"
+import Bm21Details from "@/components/bm/Bm21Details"
+import Bm20Gifs from "@/components/bm/Bm20Gifs"
+import Bm19Gifs from "@/components/bm/Bm19Gifs"
+import Bm18Gifs from "@/components/bm/Bm18Gifs"
 
 朋友圈广告年度评选，是由微信广告官方发起的广告创意评选活动，TOP 10 由大众投票产生。每一年，该活动通过 H5、公众号、视频号等渠道，完成评选流程，用户作为评委，最终将获得一张 “评委卡”。
 
@@ -78,13 +85,9 @@ import LikeBM24 from "@/components/likes/LikeBM24"
 
 ### 元素层级解构
 
-<img
-  className="block m-auto my-4 w-[150px] max-w-full rounded-lg"
-  src="https://wxa.wxs.qq.com/wxad-design/yijie/abc-bm-2.webp"
-  loading="lazy"
-/>
+<Bm22Design />
 
-在拿到设计稿后，在我心中已经结构出了下面的层级关系（当然我必须做出这个酷炫的动画示意）：
+在拿到设计稿后，在我心中已经解构出了下面的层级关系（当然我必须做出这个酷炫的动画示意）：
 
 <img
   className="block m-auto my-4 max-w-full rounded-lg"
@@ -192,16 +195,160 @@ import LikeBM24 from "@/components/likes/LikeBM24"
 
 ## 2021
 
-2021 这一年，在投票动画的细节上下了一点功夫。
+2021 这一年，在投票动画的细节上下了一点功夫。实现上的小技巧，就是动态 SVG 蒙版。
+
+SVG 是一张完全受我编写的、矢量的、而且还是 CSS 动画的图，它是一份形似图片的代码。利用这点应用在蒙版 `mask` 上，令当时的我非常兴奋。
+
+比如头像的动画：
+
+### 头像动态 SVG 蒙版
+
+<Bm21Avatar />
+
+其基于的就是这样的一份我直接把 CSS 动画写在里面的 SVG 蒙版：
+
+```html
+<svg
+  id="$accumulator"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 102.38 90.76"
+>
+  <style type="text/css">
+    #avatarPath {
+      animation: apa 0.8s ease both;
+    }
+    @keyframes apa {
+      from {
+        stroke-dashoffset: 272.5561828613281;
+      }
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+  </style>
+  <path
+    id="avatarPath"
+    d="M18.69 39.27s-2.5-10.3 9.9-11.5 11.3 13.3 6 12 13.2-23.7 26.9-22.2S69 58.87 56 54.17s20-16.9 25.8-5.6 3 13.1-4.7 16.3-21.1 2.3-28.9 3.4S39 74 29.69 73.17s-17.9-6.9-7.3-19.1l-3.4-13"
+  />
+</svg>
+```
+
+因为 `mask` 只能接收图片，就没办法以 CSS 的方式直接以代码驱动动画。SVG 正好解决了这个问题。这也是为什么可以在 Demo 中调节动画 duration，因为这是一个 CSS 动画。
+
+另一个细节是，如果把上面的 SVG Base64 后放到 `mask` 属性后，动画仅会播放一次。这时候我们可以设置一个累加器，每次播放时将数字 +1，设置到 svg 的 `id` 或者其他属性，即能保证每一次的 `mask` 值都是不同的。
+
+### 投票动态 SVG 蒙版
+
+同样的思路应用到投票动画上，为了实现绿色文字被画笔划过，变为白色的效果。设计师认为随着划过，文字整体做一个简单的不透明度变化也不是不行。我还是希望实现更符合划过这样的效果：
+
+<Bm21Vote />
+
+我是这样画这张蒙版 SVG 的：
+
+<img
+  className="block m-auto my-4 max-w-[280px] rounded-lg mix-blend-darken"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/abc-bm-5.png"
+  loading="lazy"
+/>
+
+取消投票的动画也类似，只是蒙版变为了一个更简单的 `rect`。这个动画的细节比较多。还需要考虑不同位数的细微差异：
+
+<Bm21Details />
+
+## 2020
+
+这一年在表现上做得较少。每次回顾这一年都因为一些不顺利的事而心情复杂。这一年的自己稍许有点低谷。
+
+花了蛮多时间手 k 了入场动画，因为不希望播放视频，现在看这样的优化其实也不是完全必要，当然确实对首屏时间有帮助：
+
+<img
+  className="block m-auto my-4 max-w-[300px] rounded-lg mix-blend-darken"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/abc-bm-7.gif"
+  loading="lazy"
+/>
+
+Puppeteer 脚本，评委卡的走查验证及自动化的中文字体压缩：
+
+<img
+  className="block m-auto my-4 max-w-full mix-blend-darken"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/abc-bm-8.gif"
+  loading="lazy"
+  style={{
+    clipPath: "inset(2px)",
+  }}
+/>
+
+当然我们实现得还是足够精致的，这是我和我们项目的基本要求：
+
+<Bm20Gifs />
+
+## 2019
+
+这一年 5 位设计师伙伴为每一支广告都制作了一个精美的心动动画，我使用 lottie 播放就可以了：
+
+<img
+  className="block m-auto my-4 max-w-full mix-blend-darken"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/2019-40hearts-5.gif"
+  loading="lazy"
+/>
+
+我的工作很简单，就是把设计师的成果摆到页面上。
+
+我们对这些动画太喜欢了。我不希望在短短的十几天活动之后，它们就消失了。我就设计并制作了这样一个站点，称之为 [Best Hearts](https://wxad.design/best-hearts)：
+
+![Best Hearts](https://wxa.wxs.qq.com/wxad-design/yijie/abc-bm-9.gif)
+
+> Each year, we select 40 WeChat Moments ads to be celebrated as MOST LIKED ADS of the year.  
+> We name this annual event as Best Moments.  
+> In 2019, we designed these animations inspired by each of them,to encourage more innovation, elegance and creativity.  
+> So we call them Best Hearts.
+
+比起完成整个项目本身，制作这个站点是我认为更有意义的事。因为我真的很喜欢它们。
+
+—— 如我所说，**我的工作很简单，就是把设计师的成果摆到页面上。**
+
+---
+
+一些对页面体验的打磨：
+
+<Bm19Gifs />
+
+## 2018
+
+自 2017 年的首次尝试之后，2018 年我们的活动有了很大的提升。在开发上，也基本决定了未来的结构框架。
+
+在设计上，2018 年的主题是 “矩形” —— 承载朋友圈广告创意的容器。设计师使用矩形结合内容、蒙太奇，制作了开场动画，传达令人激动的创意氛围，号召大众为自己的喜爱投票。
+
+<Bm18Gifs />
+
+## 2017
+
+故事从这里开始。急急忙忙地开发，急急忙忙地测试。和未来的几年相比，流程是最简单的，设计是最精简的，但心里是最慌的。
+
+1. 在微信 webview 中插入了第 16 个视频后，页面就不可避免地崩溃。试过了暂停和销毁，最后实在搞不定，只好将活动的视频限制在 15 个；
+2. 一开始做了一版小程序，但最终选择了更合适的 H5；
+3. 半夜给同事打电话，他陪我加班到 4 点；
+4. 上午测试，下午上线，一上线就 bug，后台峰值就没顶住；
+5. ...
+
+<img
+  className="block m-auto my-4 max-w-[400px] mix-blend-darken"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/new_head.mov.gif"
+  loading="lazy"
+/>
 
 ## 最后
 
+写完了，终于写到了文章的最后，写到了故事的开始。
+
 回顾这些作品时，我就在想，我总是享受我们设计团队主导的活动，[AD UI](https://wxad.design/abc/adui) 也好、[官网](https://wxad.design/abc/wxad) 也好，和其他业务项目就是让我感到不同。我将自己的想法和偏好融入了这些作品，它们携带着我的思想，替我表达。
 
-我享受和设计师合作的创作过程。我们职责互补，但不模糊。我们忘却时间，将对个人实现的追求托付于我们的作品。我仍然记得 2019 年拿到设计稿时，看到设计师为每一支广告都制作了一个精美的心动动画，我大半夜坐在电脑前，真的感到太美、太开心了。我理解我的设计师伙伴。
+我享受和设计师合作的创作过程。我们职责互补，但不模糊。我们忘却时间，将对个人实现的追求托付于我们的作品。我仍然记得 2019 年拿到设计稿时，看到设计师为每一支广告都制作了一个精美的心动动画，我大半夜坐在电脑前，真的感到太美、太开心了。我理解我的设计师伙伴们。
 
 我这个人很简单，只想要做优雅和精致的 UI。我很庆幸遇到这样适配自己特长的项目。
 
 每一年年末，朋友圈广告年度评选如约而至。每一次都有挑战。对我来说，这是最具有影响力的项目。也有过觉得自己的能力不足，偷偷掉眼泪的时候（2018 年？）。每一次的完满结束，就像是给一年的工作结了一个好尾。
+
+这个项目的名称是 Best Moments，它双关了“朋友圈”和“瞬间”。它也是我和团队的 Best Moments。
 
 —— 真是一个充满美好的项目。
