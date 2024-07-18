@@ -158,7 +158,7 @@ const posts = [
 const Home = () => {
   return (
     <div className="m-auto px-4 md:px-16 max-w-[1088px]">
-      <div className="flex items-end justify-between mb-8 py-6 md:mb-16 md:py-12">
+      <div className="flex items-end justify-between mb-8 py-6 md:py-10">
         <div className="flex-1 flex flex-col items-center 74:flex-row">
           <div
             className="relative w-12 h-12 74:top-1 74:mr-2 74:w-10 74:h-10 opacity-80"
@@ -219,7 +219,7 @@ const Home = () => {
             return (
               <div
                 key={index}
-                className={`flex flex-col-reverse items-center mb-16 pb-16 border-b-[1px] border-dashed border-gray-300 ${
+                className={`flex flex-col-reverse items-center mb-12 pb-12 border-b-[1px] border-dashed border-gray-300 ${
                   index % 2 ? "md:flex-row-reverse" : "md:flex-row"
                 }`}
               >
@@ -253,7 +253,7 @@ const Home = () => {
                   <div className="text-sm text-gray-500">{description}</div>
                   <NextLink
                     href={slug}
-                    className="inline-flex items-center mt-8 md:mt-32 gap-2 text-sm text-gray-600 hover:text-blue-500 font-medium hover:underline hover:decoration-dotted hover:decoration-current hover:underline-offset-4 transition-all"
+                    className="inline-flex items-center mt-8 md:mt-16 gap-2 text-sm text-gray-600 hover:text-blue-500 font-medium hover:underline hover:decoration-dotted hover:decoration-current hover:underline-offset-4 transition-all"
                   >
                     阅读文章
                     <svg
