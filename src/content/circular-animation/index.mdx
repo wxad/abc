@@ -1,0 +1,68 @@
+---
+title: "文字环绕过渡动画"
+description: "我享受和设计师合作的创作过程。我们职责互补，但不模糊。我们忘却时间，将对个人实现的追求托付于我们的作品。我这个人很简单，只想要做优雅和精致的 UI。我很庆幸遇到这样适配自己特长的项目。"
+slug: "circular-animation"
+publishedAt: "2024-07-30"
+editedAt: "2024-07-30"
+author: "Aragakey."
+authorLink: "https://codepen.io/aragakey"
+---
+
+import DemoGifs from "@/components/circular-animation/DemoGifs"
+import OnlineGifs from "@/components/circular-animation/OnlineGifs"
+
+去年和设计师合作了一个项目，我为朋友圈广告设计了一个文字环绕过渡动画，在用户与广告互动后以全屏形式展示。
+
+我的前期完整创意录屏：
+
+<DemoGifs />
+
+最终实现的效果有所简化，但仍然算得上满意。真实上线的 case：
+
+<OnlineGifs />
+
+由于最终上线的效果和我的原始创意有所不同，我没有对自己的实现过程做更多解释。因为确实不重要了。
+
+而我想在这里记录下我从头至尾的 **Design in Code** 的过程。
+
+## 单字动画
+
+## 环绕排版
+
+## 谈谈 Design Engineer 与 Design in Code
+
+### 实干者的骄傲
+
+每一个公司，每一个业务，或每一个团队内的 Design Engineer 都不一样。这非常正常。有人做 3D 或 GLSL Shaders，有人做 UI，有人做大前端。而当我读到 Vercel 的 [Design Engineering at Vercel](https://vercel.com/blog/design-engineering-at-vercel) 时，我觉得甚至有点恍惚。因为这反倒更像是按着我的模子刻出来的岗位。我明白，这就是我的天职。
+
+即使实际的工作并不可能如此完美，自然我自己也不可能完美一样 —— 更多地，我感到非常幸运，因为我已经找到了自己的方向。有许多人或许穷其一生都没有答案，相比之下，感到更多的是一种骄傲。我常将自己称为实干者。因我不喜欢说，或者应该是：我看不上自己靠说来证明能力。我说，这是属于实干者的骄傲。
+
+“实干者”的内核，我认为在 Vercel 的这篇文章中也有类似的阐述，他们用了 push、implement、ship、produce 这些词：
+
+> Design Engineers work closely with designers to **implement** designs, **skipping the traditional handoff process**. Instead of handing off a completed design, a Designer sketches the start and iterates with a Design Engineer in Figma or code to **produce** the final design. Lots of technical exploration is done to **push** the designs.
+
+关于岗位的话题，我可以再开一篇大写特写几千个字，但现在就此打住。
+
+### Design in Code
+
+为什么要 Design in Code？Rauno 在这篇 [What will you ship?](https://rauno.me/craft/vercel#code-driven-visuals) 中提及了一个类似的话题：为什么要 Code Driven Visuals？
+
+> We felt that using images is simpler in the short term, but we would get **pristine quality, granular control, and true responsiveness** by investing upfront into building marketing visuals as React components. We also make use of the same visuals across different pages so being able to drop one in anywhere is clutch.
+
+总得来说是为了更精细的控制，及代码驱动的灵活性。为了实现这一点就必须会将 UI 组件化，在精细、调整的过程中不得不组件化。这也是为什么实现文字环绕效果会涉及到组件化，这看起来似乎搞得太复杂了？然而不是的，这是一个必然的结果，如果为了实现更精细的控制，及代码驱动的灵活性。
+
+另外衍生的一个话题是，为什么我在一方面看不上 [pag](https://github.com/Tencent/libpag)。pag 加速了设计师应用新动画的速度，它在业务上的价值巨大。它很清晰地将动画交给设计师，工程师只需要播放动画就行了。然而这也同时掩盖了交互动画（interactive animation）的价值。“用户点击，再播放一个动画”，通过建立这样的所谓最佳实践，却间接忽视并抑制了打造精美交互动画的可能性。
+
+同样的例子是腾讯内部的 magic brush 渲染引擎如此强大、小程序的生态也足够丰富，但是它们在 UI 和动效表现上都有欠缺，而且欠缺很大。UI 和动效表现从不可能作为高优先级的需求得到重视。说的好听一点是分为一期、二期的方式实现。但实际上这是一种对设计与 UI 价值的赤裸忽视。
+
+这也是为什么我瞧不上工作中一期、二期的做法。如果一期、二期是一种持续进化的方式，那么就是好的。然而在实际的工作中，往往是事情做不完，才推延到了所谓的二期。这不是一种有追求的做法，这只是借口。
+
+这是典型的设计团队与工程团队屁股不坐在一起的产物 —— 我们没有以相同的目标考虑相同的问题。在 Apple 发布 Dynamic Island 时，许多人吐槽这都能叫创新，但我感到非常非常兴奋。因为自从 iPhone X 后，很久没有在 Apple 产品发布会上看到单纯的 UI/UX 设计了。
+
+曾经读过 Apple 设计师如何与工程师合作，创作出 Dynamic Island 的文章。我感到羡慕和嫉妒，因为我也想要这样闪光。
+
+---
+
+Design in Code，更根本的是 **Design starts from Code**。这和 Vercel 所说的传统合作方式（traditional handoff process）是根本价值观上的不同。正因如此，我才希望在团队中践行所谓的快速验证、积极迭代。
+
+有 UI 追求的人、有这份骄傲的人，才是 Design Engineer。

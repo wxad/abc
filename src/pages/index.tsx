@@ -10,22 +10,35 @@ import FontFamilyCover from "@/components/font-family/FontFamilyCover"
 import AduiCover from "@/components/adui/AduiCover"
 import WxadCover from "@/components/wxad/WxadCover"
 import BmCover from "@/components/bm/BmCover"
+import DepthCover from "@/components/designing-depth/DepthCover"
 import NextLink from "next/link"
 
 const posts = [
+  {
+    title: "交互动画的层级设计",
+    description:
+      "所谓“感觉很好”的二维 UI 设计，基本来源于人们对真实三维世界的认知。只不过是在此之上，或效仿，或衍伸。这篇文章的主题是层级，是我反向地从 UI 出发，去寻找关于层级的原型的一次尝试。",
+    slug: "designing-depth",
+    publishedAt: "2024-08-03",
+    editedAt: "2024-08-03",
+    author: "Aragakey.",
+    authorLink: "https://codepen.io/aragakey",
+    children: <DepthCover />,
+  },
   // {
-  //   title: "回顾：朋友圈广告的形态思考与尝试",
-  //   description: "",
-  //   slug: "bm",
-  //   publishedAt: "2024-07-13",
-  //   editedAt: "2024-07-13",
+  //   title: "文字环绕过渡动画",
+  //   description: "asd",
+  //   slug: "circular-animation",
+  //   publishedAt: "2024-07-30",
+  //   editedAt: "2024-07-30",
   //   author: "Aragakey.",
   //   authorLink: "https://codepen.io/aragakey",
-  //   children: <WxadCover />,
+  //   children: <BmCover />,
   // },
   {
     title: "回顾：制作朋友圈广告年度评选",
-    description: "我享受和设计师合作的创作过程。我们职责互补，但不模糊。我们忘却时间，将对个人实现的追求托付于我们的作品。我这个人很简单，只想要做优雅和精致的 UI。我很庆幸遇到这样适配自己特长的项目。",
+    description:
+      "我享受和设计师合作的创作过程。我们职责互补，但不模糊。我们忘却时间，将对个人实现的追求托付于我们的作品。我这个人很简单，只想要做优雅和精致的 UI。我很庆幸遇到这样适配自己特长的项目。",
     slug: "bm",
     publishedAt: "2024-07-22",
     editedAt: "2024-07-22",

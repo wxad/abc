@@ -15,9 +15,9 @@ const Demo = (props: {}) => {
 
   return (
     <DemoBox className="py-10 text-center">
-      <div className="flex items-center justify-center gap-4 text-xs text-neutral-400">
+      <div className="flex items-center justify-center text-xs text-neutral-400">
         <div>
-          <div className="relative w-[150px] h-[150px] overflow-hidden rounded-xl mix-blend-darken">
+          <div className="relative w-32 h-32 overflow-hidden rounded-xl mix-blend-darken">
             <video
               className="absolute-full"
               ref={video1Ref}
@@ -38,7 +38,7 @@ const Demo = (props: {}) => {
           背景有延时
         </div>
         <div>
-          <div className="relative w-[150px] h-[150px] overflow-hidden rounded-xl mix-blend-darken">
+          <div className="relative w-32 h-32 overflow-hidden rounded-xl mix-blend-darken">
             <video
               className="absolute-full"
               ref={video2Ref}
@@ -59,7 +59,7 @@ const Demo = (props: {}) => {
           背景无延时
         </div>
         <div>
-          <div className="relative w-[150px] h-[150px] overflow-hidden rounded-xl mix-blend-darken">
+          <div className="relative w-32 h-32 overflow-hidden rounded-xl mix-blend-darken">
             <video
               className="absolute-full"
               ref={video3Ref}

@@ -1,0 +1,260 @@
+---
+title: "交互动画的层级设计"
+description: "所谓“感觉很好”的二维 UI 设计，基本来源于人们对真实三维世界的认知。只不过是在此之上，或效仿，或衍伸。这篇文章的主题是层级，是我反向地从 UI 出发，去寻找关于层级的原型的一次尝试。"
+slug: "designing-depth"
+publishedAt: "2024-08-19"
+editedAt: "2024-08-19"
+author: "Aragakey."
+authorLink: "https://codepen.io/aragakey"
+---
+
+import IOSVideo from "@/components/designing-depth/IOSVideo"
+import IOSPull from "@/components/designing-depth/IOSPull"
+import IOSPullSlow from "@/components/designing-depth/IOSPullSlow"
+import IOSUnlock from "@/components/designing-depth/IOSUnlock"
+import IOSSteps from "@/components/designing-depth/IOSSteps"
+import IOSSteps1 from "@/components/designing-depth/IOSSteps1"
+import IOSClick from "@/components/designing-depth/IOSClick"
+import CarouselNoChoreography from "@/components/designing-depth/CarouselNoChoreography"
+import AlertDemo from "@/components/fm/AlertDemo"
+import LikeBM2404Compare from "@/components/likes/LikeBM2404Compare"
+import WxadBMTops from "@/components/designing-depth/WxadBMTops"
+
+## 前言
+
+近段时间，我无限欣赏 Vercel 这家公司的好几名 [Design Engineers](https://vercel.com/blog/design-engineering-at-vercel)。而在他们其中，我将 [Rauno(https://avatars.githubusercontent.com/u/23662329?v=4)](https://rauno.me/) 视为这个岗位的绝对典范。我实在有点太崇拜他了。
+
+我在组内分享了他的文章 [Invisible Details of Interaction Designs](https://rauno.me/craft/interaction-design)。其中最令我共鸣的一段话是：
+
+> For me, understanding and articulating why something feels right does not come as intuitively as designing something to feel right. But they are two sides of the same coin. There must be a reason. It can be as simple as a particular spring curve or something more innate, like metaphors. Analyzing and making sense of design details beyond just "it feels nice" helps nurture taste, amplify level of execution, and grow appreciation for how hard the pursuit of excellence is.
+
+分析并理解设计细节，而不仅仅是停留在“感觉很好”。感觉可以是一条建议、一种衡量手段，却唯独成为不了做 UI 的人的工具。去培养我的审美能力、去提高我的开发水平；去体味其中的趣味；去增加对追求卓越这件艰难的事的实感和敬畏。这是属于做 UI 的人的骄傲。
+
+最重要的一个启发或说收获是：所谓“感觉很好”的二维 UI 设计，基本来源于人们对真实三维世界的认知。只不过是在此之上，或效仿，或衍伸。
+
+这篇文章的主题是层级，是我反向地从 UI 出发，去寻找关于层级的原型的一次尝试。
+
+## 第 1 种层级：前后景
+
+### 丰富构图
+
+前阵子补了一部 2022 年由罗伯特·帕丁森主演的《新蝙蝠侠》。这部影片获得了包含奥斯卡奖在内的多个最佳视觉效果奖的提名。这支 [Why THE BATMAN is so beautiful](https://www.youtube.com/watch?v=STynLl-2FqU&t=132s) 的视频中有一段介绍了电影画面是如何营造紧张、惊悚的氛围的：
+
+> Horror and dread is often better achieved with atmosphere and what you can't see.
+
+其中提到了一个摄影术语：“弄脏画面（Dirtying up the frame）”。
+
+![](https://wxa.wxs.qq.com/wxad-design/yijie/dirtying-up-the-frame.webp)
+
+“弄脏画面”，简单说就是在画面中加入前景和背景，以丰富构图：
+
+![](https://wxa.wxs.qq.com/wxad-design/yijie/batman-0.webp)
+
+![](https://wxa.wxs.qq.com/wxad-design/yijie/batman-1.webp)
+
+对于 UI 界面也是一样。在微信广告官网榜单页上，设计师分别在前景和背景上加入了数个模糊的爱心。而我没有将所有元素以一张图的方式处理，而是在左右滑动时增强了它们的关系：
+
+<WxadBMTops />
+
+---
+
+除了左右滑动，通过鼠标的移动、页面的滚动，我们也可以在具有前后景的构图上，去增强元素之间的关系：
+
+![鼠标的移动](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-bm-4.gif)
+
+![页面的滚动](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-bm-2.gif)
+
+### 表明可操作性
+
+在 iOS 上长按图标，会出现一个菜单，这时通过模糊背景，强化了不同 UI 的前后深度。和不模糊的设计相比，最重要的差别是，右边的设计暗示了除了菜单以外，底部的图标也是可以操作的：
+
+<img
+  className="block m-auto my-4 w-96 max-w-full rounded-lg mix-blend-darken"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/drop-ios.webp"
+  loading="lazy"
+/>
+
+似乎左侧更适合移动端更聚焦，右侧更适合桌面端。
+
+类似地在 iPad 上，当滑出左侧通知中心时，如果再从底部滑出 Dock，那么 Dock 和通知中心都不是模糊的，这表明了此时它们都可以被操作：
+
+![](https://wxa.wxs.qq.com/wxad-design/yijie/ipad-dock2.gif)
+
+而在主屏幕右上方滑出控制中心时，Dock 和主屏幕一起变模糊了，这又表明了它不能被操作：
+
+![](https://wxa.wxs.qq.com/wxad-design/yijie/ipad-dock-no-blur.gif)
+
+Apple 很好地贯彻了后景模糊对不可操作的隐喻。
+
+## 第 2 种层级：动画编排
+
+动画编排（Choreographing Motion）是指顺序地安排一组元素的动画。
+
+和“弄脏画面（Dirtying up the frame）”类似，都是为界面增加更多的层次。不同的是，动画编排更多是在时间或运动延时上进行分层。
+
+### 更自然
+
+一个简单的例子是，我们经常会看到类似于这样的轮播 UI：
+
+<CarouselNoChoreography />
+
+这样显然不够真实和自然，因为真实世界中不可能发生一张卡片穿过另一张卡片的现象。我们可以说这样的设计是粗暴的、缺少编排的。
+
+足够自然的编排应该考虑到两张卡片的关系。会让你会心一笑，会值得你细细把玩：
+
+![](https://wxa.wxs.qq.com/wxad-design/yijie/little-weekend-pro.gif)
+
+然而和这个真实、自然的轮播相比，足够简洁和明了的轮播避免了一些三维的、比较大的变形，反倒有了一定的优势。重要的还是，使用这个产品的用户需不需要“足够自然”。
+
+---
+
+同样地，在 [Functional Motion](https://wxad.design/abc/functional-motion) 中，我提到了许多设计语言在处理添加和删除动画时，很容易忽略一个细节：透明度与位移应该是不同步的。具体而言，在添加时，透明度应该是后变化的；在删除时，透明度应该是先变化的。
+
+下面的动画是存在问题的。可以注意到，在添加时，元素自身的尺寸发生了变化（或者说 **元素自身尺寸一定是会变化的，但是不能让用户看见**）；在删除时，由于透明度和位移是同步的，因此造成了 **UI 上的重叠**。
+
+<AlertDemo sync />
+
+一个理想的添加或删除动画应该是这个样子的：
+
+<AlertDemo />
+
+```css
+/* 添加 */
+transition: 0.3s all ease 0.2s, 0.3s ease opacity;
+
+/* 删除 */
+transition: 0.3s all ease, 0.3s ease opacity 0.2s;
+```
+
+---
+
+在 iPhone 主屏幕向下滑动时，Apple 对元素的编排有许多细节。
+
+<IOSPull />
+
+上面的录屏中好像看不出什么编排。如果我们放慢下拉手势速度：
+
+<IOSPullSlow />
+
+随着下拉的程度变化，看似整体的元素变化实际上可以分为 4 段：
+
+1. 因为主屏幕第一行的图标和 Siri 建议的图标在完全一致的位置上，因此要先做主屏幕的模糊出场，避免造成类似于上面所说的 UI 上的重叠；
+2. 四个 Siri 建议开始从上方出现，它的优先级高于搜索框的变形；
+3. 搜索按钮变形为搜索框，在底部唤起键盘。虽然键盘已经展开了，但仍然跟随手势向下运动；
+4. 松手后，搜索框和键盘弹起。
+
+<IOSSteps />
+
+每一步的先后顺序都有其意义。
+
+除了在主屏幕下拉以外，点击搜索框也可以唤起相同的界面，但这时候的编排就不同了：
+
+<IOSClick />
+
+1. 搜索框会先变形，键盘也直接弹起，同时背景开始模糊；
+2. 在非常小的延迟之后，Siri 建议的图标入场。
+
+<IOSSteps1 />
+
+### 更动感
+
+在制作 2024 年榜单点赞按钮时，也有一个细节的先后顺序的编排：
+
+<LikeBM2404Compare />
+
+这个按钮的设计是原地弹跳，在结束后炸出底层的氛围。一开始，我将按钮的圆形背景和背景上的爱心同步运动，认为这样已经完成。接着可能是脑子抽了一下，往背景这一层加了 `0.1s` 的延迟。爱心与背景被分层，像是前者的运动带动了后者，从而会让整体更显动感。相比之下，同步的动画一下子就看起来呆板了。
+
+### 更有趣
+
+人为地拆分前后景，更像是一种在二维的界面上建立三维的深度。这个深度本不存在，用编排的方式带着用户去想象和感受这种深度，变成了一种有趣：
+
+<img
+  className="block m-auto my-4 max-w-full rounded-lg"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/pers-8982.gif"
+  loading="lazy"
+  style={{
+    clipPath: "inset(1px round 12px)",
+  }}
+/>
+
+<img
+  className="block m-auto my-4 max-w-full rounded-lg"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/all-steps-9114.gif"
+  loading="lazy"
+  style={{
+    clipPath: "inset(2px round 12px)",
+  }}
+/>
+
+## 第 3 种层级：错落动画
+
+错落动画（Staggering Motion）是指一组相似、并列的元素在动画中有一定的错落和差异。
+
+一群鱼儿在海洋中游动。它们在动作和时机上都有微小的错落和差异。这种微小的错落，不妨碍我们很自然地将它们视为一个整体。而且在此之上，形成了一种更加优美的视觉体验。
+
+![](https://wxa.wxs.qq.com/wxad-design/yijie/bbc-fish.gif)
+
+一群鸟儿从树上起飞：
+
+![](https://wxa.wxs.qq.com/wxad-design/yijie/bbc-birds.gif)
+
+现实世界中，不存在完全同步的运动。有时，UI 就会将相邻的元素以错落的方式运动。或避免了视觉上的突然变化，或增加了动态感和自然感。
+
+---
+
+Apple 控制中心，每一排控件存在一些细微的错落：
+
+<IOSVideo />
+
+如果仔细看，会发现：
+
+1. 每一排的位移距离是依次增加的；
+2. 只有第一排控件的弹簧参数是带有回弹的，其余的可能依次调大了阻尼（damping）。
+
+---
+
+Apple 解锁进入主屏幕时，所有图标会从中心点开始错落地下落：
+
+<IOSUnlock />
+
+在我看来，这样的设计夸大了图标和锁屏两个平面的层级。主屏幕作为 iOS 的核心页面，需要一个稍微夸张的入场仪式。
+
+---
+
+对于网格布局中的内容加载而言，可以让每个卡片依次淡入，让用户清楚有多少新的内容被添加了进来。同时所有卡片又要保持作为一次加载行为的整体，不让每一个动画都显得独立：
+
+![](https://wxa.wxs.qq.com/wxad-design/yijie/wxad-loading.gif)
+
+这里要注意先利用在第二部分提到的动画编排，让处于加载按钮下方的所有元素都向下位移，腾出空间后再执行入场动画，才符合认知。相比之下，OpenAI 官网的加载动画我个人认为不够自然，原因可能是我们对编排和延时的考量不同：
+
+![](https://wxa.wxs.qq.com/wxad-design/yijie/openai2.gif)
+
+## 最后
+
+最近浅读了一下《无界面设计》，里面有一段话：
+
+> 如果你特地招聘人才来设计界面，那么你可能并不会获得真正 创新的解决方案。你只会得到更多的界面，而非更好的用户体验。
+>
+> 以下是 UI：
+>
+> 导航、次导航、菜单、下拉列表、按钮、链接、窗口、圆角、阴 影、错误提示、警报、更新、复选框、密码输入框、搜索框、文本输 入、单选框、文本框、悬停状态、选择状态、按下状态、工具提示条、横幅广告、嵌入式视频、滑动效果、滚动、点击、图标、色彩、列表、幻灯片、文本转换、标记、通知、渐变、弹出窗口、转盘、确定/取消，等等。
+>
+> 以下是 UX：
+>
+> 人、幸福、解决问题、理解需求、爱、效率、娱乐、快乐、愉悦、微笑、灵魂、温暖、个性、欢乐、满意、满足、得意、兴奋、福佑、极度兴奋、便捷、魅惑、魔力、生产力、成效，等等。
+>
+> 一直以来，我们混淆了这两个概念。我们并不是追求最佳的、最有创意的、最实用的方式来解决问题，而是用屏幕来解决问题，因为这就是招聘职位所描述的。一旦发现问题，我们就扔个界面上去。**用户体验也不再是以人为本，而是慢慢变得只关乎圆角矩形和视差动画**。
+
+我觉得尤其是最后一句是指着我的鼻子骂。道理我们都懂，我们应该洞察的是用户需求，而非 UI 本身，因为 UI 本身没有意义。但我的工作岗位使得我专注于 UI 本身的惯性很大。那么我应该质疑自己吗？
+
+---
+
+另一方面，我又从 Vercel 看到一句话：
+
+![](https://wxa.wxs.qq.com/wxad-design/yijie/vercel-de.webp)
+
+即便只是一段示意性质的文字，但来自 Vercel 的 Design Engineers 说，他们聚焦于 interfaces 和 stunning visuals。 —— 这好像不太对吧，用户在哪？
+
+---
+
+虽然实际上，我们不可能极端地以一种方式去做事，或完全信奉一种观点，但我仍然想要以一种偏执的方式驳斥《无界面设计》的观点。Apple 在 WWDC18 上说 playfulness is a natural consequence of a fluid interface。我不认为钻到界面中去，就只会得到更好的界面，而不是更好的用户体验 —— 那是因为你的界面还不够好。
