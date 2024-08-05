@@ -13,7 +13,7 @@ const Trail = ({ showHeart = false }: { showHeart?: boolean }) => {
   const element2 = useRef<HTMLDivElement>(null)
   const heartRef = useRef<HTMLDivElement>(null)
 
-  const fast = { tension: 800, friction: 40 }
+  const fast = { tension: 900, friction: 50 }
   const slow = { mass: 3, tension: 600, friction: 50 }
 
   const [, api]: any = useTrail(2, (i) => ({

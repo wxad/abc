@@ -11,7 +11,7 @@ const Trail = (props: {}) => {
   const handleRef = useRef<HTMLDivElement>(null)
   const heartRef = useRef<HTMLDivElement>(null)
 
-  const fast = { tension: 800, friction: 40 }
+  const fast = { tension: 900, friction: 50 }
   const slow = { mass: 2.6, tension: 400, friction: 50 }
 
   const [, api]: any = useTrail(2, (i) => ({
