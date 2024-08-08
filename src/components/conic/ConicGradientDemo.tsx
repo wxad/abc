@@ -101,7 +101,7 @@ const Demo = () => {
   const handleSwitch = () => {
     animate(velocityValue, velocityValue.get() + 4, {
       type: "keyframes",
-      duration: 1.7,
+      duration: 2,
       ease: [0.43, 0.35, 0.2, 0.95],
     })
     setScene((p) => (p === "moments" ? "channels" : "moments"))

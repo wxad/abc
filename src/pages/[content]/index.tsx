@@ -25,7 +25,7 @@ export default function PostPage({ content }: { content: Post }) {
   const PostContent = React.useMemo(() => getMDXComponent(code), [code])
 
   return (
-    <div className="m-auto px-4 py-16 w-[min(80rem,_100%)] text-base">
+    <div className="m-auto px-4 pt-16 pb-28 w-[min(80rem,_100%)] text-base">
       <Head>
         <title>{frontmatter.title}</title>
         <meta name="description" content={frontmatter.description} />
@@ -33,7 +33,7 @@ export default function PostPage({ content }: { content: Post }) {
         <meta property="og:title" content={frontmatter.title} />
         <meta property="og:description" content={frontmatter.description} />
       </Head>
-      <nav className="fixed 74:hidden bottom-0 py-6 px-4 left-1/2 transform -translate-x-1/2 z-20 w-[min(800px,_100vw)]">
+      {/* <nav className="fixed 74:hidden bottom-0 py-6 px-4 left-1/2 transform -translate-x-1/2 z-20 w-[min(800px,_100vw)]">
         <div className="flex items-center justify-between px-4 h-[48px] bg-neutral-100 bg-opacity-90 backdrop-blur-sm rounded-xl shadow-md">
           <NextLink
             className="flex items-center gap-2 text-xs font-semibold opacity-80"
@@ -63,7 +63,7 @@ export default function PostPage({ content }: { content: Post }) {
             </svg>
           </a>
         </div>
-      </nav>
+      </nav> */}
       <nav className="fixed hidden 74:flex flex-col justify-between top-16 bottom-20 pl-6 max-w-44 text-gray-600">
         <h2>
           <NextLink

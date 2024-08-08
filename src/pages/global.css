@@ -434,3 +434,20 @@ code:where(:not(pre) > code) {
     --wipe-in: 0%;
   }
 }
+
+.footer-animation {
+  animation: 500ms ease 200ms both footerAnimation;
+}
+
+@keyframes footerAnimation {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateY(80px);
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) translateY(0);
+    filter: blur(0);
+  }
+}
