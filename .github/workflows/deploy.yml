@@ -73,6 +73,11 @@ jobs:
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
+      - name: Install sharp
+        run: |
+          ${{ steps.detect-package-manager.outputs.manager }} add sharp
+          ${{ steps.detect-package-manager.outputs.manager }} add --force @img/sharp-linux-x64
+
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
 
