@@ -47,7 +47,7 @@ const CraftFooterItem = ({
 
 const CraftFooter = () => {
   return (
-    <div className="mt-16 mb-32 mx-auto w-1/2 min-w-96 grid grid-cols-9 grid-rows-3 gap-1">
+    <div className="mt-16 mb-32 mx-auto w-full min-w-96 grid grid-cols-9 grid-rows-3 gap-1">
       <CraftFooterItem className="row-start-2 row-end-3 col-start-1 col-end-2">
         <svg className="block w-full h-full" viewBox="0 0 180 180">
           <path
