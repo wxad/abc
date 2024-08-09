@@ -162,6 +162,9 @@ body {
 
 html,
 body {
+  -webkit-text-size-adjust: 100% !important;
+  text-size-adjust: 100% !important;
+  -moz-text-size-adjust: 100% !important;
   min-height: 100vh;
 }
 
