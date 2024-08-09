@@ -62,13 +62,16 @@ export async function getStaticProps() {
 
           const aspectRatio = mediaWidth / mediaHeight
 
-          // 生成 25x 的小图
-          await sharp(imagePath).resize(25, null).toFile(posterPath)
+          // 如果不存在 posterPath 或 index.png，再执行 sharp
+          if (!fs.existsSync(posterPath)) {
+            // 生成 25x 的小图
+            await sharp(imagePath).resize(25, null).toFile(posterPath)
 
-          // 压缩原图
-          await sharp(imagePath)
-            .resize(500)
-            .toFile(path.join("public", "crafts", dir, "index.png"))
+            // 压缩原图
+            await sharp(imagePath)
+              .resize(500)
+              .toFile(path.join("public", "crafts", dir, "index.png"))
+          }
 
           return {
             ...json,
@@ -99,42 +102,43 @@ export async function getStaticProps() {
           })
 
           const aspectRatio = mediaWidth / mediaHeight
+          // 如果不存在 index.mp4，则执行 ffmpeg
+          if (!fs.existsSync(outputVideoPath)) {
+            // 使用 fluent-ffmpeg 导出首帧作为 poster 图片
+            await new Promise<void>((resolve, reject) => {
+              ffmpeg(videoPath)
+                .screenshots({
+                  count: 1,
+                  filename: "poster.png",
+                  folder: posterDir,
+                  size: "500x?",
+                })
+                .on("end", () => {
+                  resolve()
+                })
+                .on("error", (err) => {
+                  reject(err)
+                })
+            })
 
-          // 使用 fluent-ffmpeg 导出首帧作为 poster 图片
-          await new Promise<void>((resolve, reject) => {
-            ffmpeg(videoPath)
-              .screenshots({
-                count: 1,
-                filename: "poster.png",
-                folder: posterDir,
-                size: "25x?",
-              })
-              .on("end", () => {
-                resolve()
-              })
-              .on("error", (err) => {
-                reject(err)
-              })
-          })
-
-          // 压缩视频并输出到 public 目录
-          await new Promise<void>((resolve, reject) => {
-            ffmpeg(videoPath)
-              .output(outputVideoPath)
-              .videoCodec("libx264")
-              .audioCodec("aac")
-              .audioBitrate("128k")
-              .videoBitrate("1000k")
-              .size("720x?")
-              .on("end", () => {
-                resolve()
-              })
-              .on("error", (err) => {
-                reject(err)
-              })
-              .run()
-          })
-
+            // 压缩视频并输出到 public 目录
+            await new Promise<void>((resolve, reject) => {
+              ffmpeg(videoPath)
+                .output(outputVideoPath)
+                .videoCodec("libx264")
+                .audioCodec("aac")
+                .audioBitrate("128k")
+                .videoBitrate("1000k")
+                .size("720x?")
+                .on("end", () => {
+                  resolve()
+                })
+                .on("error", (err) => {
+                  reject(err)
+                })
+                .run()
+            })
+          }
           return {
             ...json,
             aspectRatio,
@@ -175,11 +179,7 @@ const CraftItem = ({ item }: { item: DataSource }) => {
 
     if (inView) {
       if (item.videoUrl) {
-        playVideo(videoRef.current, () => {
-          handleDone()
-        })
-      } else {
-        handleDone()
+        playVideo(videoRef.current, handleDone)
       }
     } else {
       videoRef.current?.pause()
@@ -198,28 +198,30 @@ const CraftItem = ({ item }: { item: DataSource }) => {
         }}
       >
         {item.videoUrl ? (
-          <video
-            ref={videoRef}
-            className="block w-full h-auto object-cover"
-            src={item.videoUrl}
-            preload="none"
-            x-webkit-airplay="true"
-            webkit-playsinline="true"
-            playsInline
-            muted
-            loop
-          />
+          <>
+            <video
+              ref={videoRef}
+              className="block w-full h-auto object-cover"
+              src={item.videoUrl}
+              preload="none"
+              x-webkit-airplay="true"
+              webkit-playsinline="true"
+              playsInline
+              muted
+              loop
+            />
+            <img
+              ref={posterRef}
+              className="absolute-full object-cover"
+              src={item.posterUrl}
+            />
+          </>
         ) : (
           <img
             className="block w-full h-auto object-cover"
             src={item.imageUrl}
           />
         )}
-        <img
-          ref={posterRef}
-          className="absolute-full object-cover blur"
-          src={item.posterUrl}
-        />
         <div
           className="absolute left-0 bottom-0 w-full h-8"
           style={{
