@@ -79,6 +79,8 @@ const Footer = () => {
   }
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    // if touch, ignore
+    if (window.matchMedia("(hover: none)").matches) return
     const { left } = e.currentTarget.getBoundingClientRect()
     const x = e.clientX - left
     setLeftOffset(x)
