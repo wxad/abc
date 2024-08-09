@@ -263,7 +263,6 @@ const CraftItem = ({ item }: { item: DataSource }) => {
 }
 
 const Page: React.FC<IPageProps> = ({ dataSource }) => {
-  console.log("[yijie]", dataSource)
   // 这个页面是一个瀑布流的布局。每一项是一个视频。瀑布流的实现方式是以三列栅格的方式呈现。通过预先计算视频的高度，然后依次分配到三列里去。
   // 现在 dataSource 里的每一个对象已经存在 aspectRatio, mediaWidth, mediaHeight 这三个字段了。我们可以根据这三个字段来计算每一个视频的高度，并最终得到三列 columns
   // 注意使用 useCallback
