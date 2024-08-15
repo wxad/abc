@@ -11,6 +11,8 @@ const Cover = () => {
         <img
           src="https://wxa.wxs.qq.com/wxad-design/yijie/conic.gif"
           className="absolute-full grayscale"
+          loading="lazy"
+          alt="cover"
         />
       </div>
     </div>

@@ -11,6 +11,8 @@ const Cover = () => {
         <img
           src="https://wxa.wxs.qq.com/wxad-design/yijie/adui-cover-2.webp"
           className="absolute-full object-contain"
+          loading="lazy"
+          alt="cover"
         />
       </div>
     </div>

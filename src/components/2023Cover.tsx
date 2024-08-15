@@ -10,14 +10,20 @@ const Cover2023 = () => {
       >
         <img
           src="https://wxa.wxs.qq.com/wxad-design/yijie/triangle-2.webp"
+          loading="lazy"
+          alt="cover"
           className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-85%] w-[40%] h-[40%] mix-blend-darken"
         />
         <img
           src="https://wxa.wxs.qq.com/wxad-design/yijie/triangle-0.webp"
+          loading="lazy"
+          alt="cover"
           className="absolute top-1/2 left-1/2 translate-x-[-100%] translate-y-[-35%] w-[40%] h-[40%] mix-blend-darken"
         />
         <img
           src="https://wxa.wxs.qq.com/wxad-design/yijie/triangle-1.webp"
+          loading="lazy"
+          alt="cover"
           className="absolute top-1/2 left-1/2 translate-y-[-35%] w-[40%] h-[40%] mix-blend-darken"
         />
       </div>

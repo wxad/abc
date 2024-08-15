@@ -182,10 +182,10 @@ const Home = () => {
               }}
             />
             <div className="text-center 74:text-left">
-              <h1 className="relative left-[-1px] text-neutral-500 74:text-neutral-800 font-semibold text-sm 74:text-base">
+              <h1 className="relative left-[-1px] text-neutral-600 74:text-neutral-800 font-semibold text-sm 74:text-base">
                 设计垂点
               </h1>
-              <div className="mt-4 74:mt-0 text-xs text-neutral-500">
+              <div className="mt-4 74:mt-0 text-xs text-neutral-600">
                 过设计点 A，作业务目标 BC 的思考辅助垂线。
                 <br className="md:hidden" />
                 它们的交点即设计垂点。

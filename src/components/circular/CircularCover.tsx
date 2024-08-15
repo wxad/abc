@@ -6,6 +6,8 @@ const Cover = () => {
         <img
           src="https://wxa.wxs.qq.com/wxad-design/yijie/wxad-decennial-abc-cover.webp"
           className="absolute-full"
+          loading="lazy"
+          alt="cover"
         />
       </div>
     </div>

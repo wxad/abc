@@ -8,7 +8,12 @@ const Cover = () => {
           backgroundImage: "url(/abc/grid.svg)",
         }}
       >
-        <img src="https://wxa.wxs.qq.com/wxad-design/yijie/fm-cover.png" className="absolute-full mix-blend-darken" />
+        <img
+          src="https://wxa.wxs.qq.com/wxad-design/yijie/fm-cover.png"
+          className="absolute-full mix-blend-darken"
+          loading="lazy"
+          alt="cover"
+        />
       </div>
     </div>
   )
