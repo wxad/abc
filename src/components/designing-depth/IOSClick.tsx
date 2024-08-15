@@ -7,6 +7,7 @@ const Demo = () => {
         <img
           src="https://wxa.wxs.qq.com/wxad-design/yijie/RPReplay_Final1722493162.gif"
           loading="lazy"
+          alt="RPReplay_Final1722493162"
         />
       </div>
     </DemoBox>

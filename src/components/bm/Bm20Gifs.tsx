@@ -7,6 +7,7 @@ const Demo = () => {
         <img
           src="https://wxa.wxs.qq.com/wxad-design/yijie/2020-openning.gif"
           loading="lazy"
+          alt="进入欢迎页"
         />
         进入欢迎页
       </div>
@@ -14,6 +15,7 @@ const Demo = () => {
         <img
           src="https://wxa.wxs.qq.com/wxad-design/yijie/2020-vote.gif"
           loading="lazy"
+          alt="参与投票"
         />
         参与投票
       </div>
@@ -21,6 +23,7 @@ const Demo = () => {
         <img
           src="https://wxa.wxs.qq.com/wxad-design/yijie/2020-cards.gif"
           loading="lazy"
+          alt="生成评委卡"
         />
         生成评委卡
       </div>

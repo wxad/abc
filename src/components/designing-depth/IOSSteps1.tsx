@@ -7,6 +7,7 @@ const Demo = () => {
         <img
           src="https://wxa.wxs.qq.com/wxad-design/yijie/ios-stage-5.webp"
           loading="lazy"
+          alt="ios-stage"
         />
         1
       </div>
@@ -14,6 +15,7 @@ const Demo = () => {
         <img
           src="https://wxa.wxs.qq.com/wxad-design/yijie/ios-stage-6.webp"
           loading="lazy"
+          alt="ios-stage"
         />
         2
       </div>

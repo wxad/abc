@@ -46,6 +46,7 @@ const FooterItem = ({
       target={link.startsWith("http") ? "_blank" : undefined}
       className="block"
       ref={ref}
+      aria-label={link}
     >
       <animated.div
         className="relative flex items-center justify-center aspect-square rounded-full cursor-pointer"

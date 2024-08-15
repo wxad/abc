@@ -7,12 +7,14 @@ const Demo = () => {
         <img
           src="https://wxa.wxs.qq.com/wxad-design/yijie/carousel-no-cho.gif"
           loading="lazy"
+          alt="carousel-no-cho"
         />
       </div>
       <div className="flex flex-col items-center gap-2 w-80 mix-blend-darken">
         <img
           src="https://wxa.wxs.qq.com/wxad-design/yijie/output-recent-design.gif"
           loading="lazy"
+          alt="output-recent-design"
         />
       </div>
     </DemoBox>

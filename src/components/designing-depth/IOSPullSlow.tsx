@@ -7,6 +7,7 @@ const Demo = () => {
         <img
           src="https://wxa.wxs.qq.com/wxad-design/yijie/ios-video-2-slow.gif"
           loading="lazy"
+          alt="ios-video-2-slow"
         />
       </div>
     </DemoBox>

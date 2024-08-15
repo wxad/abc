@@ -7,6 +7,7 @@ const Demo = () => {
         <img
           src="https://wxa.wxs.qq.com/wxad-design/yijie/ios-stage-1.webp"
           loading="lazy"
+          alt="ios-stage"
         />
         1
       </div>
@@ -14,6 +15,7 @@ const Demo = () => {
         <img
           src="https://wxa.wxs.qq.com/wxad-design/yijie/ios-stage-2.webp"
           loading="lazy"
+          alt="ios-stage"
         />
         2
       </div>
@@ -21,6 +23,7 @@ const Demo = () => {
         <img
           src="https://wxa.wxs.qq.com/wxad-design/yijie/ios-stage-3.webp"
           loading="lazy"
+          alt="ios-stage"
         />
         3
       </div>
@@ -28,6 +31,7 @@ const Demo = () => {
         <img
           src="https://wxa.wxs.qq.com/wxad-design/yijie/ios-stage-4.webp"
           loading="lazy"
+          alt="ios-stage"
         />
         4
       </div>

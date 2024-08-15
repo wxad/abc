@@ -6,6 +6,7 @@ const Cover = () => {
         <img
           src="https://wxa.wxs.qq.com/wxad-design/yijie/og-depth.webp"
           className="absolute-full object-contain mix-blend-darken grayscale"
+          alt="cover"
         />
       </div>
     </div>

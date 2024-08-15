@@ -356,7 +356,7 @@ export const Img = ({ src, alt }: { src: string; alt: string }) => {
       <img
         className="block mb-4 w-full max-w-full"
         src={src}
-        alt={alt}
+        alt={alt || "image"}
         loading="lazy"
       />
       <span className="block text-xs text-center text-neutral-400">{alt}</span>

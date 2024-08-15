@@ -265,7 +265,7 @@ const Home = () => {
                           : "md:pr-16 md:border-r-[1px]"
                       }`}
                     >
-                      <div className="mb-6 font-mono text-neutral-500">
+                      <div className="mb-6 font-mono text-neutral-600">
                         {new Intl.DateTimeFormat("zh-CN", {
                           month: "long",
                           year: "numeric",
@@ -285,10 +285,10 @@ const Home = () => {
                       >
                         {title}
                       </NextLink>
-                      <div className="text-sm text-neutral-500">{description}</div>
+                      <div className="text-sm text-neutral-600">{description}</div>
                       <NextLink
                         href={slug}
-                        className="inline-flex items-center mt-8 md:mt-16 gap-2 text-sm text-neutral-600 hover:text-blue-500 font-medium hover:underline hover:decoration-dotted hover:decoration-current hover:underline-offset-4 transition-all"
+                        className="inline-flex items-center mt-8 md:mt-16 gap-2 text-sm text-neutral-700 hover:text-blue-500 font-medium hover:underline hover:decoration-dotted hover:decoration-current hover:underline-offset-4 transition-all"
                       >
                         阅读文章
                         <svg

@@ -7,12 +7,14 @@ const Demo = () => {
         <img
           src="https://wxa.wxs.qq.com/wxad-design/yijie/2019-vote-scene.gif"
           loading="lazy"
+          alt="投票场景"
         />
       </div>
       <div className="flex flex-1 flex-col items-center gap-2 max-w-64">
         <img
           src="https://wxa.wxs.qq.com/wxad-design/yijie/2019-cards-choose.gif"
           loading="lazy"
+          alt="评委卡选择"
         />
       </div>
     </DemoBox>

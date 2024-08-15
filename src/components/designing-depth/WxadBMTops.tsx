@@ -7,6 +7,7 @@ const Demo = () => {
         <img
           src="https://wxa.wxs.qq.com/wxad-design/yijie/bm-wxad-carousel-touch.gif"
           loading="lazy"
+          alt="bm-wxad-carousel-touch"
         />
       </div>
     </DemoBox>
