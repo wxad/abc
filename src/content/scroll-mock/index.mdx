@@ -1,0 +1,47 @@
+---
+  title: "如何依靠 transform 模拟 iOS 原生滚动体验"
+  description: "这篇文章将介绍利用 inertia + 手势动画尽可能模拟 iOS 原生滚动体验的方法，以及这样做的原因。"
+  slug: "scroll-mock"
+  publishedAt: "2024-08-27"
+  editedAt: "2024-08-27"
+  author: "Aragakey."
+  authorLink: "https://codepen.io/aragakey"
+---
+
+import ScrollMockBase from "@/components/scroll-mock/ScrollMockBase"
+
+## 为什么要模拟滚动
+
+最近做了一些移动端的交互 Demo，需要在用户一边滑动容器时，一边做一些 UI 上的变化。传统的做法是依靠 `scroll` 事件，很简单：
+
+```tsx
+const handleScroll = () => {
+  const { scrollLeft, scrollWidth } = element
+}
+```
+
+但会遇到以下几个问题：
+
+1. 在 iOS 设备上，`scroll` 事件的触发频率没有非常高，无法做顺畅的 UI 变化；
+2. 在 Android 设备上，没有 iOS 的“橡皮筋效果”，对此我确实一直都觉得很无语，难不成这是 iOS 的专利？
+3. 在桌面端设备中，无法通过鼠标拖拽的方式来横向滚动容器，必须通过横向的滚动条来操作；
+4. 无法拿到滚动开始、滚动结束的时机。有时候这个问题非常关键；
+5. 无法调整滚动的属性，如 `scroll-snap` 相关的属性。从我用过原生 CSS 的 `scroll-snap` 的经验来看，这个属性虽然很方便，但是和最舒服的体验总是不一样。
+
+---
+
+实际上，模拟一个移动端滚动，无非是以 `transform` 属性为核心，通过弹簧动画来模拟。这类似于我在 [转盘交互动画：以关键参数，细化我们的感受
+](https://wxad.design/abc/carousel) 这篇文章中所做的事。
+
+## 为什么不直接用 framer-motion 的 dragConstraints 属性
+
+`framer-motion` 提供了一个 `dragConstraints` 属性，可以用来限制拖拽的范围。但是我的需求是需要在滚动的过程中实时变换 `dragConstraints` 的值，而这是 `framer-motion` 做不到的。至于是什么需求，暂时还不能说。
+
+## 技术实现：use-gesture + inertia
+
+<ScrollMockBase />
+
+## 模拟存在的问题
+
+1. iOS 省电模式下，帧率会降低，导致动画卡顿，老问题了；
+2. 虽然 `transform` 已经是 web 端的最优解了，但性能一定不如 iOS 原生。虽然差别没有那么大，但只要横向对比着体验，还是能感受到差别。

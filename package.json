@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "@react-spring/web": "^9.7.3",
-    "@use-gesture/react": "^10.3.0",
+    "@use-gesture/react": "^10.3.1",
     "esbuild": "^0.14.51",
-    "framer-motion": "^11.2.11",
+    "framer-motion": "^11.3.30",
     "glob": "^8.0.3",
     "gray-matter": "^4.0.3",
     "mdx-bundler": "^9.0.1",

@@ -128,7 +128,7 @@ export async function getStaticProps() {
                 .videoCodec("libx264")
                 .audioCodec("aac")
                 .audioBitrate("128k")
-                .videoBitrate("1000k")
+                .videoBitrate("2000k")
                 .size("720x?")
                 .on("end", () => {
                   resolve()
@@ -236,30 +236,33 @@ const CraftItem = ({ item }: { item: DataSource }) => {
           <div className="ml-1 opacity-60 flex-none">{item.date}</div>
         </div>
       </div>
-      <NextLink
-        href={item.link}
-        target="_blank"
-        className="flex items-center justify-center mt-1 h-8 font-medium bg-neutral-200 bg-opacity-50 backdrop-blur-sm transition-all hover:bg-opacity-100 rounded-md cursor-pointer"
-      >
-        {item.link.startsWith("http") ? "跳转查看" : "阅读文章"}
-        <svg
-          className={`ml-1 w-4 ${
-            item.link.startsWith("http") ? "-rotate-45" : ""
-          }`}
-          strokeWidth="1.5"
-          viewBox="0 0 24 24"
-          fill="none"
-          color="currentColor"
-        >
-          <path
-            d="M6 12h12.5m0 0l-6-6m6 6l-6 6"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </NextLink>
+      {
+        !!item.link && (
+          <NextLink
+            href={item.link}
+            target="_blank"
+            className="flex items-center justify-center mt-1 h-8 font-medium bg-neutral-300 transition-all hover:bg-neutral-400 rounded-md cursor-pointer"
+          >
+            {item.link.startsWith("http") ? "跳转查看" : "阅读文章"}
+            <svg
+              className={`ml-1 w-4 ${item.link.startsWith("http") ? "-rotate-45" : ""
+                }`}
+              strokeWidth="1.5"
+              viewBox="0 0 24 24"
+              fill="none"
+              color="currentColor"
+            >
+              <path
+                d="M6 12h12.5m0 0l-6-6m6 6l-6 6"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </NextLink>
+        )
+      }
     </div>
   )
 }
@@ -351,15 +354,15 @@ const Page: React.FC<IPageProps> = ({ dataSource }) => {
   }, [])
 
   return (
-    <>
+    <div className="mx-auto md:px-16 max-w-[1200px]">
       <div className="mt-40 mb-16 text-5xl text-center font-semibold font-serif">
         Crafts
       </div>
-      <div className="flex gap-2 p-2">
+      <div className="flex gap-3 p-3">
         {currentColumns.crafts.map((column, i) => (
-          <div key={i} className="flex-1 flex flex-col gap-2">
-            {column.map((item) => (
-              <CraftItem key={item.link} item={item} />
+          <div key={i} className="flex-1 flex flex-col gap-3">
+            {column.map((item, j) => (
+              <CraftItem key={`${i}-${j}`} item={item} />
             ))}
           </div>
         ))}
@@ -367,18 +370,18 @@ const Page: React.FC<IPageProps> = ({ dataSource }) => {
       <div className="mt-40 mb-16 text-5xl text-center font-semibold font-serif">
         CSS Generatives
       </div>
-      <div className="flex gap-2 p-2">
+      <div className="flex gap-3 p-3">
         {currentColumns.generative.map((column, i) => (
-          <div key={i} className="flex-1 flex flex-col gap-2">
-            {column.map((item) => (
-              <CraftItem key={item.link} item={item} />
+          <div key={i} className="flex-1 flex flex-col gap-3">
+            {column.map((item, j) => (
+              <CraftItem key={`${i}-${j}`} item={item} />
             ))}
           </div>
         ))}
       </div>
       <CraftFooter />
       {/* <DynamicArtDots /> */}
-    </>
+    </div>
   )
 }
 

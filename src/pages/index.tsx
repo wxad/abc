@@ -11,9 +11,20 @@ import AduiCover from "@/components/adui/AduiCover"
 import WxadCover from "@/components/wxad/WxadCover"
 import BmCover from "@/components/bm/BmCover"
 import DepthCover from "@/components/designing-depth/DepthCover"
+import ScrollMockCover from "@/components/scroll-mock/ScrollMockCover"
 import NextLink from "next/link"
 
 const posts = [
+  {
+    title: "如何依靠 transform 模拟 iOS 原生滚动体验",
+    description: "这篇文章将介绍利用 inertia + 手势动画尽可能模拟 iOS 原生滚动体验的方法，以及这样做的原因。",
+    slug: "scroll-mock",
+    publishedAt: "2024-08-27",
+    editedAt: "2024-08-27",
+    author: "Aragakey.",
+    authorLink: "https://codepen.io/aragakey",
+    children: <ScrollMockCover />,
+  },
   {
     title: "交互动画的层级设计",
     description:
