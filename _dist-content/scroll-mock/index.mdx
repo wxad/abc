@@ -41,6 +41,36 @@ const handleScroll = () => {
 
 <ScrollMockBase />
 
+### 橡皮筋公式
+
+`framer-motion` 的做法是直接将超出的部分乘以 0.35，以达到橡皮筋的效果。这种简单的线性做法实际上并不是 iOS 的做法。下面的公式才是 iOS 的做法：
+
+`x = (1.0 - (1.0 / ((x * c / d) + 1.0))) * d`
+
+其中：
+
+- x: 超出边界的距离
+- c: 常数，用于调整橡皮筋的"紧度"（通常在 0.55 到 0.85 之间）
+- d: 可滚动区域的尺寸
+
+```tsx
+const applyRubberBand = (x: number, edge: number, dimension: number) => {
+  const c = 0.55
+  return (
+    (1.0 - 1.0 / ((Math.abs(x - edge) * c) / dimension + 1.0)) *
+      dimension *
+      Math.sign(x - edge) +
+    edge
+  )
+}
+```
+
+这个公式有意思的地方就在于：
+
+1. 更接近真实的物理效果，滚动感更自然；
+2. 随着超出边界的距离增加，阻力会逐渐增大；
+3. 可以通过调整常数 c 来微调橡皮筋的紧度。
+
 ## 模拟存在的问题
 
 1. iOS 省电模式下，帧率会降低，导致动画卡顿，老问题了；

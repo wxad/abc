@@ -4,6 +4,11 @@ import { animate, AnimationPlaybackControls } from "framer-motion"
 import { useDrag } from "@use-gesture/react"
 import DemoBox from "../DemoBox"
 
+const applyRubberBand = (x: number, edge: number, dimension: number) => {
+  const c = 0.55; // 你可以调整这个值来改变橡皮筋的紧度
+  return (1.0 - (1.0 / ((Math.abs(x - edge) * c / dimension) + 1.0))) * dimension * Math.sign(x - edge) + edge;
+}
+
 const Demo = () => {
   const scrollMax = 248
   const containerRef = useRef<HTMLDivElement>(null)
@@ -31,10 +36,12 @@ const Demo = () => {
       if (down) {
         let finalX = startTranslateX.current + mx
         if (finalX > 0) {
-          finalX = 0 + (finalX - 0) * 0.35
+          // finalX = 0 + (finalX - 0) * 0.35
+          finalX = applyRubberBand(finalX, 0, scrollMax)
           setStatus("到达左边界，橡皮筋效果")
         } else if (finalX < -scrollMax) {
-          finalX = -scrollMax + (finalX + scrollMax) * 0.35
+          // finalX = -scrollMax + (finalX + scrollMax) * 0.35
+          finalX = applyRubberBand(finalX, -scrollMax, scrollMax)
           setStatus("到达右边界，橡皮筋效果")
         } else {
           setStatus("跟手滚动中")
@@ -55,7 +62,7 @@ const Demo = () => {
             },
             onComplete: () => {
               setStatus("未开始滚动")
-            } 
+            }
           })
         } else if (vx !== 0) {
           animationRef.current?.pause()
