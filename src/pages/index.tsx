@@ -12,12 +12,25 @@ import WxadCover from "@/components/wxad/WxadCover"
 import BmCover from "@/components/bm/BmCover"
 import DepthCover from "@/components/designing-depth/DepthCover"
 import ScrollMockCover from "@/components/scroll-mock/ScrollMockCover"
+import ShadcnCover from "@/components/shadcn/ShadcnCover"
 import NextLink from "next/link"
 
 const posts = [
   {
+    title: "关于 shadcn/ui 的思考与启发",
+    description:
+      "我认为 shadcn/ui 的取巧之处在于两点：对最佳实践的探讨，自由度和掌控感的建立。",
+    slug: "shadcn",
+    publishedAt: "2024-09-04",
+    editedAt: "2024-09-04",
+    author: "Aragakey.",
+    authorLink: "https://codepen.io/aragakey",
+    children: <ShadcnCover />,
+  },
+  {
     title: "如何依靠 transform 模拟 iOS 原生滚动体验",
-    description: "这篇文章将介绍利用 inertia + 手势动画尽可能模拟 iOS 原生滚动体验的方法，以及这样做的原因。",
+    description:
+      "这篇文章将介绍利用 inertia + 手势动画尽可能模拟 iOS 原生滚动体验的方法，以及这样做的原因。",
     slug: "scroll-mock",
     publishedAt: "2024-08-27",
     editedAt: "2024-08-27",
@@ -296,7 +309,9 @@ const Home = () => {
                       >
                         {title}
                       </NextLink>
-                      <div className="text-sm text-neutral-600">{description}</div>
+                      <div className="text-sm text-neutral-600">
+                        {description}
+                      </div>
                       <NextLink
                         href={slug}
                         className="inline-flex items-center mt-8 md:mt-16 gap-2 text-sm text-neutral-700 hover:text-blue-500 font-medium hover:underline hover:decoration-dotted hover:decoration-current hover:underline-offset-4 transition-all"

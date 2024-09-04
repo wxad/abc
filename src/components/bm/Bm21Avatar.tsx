@@ -49,11 +49,10 @@ const Demo = () => {
     <DemoBox className="flex justify-center items-center py-12">
       <div className="relative mx-auto w-[100px] h-[100px]">
         <svg
-          className={`absolute top-2 right-[-28px] ${
-            show
-              ? "opacity-100 scale-100 transition-all duration-500"
-              : "opacity-0 scale-60"
-          }`}
+          className={`absolute top-2 right-[-28px] ${show
+            ? "opacity-100 scale-100 transition-all duration-500"
+            : "opacity-0 scale-60"
+            }`}
           width="94"
           height="90"
           viewBox="0 0 94 90"
@@ -76,7 +75,7 @@ const Demo = () => {
           }}
         />
       </div>
-      <div ref={paneWrapper} className="absolute top-[4px] right-[4px]" />
+      <div ref={paneWrapper} className="absolute top-1 right-1" />
     </DemoBox>
   )
 }

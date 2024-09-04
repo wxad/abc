@@ -105,7 +105,7 @@ const Demo = () => {
       widths.current[0] / 2 -
       widths.current[widths.current.length - 1] / 2) *
       100) /
-      (Math.PI * 32 * 2)
+    (Math.PI * 32 * 2)
 
   return (
     <DemoBox
@@ -124,7 +124,7 @@ const Demo = () => {
           </div>
         ))}
       </div>
-      <div ref={paneWrapper} className="absolute top-[4px] right-[4px]" />
+      <div ref={paneWrapper} className="absolute top-1 right-1" />
       <div className="relative w-[100px] h-[100px] scale-[1.3]">
         <svg
           className="absolute top-[18px] left-[10px]"

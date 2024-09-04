@@ -290,7 +290,7 @@ const CarouselDemo = ({
 
   return (
     <div className="flex items-end h-[360px]">
-      <div ref={paneWrapper} className="absolute top-[4px] right-[4px]" />
+      <div ref={paneWrapper} className="absolute top-1 right-1" />
       <div
         className="relative w-full h-[290px] touch-none overflow-hidden"
         // @ts-ignore
