@@ -69,7 +69,7 @@ import CircularPerfect from "@/components/circular/CircularPerfect"
 具体逻辑懒得解释了，有一些细节：
 
 1. 由于使用的是自定义字体，因此文字的宽度可能是会变化的。如何获取变化的时机呢？这里就需要用到 `ResizeObserver` 了。然而给每一个文字都加上 `ResizeObserver` 有点没必要，因此可以使用 `inline-block` 布局，只监听父元素的变化。
-2. 文字的总宽度和周长的关系是比较好计算的。而圆圈的 `stroke-dasharray` 还需要在文字的左右两侧留出一些 `padding`，这个 padding 的就算就要考虑第一个文字和最后一个文字的宽度。
+2. 文字的总宽度和周长的关系是比较好计算的。而圆圈的 `stroke-dasharray` 还需要在文字的左右两侧留出一些 `padding`，这个 padding 的计算就要考虑第一个文字和最后一个文字的宽度。
 
 核心代码：
 
