@@ -222,47 +222,43 @@ const CraftItem = ({ item }: { item: DataSource }) => {
             src={item.imageUrl}
           />
         )}
-        <div
-          className="absolute left-0 bottom-0 w-full h-8"
-          style={{
-            background:
-              "linear-gradient(rgba(0, 0, 0, 0), 50%, rgba(0, 0, 0, 0.5))",
-          }}
-        />
-        <div className="absolute bottom-0 left-0 w-full p-2 flex items-center justify-between text-white text-xs">
-          <div className="font-medium whitespace-nowrap text-ellipsis overflow-hidden">
-            {item.title}
+      </div>
+      <div>
+        <div className="p-2 flex items-center justify-between text-black text-xs">
+          <div className="flex-1 min-w-0">
+            <div className="font-medium whitespace-nowrap text-ellipsis overflow-hidden">
+              {item.title}
+            </div>
+            <div className="mt-1 opacity-60 flex-none">{item.date}</div>
           </div>
-          <div className="ml-1 opacity-60 flex-none">{item.date}</div>
+          {!!item.link && (
+            <NextLink
+              href={item.link}
+              target="_blank"
+              className="ml-2 flex-none flex items-center justify-center pl-2 pr-1 h-7 font-medium bg-neutral-200 transition-all hover:bg-neutral-300 rounded-md cursor-pointer"
+            >
+              {item.link.startsWith("http") ? "查看" : "阅读"}
+              <svg
+                className={`w-4 ${
+                  item.link.startsWith("http") ? "-rotate-45" : ""
+                }`}
+                strokeWidth="1.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                color="currentColor"
+              >
+                <path
+                  d="M6 12h12.5m0 0l-6-6m6 6l-6 6"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </NextLink>
+          )}
         </div>
       </div>
-      {
-        !!item.link && (
-          <NextLink
-            href={item.link}
-            target="_blank"
-            className="flex items-center justify-center mt-1 h-8 font-medium bg-neutral-300 transition-all hover:bg-neutral-400 rounded-md cursor-pointer"
-          >
-            {item.link.startsWith("http") ? "跳转查看" : "阅读文章"}
-            <svg
-              className={`ml-1 w-4 ${item.link.startsWith("http") ? "-rotate-45" : ""
-                }`}
-              strokeWidth="1.5"
-              viewBox="0 0 24 24"
-              fill="none"
-              color="currentColor"
-            >
-              <path
-                d="M6 12h12.5m0 0l-6-6m6 6l-6 6"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </NextLink>
-        )
-      }
     </div>
   )
 }
@@ -360,7 +356,7 @@ const Page: React.FC<IPageProps> = ({ dataSource }) => {
       </div>
       <div className="flex gap-3 p-3">
         {currentColumns.crafts.map((column, i) => (
-          <div key={i} className="flex-1 flex flex-col gap-3">
+          <div key={i} className="flex-1 flex flex-col gap-3 min-w-0">
             {column.map((item, j) => (
               <CraftItem key={`${i}-${j}`} item={item} />
             ))}
@@ -372,7 +368,7 @@ const Page: React.FC<IPageProps> = ({ dataSource }) => {
       </div>
       <div className="flex gap-3 p-3">
         {currentColumns.generative.map((column, i) => (
-          <div key={i} className="flex-1 flex flex-col gap-3">
+          <div key={i} className="flex-1 flex flex-col gap-3 min-w-0">
             {column.map((item, j) => (
               <CraftItem key={`${i}-${j}`} item={item} />
             ))}
