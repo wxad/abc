@@ -260,6 +260,7 @@ export const A = ({
                 className="absolute-full origin-bottom"
                 ref={innerRef}
                 style={{
+                  // @ts-ignore
                   "--scale": 0.4,
                 }}
               >
