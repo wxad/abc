@@ -201,7 +201,7 @@ const CraftItem = ({ item }: { item: DataSource }) => {
           <>
             <video
               ref={videoRef}
-              className="block w-full h-auto object-cover"
+              className="block w-full h-full object-cover"
               src={item.videoUrl}
               preload="none"
               x-webkit-airplay="true"
@@ -313,8 +313,8 @@ const Page: React.FC<IPageProps> = ({ dataSource }) => {
     const width = window.innerWidth
     if (width > 1024) {
       return {
-        generative: columns.generativeColumns4,
-        crafts: columns.craftsColumns4,
+        generative: columns.generativeColumns3,
+        crafts: columns.craftsColumns3,
       }
     } else if (width > 500) {
       return {

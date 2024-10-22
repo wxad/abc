@@ -135,7 +135,11 @@ export const A = ({
     }
 
     if (innerRef.current) {
-      innerRef.current.style.transform = `scale(${scale})`
+      const children = [...innerRef.current.children] as HTMLImageElement[]
+      innerRef.current.style.setProperty("--scale", `${scale}`)
+      children.forEach((child) => {
+        child.style.opacity = `${opacity}`
+      })
     }
   }
 
@@ -146,6 +150,16 @@ export const A = ({
     if (!outerRef.current) {
       return
     }
+
+    const videos = [
+      ...outerRef.current.querySelectorAll("video"),
+    ] as HTMLVideoElement[]
+
+    videos.forEach((video) => {
+      video.currentTime = 0
+      video.play()
+    })
+
     const outerRect = outerRef.current.getBoundingClientRect()
     const linkRect = linkRef.current.getBoundingClientRect()
     const { x, y, width, height } = linkRect
@@ -187,10 +201,19 @@ export const A = ({
     if (!isClient) {
       return
     }
+
+    const videos = [
+      ...outerRef.current.querySelectorAll("video"),
+    ] as HTMLVideoElement[]
+
+    videos.forEach((video) => {
+      video.pause()
+    })
+
     portalStyleRef.current = {
       ...portalStyleRef.current,
       opacity: 0,
-      scale: 0.5,
+      scale: 0.4,
     }
 
     updatePortalStyle()
@@ -226,41 +249,78 @@ export const A = ({
         <>
           {createPortal(
             <div
-              className="fixed top-0 left-0 w-[240px] h-[135px] overflow-hidden pointer-events-none"
+              className="fixed top-0 left-0 w-[200px] h-[112px] pointer-events-none"
               ref={outerRef}
               style={{
                 opacity: 0,
-                transition: ".3s ease opacity",
+                transition: "opacity 0.25s cubic-bezier(0.32, 0.72, 0, 1)",
               }}
             >
               <div
-                className="absolute-full bg-neutral-50 border-2 border-white border-opacity-20 rounded-lg overflow-hidden origin-bottom"
+                className="absolute-full origin-bottom"
                 ref={innerRef}
                 style={{
-                  transform: "scale(0.5)",
-                  transition: ".3s ease transform",
+                  "--scale": 0.4,
                 }}
               >
-                {img.includes("mp4") ? (
+                {/* {img.includes("mp4") ? (
                   <video
-                    className="absolute-full"
+                    className="absolute-full object-cover bg-neutral-50 rounded-lg"
                     preload="auto"
                     x-webkit-airplay="true"
                     webkit-playsinline="true"
                     playsInline
                     muted
                     loop
-                    autoPlay
                   >
                     <source src={img} type="video/mp4" />
                   </video>
                 ) : (
                   <img
-                    className="absolute-full object-cover"
+                    className="absolute-full object-cover bg-neutral-50 rounded-lg"
                     src={img}
                     alt=""
                   />
-                )}
+                )} */}
+
+                <img
+                  className="absolute-full object-cover bg-neutral-50 rounded-lg"
+                  src={"https://wxa.wxs.qq.com/wxad-design/yijie/bms/bm-2023-q4-yyqx-thumb.webp"}
+                  alt=""
+                  style={{
+                    opacity: 0,
+                    boxShadow: "rgba(0, 0, 0, 0.2) 0px 15px 40px 0px",
+                    transform:
+                      "translate3d(-40px, -30px, 0) scale(var(--scale))",
+                    transition:
+                      "opacity 0.2s ease 0s, transform 0.4s cubic-bezier(0.32, 0.72, 0.2, 1.1) 0s",
+                  }}
+                />
+                <img
+                  className="absolute-full object-cover bg-neutral-50 rounded-lg"
+                  src={"https://wxa.wxs.qq.com/wxad-design/yijie/bm-2023-q1-gucci-thumb.webp"}
+                  alt=""
+                  style={{
+                    opacity: 0,
+                    boxShadow: "rgba(0, 0, 0, 0.2) 0px 15px 40px 0px",
+                    transform: "rotate(-3deg) scale(var(--scale))",
+                    transition:
+                      "opacity 0.2s ease 0.1s, transform 0.4s cubic-bezier(0.32, 0.72, 0.2, 1.1) 0.1s",
+                  }}
+                />
+                <img
+                  className="absolute-full object-cover bg-neutral-50 rounded-lg"
+                  src={"https://wxa.wxs.qq.com/wxad-design/yijie/bm-2023-q3-dyson-thumb.webp"}
+                  alt=""
+                  style={{
+                    opacity: 0,
+                    boxShadow: "rgba(0, 0, 0, 0.2) 0px 15px 40px 0px",
+                    transform:
+                      "translate3d(70px, -25px, 0) rotate(5deg) scale(var(--scale))",
+                    transition:
+                      "opacity 0.2s ease 0.2s, transform 0.4s cubic-bezier(0.32, 0.72, 0.2, 1.1) 0.2s",
+                  }}
+                />
               </div>
             </div>,
             document.body
