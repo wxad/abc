@@ -313,12 +313,12 @@ const Page: React.FC<IPageProps> = ({ dataSource }) => {
     const width = window.innerWidth
     if (width > 1024) {
       return {
-        generative: columns.generativeColumns3,
+        generative: columns.generativeColumns2,
         crafts: columns.craftsColumns3,
       }
     } else if (width > 500) {
       return {
-        generative: columns.generativeColumns3,
+        generative: columns.generativeColumns2,
         crafts: columns.craftsColumns3,
       }
     } else {
@@ -350,7 +350,7 @@ const Page: React.FC<IPageProps> = ({ dataSource }) => {
   }, [])
 
   return (
-    <div className="mx-auto md:px-16 max-w-[1200px]">
+    <div className="mx-auto md:px-16 max-w-[1440px]">
       <div className="mt-40 mb-16 text-5xl text-center font-semibold font-serif">
         Crafts
       </div>
