@@ -129,7 +129,7 @@ export async function getStaticProps() {
                 .audioCodec("aac")
                 .audioBitrate("128k")
                 .videoBitrate("2000k")
-                .size("720x?")
+                .size("900x?")
                 .on("end", () => {
                   resolve()
                 })
