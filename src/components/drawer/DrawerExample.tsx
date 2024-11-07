@@ -265,12 +265,14 @@ const Demo = () => {
             <div className="relative z-10 flex items-center justify-center gap-4 mt-6">
               <div
                 className="w-[120px] flex items-center justify-center h-[48px] text-[17px] rounded-lg bg-[#F7F7F7] font-medium cursor-pointer"
+                // @ts-ignore
                 onClick={handleSecondClick}
               >
                 取消
               </div>
               <div
                 className="w-[120px] flex items-center justify-center h-[48px] text-[17px] rounded-lg font-medium text-white bg-[#FA9D3B] cursor-pointer"
+                // @ts-ignore
                 onClick={handleSecondClick}
               >
                 确定
