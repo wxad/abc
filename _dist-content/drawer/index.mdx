@@ -1,5 +1,5 @@
 ---
-title: "一个 Drawer 的小 demo"
+title: "Drawer demos"
 description: "所谓“感觉很好”的二维 UI 设计，基本来源于人们对真实三维世界的认知。只不过是在此之上，或效仿，或衍伸。这篇文章的主题是层级，是我反向地从 UI 出发，去寻找关于层级的原型的一次尝试。"
 slug: "drawer"
 publishedAt: "2024-09-25"
@@ -9,13 +9,33 @@ authorLink: "https://codepen.io/aragakey"
 ---
 
 import DrawerExample from "@/components/drawer/DrawerExample"
-import DrawerDesktop from "@/components/drawer/DrawerDesktop"
-import TabTransition from "@/components/drawer/TabTransition"
+import DrawerExample2 from "@/components/drawer/DrawerExample2"
+import DrawerExample3 from "@/components/drawer/DrawerExample3"
+import DrawerExample4 from "@/components/drawer/DrawerExample4"
+import DrawerExample5 from "@/components/drawer/DrawerExample5"
+import DrawerExample6 from "@/components/drawer/DrawerExample6"
 
-测试：
-
-<TabTransition />
-
-<DrawerDesktop />
+不透明度变化，我仍然最喜欢这个：
 
 <DrawerExample />
+
+标题与内容分开，按钮不固定底部，位移距离不同：
+
+<DrawerExample2 />
+
+全部位移：
+
+<DrawerExample3 />
+
+全部位移，但按钮固定底部 —— 💭 和标题分开动画一样，觉得没必要不作为整体：
+
+<DrawerExample4 />
+
+上下，无延时 —— 💭 上下来回运动不如直接不透明度变化：
+
+<DrawerExample5 />
+
+
+上下，有延时 —— 💭 上下来回运动不如直接不透明度变化：
+
+<DrawerExample6 />

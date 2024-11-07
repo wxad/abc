@@ -7,13 +7,16 @@ const Demo = () => {
   const statusBar = useRef<HTMLImageElement>(null)
   const drawer = useRef<HTMLDivElement>(null)
   const drawerSecond = useRef<HTMLDivElement>(null)
+  const drawerThird = useRef<HTMLDivElement>(null)
   const container = useRef<HTMLDivElement>(null)
   const secondContainer = useRef<HTMLDivElement>(null)
   const thirdContainer = useRef<HTMLDivElement>(null)
+  const secondButtons = useRef<HTMLDivElement>(null)
   const secondTitle = useRef<HTMLDivElement>(null)
   const thirdTitle = useRef<HTMLDivElement>(null)
+  const thirdDivider = useRef<HTMLDivElement>(null)
+  const thirdButtons = useRef<HTMLDivElement>(null)
   const icon = useRef<SVGSVGElement>(null)
-  const iconThird = useRef<SVGSVGElement>(null)
   const handleFirstClick = () => {
     if (
       !bg.current ||
@@ -27,46 +30,34 @@ const Demo = () => {
       "all 0.55s cubic-bezier(0.32, 0.72, 0, 1)"
     bgCover.current.style.opacity = "0.3"
 
-    // bg.current.style.transition = "all 0.55s cubic-bezier(0.32, 0.72, 0, 1)"
-    // bg.current.style.transform = "translate3d(0px, 40px, 0px) scale(0.91)"
-    // bg.current.style.borderRadius = "12px"
-
-    // statusBar.current.style.transition =
-    //   "all 0.55s cubic-bezier(0.32, 0.72, 0, 1)"
-    // statusBar.current.style.filter = "invert(1)"
-
     drawer.current.style.transition = "all 0.55s cubic-bezier(0.32, 0.72, 0, 1)"
     drawer.current.style.transform = "translate3d(0, -100%, 0)"
+  }
+
+  const handleBackSecondClick = (e) => {
+    e.stopPropagation()
+    drawer.current.style.transform = "translate3d(0, -100%, 0)"
+    drawerThird.current.style.transform = "translate3d(0, 0, 0)"
+
+    drawer.current.style.zIndex = "1"
+    drawerThird.current.style.zIndex = "0"
+
+    drawer.current.style.transition =
+      "transform 0.5s cubic-bezier(0.32, 0.72, 0, 1) .2s"
+    drawerThird.current.style.transition =
+      "transform 0.5s cubic-bezier(0.32, 0.72, 0, 1)"
   }
 
   const handleSecondClick: React.MouseEventHandler<SVGSVGElement> = (e) => {
     e.stopPropagation()
     if (icon.current.style.transform) {
-      secondContainer.current.style.transition =
-        "all 0.3s cubic-bezier(0.32, 0.72, 0, 1)"
-      secondContainer.current.style.opacity = ""
+      drawer.current.style.transform = ""
+      drawerThird.current.style.transform = ""
 
-      secondTitle.current.style.transition =
-        "all 0.3s cubic-bezier(0.32, 0.72, 0, 1)"
-      secondTitle.current.style.opacity = ""
-
-      thirdContainer.current.style.transition =
-        "all 0.2s cubic-bezier(0.32, 0.72, 0, 1)"
-      thirdContainer.current.style.opacity = ""
-
-      thirdTitle.current.style.transition =
-        "all 0.2s cubic-bezier(0.32, 0.72, 0, 1)"
-      thirdTitle.current.style.opacity = ""
-
-      container.current.style.transition =
-        "all 0.4s cubic-bezier(0.32, 0.72, 0, 1)"
-      container.current.style.height = "400px"
-
-      icon.current.style.transform = ""
-      icon.current.style.opacity = ""
-
-      iconThird.current.style.opacity = ""
-      iconThird.current.style.transform = ""
+      drawer.current.style.transition =
+        "transform 0.5s cubic-bezier(0.32, 0.72, 0, 1)"
+      drawerThird.current.style.transition =
+        "transform 0.5s cubic-bezier(0.32, 0.72, 0, 1)"
     } else {
       bgCover.current.style.opacity = ""
 
@@ -81,34 +72,17 @@ const Demo = () => {
 
   const handleToThirdClick: React.MouseEventHandler<HTMLDivElement> = (e) => {
     e.stopPropagation()
-    secondContainer.current.style.transition =
-      "all 0.2s cubic-bezier(0.32, 0.72, 0, 1)"
-    secondContainer.current.style.opacity = "0"
 
-    secondTitle.current.style.transition =
-      "all 0.2s cubic-bezier(0.32, 0.72, 0, 1)"
-    secondTitle.current.style.opacity = "0"
+    drawer.current.style.transform = "translate3d(0, 0, 0)"
+    drawerThird.current.style.transform = "translate3d(0, -100%, 0)"
 
-    thirdContainer.current.style.transition =
-      "all 0.3s cubic-bezier(0.32, 0.72, 0, 1)"
-    thirdContainer.current.style.opacity = "1"
+    drawer.current.style.zIndex = "0"
+    drawerThird.current.style.zIndex = "1"
 
-    thirdTitle.current.style.transition =
-      "all 0.3s cubic-bezier(0.32, 0.72, 0, 1)"
-    thirdTitle.current.style.opacity = "1"
-
-    container.current.style.transition =
-      "all 0.4s cubic-bezier(0.32, 0.72, 0, 1)"
-    container.current.style.height = "272px"
-
-    icon.current.style.transition = "all 0.4s cubic-bezier(0.32, 0.72, 0, 1)"
-    icon.current.style.transform = "rotate(90deg)"
-    icon.current.style.opacity = "0"
-
-    iconThird.current.style.transition =
-      "all 0.4s cubic-bezier(0.32, 0.72, 0, 1)"
-    iconThird.current.style.opacity = "1"
-    iconThird.current.style.transform = "rotate(0deg)"
+    drawer.current.style.transition =
+      "transform 0.5s cubic-bezier(0.32, 0.72, 0, 1)"
+    drawerThird.current.style.transition =
+      "transform 0.5s cubic-bezier(0.32, 0.72, 0, 1) .2s"
   }
 
   return (
@@ -148,65 +122,40 @@ const Demo = () => {
             className="absolute top-full left-0 w-full origin-bottom pb-[76px] bg-white rounded-t-xl overflow-hidden"
             ref={drawer}
           >
-            <div className="relative flex items-center justify-center mb-2 h-16">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                className="absolute top-5 left-4 bg-black bg-opacity-5 rounded-full cursor-pointer"
-                ref={icon}
-                onClick={handleSecondClick}
-              >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M11.2929 15.3466C11.6834 15.7371 12.3166 15.7371 12.7071 15.3466L17.3033 10.7504L16.1248 9.5719L12 13.6967L7.87521 9.5719L6.6967 10.7504L11.2929 15.3466Z"
-                  fill="black"
-                  fillOpacity="0.9"
-                />
-              </svg>
-              <svg
-                width="44"
-                height="44"
-                viewBox="0 0 44 44"
-                fill="none"
-                className="absolute top-3 left-2 cursor-pointer opacity-0 -rotate-90"
-                ref={iconThird}
-                onClick={handleSecondClick}
-              >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M26.0001 29.4375L24.9546 30.5L17.281 22.7014C16.898 22.3122 16.898 21.6878 17.281 21.2986L24.9546 13.5L26.0001 14.5625L18.6818 22L26.0001 29.4375Z"
-                  fill="black"
-                  fillOpacity="0.9"
-                />
-              </svg>
-              <div className="font-medium text-[15px]" ref={secondTitle}>
-                筛选订单
-              </div>
-              <div
-                className="font-medium text-[15px] opacity-0 absolute-full flex items-center justify-center pointer-events-none"
-                ref={thirdTitle}
-              >
-                开始日期
-              </div>
-            </div>
             <div
               className="relative"
               style={{
-                height: "400px",
+                height: "536px",
               }}
               ref={container}
             >
               <div
                 className="px-6 absolute top-0 left-0 w-full"
                 style={{
-                  height: "400px",
+                  height: "536px",
                 }}
                 ref={secondContainer}
               >
+                <div className="relative flex items-center justify-center -mx-6 mb-2 h-16">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    className="absolute top-5 left-4 bg-black bg-opacity-5 rounded-full cursor-pointer"
+                    ref={icon}
+                    onClick={handleSecondClick}
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M11.2929 15.3466C11.6834 15.7371 12.3166 15.7371 12.7071 15.3466L17.3033 10.7504L16.1248 9.5719L12 13.6967L7.87521 9.5719L6.6967 10.7504L11.2929 15.3466Z"
+                      fill="black"
+                      fillOpacity="0.9"
+                    />
+                  </svg>
+                  <div className="font-medium text-[15px]">筛选订单</div>
+                </div>
                 <div className="mb-3 text-[15px] font-medium">期望发表日期</div>
                 <div className="flex items-center">
                   <div
@@ -253,25 +202,58 @@ const Demo = () => {
                 </div>
               </div>
               <div
-                ref={thirdContainer}
-                className="px-6 absolute top-0 left-0 w-full bg-cover opacity-0 pointer-events-none"
+                className="absolute bottom-[-76px] left-0 z-10 flex items-center justify-center gap-4 pt-4 w-full pb-[76px] bg-white"
+                ref={secondButtons}
+              >
+                <div
+                  className="w-[120px] flex items-center justify-center h-[48px] text-[17px] rounded-lg bg-[#F7F7F7] font-medium cursor-pointer"
+                  // @ts-ignore
+                  onClick={handleSecondClick}
+                >
+                  取消
+                </div>
+                <div className="w-[120px] flex items-center justify-center h-[48px] text-[17px] rounded-lg font-medium text-white bg-[#FA9D3B] cursor-pointer">
+                  确定
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="absolute top-full left-0 w-full origin-bottom pb-[76px] bg-white rounded-t-xl overflow-hidden"
+            ref={drawerThird}
+          >
+            <div
+              style={{
+                height: 384,
+              }}
+              ref={thirdContainer}
+            >
+              <div className="relative flex items-center justify-center mb-2 h-16">
+                <div className="font-medium text-[15px] absolute top-0 left-6 w-full h-full flex items-center pointer-events-none">
+                  开始日期
+                </div>
+                <div className="absolute bottom-0 left-6 right-6 h-[0.5px] bg-black bg-opacity-10" />
+              </div>
+              <div
+                className="px-6 w-full bg-cover"
                 style={{
-                  height: "272px",
+                  height: 272,
                   backgroundImage:
                     "url(https://wxa.wxs.qq.com/wxad-design/yijie/time-lister.png)",
                 }}
               />
             </div>
-            <div className="relative z-10 flex items-center justify-center gap-4 mt-6">
+            <div className="absolute bottom-0 left-0 z-10 flex items-center justify-center gap-4 pt-4 w-full pb-[76px] bg-white">
               <div
                 className="w-[120px] flex items-center justify-center h-[48px] text-[17px] rounded-lg bg-[#F7F7F7] font-medium cursor-pointer"
-                onClick={handleSecondClick}
+                // @ts-ignore
+                onClick={handleBackSecondClick}
               >
                 取消
               </div>
               <div
                 className="w-[120px] flex items-center justify-center h-[48px] text-[17px] rounded-lg font-medium text-white bg-[#FA9D3B] cursor-pointer"
-                onClick={handleSecondClick}
+                onClick={handleBackSecondClick}
               >
                 确定
               </div>
