@@ -83,14 +83,14 @@ const Demo = () => {
     thirdTitle.current.style.transform = "translate3d(-131px, 0, 0)"
 
     thirdDivider.current.style.transition =
-      "all 0.4s cubic-bezier(0.32, 0.72, 0, 1)"
+      "all .45s ease"
     thirdDivider.current.style.opacity = "1"
 
     container.current.style.transition =
-      "all 0.4s cubic-bezier(0.32, 0.72, 0, 1)"
+      "all .45s ease"
     container.current.style.height = "320px"
 
-    icon.current.style.transition = "all 0.4s cubic-bezier(0.32, 0.72, 0, 1)"
+    icon.current.style.transition = "all .45s ease"
     icon.current.style.transform = "translate3d(-20px, 0, 0)"
     icon.current.style.opacity = "0"
   }

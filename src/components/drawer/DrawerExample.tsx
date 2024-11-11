@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import DemoBox from "../DemoBox"
 
 const Demo = () => {
@@ -15,32 +15,14 @@ const Demo = () => {
   const icon = useRef<SVGSVGElement>(null)
   const iconThird = useRef<SVGSVGElement>(null)
   const handleFirstClick = () => {
-    if (
-      !bg.current ||
-      !statusBar.current ||
-      !drawer.current ||
-      !bgCover.current
-    ) {
-      return
-    }
     bgCover.current.style.transition =
       "all 0.55s cubic-bezier(0.32, 0.72, 0, 1)"
     bgCover.current.style.opacity = "0.3"
-
-    // bg.current.style.transition = "all 0.55s cubic-bezier(0.32, 0.72, 0, 1)"
-    // bg.current.style.transform = "translate3d(0px, 40px, 0px) scale(0.91)"
-    // bg.current.style.borderRadius = "12px"
-
-    // statusBar.current.style.transition =
-    //   "all 0.55s cubic-bezier(0.32, 0.72, 0, 1)"
-    // statusBar.current.style.filter = "invert(1)"
-
     drawer.current.style.transition = "all 0.55s cubic-bezier(0.32, 0.72, 0, 1)"
     drawer.current.style.transform = "translate3d(0, -100%, 0)"
   }
 
-  const handleSecondClick: React.MouseEventHandler<SVGSVGElement> = (e) => {
-    e.stopPropagation()
+  const handleSecondClick = () => {
     if (icon.current.style.transform) {
       secondContainer.current.style.transition =
         "all 0.3s cubic-bezier(0.32, 0.72, 0, 1)"
@@ -60,7 +42,7 @@ const Demo = () => {
 
       container.current.style.transition =
         "all 0.4s cubic-bezier(0.32, 0.72, 0, 1)"
-      container.current.style.height = "400px"
+      container.current.style.height = "472px"
 
       icon.current.style.transform = ""
       icon.current.style.opacity = ""
@@ -69,18 +51,11 @@ const Demo = () => {
       iconThird.current.style.transform = ""
     } else {
       bgCover.current.style.opacity = ""
-
-      bg.current.style.transform = ""
-      bg.current.style.borderRadius = ""
-
-      statusBar.current.style.filter = ""
-
       drawer.current.style.transform = ""
     }
   }
 
-  const handleToThirdClick: React.MouseEventHandler<HTMLDivElement> = (e) => {
-    e.stopPropagation()
+  const handleToThirdClick = () => {
     secondContainer.current.style.transition =
       "all 0.2s cubic-bezier(0.32, 0.72, 0, 1)"
     secondContainer.current.style.opacity = "0"
@@ -99,7 +74,7 @@ const Demo = () => {
 
     container.current.style.transition =
       "all 0.4s cubic-bezier(0.32, 0.72, 0, 1)"
-    container.current.style.height = "272px"
+    container.current.style.height = "344px"
 
     icon.current.style.transition = "all 0.4s cubic-bezier(0.32, 0.72, 0, 1)"
     icon.current.style.transform = "rotate(90deg)"
@@ -112,21 +87,15 @@ const Demo = () => {
   }
 
   return (
-    <DemoBox className="flex justify-center items-center gap-4 p-5 text-sm">
+    <DemoBox className="flex justify-center items-center gap-4 p-5 text-sm select-none">
       <div
         className="relative w-[404.8px] h-[820px] overflow-hidden"
         style={{
-          backgroundImage:
-            "url(https://wxa.wxs.qq.com/wxad-design/yijie/iphone14.png)",
-          backgroundSize: "cover",
-          zoom: 0.85,
+          zoom: 0.8,
         }}
       >
-        <div className="absolute inset-[18px] rounded-[48px] bg-black overflow-hidden">
-          <div
-            className="absolute-full rounded-[48px] overflow-hidden origin-top"
-            ref={bg}
-          >
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute-full overflow-hidden origin-top" ref={bg}>
             <img
               src="https://wxa.wxs.qq.com/wxad-design/yijie/list-tester-1.png"
               alt=""
@@ -138,12 +107,6 @@ const Demo = () => {
               ref={bgCover}
             />
           </div>
-          <img
-            className="absolute top-0 left-0 w-full pointer-events-none"
-            src="https://wxa.wxs.qq.com/wxad-design/yijie/status-bar.png"
-            ref={statusBar}
-            alt=""
-          />
           <div
             className="absolute top-full left-0 w-full origin-bottom pb-[76px] bg-white rounded-t-xl overflow-hidden"
             ref={drawer}
@@ -196,14 +159,14 @@ const Demo = () => {
             <div
               className="relative"
               style={{
-                height: "400px",
+                height: "472px",
               }}
               ref={container}
             >
               <div
                 className="px-6 absolute top-0 left-0 w-full"
                 style={{
-                  height: "400px",
+                  height: "472px",
                 }}
                 ref={secondContainer}
               >
@@ -251,40 +214,55 @@ const Demo = () => {
                     </div>
                   ))}
                 </div>
+                <div className="relative z-10 flex items-center justify-center gap-4 mt-6">
+                  <div
+                    className="w-[120px] flex items-center justify-center h-[48px] text-[17px] rounded-lg bg-[#F7F7F7] font-medium cursor-pointer"
+                    // @ts-ignore
+                    onClick={handleSecondClick}
+                  >
+                    取消
+                  </div>
+                  <div
+                    className="w-[120px] flex items-center justify-center h-[48px] text-[17px] rounded-lg font-medium text-white bg-[#FA9D3B] cursor-pointer"
+                    // @ts-ignore
+                    onClick={handleSecondClick}
+                  >
+                    确定
+                  </div>
+                </div>
               </div>
               <div
                 ref={thirdContainer}
-                className="px-6 absolute top-0 left-0 w-full bg-cover opacity-0 pointer-events-none"
-                style={{
-                  height: "272px",
-                  backgroundImage:
-                    "url(https://wxa.wxs.qq.com/wxad-design/yijie/time-lister.png)",
-                }}
-              />
-            </div>
-            <div className="relative z-10 flex items-center justify-center gap-4 mt-6">
-              <div
-                className="w-[120px] flex items-center justify-center h-[48px] text-[17px] rounded-lg bg-[#F7F7F7] font-medium cursor-pointer"
-                // @ts-ignore
-                onClick={handleSecondClick}
+                className="absolute top-0 left-0 w-full opacity-0 pointer-events-none"
               >
-                取消
-              </div>
-              <div
-                className="w-[120px] flex items-center justify-center h-[48px] text-[17px] rounded-lg font-medium text-white bg-[#FA9D3B] cursor-pointer"
-                // @ts-ignore
-                onClick={handleSecondClick}
-              >
-                确定
+                <div
+                  className="bg-cover"
+                  style={{
+                    height: "272px",
+                    backgroundImage:
+                      "url(https://wxa.wxs.qq.com/wxad-design/yijie/time-lister.png)",
+                  }}
+                />
+                <div className="relative z-10 flex items-center justify-center gap-4 mt-6 pointer-events-auto">
+                  <div
+                    className="w-[120px] flex items-center justify-center h-[48px] text-[17px] rounded-lg bg-[#F7F7F7] font-medium cursor-pointer"
+                    // @ts-ignore
+                    onClick={handleSecondClick}
+                  >
+                    取消
+                  </div>
+                  <div
+                    className="w-[120px] flex items-center justify-center h-[48px] text-[17px] rounded-lg font-medium text-white bg-[#FA9D3B] cursor-pointer"
+                    // @ts-ignore
+                    onClick={handleSecondClick}
+                  >
+                    确定
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <img
-          className="absolute top-[-3px] left-0 w-full h-full pointer-events-none"
-          src="https://wxa.wxs.qq.com/wxad-design/yijie/iphone14-notch.png"
-          alt=""
-        />
       </div>
     </DemoBox>
   )

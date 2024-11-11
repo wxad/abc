@@ -1,3 +1,14 @@
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+/**
+ * 合并 tailwind ClassNames
+ * @param inputs ClassValue[]
+ * @returns string
+ */
+export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs))
+
+
 export const steppedRange = (start: number, end: number, step: number) => {
   let arr = []
   for (let i = start; i <= end; i += step) {
@@ -29,3 +40,4 @@ export const playVideo = (video?: HTMLVideoElement | null, cb?: () => void) => {
     }
   }
 }
+

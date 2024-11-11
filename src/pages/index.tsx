@@ -13,9 +13,21 @@ import BmCover from "@/components/bm/BmCover"
 import DepthCover from "@/components/designing-depth/DepthCover"
 import ScrollMockCover from "@/components/scroll-mock/ScrollMockCover"
 import ShadcnCover from "@/components/shadcn/ShadcnCover"
+import DrawerCover from "@/components/drawer/DrawerCover"
 import NextLink from "next/link"
 
 const posts = [
+  {
+    title: "关于 Drawer 组件的设计发散",
+    description:
+      "最近在视频号互选移动端和设计师尝试了一个 Drawer，想借此延展开讨论 Drawer 这个 UI 形式的可能性，稍许发散发散。",
+    slug: "drawer",
+    publishedAt: "2024-11-11",
+    editedAt: "2024-11-11",
+    author: "Aragakey.",
+    authorLink: "https://codepen.io/aragakey",
+    children: <DrawerCover />,
+  },
   {
     title: "关于 shadcn/ui 的思考与启发",
     description:

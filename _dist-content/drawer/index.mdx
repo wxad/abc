@@ -1,41 +1,172 @@
 ---
-title: "Drawer demos"
-description: "所谓“感觉很好”的二维 UI 设计，基本来源于人们对真实三维世界的认知。只不过是在此之上，或效仿，或衍伸。这篇文章的主题是层级，是我反向地从 UI 出发，去寻找关于层级的原型的一次尝试。"
+title: "关于 Drawer 组件的设计发散"
+description: "最近在视频号互选移动端和设计师尝试了一个 Drawer，想借此延展开讨论 Drawer 这个 UI 形式的可能性，稍许发散发散。"
 slug: "drawer"
-publishedAt: "2024-09-25"
-editedAt: "2024-09-25"
+publishedAt: "2024-11-11"
+editedAt: "2024-11-11"
 author: "Aragakey."
 authorLink: "https://codepen.io/aragakey"
 ---
 
-import DrawerExample from "@/components/drawer/DrawerExample"
-import DrawerExample2 from "@/components/drawer/DrawerExample2"
-import DrawerExample3 from "@/components/drawer/DrawerExample3"
-import DrawerExample4 from "@/components/drawer/DrawerExample4"
-import DrawerExample5 from "@/components/drawer/DrawerExample5"
-import DrawerExample6 from "@/components/drawer/DrawerExample6"
+import DrawerExample10 from "@/components/drawer/DrawerExample10"
+import Drawer from "@/components/fm/Drawer"
 
-不透明度变化，我仍然最喜欢这个：
+最近在视频号互选移动端和设计师尝试了一个 Drawer，想借此延展开讨论 Drawer 这个 UI 形式的可能性，稍许发散发散。
 
-<DrawerExample />
+## 视频号互选移动端
 
-标题与内容分开，按钮不固定底部，位移距离不同：
+先从具体需求说起。我们需要在点击筛选按钮时弹出一个 Drawer 展示筛选项。像订单状态的筛选可以直接在 Drawer 内完成，而像日期的选择则需要跳转到另一个页面。
 
-<DrawerExample2 />
+如何承载着两个页面，是分开两个 Drawer，还是放在同一个 Drawer 中？
 
-全部位移：
+首先可以尝试一下两个 Drawer：
 
-<DrawerExample3 />
+<img
+  className="block max-w-[320px] mx-auto my-8 w-full overflow-hidden rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/drawer-two.gif"
+/>
 
-全部位移，但按钮固定底部 —— 💭 和标题分开动画一样，觉得没必要不作为整体：
+这个方案我认为是可以接受的。只是两个 Drawer 的进场退场、一上一下不足够优雅。在这个 Demo 中，它们之间存在一定的延时，如果把延时去掉，效果其实也不会更好。
 
-<DrawerExample4 />
+---
 
-上下，无延时 —— 💭 上下来回运动不如直接不透明度变化：
+在 [《Family Values》](https://benji.org/family-values) 中，Family 的设计师们设计了一个系统，名为 dynamic tray system（动态托盘系统）。受此启发，我尝试的第一种方案如下：
 
-<DrawerExample5 />
+<img
+  className="block max-w-[320px] mx-auto my-8 w-full overflow-hidden rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/drawer-opacity.gif"
+/>
 
+通过不透明度的变化，元素的位置变化比较小，也没有了刚才两个 Drawer 的进场退场，这显得足够优雅。但给不同的设计师看了这个 Demo 后，我初步得出这样的结论：元素的突然消失（即便有过渡）确实是用户预期之外的，用户可能难以判断具体发生了什么。
 
-上下，有延时 —— 💭 上下来回运动不如直接不透明度变化：
+不透明度的覆盖不存在前进和后退的表意。如果从这点来看，这个方案甚至不如两个 Drawer。
 
-<DrawerExample6 />
+---
+
+既然要表达前进和后退，设计师认为左右位移的形式更合适：
+
+<img
+  className="block max-w-[320px] mx-auto my-8 w-full overflow-hidden rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/drawer-fb.gif"
+/>
+
+考虑到取消和确定按钮的位置在两个页面中是相同的，固定在底部进行位移，会让整体的布局显得更加稳定，避免两个页面整体地左右位移：
+
+<img
+  className="block max-w-[320px] mx-auto my-8 w-full overflow-hidden rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/drawer-fb-1.gif"
+/>
+
+将这个方案和最初的两个 Drawer 的方案对比，左右位移的形式在视觉上更加连贯，也更好地传达了两个页面间前进和后退的关系。
+
+## 桌面端 Drawer
+
+Dialog 和 Drawer 存在部分相同的功能。我认为核心的功能区别在于，当承载的是全局性的、临时性的反馈时，Dialog 更适合；当承载的是额外的页面内容时，Drawer 更适合。
+
+在表现上，它们的区别通常是贴不贴边而已。设计语言一般不会在这两者的表现上做更多的设计。不过，正是因为 Drawer 承载的是页面内容，似乎可以按照内容的不同性质来细化出更多的表现形式。
+
+比如对于需要占据接近整个屏幕尺寸的、内容独立的 Drawer，可以在背景遮罩的基础上，再做一个主页面的缩小：
+
+<img
+  className="block mx-auto my-8 w-full overflow-hidden rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/drawer-desktop.gif"
+/>
+
+背景遮罩当然足够让 Drawer 独立出一个层级。在此之上，这种启发自 iOS 的做法更突出了该层级。与其说是一个 Drawer，实际上更像是一个新的内嵌的页面。
+
+因此我认为这种形式的 Drawer 更适用于承载独立的页面内容，而不是一些简单的操作。
+
+---
+
+另一个突出层级的方式是让 Drawer 不接触屏幕边缘：
+
+<img
+  className="block mx-auto my-8 w-full overflow-hidden rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/drawer-desktop-light-1.gif"
+/>
+
+这种做法可以让 Drawer 与主页面之间的层级关系更一目了然。当然，这些设计确实都是非必要的。
+
+---
+
+还可以更轻量一点，比如当屏幕尺寸不足够展示当前文章的目录时，可以在右侧简略地显示当前的浏览进度，随着页面的滚动高亮当前的标题位置。在 hover 时展开为完整的目录：
+
+<img
+  className="block mx-auto my-8 w-full overflow-hidden rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/drawer-popover.gif"
+/>
+
+对比上面两个 Drawer，它们有如下的区别：
+
+1. 内容上：前者承载的是整个网站的目录，后者承载的是当前文章的目录；
+2. 交互上：前者是点击展开，后者是 hover 展开；
+3. 表现上：前者有背景遮罩且撑满屏幕，后者没有背景遮罩且高度默认自适应，只有当内容足够高时撑满屏幕。
+
+在上面的例子中，如果目录项较少，Drawer 就会轻量到接近 Popover 了；如果目录项多到撑满屏幕，Drawer 的层级就会更突出。
+
+---
+
+最后，在 [Functional Motion](https://wxad.design/abc/functional-motion) 中也提到过关于层叠 Drawer 的设计：
+
+<Drawer />
+
+## 移动端 Drawer
+
+### 连接
+
+在移动端上，第一个想要讨论的是 **连接**。这本身也是过渡动画最重要的作用。
+
+从视频号互选移动端的 Drawer 来看，它所要连接的是填写表单时的前后两块内容。UI 上的处理方式是外层的高度变化 + 内层的左右位移。
+
+还有一些场景可以通过 Drawer 去连接。
+
+比如连接点击发表和确认发表：
+
+<img
+  className="block max-w-[320px] mx-auto my-8 w-full overflow-hidden rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/renqiang/drawer-btn.gif"
+/>
+
+在上面的例子中，Drawer 连接的是点击发表和确认发表两个行为。UI 上的处理方式是将两个按钮合并为一个，更加明确地告诉用户 Drawer 是为了再次确认，点击按钮后不会发生其他的事。
+
+---
+
+比如连接到一个子页面时，可以通过 Drawer 将新内容直接覆盖到当前页面上：
+
+<img
+  className="block max-w-[320px] mx-auto my-8 w-full overflow-hidden rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/drawer-page.gif"
+/>
+
+从右边推入一个新页面也没有问题，以 Drawer 覆盖到当前页面上就是一种不跳转新页面的设计方式。它可以更明确地告诉用户当前页面一直被保留着，你可以随时返回。
+
+### 滑动交互
+
+在移动端上，第二个想要讨论的是 **滑动交互**。移动端的手指的滑动交互会比桌面端丰富得多。
+
+常见地，当我们用一个拖拽指示条（drag indicator）来代替关闭按钮时，就允许了用户可以通过拖拽来控制 Drawer：
+
+<img
+  className="block max-w-[320px] mx-auto my-8 w-full overflow-hidden rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/drawer-handle-base.gif"
+/>
+
+[不管是什么 UI](https://wxad.design/abc/carousel)，对滑动交互的分支判断都是类似的，这里我用数学符号的方式概括一下需要进行判断的分支：
+
+1. 拖拽时：不超过边界 + 超过边界时；
+2. 抬手时：（不超过边界 + 超过边界）× 加速度 × 加速度方向。
+
+接着，我们就可以做多个边界点（snap points），这种做法来自于 iOS 地图 app：
+
+<img
+  className="block max-w-[320px] mx-auto my-8 w-full overflow-hidden rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/ScreenRecording_11-11-202416.gif"
+/>
+
+Google Maps、高德地图等地图 app 都有类似的设计。它们的共同点是，Drawer 是常驻于屏幕底部的。这样的设计更加鼓励用户去拖拽 Drawer 以看到更多或更少的内容。
+
+## 最后
+
+我非常喜欢 [《Family Values》](https://benji.org/family-values) 这篇文章，也非常理解 Emil 的 [Vaul 组件](https://vaul.emilkowal.ski/) 的困难与追求。
+
+最打动的我的不是他们在具体讨论什么，而是他们的全篇文章都只关于设计、只在于 UI。

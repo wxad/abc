@@ -17,14 +17,6 @@ const Demo = () => {
   const thirdButtons = useRef<HTMLDivElement>(null)
   const icon = useRef<SVGSVGElement>(null)
   const handleFirstClick = () => {
-    if (
-      !bg.current ||
-      !statusBar.current ||
-      !drawer.current ||
-      !bgCover.current
-    ) {
-      return
-    }
     bgCover.current.style.transition =
       "all 0.55s cubic-bezier(0.32, 0.72, 0, 1)"
     bgCover.current.style.opacity = "0.3"
@@ -54,11 +46,6 @@ const Demo = () => {
     } else {
       bgCover.current.style.opacity = ""
 
-      bg.current.style.transform = ""
-      bg.current.style.borderRadius = ""
-
-      statusBar.current.style.filter = ""
-
       drawer.current.style.transform = ""
     }
   }
@@ -75,8 +62,7 @@ const Demo = () => {
 
     icon.current.style.transform = "translate3d(0, 0, 0)"
 
-    container.current.style.transition =
-      "all 0.4s cubic-bezier(0.32, 0.72, 0, 1)"
+    container.current.style.transition = "all .45s ease"
     container.current.style.height = "384px"
 
     secondButtons.current.style.transition = "all .45s ease"
@@ -93,17 +79,12 @@ const Demo = () => {
       <div
         className="relative w-[404.8px] h-[820px] overflow-hidden"
         style={{
-          backgroundImage:
-            "url(https://wxa.wxs.qq.com/wxad-design/yijie/iphone14.png)",
           backgroundSize: "cover",
           zoom: 0.85,
         }}
       >
-        <div className="absolute inset-[18px] rounded-[48px] bg-black overflow-hidden">
-          <div
-            className="absolute-full rounded-[48px] overflow-hidden origin-top"
-            ref={bg}
-          >
+        <div className="absolute inset-0 bg-black overflow-hidden">
+          <div className="absolute-full overflow-hidden origin-top" ref={bg}>
             <img
               src="https://wxa.wxs.qq.com/wxad-design/yijie/list-tester-1.png"
               alt=""
@@ -115,12 +96,6 @@ const Demo = () => {
               ref={bgCover}
             />
           </div>
-          <img
-            className="absolute top-0 left-0 w-full pointer-events-none"
-            src="https://wxa.wxs.qq.com/wxad-design/yijie/status-bar.png"
-            ref={statusBar}
-            alt=""
-          />
           <div
             className="absolute top-full left-0 w-full origin-bottom pb-[76px] bg-white rounded-t-xl overflow-hidden"
             ref={drawer}
@@ -212,9 +187,23 @@ const Demo = () => {
                 ref={thirdContainer}
               >
                 <div className="relative flex items-center justify-center mb-2 h-16">
-                  <div className="font-medium text-[15px] absolute top-0 left-6 w-full h-full flex items-center pointer-events-none">
-                    开始日期
-                  </div>
+                  <svg
+                    width="44"
+                    height="44"
+                    viewBox="0 0 44 44"
+                    fill="none"
+                    className="absolute top-3 left-2 cursor-pointer"
+                    onClick={handleSecondClick}
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M26.0001 29.4375L24.9546 30.5L17.281 22.7014C16.898 22.3122 16.898 21.6878 17.281 21.2986L24.9546 13.5L26.0001 14.5625L18.6818 22L26.0001 29.4375Z"
+                      fill="black"
+                      fillOpacity="0.9"
+                    />
+                  </svg>
+                  <div className="font-medium text-[15px]">开始日期</div>
                   <div className="absolute bottom-0 left-6 right-6 h-[0.5px] bg-black bg-opacity-10" />
                 </div>
                 <div
@@ -226,7 +215,10 @@ const Demo = () => {
                   }}
                 />
               </div>
-              <div className="absolute bottom-[-76px] left-0 z-10 flex items-center justify-center gap-4 pt-4 w-full pb-[76px] bg-white" ref={secondButtons}>
+              <div
+                className="absolute bottom-[-76px] left-0 z-10 flex items-center justify-center gap-4 pt-4 w-full pb-[76px] bg-white"
+                ref={secondButtons}
+              >
                 <div
                   className="w-[120px] flex items-center justify-center h-[48px] text-[17px] rounded-lg bg-[#F7F7F7] font-medium cursor-pointer"
                   // @ts-ignore
@@ -238,7 +230,10 @@ const Demo = () => {
                   确定
                 </div>
               </div>
-              <div className="absolute bottom-[-76px] left-0 z-10 flex items-center justify-center gap-4 pt-4 w-full pb-[76px] bg-white translate-x-full" ref={thirdButtons}>
+              <div
+                className="absolute bottom-[-76px] left-0 z-10 flex items-center justify-center gap-4 pt-4 w-full pb-[76px] bg-white translate-x-full"
+                ref={thirdButtons}
+              >
                 <div
                   className="w-[120px] flex items-center justify-center h-[48px] text-[17px] rounded-lg bg-[#F7F7F7] font-medium cursor-pointer"
                   // @ts-ignore
@@ -253,11 +248,6 @@ const Demo = () => {
             </div>
           </div>
         </div>
-        <img
-          className="absolute top-[-3px] left-0 w-full h-full pointer-events-none"
-          src="https://wxa.wxs.qq.com/wxad-design/yijie/iphone14-notch.png"
-          alt=""
-        />
       </div>
     </DemoBox>
   )

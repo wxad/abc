@@ -18,14 +18,6 @@ const Demo = () => {
   const thirdButtons = useRef<HTMLDivElement>(null)
   const icon = useRef<SVGSVGElement>(null)
   const handleFirstClick = () => {
-    if (
-      !bg.current ||
-      !statusBar.current ||
-      !drawer.current ||
-      !bgCover.current
-    ) {
-      return
-    }
     bgCover.current.style.transition =
       "all 0.55s cubic-bezier(0.32, 0.72, 0, 1)"
     bgCover.current.style.opacity = "0.3"
@@ -60,12 +52,6 @@ const Demo = () => {
         "transform 0.5s cubic-bezier(0.32, 0.72, 0, 1)"
     } else {
       bgCover.current.style.opacity = ""
-
-      bg.current.style.transform = ""
-      bg.current.style.borderRadius = ""
-
-      statusBar.current.style.filter = ""
-
       drawer.current.style.transform = ""
     }
   }
@@ -90,15 +76,12 @@ const Demo = () => {
       <div
         className="relative w-[404.8px] h-[820px] overflow-hidden"
         style={{
-          backgroundImage:
-            "url(https://wxa.wxs.qq.com/wxad-design/yijie/iphone14.png)",
-          backgroundSize: "cover",
           zoom: 0.85,
         }}
       >
-        <div className="absolute inset-[18px] rounded-[48px] bg-black overflow-hidden">
+        <div className="absolute inset-0 bg-black overflow-hidden">
           <div
-            className="absolute-full rounded-[48px] overflow-hidden origin-top"
+            className="absolute-full overflow-hidden origin-top"
             ref={bg}
           >
             <img
@@ -112,12 +95,6 @@ const Demo = () => {
               ref={bgCover}
             />
           </div>
-          <img
-            className="absolute top-0 left-0 w-full pointer-events-none"
-            src="https://wxa.wxs.qq.com/wxad-design/yijie/status-bar.png"
-            ref={statusBar}
-            alt=""
-          />
           <div
             className="absolute top-full left-0 w-full origin-bottom pb-[76px] bg-white rounded-t-xl overflow-hidden"
             ref={drawer}
@@ -260,11 +237,6 @@ const Demo = () => {
             </div>
           </div>
         </div>
-        <img
-          className="absolute top-[-3px] left-0 w-full h-full pointer-events-none"
-          src="https://wxa.wxs.qq.com/wxad-design/yijie/iphone14-notch.png"
-          alt=""
-        />
       </div>
     </DemoBox>
   )
