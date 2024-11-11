@@ -120,6 +120,7 @@ const Demo = () => {
             <div className="relative">
               <div
                 className="absolute z-1 top-0 left-0 w-full h-10 touch-none"
+                // @ts-ignore
                 {...bindDrag()}
               >
                 <div className="absolute top-4 left-1/2 w-12 h-1.5 rounded-full bg-gray-300 -translate-x-1/2" />
