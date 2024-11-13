@@ -17,11 +17,11 @@ import ConicFigmaToCodeNatural from "@/components/conic/ConicFigmaToCodeNatural"
 import ConicSwitch0 from "@/components/conic/ConicSwitch0"
 import ConicRotateDemo from "@/components/conic/ConicRotateDemo"
 
-随着今年微信广告榜单页面的升级，我和设计师一起完成了基于 `conic-gradient` 的旋转动画。这篇文章中，我将分享使用 motion/react 逐步优化的过程，其中包含了：
+随着今年微信广告榜单页面的升级，我和设计师一起完成了基于 `conic-gradient` 的旋转动画。这篇文章中，我将分享使用 `motion/react` 逐步优化的过程，其中包含了：
 
 1. **如何绘制**：画对 Figma 中的 “Angular Fill”；
 2. **如何旋转**：让 `conic-gradient` 转起来；
-3. **如何加速和切换**：使用 motion/react 的数个方法控制动画速度，以在切换时展现光线流转的效果。
+3. **如何加速和切换**：使用 `motion/react` 的数个方法控制动画速度，以在切换时展现光线流转的效果。
 
 下面是完整演示，你可以点击上方的 Tab 进行切换：
 
@@ -134,7 +134,7 @@ div {
 
 ![Figma 打点](https://wxa.wxs.qq.com/wxad-design/yijie/conic-figma-3.webp)
 
-借助 motion/react 底层的 popmotion，即便是字符串，我也可以很方便实现 12 个点的过渡。由于设计师打的点又不是等距的，因此又花了非常多的时间微调每个点的偏移量：
+借助 `motion/react` 底层的 popmotion，即便是字符串，我也可以很方便实现 12 个点的过渡。由于设计师打的点又不是等距的，因此又花了非常多的时间微调每个点的偏移量：
 
 ```js
 animate({
@@ -172,9 +172,9 @@ animate({
 
 这样的效果其实目的已经达到了，但是毕竟不够优雅。在前后两层不透明度的变化时，画面还是比较乱的。
 
-回过头来看，我们要做的，就好像是在一个匀速摇摆的秋千背后，稍微推一把。基础思路是 hack 进 popmotion 的 `animate` 的每一帧，然后对每一帧的值进行微调。而 motion/react 的 `useAnimationFrame` 就是这样一个 hook。
+回过头来看，我们要做的，就好像是在一个匀速摇摆的秋千背后，稍微推一把。基础思路是 hack 进 popmotion 的 `animate` 的每一帧，然后对每一帧的值进行微调。而 `motion/react` 的 `useAnimationFrame` 就是这样一个 hook。
 
-在用 motion/react 来简单地改写整个动画之前，我们先试试让一个匀速旋转的图标加速：
+在用 `motion/react` 来简单地改写整个动画之前，我们先试试让一个匀速旋转的图标加速：
 
 ```jsx
 const rotate = useMotionValue(0)
@@ -232,6 +232,6 @@ const bg = useTransform(
 
 ## 最后
 
-在整个动画的实现中，我们用到了 6 个 motion/react 中的方法或 hook：`animate`，`motion`，`useAnimationFrame`，`useMotionValue`，`useTransform`，`useVelocity`。
+在整个动画的实现中，我们用到了 6 个 `motion/react` 中的方法或 hook：`animate`，`motion`，`useAnimationFrame`，`useMotionValue`，`useTransform`，`useVelocity`。
 
 即便看起来很多，它们所服务的目的却非常好理解。API 只是实现目的的手段 。最佳实践永远源于个人的追求，而非工具的限制。
