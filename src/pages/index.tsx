@@ -116,9 +116,9 @@ const posts = [
     children: <CircularCover />,
   },
   {
-    title: "用 framer-motion 实现优雅的 conic-gradient 旋转动画",
+    title: "用 motion/react 实现优雅的 conic-gradient 旋转动画",
     description:
-      "随着今年微信广告榜单页面的升级，我和设计师一起完成了基于 conic-gradient 的旋转动画。这篇文章中，我将简单总结使用 framer-motion 逐步优化的过程。",
+      "随着今年微信广告榜单页面的升级，我和设计师一起完成了基于 conic-gradient 的旋转动画。这篇文章中，我将简单总结使用 motion/react 逐步优化的过程。",
     slug: "conic-gradient",
     publishedAt: "2024-06-21",
     editedAt: "2024-06-21",

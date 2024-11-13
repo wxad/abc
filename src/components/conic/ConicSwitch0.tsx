@@ -3,7 +3,7 @@ import {
   useAnimationFrame,
   useMotionValue,
   useTransform,
-} from "framer-motion"
+} from "motion/react"
 import { useRef, useState } from "react"
 import { useIntersectionObserver } from "react-intersection-observer-hook"
 import { animate, easeOut, linear } from "popmotion"

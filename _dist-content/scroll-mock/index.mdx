@@ -33,9 +33,9 @@ const handleScroll = () => {
 实际上，模拟一个移动端滚动，无非是以 `transform` 属性为核心，通过弹簧动画来模拟。这类似于我在 [转盘交互动画：以关键参数，细化我们的感受
 ](https://wxad.design/abc/carousel) 这篇文章中所做的事。
 
-## 为什么不直接用 framer-motion 的 dragConstraints 属性
+## 为什么不直接用 motion/react 的 dragConstraints 属性
 
-`framer-motion` 提供了一个 `dragConstraints` 属性，可以用来限制拖拽的范围。但是我的需求是需要在滚动的过程中实时变换 `dragConstraints` 的值，而这是 `framer-motion` 做不到的。至于是什么需求，暂时还不能说。
+`motion/react` 提供了一个 `dragConstraints` 属性，可以用来限制拖拽的范围。但是我的需求是需要在滚动的过程中实时变换 `dragConstraints` 的值，而这是 `motion/react` 做不到的。至于是什么需求，暂时还不能说。
 
 ## 技术实现：use-gesture + inertia
 
@@ -43,7 +43,7 @@ const handleScroll = () => {
 
 ### 橡皮筋公式
 
-`framer-motion` 的做法是直接将超出的部分乘以 0.35，以达到橡皮筋的效果。这种简单的线性做法实际上并不是 iOS 的做法。下面的公式才是 iOS 的做法：
+`motion/react` 的做法是直接将超出的部分乘以 0.35，以达到橡皮筋的效果。这种简单的线性做法实际上并不是 iOS 的做法。下面的公式才是 iOS 的做法：
 
 `x = (1.0 - (1.0 / ((x * c / d) + 1.0))) * d`
 

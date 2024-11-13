@@ -5,7 +5,7 @@ import {
   useAnimationFrame,
   useMotionValue,
   useTransform,
-} from "framer-motion"
+} from "motion/react"
 
 const Demo = () => {
   const [ref, { entry }] = useIntersectionObserver({

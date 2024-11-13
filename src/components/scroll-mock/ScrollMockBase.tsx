@@ -1,6 +1,6 @@
 import { useRef, useState } from "react"
 import { Pane } from "tweakpane"
-import { animate, AnimationPlaybackControls } from "framer-motion"
+import { animate, AnimationPlaybackControls } from "motion/react"
 import { useDrag } from "@use-gesture/react"
 import DemoBox from "../DemoBox"
 

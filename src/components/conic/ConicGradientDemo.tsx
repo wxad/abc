@@ -5,7 +5,7 @@ import {
   useMotionValue,
   useTransform,
   useVelocity,
-} from "framer-motion"
+} from "motion/react"
 import { useState } from "react"
 import { useIntersectionObserver } from "react-intersection-observer-hook"
 import DemoBox from "../DemoBox"

@@ -1,6 +1,6 @@
 import { useRef } from "react"
 import { useDrag } from "@use-gesture/react"
-import { animate, AnimationPlaybackControls } from "framer-motion"
+import { animate, AnimationPlaybackControls } from "motion/react"
 import DemoBox from "../DemoBox"
 
 // 0 - 250 - 567
