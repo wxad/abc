@@ -18,7 +18,7 @@ import NextLink from "next/link"
 
 const posts = [
   {
-    title: "关于 Drawer 组件的设计发散",
+    title: "关于 Drawer 组件的发散",
     description:
       "最近在视频号互选移动端和设计师尝试了一个 Drawer，想借此延展开讨论 Drawer 这个 UI 形式的可能性，稍许发散发散。",
     slug: "drawer",
