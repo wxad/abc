@@ -25,7 +25,7 @@ export default function PostPage({ content }: { content: Post }) {
   const PostContent = React.useMemo(() => getMDXComponent(code), [code])
 
   return (
-    <div className="m-auto px-4 pt-16 pb-28 w-[min(80rem,_100%)] text-base">
+    <div className="m-auto px-4 pt-16 pb-28 w-[min(80rem,_100%)] text-sm md:text-base">
       <Head>
         <title>{frontmatter.title}</title>
         <meta name="description" content={frontmatter.description} />
@@ -94,7 +94,7 @@ export default function PostPage({ content }: { content: Post }) {
         {frontmatter.cover ? (
           <img src={frontmatter.cover} alt="" className="block mb-8 w-full rounded-lg shadow-lg" />
         ) : null}
-        <div className="mb-8 font-mono text-gray-500">
+        <div className="mb-4 md:mb-8 font-mono text-gray-500">
           {new Intl.DateTimeFormat("zh-CN", {
             month: "long",
             year: "numeric",
@@ -108,7 +108,7 @@ export default function PostPage({ content }: { content: Post }) {
             @{frontmatter.author}
           </a>
         </div>
-        <h1 className="mb-8 font-semibold text-3xl md:text-4xl">
+        <h1 className="mb-8 font-semibold text-2xl md:text-4xl">
           {frontmatter.title}
         </h1>
         <PostContent

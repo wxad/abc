@@ -11,7 +11,7 @@ export const H2: React.FC<{ children: string }> = ({
   return (
     <h2
       id={id}
-      className="relative mb-8 mt-24 text-2xl font-medium before:absolute before:-top-4 before:left-0 before:h-[3px] before:w-6 before:bg-current"
+      className="relative mb-8 mt-24 text-xl md:text-2xl font-medium before:absolute before:-top-4 before:left-0 before:h-[3px] before:w-6 before:bg-current"
       {...otherProps}
     >
       {children}
@@ -22,7 +22,7 @@ export const H2: React.FC<{ children: string }> = ({
 export const H3 = ({ children, ...otherProps }: { children: string }) => {
   const id = getId(children)
   return (
-    <h3 id={id} className="text-xl mt-12 mb-4 font-medium" {...otherProps}>
+    <h3 id={id} className="text-lg md:text-xl mt-12 mb-4 font-medium" {...otherProps}>
       {children}
     </h3>
   )
