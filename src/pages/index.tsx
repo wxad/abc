@@ -18,6 +18,18 @@ import NextLink from "next/link"
 
 const posts = [
   {
+    title: "做 UI 的开发",
+    description:
+      "你想当一个诗人的时候，你就失去了诗。你想成为一个人的时候，你就失去了你自己。在你什么也不想要的时候，或许一切才如期而来。",
+    slug: "deng",
+    publishedAt: "2024-11-27",
+    editedAt: "2024-11-27",
+    author: "Aragakey.",
+    authorLink: "https://codepen.io/aragakey",
+    cover: "https://wxa.wxs.qq.com/wxad-design/yijie/deng-cover.webp",
+    children: <Cover2023 />,
+  },
+  {
     title: "关于 Drawer 组件的发散",
     description:
       "最近在视频号互选移动端和设计师尝试了一个 Drawer，想借此延展开讨论 Drawer 这个 UI 形式的可能性，稍许发散发散。",
