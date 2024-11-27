@@ -30,7 +30,7 @@ export const H3 = ({ children, ...otherProps }: { children: string }) => {
 
 export const P = ({ children, ...otherProps }: { children: string }) => {
   return (
-    <p className="mb-4" {...otherProps}>
+    <p className="mb-4 last:mb-0" {...otherProps}>
       {children}
     </p>
   )

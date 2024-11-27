@@ -25,7 +25,7 @@ export default function PostPage({ content }: { content: Post }) {
   const PostContent = React.useMemo(() => getMDXComponent(code), [code])
 
   return (
-    <div className="m-auto px-4 pt-16 pb-28 w-[min(80rem,_100%)] text-sm md:text-base">
+    <div className="m-auto px-4 pt-8 md:pt-16 pb-28 w-[min(80rem,_100%)] text-sm md:text-base">
       <Head>
         <title>{frontmatter.title}</title>
         <meta name="description" content={frontmatter.description} />
@@ -64,7 +64,7 @@ export default function PostPage({ content }: { content: Post }) {
           </a>
         </div>
       </nav> */}
-      <nav className="fixed hidden 74:flex flex-col justify-between top-16 bottom-20 pl-6 max-w-44 text-gray-600">
+      <nav className="fixed hidden 74:flex flex-col justify-between top-16 bottom-[7.2rem] pl-6 max-w-44 text-gray-600">
         <h2>
           <NextLink
             href="/"
