@@ -14,20 +14,21 @@ import DepthCover from "@/components/designing-depth/DepthCover"
 import ScrollMockCover from "@/components/scroll-mock/ScrollMockCover"
 import ShadcnCover from "@/components/shadcn/ShadcnCover"
 import DrawerCover from "@/components/drawer/DrawerCover"
+import DengCover from "@/components/deng/DengCover"
 import NextLink from "next/link"
 
 const posts = [
   {
     title: "做 UI 的开发",
     description:
-      "你想当一个诗人的时候，你就失去了诗。你想成为一个人的时候，你就失去了你自己。在你什么也不想要的时候，或许一切才如期而来。",
+      "滑进瞳孔的一盏盏路灯不是星星，热带的太阳鸟也不会落在我的树上。我只需面向暖流走向海。难得了，足够了。\n我知道顾城说的执者失之。你想当一个诗人的时候，你就失去了诗。你想成为一个人的时候，你就失去了你自己。在你什么也不想要的时候，或许一切才如期而来。",
     slug: "deng",
     publishedAt: "2024-11-27",
     editedAt: "2024-11-27",
     author: "Aragakey.",
     authorLink: "https://codepen.io/aragakey",
-    cover: "https://wxa.wxs.qq.com/wxad-design/yijie/deng-cover.webp",
-    children: <Cover2023 />,
+    cover: "https://wxa.wxs.qq.com/wxad-design/yijie/deng-cover-1.webp",
+    children: <DengCover />,
   },
   {
     title: "关于 Drawer 组件的发散",
@@ -334,11 +335,11 @@ const Home = () => {
                       </div>
                       <NextLink
                         href={slug}
-                        className="block mb-8 font-semibold text-2xl md:text-3xl hover:text-blue-500 transition-all"
+                        className="block mb-8 font-semibold text-2xl md:text-3xl hover:text-blue-500 active:text-blue-500 transition-all"
                       >
                         {title}
                       </NextLink>
-                      <div className="text-sm text-neutral-600">
+                      <div className="text-sm text-neutral-600 whitespace-break-spaces">
                         {description}
                       </div>
                       <NextLink
