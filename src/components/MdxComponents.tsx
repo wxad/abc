@@ -342,7 +342,7 @@ export const BlockQuote = ({
 }) => {
   return (
     <blockquote
-      className="pl-4 border-l-2 border-gray-500 text-gray-700 italic"
+      className="mb-4 pl-4 border-l-2 border-gray-500 text-gray-700 italic"
       {...otherProps}
     >
       {children}
