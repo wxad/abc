@@ -42,7 +42,7 @@ const Demo = () => {
           playsInline
           loop
           crossOrigin="anonymous"
-          src="/abc/making-fluid-interfaces/carousel-vote.mp4"
+          src="https://wxa.wxs.qq.com/wxad-design/yijie/making-fluid-interfaces/carousel-vote.mp4"
         />
         <div
           ref={coverRef}
