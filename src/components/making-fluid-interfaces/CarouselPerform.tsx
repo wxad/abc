@@ -12,10 +12,15 @@ const Demo = () => {
   const inView = entry?.isIntersecting
 
   const playVideo = () => {
-    videoRef.current!.play().catch((error) => {
-      // 如果自动播放失败，显示封面
-      coverRef.current.style.display = "flex"
-    })
+    videoRef
+      .current!.play()
+      .then(() => {
+        coverRef.current.style.display = "none"
+      })
+      .catch((error) => {
+        // 如果自动播放失败，显示封面
+        coverRef.current.style.display = "flex"
+      })
   }
 
   useEffect(() => {
