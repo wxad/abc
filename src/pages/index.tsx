@@ -15,9 +15,21 @@ import ScrollMockCover from "@/components/scroll-mock/ScrollMockCover"
 import ShadcnCover from "@/components/shadcn/ShadcnCover"
 import DrawerCover from "@/components/drawer/DrawerCover"
 import DengCover from "@/components/deng/DengCover"
+import MakingFluidInterfacesCover from "@/components/making-fluid-interfaces/Cover"
 import NextLink from "next/link"
 
 const posts = [
+  {
+    title: "制作流畅界面",
+    description:
+      "WWDC18 的《设计流畅界面 Designing Fluid Interfaces》对我职业发展影响巨大，我将通过 2 个项目，分享自己是如何学习与制作流畅界面的。希望这个被我视为灯塔的视频，也能让你觉得有所收获。",
+    slug: "making-fluid-interfaces",
+    publishedAt: "2025-01-15",
+    editedAt: "2025-01-15",
+    author: "Aragakey.",
+    authorLink: "https://codepen.io/aragakey",
+    children: <MakingFluidInterfacesCover />,
+  },
   {
     title: "做 UI 的开发",
     description:

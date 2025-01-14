@@ -1,20 +1,37 @@
-import { playVideoWithCover } from "@/lib/utils"
 import { useEffect, useRef } from "react"
 import DemoBox from "../DemoBox"
+import { useIntersectionObserver } from "react-intersection-observer-hook"
 
 const Demo = () => {
   const videoRef = useRef<HTMLVideoElement>(null)
   const coverRef = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    playVideoWithCover({
-      video: videoRef.current,
-      cover: coverRef.current,
+
+  const [ref, { entry }] = useIntersectionObserver({
+    threshold: 0,
+  })
+  const inView = entry?.isIntersecting
+
+  const playVideo = () => {
+    videoRef.current!.play().catch((error) => {
+      // 如果自动播放失败，显示封面
+      coverRef.current.style.display = "flex"
     })
-  }, [])
+  }
+
+  useEffect(() => {
+    if (inView) {
+      playVideo()
+    } else {
+      videoRef.current?.pause()
+    }
+  }, [inView])
 
   return (
     <DemoBox className="flex justify-center items-center p-6">
-      <div className="relative w-[300px] aspect-[558/1080] rounded-xl overflow-hidden">
+      <div
+        ref={ref}
+        className="relative w-[250px] aspect-[558/1080] rounded-xl overflow-hidden"
+      >
         <video
           ref={videoRef}
           className="absolute-full"
@@ -25,9 +42,16 @@ const Demo = () => {
           playsInline
           loop
           crossOrigin="anonymous"
-          src="https://wxa.wxs.qq.com/wxad-design/yijie/hx-instant-01s.mp4"
+          src="/abc/making-fluid-interfaces/hx-instant-00s.mp4"
         />
-        <div ref={coverRef} className="absolute-full hidden items-center justify-center font-medium text-sm text-neutral-500 bg-gradient-to-bl from-white to-neutral-100 border border-sold border-neutral-200 cursor-pointer rounded-xl opacity-95 backdrop-blur-xl">
+        <div
+          ref={coverRef}
+          className="absolute-full hidden items-center justify-center font-medium text-sm text-neutral-500 bg-gradient-to-bl from-white to-neutral-100 border border-sold border-neutral-200 cursor-pointer rounded-xl opacity-95 backdrop-blur-xl"
+          onClick={() => {
+            videoRef.current?.play()
+            coverRef.current.style.display = "none"
+          }}
+        >
           <svg className="w-4 h-4 mr-1" viewBox="0 0 24 24">
             <g fill="currentColor" fillRule="evenodd" clipRule="evenodd">
               <path d="M11.075 7.508c-1.329-.784-2.825.283-2.825 1.705v5.574c0 1.422 1.496 2.489 2.825 1.705l4.72-2.787c1.273-.752 1.273-2.658 0-3.41zM9.75 9.213c0-.198.096-.337.21-.408a.323.323 0 0 1 .352-.005l4.72 2.787a.465.465 0 0 1 .218.413a.465.465 0 0 1-.218.413l-4.72 2.787a.323.323 0 0 1-.353-.005a.467.467 0 0 1-.209-.408z" />
