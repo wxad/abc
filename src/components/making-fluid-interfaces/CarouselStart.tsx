@@ -53,7 +53,7 @@ const Demo = () => {
           playsInline
           loop
           crossOrigin="anonymous"
-          src="https://wxa.wxs.qq.com/wxad-design/yijie/making-fluid-interfaces/carousel-start.mp4"
+          src="/abc/making-fluid-interfaces/carousel-start.mp4"
         />
         <div
           ref={coverRef0}
@@ -83,7 +83,7 @@ const Demo = () => {
           playsInline
           loop
           crossOrigin="anonymous"
-          src="https://wxa.wxs.qq.com/wxad-design/yijie/making-fluid-interfaces/carousel-start-1.mp4"
+          src="/abc/making-fluid-interfaces/carousel-start-1.mp4"
         />
         <div
           ref={coverRef1}

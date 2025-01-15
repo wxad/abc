@@ -42,7 +42,7 @@ const Demo = () => {
           playsInline
           loop
           crossOrigin="anonymous"
-          src="https://wxa.wxs.qq.com/wxad-design/yijie/making-fluid-interfaces/hx-instant-00s.mp4"
+          src="/abc/making-fluid-interfaces/hx-instant-00s.mp4"
         />
         <div
           ref={coverRef}
