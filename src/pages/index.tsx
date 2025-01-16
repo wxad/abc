@@ -16,9 +16,21 @@ import ShadcnCover from "@/components/shadcn/ShadcnCover"
 import DrawerCover from "@/components/drawer/DrawerCover"
 import DengCover from "@/components/deng/DengCover"
 import MakingFluidInterfacesCover from "@/components/making-fluid-interfaces/Cover"
+import MakingFluidInterfacesCover2 from "@/components/making-fluid-interfaces/Cover2"
 import NextLink from "next/link"
 
 const posts = [
+  {
+    title: "Web 流畅界面建议",
+    description:
+      "整理自《制作流畅界面》👇。我个人在移动端制作交互动画的一些经验、心得与建议。一开始叫“指南”，也是给自己脸了，确实没有这么大权威。",
+    slug: "https://wxad.design/making-fluid-interfaces/",
+    publishedAt: "2025-01-16",
+    editedAt: "2025-01-16",
+    author: "Aragakey.",
+    authorLink: "https://codepen.io/aragakey",
+    children: <MakingFluidInterfacesCover2 />,
+  },
   {
     title: "制作流畅界面",
     description:
