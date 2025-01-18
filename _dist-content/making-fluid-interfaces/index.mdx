@@ -16,6 +16,7 @@ import CarouselVote from "@/components/making-fluid-interfaces/CarouselVote"
 import HxVote from "@/components/making-fluid-interfaces/HxVote"
 import HxTab from "@/components/making-fluid-interfaces/HxTab"
 import List from "@/components/making-fluid-interfaces/List"
+import ListDemo from "@/components/making-fluid-interfaces/ListDemo"
 import ListNumbers from "@/components/making-fluid-interfaces/ListNumbers"
 import CarouselPerform from "@/components/making-fluid-interfaces/CarouselPerform"
 import HxPerform from "@/components/making-fluid-interfaces/HxPerform"
@@ -175,7 +176,11 @@ const rotate = useSpring(0, {
 
 ![](https://wxa.wxs.qq.com/wxad-design/yijie/list-numbers-time.png)
 
-但时间和参数的数字并没有用（_时间只是物体运动的结果，而非原因_），还是需要拿在手上不断调整。比如在惯性滚动时，我将 `timeConstant` 调整为 `150`，这会导致衰减得更快，列表停下来就更快，你可以再看看上面的视频就会发现这点 —— 因为这里的需求并不是浏览长列表的效率。不展开了。
+但时间和参数的数字并没有用（_时间只是物体运动的结果，而非原因_），还是需要拿在手上不断调整。比如在惯性滚动时，我将 `timeConstant` 调整为 `150`，这会导致衰减得更快，列表停下来就更快，细看就会发现这点 —— 因为这里的需求并不是浏览长列表的效率。不展开了。
+
+也可以在下面的 Demo 中粗略体验，调节一下参数试试：
+
+<ListDemo />
 
 ## 交互动画，就是为了“好玩”
 

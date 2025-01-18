@@ -27,6 +27,14 @@ const Demo = () => {
     })
   }
 
+  const handleTimeUpdate0 = () => {
+    coverRef0.current.style.display = "none"
+  }
+
+  const handleTimeUpdate1 = () => {
+    coverRef1.current.style.display = "none"
+  }
+
   useEffect(() => {
     if (inView) {
       playVideo0()
@@ -38,7 +46,7 @@ const Demo = () => {
   }, [inView])
 
   return (
-    <DemoBox className="flex justify-center items-center p-6 gap-6">
+    <div className="relative flex justify-center items-center mt-8 mb-12 gap-3">
       <div
         ref={ref}
         className="relative w-[250px] aspect-[558/1080] rounded-xl overflow-hidden"
@@ -53,6 +61,7 @@ const Demo = () => {
           playsInline
           loop
           crossOrigin="anonymous"
+          onTimeUpdate={handleTimeUpdate0}
           src="/abc/making-fluid-interfaces/carousel-start.mp4"
         />
         <div
@@ -84,6 +93,7 @@ const Demo = () => {
           loop
           crossOrigin="anonymous"
           src="/abc/making-fluid-interfaces/carousel-start-1.mp4"
+          onTimeUpdate={handleTimeUpdate1}
         />
         <div
           ref={coverRef1}
@@ -102,7 +112,10 @@ const Demo = () => {
           播放视频
         </div>
       </div>
-    </DemoBox>
+      <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 text-sm text-neutral-400 whitespace-nowrap">
+        在任何时候开始交互
+      </div>
+    </div>
   )
 }
 
