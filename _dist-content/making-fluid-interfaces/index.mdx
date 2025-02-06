@@ -6,6 +6,7 @@ publishedAt: "2025-01-15"
 editedAt: "2025-01-15"
 author: "Aragakey."
 authorLink: "https://codepen.io/aragakey"
+cover: https://wxa.wxs.qq.com/wxad-design/yijie/mfi-top.webp
 ---
 
 import HxInstant0 from "@/components/making-fluid-interfaces/HxInstant0"
@@ -21,9 +22,9 @@ import ListNumbers from "@/components/making-fluid-interfaces/ListNumbers"
 import CarouselPerform from "@/components/making-fluid-interfaces/CarouselPerform"
 import HxPerform from "@/components/making-fluid-interfaces/HxPerform"
 
-在 2025 年 1 月，我与设计师完成了两个项目，它们分别是 [视频号互选创作者榜](https://mp.weixin.qq.com/promotion/wxahelper/index?page=best_creators) 和 [朋友圈广告年度评选](https://mp.weixin.qq.com/promotion/res/htmledition/best-moments-2024-demo/index.html)。我们共同完成了一些有趣的交互动画，其中包含了我对这个领域的理解与追求。
+在 2025 年 1 月，我与设计师完成了两个项目，它们分别是 [视频号互选创作者榜(https://wxa.wxs.qq.com/wxad-design/yijie/bc24-popover.webp)](https://mp.weixin.qq.com/promotion/wxahelper/index?page=best_creators) 和 [朋友圈广告年度评选(https://wxa.wxs.qq.com/wxad-design/yijie/bm24-popover.webp)](https://mp.weixin.qq.com/promotion/res/htmledition/best-moments-2024-demo/index.html)。我们共同完成了一些有趣的交互动画，其中包含了我对这个领域的理解与追求。
 
-这篇文章的标题是《制作流畅界面》，来自于 WWDC18《[设计流畅界面 Designing Fluid Interfaces](https://developer.apple.com/videos/play/wwdc2018/803)》。这个 7 年前的视频对我影响极大，我看过它许多遍、将它视为指引的灯塔。接下来，我将通过几个具体案例，分享自己是如何学习与制作流畅界面的。希望这个对我职业发展有重要意义的视频，也能让你觉得有所收获。
+这篇文章的标题是《制作流畅界面》，来自于 WWDC18《[设计流畅界面 Designing Fluid Interfaces(https://wxa.wxs.qq.com/wxad-design/yijie/2247_wide_250x141_3x.webp)](https://developer.apple.com/videos/play/wwdc2018/803)》。这个 7 年前的视频对我影响极大，我看过它许多遍、将它视为指引的灯塔。接下来，我将通过几个具体案例，分享自己是如何学习与制作流畅界面的。希望这个对我职业发展有重要意义的视频，也能让你觉得有所收获。
 
 ## 实时与连续反馈
 
@@ -31,7 +32,7 @@ import HxPerform from "@/components/making-fluid-interfaces/HxPerform"
 
 > 人们对延迟非常敏感。当发生任何时延迟时，就会感到脱节，交互不再像是自己手指的延伸。
 >
-> —— [设计流畅界面 05:47](https://youtu.be/gttSJA-kDmQ?t=347)
+> —— [设计流畅界面 05:47(https://wxa.wxs.qq.com/wxad-design/yijie/2247_wide_250x141_3x.webp)](https://youtu.be/gttSJA-kDmQ?t=347)
 
 <HxInstant0 />
 
@@ -69,7 +70,7 @@ const rotate = useSpring(0, {
 
 > 我们发现，让界面始终具有响应性、始终理解用户是非常重要的。这对用户的预期和对界面的理解来说非常关键。这样用户才能感到舒适，并意识到每当需要时，界面都会及时响应。
 >
-> —— [设计流畅界面 09:44](https://youtu.be/gttSJA-kDmQ?t=584)
+> —— [设计流畅界面 09:44(https://wxa.wxs.qq.com/wxad-design/yijie/2247_wide_250x141_3x.webp)](https://youtu.be/gttSJA-kDmQ?t=584)
 
 在 Apple iOS 的例子中，当用户打开一个 app 时，他可以在过渡过程中就选择关闭它。用户不需要等待任何过渡的完成和停止。这也是交互动画与视觉（非交互）动画的一大区别 —— 过渡不只是一种形式。
 
@@ -91,7 +92,7 @@ const rotate = useSpring(0, {
 
 ---
 
-在 [视频号互选创作者榜](https://mp.weixin.qq.com/promotion/wxahelper/index?page=best_creators) 中也一样，你随时可以点开卡片查看更多信息，也可以在卡片翻转的过程中选择关闭它：
+在 [视频号互选创作者榜(https://wxa.wxs.qq.com/wxad-design/yijie/bc24-popover.webp)](https://mp.weixin.qq.com/promotion/wxahelper/index?page=best_creators) 中也一样，你随时可以点开卡片查看更多信息，也可以在卡片翻转的过程中选择关闭它：
 
 <HxVote />
 
@@ -103,7 +104,7 @@ const rotate = useSpring(0, {
 
 > 从一个短暂、轻量的交互开始，通过位置、速度、加速、力量，放大你移动的结果，让你仍觉得是自己的延伸。通过轻量的交互，就能得到愉悦的感受。
 >
-> —— [设计流畅界面 15:06](https://youtu.be/gttSJA-kDmQ?t=906)
+> —— [设计流畅界面 15:06(https://wxa.wxs.qq.com/wxad-design/yijie/2247_wide_250x141_3x.webp)](https://youtu.be/gttSJA-kDmQ?t=906)
 
 <Velocity />
 
@@ -117,7 +118,7 @@ const rotate = useSpring(0, {
 
 > 线性的界面迫使用户先思考、再做决定、然后交互。而流畅的界面思考和手势是同时发生的，这比先思考再交互要快得多。
 >
-> —— [设计流畅界面 08:24](https://youtu.be/gttSJA-kDmQ?t=504)
+> —— [设计流畅界面 08:24(https://wxa.wxs.qq.com/wxad-design/yijie/2247_wide_250x141_3x.webp)](https://youtu.be/gttSJA-kDmQ?t=504)
 
 我们对此也做了一些有意思的尝试，虽然我觉得确实有一些“牵强附会”。
 
@@ -147,7 +148,7 @@ const rotate = useSpring(0, {
 
 <List />
 
-我曾在《[交互动画的层级设计](https://wxad.design/abc/designing-depth#%E7%AC%AC-3-%E7%A7%8D%E5%B1%82%E7%BA%A7%EF%BC%9A%E9%94%99%E8%90%BD%E5%8A%A8%E7%94%BB)》中探讨过这种形式。错落的形式并不妨碍我们很自然地将它们视为一个整体。可是，为什么要这样做呢？
+我曾在《[交互动画的层级设计(https://wxa.wxs.qq.com/wxad-design/yijie/og-depth.webp)](https://wxad.design/abc/designing-depth#%E7%AC%AC-3-%E7%A7%8D%E5%B1%82%E7%BA%A7%EF%BC%9A%E9%94%99%E8%90%BD%E5%8A%A8%E7%94%BB)》中探讨过这种形式。错落的形式并不妨碍我们很自然地将它们视为一个整体。可是，为什么要这样做呢？
 
 1. 这种细微的不同步，避免了列表像“死板的整块内容”那样滚动，每一个标准都独立存在，每一个标准都可以被你点击、定义，这是功能上的意义；
 2. 你每天都在滑动同样的长列表，在微信里、在小红书里。只要你开始在这里滑动，你就能体会到这种细微细腻的差别，我希望它们的错落让你觉得自然舒适，又和你再熟悉不过的体验有一点点不同。优雅而精致，一直是我在体验上的目标。
@@ -188,7 +189,7 @@ const rotate = useSpring(0, {
 
 > 好玩，是流畅界面的自然结果。
 >
-> —— [设计流畅界面 01:00:28](https://youtu.be/gttSJA-kDmQ?t=3628)
+> —— [设计流畅界面 01:00:28(https://wxa.wxs.qq.com/wxad-design/yijie/2247_wide_250x141_3x.webp)](https://youtu.be/gttSJA-kDmQ?t=3628)
 
 ![](https://wxa.wxs.qq.com/wxad-design/yijie/playfulness-apple.png)
 
