@@ -21,6 +21,7 @@ import ListDemo from "@/components/making-fluid-interfaces/ListDemo"
 import ListNumbers from "@/components/making-fluid-interfaces/ListNumbers"
 import CarouselPerform from "@/components/making-fluid-interfaces/CarouselPerform"
 import HxPerform from "@/components/making-fluid-interfaces/HxPerform"
+import Momentum from "@/components/making-fluid-interfaces/Momentum"
 
 在 2025 年 1 月，我与设计师完成了两个项目，它们分别是 [视频号互选创作者榜(https://wxa.wxs.qq.com/wxad-design/yijie/bc24-popover.webp)](https://mp.weixin.qq.com/promotion/wxahelper/index?page=best_creators) 和 [朋友圈广告年度评选(https://wxa.wxs.qq.com/wxad-design/yijie/bm24-popover.webp)](https://mp.weixin.qq.com/promotion/res/htmledition/best-moments-2024-demo/index.html)。我们共同完成了一些有趣的交互动画，其中包含了我对这个领域的理解与追求。
 
@@ -98,7 +99,7 @@ const rotate = useSpring(0, {
 
 流畅的界面要始终具有响应性，可打断、可反悔。允许用户在每一个状态变化的过程中，都可以将他的手指按下，界面随他调度。
 
-## 响应速度，保持惯性
+## 响应速度，保持惯性，奖励动量
 
 当用户松手时，流畅的界面应该响应速度，保持惯性。有的时候还需要奖励动量（momentum），最常见的就是橡皮筋效果（rubberband）的例子。
 
@@ -109,6 +110,14 @@ const rotate = useSpring(0, {
 <Velocity />
 
 以上的两种交互的表现是类似的，都围绕着 [“松开手之后，应该停在哪？”](https://wxad.design/abc/carousel#%E6%9D%BE%E5%BC%80%E6%89%8B%E6%8C%87%E5%90%8E%EF%BC%8C%E5%BA%94%E8%AF%A5%E5%81%9C%E5%9C%A8%E5%93%AA%EF%BC%9F) 和 [“停到那个地方，要花多久？”](https://wxad.design/abc/carousel#%E5%81%9C%E5%88%B0%E9%82%A3%E4%B8%AA%E5%9C%B0%E6%96%B9%EF%BC%8C%E8%A6%81%E8%8A%B1%E5%A4%9A%E4%B9%85%EF%BC%9F) 这两个关键问题展开。过去已经讨论过，在这篇文章中不再展开。
+
+---
+
+奖励动量发生在下面的场景：当用户点击左右两侧卡片时，转盘也会转动，但是这个过程不会有回弹效果；而当用户滑动后，转盘就会带有一个回弹，这就是一种对动量的奖励，也更用户明确：已经到达最终位置了，你可以继续交互了。
+
+<Momentum />
+
+这样的细节我觉得是合理的，是有趣的。
 
 ## 操作与想法并行
 
