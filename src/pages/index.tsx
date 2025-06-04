@@ -17,9 +17,20 @@ import DrawerCover from "@/components/drawer/DrawerCover"
 import DengCover from "@/components/deng/DengCover"
 import MakingFluidInterfacesCover from "@/components/making-fluid-interfaces/Cover"
 import MakingFluidInterfacesCover2 from "@/components/making-fluid-interfaces/Cover2"
+import SpringenCover from "@/components/springen/SpringenCover"
 import NextLink from "next/link"
 
 const posts = [
+  {
+    title: "一个名为“跳跃”的动效语言",
+    description: "跳跃，就是与状态变化、切换相关的一系列交互动画。",
+    slug: "springen",
+    publishedAt: "2025-06-03",
+    editedAt: "2025-06-03",
+    author: "Aragakey.",
+    authorLink: "https://codepen.io/aragakey",
+    children: <SpringenCover />,
+  },
   {
     title: "Web 流畅界面建议",
     description:

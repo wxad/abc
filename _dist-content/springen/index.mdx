@@ -1,0 +1,256 @@
+---
+  title: "一个名为“跳跃”的动效语言"
+  description: "跳跃，就是与状态变化、切换相关的一系列交互动画。"
+  slug: "springen"
+  publishedAt: "2025-06-04"
+  editedAt: "2025-06-04"
+  author: "Aragakey."
+  authorLink: "https://codepen.io/aragakey"
+---
+
+import HoverFillButton from "@/components/springen/hover-fill-button"
+import HoverFillInput from "@/components/springen/hover-fill-input"
+import HoverFillCard from "@/components/springen/hover-fill-card"
+import HoverFillButtons from "@/components/springen/hover-fill-buttons"
+import HoverFillCards from "@/components/springen/hover-fill-cards"
+import HoverFillCards1 from "@/components/springen/hover-fill-cards-1"
+import HoverFillTable from "@/components/springen/hover-fill-table"
+import HoverFillTableRows from "@/components/springen/hover-fill-table-rows"
+import HoverFillPagination from "@/components/springen/hover-fill-pagination"
+import HoverFillCalendar from "@/components/springen/hover-fill-calendar"
+import HoverFillCombination from "@/components/springen/hover-fill-combination"
+import HoverFillList from "@/components/springen/hover-fill-list"
+import HoverFillNav from "@/components/springen/hover-fill-nav"
+import HoverFillTooltip from "@/components/springen/hover-fill-tooltip"
+import Slider from "@/components/fm/Slider"
+import NavigationMenu from "@/components/fm/NavigationMenu"
+import HoverFillHuxuan from "@/components/springen/hover-fill-huxuan"
+import TabsDefault from "@/components/springen/tabs-default"
+import TabsVertical from "@/components/springen/tabs-vertical"
+
+最近在 B 端项目中实践了一个名为“跳跃”的动效语言，由于 npm 起名字实在困难，选择了德语单词 “[Springen](https://wxad.design/springen)” 作为它们的名字。
+
+以一种统一的交互表现，而不是以一个完整的组件库的方式去归纳组件，对我来说是一件很有趣的事情。更像是为了“跳跃”这盘“醋”，包了几只饺子。能用到什么组件，我就去写什么组件。
+
+现在已不是做组件的年代，但 [我不认为做 UI 已经没有意义](https://wxad.design/abc/shadcn)。
+
+> 注：本文只适合使用带有 `hover` 交互的设备阅读。
+
+## 悬浮填充 HoverFill
+
+`HoverFill` 是“跳跃”系列的核心。即使其他组件没有直接使用它，其设计也都建立在它之上。它的作用很简单——当鼠标悬停在某个元素上时，为其填充一层背景色。
+
+细节也就两点：我会根据鼠标移入的方位加一点点缩放和中心偏移；以及相邻的元素会共享背景色。
+
+`HoverFill` 是这些组件中我最喜欢的一个。它这么简单，却能扩展到许多组件，最终适用于许多场景。
+
+我先不谈设计上的考量，先看看具体表现：
+
+### 作为轻量按钮
+
+最简单地，`HoverFill` 可以成为一个轻量按钮，你需要比较仔细才能看到缩放的中心偏移，这是有意弱化的：
+
+<HoverFillButton />
+
+### 作为轻量输入框
+
+接着，`HoverFill` 当然可以成为一个轻量的其他表单元素：
+
+<HoverFillInput />
+
+### 作为轻量卡片
+
+除了表单，HoverFill 也可以成为一个轻量的卡片，可以修改 `var(--odn-hoverfill-scale-start)` 来改变缩放的开始值，因为在尺寸比较大的卡片上，起始的 0.92 就会显得明显和刻意，可以在下面试试：
+
+<HoverFillCard />
+
+### 共享背景
+
+`HoverFill` 最重要的特性：从一个 hover 到相邻的另一个时，它们会 **自动地** 共享同一个背景。
+
+“相邻”不仅是指视觉上，在 DOM 上的判断为是否在同一个父元素下。这种“自动”确实存在风险，但是刻意这样设计的。我不想增加 `HoverFill.Group` 这样的设计，这会增加心智成本。
+
+### 作为多个轻量按钮
+
+同为一组的按钮，它们会共享背景：
+
+<HoverFillButtons />
+
+### 作为多个轻量卡片
+
+同为一组的卡片，它们会共享背景：
+
+<HoverFillCards />
+
+---
+
+如果元素涉及到样式改变，直接使用 `transition` 是不合适的。更好的做法是叠加两层元素，然后通过 `clip-path` 的方式裁切叠加在上方的那层：
+
+<HoverFillCards1 />
+
+实际上这反应了这个动效形式的“弊端”，它要求所有变化的运动方式都一致。让 dom 结构增加一倍的同时，也大大增加了开发成本。
+
+### 作为表格内的轻量表单
+
+当被用在表格内时，每一个 `td` 是分隔的，所以 `HoverFill` 自然地被分开。而在最后一列中，两个轻量按钮的父级相同，则会自动共享背景：
+
+<HoverFillTable />
+
+### 作为多行表格
+
+如果表格的每行没有分隔，则可以考虑使用：
+
+<HoverFillTableRows />
+
+### 作为多个列表项
+
+<HoverFillList />
+
+### 作为多个导航项
+
+点击左上角按钮折叠或展开：
+
+<HoverFillNav />
+
+---
+
+在以上的简单例子中，`HoverFill` 共享了多个轻量元素的背景，展示了它的通用性。但我还没有回答 **为什么需要共享背景，为什么要“跳跃”？**
+
+接下来，我开始以 `HoverFill` 为基础，扩展“跳跃”语言的应用，试着逐步回答这个问题。首先，我以 `Pagination` 为例。
+
+## 分页器 Pagination
+
+`Pagination` 的交互表现为：
+
+1. 在悬浮（hover）时页码之间、翻页按钮之间会共享背景；
+2. 在点击（click）时当前页码的高亮 indicator 会平移运动。
+
+<HoverFillPagination />
+
+[HeroUI 的 Pagination](https://www.heroui.com/docs/components/pagination) 的表现有一些类似的地方：
+
+<img
+  className="block mx-auto my-8 max-w-[350px] w-full overflow-hidden rounded"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/hero-pagination.gif"
+  alt=""
+/>
+
+但是我觉得有一些“奇怪”的地方：
+
+1. 高亮 indicator 覆盖在有背景色的元素上平移运动，这造成了视觉上的重叠；
+2. 在点击的那一刻，高亮 indicator 中的页码就发生了变化，这造成了视觉上的突兀。
+
+虽然问题不大，但我们解决或规避了这两个问题：
+
+1. 我们的 `Pagination` 设计上是轻量按钮的组合，所以规避了背景的重叠；
+2. 高亮 indicator 层级在页码数字之下，只是作为背景色的形式存在，数字是不需要变化的。
+3. 不仅仅是 indicator 会平移运动，hover 态也会平移运动，这样至少整个组件的语言是统一的。流畅的感受是被贯彻的。
+
+虽然没有涉及功能层面的意义，但我想从感受层面出发，首先抛出 **“流畅”、“连续”** 这些词。
+
+## 日历 Calendar
+
+`Calendar` 的交互表现为：
+
+1. 头部的按钮与年月选择为一组，它们会共享背景；
+2. 日期为一组，它们会共享背景；
+
+<HoverFillCalendar />
+
+我们还可以将气泡、日历与列表的组合，将 **“流畅”、“连续”** 的表现统一运用。你可以点击下方的轻量卡片，看看它们的表现：
+
+<HoverFillCombination />
+
+---
+
+接下来，不仅仅是背景，我们在这之上继续扩展。这样的行为还可以应用到弹出层的共享上，特别是当两个弹出层存在重叠时。
+
+## 工具提示 Tooltip
+
+`Tooltip` 的交互表现为：
+
+1. 当鼠标移出按钮时，`Tooltip` 会延迟 100ms 后消失；
+2. 在这 `100ms` 内，如果鼠标移入按钮，则它们会共享同一个 `Tooltip`。
+
+随着轻量按钮的背景共享，弹出的 `Tooltip` 也得到了共享，你可以 hover 到下方的按钮上，看看它们的表现：
+
+<HoverFillTooltip />
+
+至此，在“流畅”、“连续”的感受之下，我们开始接近“跳跃”语言的本质 —— **共享是为了减少层级数量**。
+
+这 4 个轻量按钮共享了一个 hover 态，因此只存在一个 hover 的“层级”，它们就是一组按钮；这 4 个 `Tooltip` 合并成了一个，因此只存在一个弹出层的层级。**最妙的是，当它们两者相互同步的时候，它们两组的关联就更加紧密了**。
+
+你可以想象一下（我就不写例子了），四个 `Tooltip` 相互叠加时的过渡效果，它们会相互覆盖，让过渡变“脏”、让层级重叠 —— 这当然确实不是什么大问题，甚至连问题都算不上。
+
+通过 `Tooltip` 的例子，我试图从功能层面出发，解释“跳跃”的语言。如果你认为我所说的“功能层面”不是你所认可的“功能”，那么我也理解。如我所说，我确实没有解决什么问题。
+
+## 标签页 Tabs
+
+其实这种元素的共享（不论是背景还是层级）很常见。让我们稍微扯远一些，看看 `Tabs` 的表现，同样也是一种“跳跃”：
+
+<TabsDefault />
+
+`Tabs` 的交互表现为：
+
+1. 不仅仅是当前的 indicator 会平移移动，文字的高亮色也会平移移动；
+2. 文字实际上有上下两层，一层是高亮色，一层是常态色，通过 `clip-path` 的方式 **裁切遮罩**。
+
+之所以选择这种裁切遮罩的方式，是因为这样能统一文字和 indicator 的表现 —— 既然要移动，那就一起“跳跃”。
+
+这种方式尤其是在竖向的 `Tabs` 中表现得舒服。因为我们需要在页面滚动时改变高亮状态，而遮罩的上下运动对应着页面滚动的上下运动。这种对应关系让状态的变化非常自然和明确。
+
+你可以试着滚动下面的容器，看看高亮状态的变化：
+
+<TabsVertical />
+
+---
+
+这种“共享”的特性，在 `Tabs` 上更加常见。通过使用同一个 indicator 来回移动，让我们很自然地接受 `Tabs` 虽然有被分隔开的几项，但它们是以一个整体存在的。
+
+让我们接着将这种特性扩展到更多组件：
+
+## 滑动条 Slider
+
+`Slider` 的交互表现为：
+
+1. 当 `Slider` 的两个滑块距离足够远时，两个 Tooltip 分开显示；
+2. 当 `Tooltip` 发生重叠时，它们会合二为一。
+
+你可以拖拽体验一下：
+
+<Slider value={[40, 50]} tooltipVisible combine />
+
+## 气泡提示 Popover
+
+`Popover` 的交互表现为：
+
+1. 当鼠标移出按钮时，`Popover` 会延迟 100ms 后消失；
+1. 与 `Tooltip` 的表现类似，不过这一次我们改变的不是 `Popover` 的偏移量，而是箭头的位置。
+
+<NavigationMenu />
+
+---
+
+<HoverFillHuxuan />
+
+这个表现还是比较常见的，如 [Apple](https://www.apple.com/)，[Vercel](https://vercel.com/home)，[linear](https://linear.app/build) 等：
+
+![Apple 头部导航](https://wxa.wxs.qq.com/wxad-design/yijie/apple-header.gif)
+
+当 `Popover` 发生重叠时，而且是如上面例子的大面积重叠时，合并弹出层的做法就显得尤为重要。
+
+---
+
+“跳跃”的设计语言 **在体验上的目标是流畅与连续；在功能上的意义是减少层级数量**。
+
+一定是两者的结合，才能传达关乎产品的不空洞的“品质”或“性格”。比如在上面 `HoverFill` 多行表格的简单例子之上，我们在实际业务上的运用结合了图表和 `Popover`：
+
+![table-hover-popover](https://wxa.wxs.qq.com/wxad-design/yijie/table-hover-popover.gif)
+
+## 总结
+
+`HoverFill` 当然最初来源于我的个人兴趣。通过和实际功能的结合，我希望所谓的“跳跃”不仅仅是形式。
+
+而它其实非常简单，最让我感到有趣的过程，就是不断延伸它的使用边界，将一个看起来那么简单的形式，扩展成一种尽可能完整的语言。
+
+除了“跳跃”，我还做了一系列叫“[发芽 🌱](https://wxad.design/spross)”的组件，那就是另一个主题了。
