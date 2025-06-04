@@ -23,10 +23,11 @@ import NextLink from "next/link"
 const posts = [
   {
     title: "一个名为“跳跃”的动效语言",
-    description: "跳跃，就是与状态变化、切换相关的一系列交互动画。",
+    description:
+      "以一种统一的交互表现，而不是以一个完整的组件库的方式去归纳组件，对我来说是一件很有趣的事情。跳跃，就是与状态变化、切换相关的一系列交互动画。",
     slug: "springen",
-    publishedAt: "2025-06-03",
-    editedAt: "2025-06-03",
+    publishedAt: "2025-06-04",
+    editedAt: "2025-06-04",
     author: "Aragakey.",
     authorLink: "https://codepen.io/aragakey",
     children: <SpringenCover />,
