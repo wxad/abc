@@ -18,13 +18,15 @@ const CarouselCover = () => {
             playsInline
             muted
             loop
+            style={{
+              clipPath: "inset(4px)",
+            }}
           >
             <source
               src="https://wxa.wxs.qq.com/wxad-design/yijie/bm-24version-green-un.mp4"
               type="video/mp4"
             />
           </video>
-          <div className="absolute-full border-4 border-white" />
         </div>
       </div>
     </div>

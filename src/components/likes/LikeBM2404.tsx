@@ -26,13 +26,15 @@ const Demo = (props: {}) => {
               muted
               loop
               autoPlay
+              style={{
+                clipPath: "inset(4px)",
+              }}
             >
               <source
                 src="https://wxa.wxs.qq.com/wxad-design/yijie/bm-24version-green-un.mp4"
                 type="video/mp4"
               />
             </video>
-            <div className="absolute-full border-4 border-white" />
           </div>
           朋友圈榜单
         </div>
@@ -49,13 +51,15 @@ const Demo = (props: {}) => {
               muted
               loop
               autoPlay
+              style={{
+                clipPath: "inset(4px)",
+              }}
             >
               <source
                 src="https://wxa.wxs.qq.com/wxad-design/yijie/bm-24version-orange.mp4"
                 type="video/mp4"
               />
             </video>
-            <div className="absolute-full border-4 border-white" />
           </div>
           视频号榜单
         </div>

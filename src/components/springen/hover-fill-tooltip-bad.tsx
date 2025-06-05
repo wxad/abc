@@ -4,11 +4,6 @@ import React, { useEffect, useRef, useState } from "react"
 import DemoBox from "../DemoBox"
 
 const Basic = () => {
-  const [visible, setVisible] = useState(false)
-  const [hoverIndex, setHoverIndex] = useState<number>(0)
-  const lastHoverIndex = useRef(hoverIndex)
-  const hoverTimer = useRef(0)
-
   const operations = [
     {
       icon: (
@@ -170,65 +165,56 @@ const Basic = () => {
     },
   ]
 
-  const handleMouseEnter = (index: number) => {
-    clearTimeout(hoverTimer.current)
-    setHoverIndex(index)
-
-    hoverTimer.current = window.setTimeout(() => {
-      setVisible(true)
-    }, 300)
-  }
-
-  const handleMouseLeave = () => {
-    clearTimeout(hoverTimer.current)
-
-    hoverTimer.current = window.setTimeout(() => {
-      setVisible(false)
-    }, 200)
-  }
-
-  useEffect(() => {
-    if (lastHoverIndex.current !== hoverIndex) {
-      lastHoverIndex.current = hoverIndex
-    }
-  }, [hoverIndex])
-
-  useEffect(() => {
-    return () => {
-      clearTimeout(hoverTimer.current)
-    }
-  }, [])
-
   return (
     <div>
-      <DemoBox className="flex justify-center p-10">
-        <Tooltip
-          visible={visible}
-          arrowed={false}
-          placement="bottomLeft"
-          popup={operations[hoverIndex].tip}
-          popupStyle={{
-            padding: "4px 8px",
-            transform: `translate3d(${operations[hoverIndex].offset}px, 0, 0)`,
-          }}
-        >
-          <div className="flex gap-3">
-            {operations.map((operation, index) => (
-              <HoverFill
-                bgClassName="rounded-lg"
-                onMouseEnter={() => {
-                  handleMouseEnter(index)
-                }}
-                onMouseLeave={handleMouseLeave}
-                key={index}
-              >
+      <DemoBox
+        className="flex flex-col gap-10 items-center p-10"
+        style={{
+          // @ts-ignore
+          "--odn-hoverfill-duration": "0",
+        }}
+      >
+        <div className="flex items-center gap-3 text-xs text-neutral-500 font-medium">
+          <div>去除背景与弹出层共享：</div>
+          {operations.map((operation, index) => (
+            <Tooltip
+              arrowed={false}
+              placement="bottom"
+              popup={operation.tip}
+              popupStyle={{
+                padding: "4px 8px",
+              }}
+              key={index}
+            >
+              <HoverFill bgClassName="rounded-lg" key={index}>
                 <div className="flex items-center justify-center size-8">
                   {operation.icon}
                 </div>
               </HoverFill>
-            ))}
-          </div>
-        </Tooltip>
+            </Tooltip>
+          ))}
+        </div>
+        <div className="flex items-center gap-3 text-xs text-neutral-500 font-medium">
+          <div>去除鼠标移入延时共享：</div>
+          {operations.map((operation, index) => (
+            <Tooltip
+              arrowed={false}
+              placement="bottom"
+              popup={operation.tip}
+              popupStyle={{
+                padding: "4px 8px",
+              }}
+              mouseEnterDelay={0.3}
+              key={index}
+            >
+              <HoverFill bgClassName="rounded-lg" key={index}>
+                <div className="flex items-center justify-center size-8">
+                  {operation.icon}
+                </div>
+              </HoverFill>
+            </Tooltip>
+          ))}
+        </div>
       </DemoBox>
     </div>
   )

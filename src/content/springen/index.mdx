@@ -22,6 +22,7 @@ import HoverFillCombination from "@/components/springen/hover-fill-combination"
 import HoverFillList from "@/components/springen/hover-fill-list"
 import HoverFillNav from "@/components/springen/hover-fill-nav"
 import HoverFillTooltip from "@/components/springen/hover-fill-tooltip"
+import HoverFillTooltipBad from "@/components/springen/hover-fill-tooltip-bad"
 import Slider from "@/components/fm/Slider"
 import NavigationMenu from "@/components/fm/NavigationMenu"
 import HoverFillHuxuan from "@/components/springen/hover-fill-huxuan"
@@ -169,8 +170,8 @@ import TabsVertical from "@/components/springen/tabs-vertical"
 
 `Tooltip` 的交互表现为：
 
-1. 当鼠标移出按钮时，`Tooltip` 会延迟 100ms 后消失；
-2. 在这 `100ms` 内，如果鼠标移入按钮，则它们会共享同一个 `Tooltip`。
+1. 当鼠标移出按钮时，`Tooltip` 会延迟 200ms 后消失；
+2. 在这 200ms 内，如果鼠标移入按钮，则它们会共享同一个 `Tooltip`。
 
 随着轻量按钮的背景共享，弹出的 `Tooltip` 也得到了共享，你可以 hover 到下方的按钮上，看看它们的表现：
 
@@ -178,11 +179,23 @@ import TabsVertical from "@/components/springen/tabs-vertical"
 
 至此，在“流畅”、“连续”的感受之下，我们开始接近“跳跃”语言的本质 —— **共享是为了减少层级数量**。
 
-这 4 个轻量按钮共享了一个 hover 态，因此只存在一个 hover 的“层级”，它们就是一组按钮；这 4 个 `Tooltip` 合并成了一个，因此只存在一个弹出层的层级。**最妙的是，当它们两者相互同步的时候，它们两组的关联就更加紧密了**。
+这四个轻量按钮共享了一个 hover 态，因此只存在一个 hover 的“层级”，它们就是一组按钮；这四个 `Tooltip` 合并成了一个，因此只存在一个弹出层的层级。随着鼠标的移动，**当它们之间又相互同步的时候，它们两组的关联就更加紧密了**。这还挺妙的。
 
-你可以想象一下（我就不写例子了），四个 `Tooltip` 相互叠加时的过渡效果，它们会相互覆盖，让过渡变“脏”、让层级重叠 —— 这当然确实不是什么大问题，甚至连问题都算不上。
+当 `Tooltip` 存在四个而不是一个时，它们会相互覆盖，让过渡变“脏”、让层级重叠（可以在下面的 demo 中试试） —— 这当然确实不是什么大问题，甚至连问题都算不上。
 
 通过 `Tooltip` 的例子，我试图从功能层面出发，解释“跳跃”的语言。如果你认为我所说的“功能层面”不是你所认可的“功能”，那么我也理解。如我所说，我确实没有解决什么问题。
+
+---
+
+另外，一般我们会让 `Tooltip` 延迟一点出现，而不是立即出现。因为用户并不一定需要提示。将“hover 了一定时间”判断为“需要提示”，这是比较常见的。
+
+细节是：只有第一个按钮的 `Tooltip` 会有这个延迟，如果你在按钮之间移动，那么其他 `Tooltip` 应该立即出现。你可以在上面的例子中再试试。
+
+看起来是一个很简单的例子，我总结一下一共存在三种“共享”：按钮共享了背景，`Tooltip` 共享了层级，并且它们还共享了延迟时间。
+
+下面是一个去除了这三种“共享”的例子，你可以对比看看：
+
+<HoverFillTooltipBad />
 
 ## 标签页 Tabs
 
@@ -224,7 +237,7 @@ import TabsVertical from "@/components/springen/tabs-vertical"
 
 `Popover` 的交互表现为：
 
-1. 当鼠标移出按钮时，`Popover` 会延迟 100ms 后消失；
+1. 当鼠标移出按钮时，`Popover` 会延迟 200ms 后消失；
 1. 与 `Tooltip` 的表现类似，不过这一次我们改变的不是 `Popover` 的偏移量，而是箭头的位置。
 
 <NavigationMenu />
