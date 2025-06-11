@@ -7,7 +7,7 @@ export default function Document() {
       <Head></Head>
       <body className="scrollbar-custom">
         <div
-          className="pointer-events-none fixed inset-0 mix-blend-hard-light"
+          className="pointer-events-none fixed inset-0 mix-blend-hard-light opacity-90"
           style={{
             backgroundImage:
               "url(https://wxa.wxs.qq.com/wxad-design/yijie/noise.png)",

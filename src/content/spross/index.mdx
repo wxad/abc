@@ -1,0 +1,139 @@
+---
+  title: "一类叫作“发芽”的 UI 组件"
+  description: "以一种统一的交互表现，而不是以一个完整的组件库的方式去归纳组件，对我来说是一件很有趣的事情。发芽，就是与临时浮层、弹出相关的一系列 UI 组件。"
+  slug: "spross"
+  publishedAt: "2025-06-10"
+  editedAt: "2025-06-10"
+  author: "Aragakey."
+  authorLink: "https://codepen.io/aragakey"
+---
+
+import Overflow from "@/components/spross/Overflow"
+import Flip from "@/components/spross/Flip"
+import Height from "@/components/spross/Height"
+import DialogOrigin from "@/components/spross/DialogOrigin"
+
+接着上篇 [一类叫作“跳跃”的 UI 动效](https://wxad.design/abc/springen)，“跳跃”更像是为了这盘“醋”，包了几只“饺子”。能用到什么组件，我就去写什么组件。它们拥有相似的表现和语言。
+
+“发芽”的目标是将一个个与临时浮层、弹出相关的基础组件做好。在动效语言上，它们互相之间倒可能并没有关联。所谓做好，就是指基础组件仍有可优化的空间。这正是我想通过“发芽”来探讨的。如果说“跳跃”中我更关注的是动效设计，那么“发芽”中我更想表达：熟悉会让我们懒惰，潜在空间会被低估，UI 这件事即便简单如基础组件，我们仍能继续做。
+
+## 气泡提示 Popover
+
+在“跳跃”中我展示了多个 `Popover` 是怎样被组合在一起的。我们现在聚焦于弹出这件事本身所涉及到的 features：
+
+### 自动内滚动跟随
+
+不需要类似 [getPopupContainer](https://ant.design/components/popover-cn/#API) Prop 来指定弹出层挂载的容器。如果正在阅读这篇文章的你是一名设计师，em...这可能真的很难解释。在 Web 端滚动容器会隐藏所有子元素，包括弹出层。那么为了不让弹出层被隐藏，我们只能将弹出层挂载到最外层。这就出现了一个问题，就是容器滚动的时候，弹出层没有办法跟随定位。
+
+要解决这个问题，没有什么足够便捷的 API。[Ant Design](https://github.com/react-component/trigger/blob/7bc685c3d6ba0adeea7e624c8ded2ea8b0f98563/src/util.ts#L48) 和我所基于的 [floating-ui](https://github.com/floating-ui/floating-ui/blob/3224f2c9a16942b2ce4343704df274b07f859856/packages/utils/src/dom.ts#L195) 的做法都是向上遍历所有可滚动的父元素，监听所有父元素的滚动事件，一旦触发，就重新计算弹出层的位置：
+
+<Overflow />
+
+### 自动翻转与偏移
+
+`Popover` 会根据屏幕或父容器尺寸自动调整位置。
+
+当 `Popover` 在上方或下方时，上下翻转，左右偏移；当 `Popover` 在左侧或右侧时，左右翻转，上下偏移。在这个过程中箭头的位置也会自动调整：
+
+<Flip />
+
+### 自适应高度
+
+在自动翻转与偏移之上，`Popover` 还可以根据剩余的屏幕空间来动态地调整自身的高度。这个用处可能不多，但对一个长列表来说，可能是一个很实用的功能。
+
+<Height />
+
+---
+
+`Popover` 在“跳跃”之外拥有的这些基础特性，让它在实际业务中可以被灵活地使用。
+
+名单列表会根据屏幕空间自动调整方位与高度，用户不需要额外的滚动来看到更多内容。甚至在页面滚动的过程中也会自动调整高度：
+
+<img
+  className="block max-w-[400px] mx-auto my-8 w-full overflow-hidden rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/abc-popover-height.gif"
+/>
+
+---
+
+日期选择器不管在哪个角落都能正确显示，下面不够就往上翻，右边不够就往左翻。左右都不够，那就居中：
+
+<img
+  className="block max-w-[600px] mx-auto my-8 w-full overflow-hidden rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/abc-popover-date.gif"
+/>
+
+---
+
+弹出层不会受屏幕尺寸的限制而被遮挡：
+
+<img
+  className="block max-w-full mx-auto my-8 w-full overflow-hidden rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/abc-popover-head.gif"
+/>
+
+<img
+  className="block max-w-[600px] mx-auto my-8 w-full overflow-hidden rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/abc-popover-base.gif"
+/>
+
+---
+
+`Popover` 是自适应的、流动的、灵活的（真的很想用 flexible 这个资本主义设计词汇）。
+
+## 对话框 Dialog
+
+### 点击来源放大
+
+对话框会从点击位置放大出现。和 [Ant Design](https://ant.design/components/modal-cn) 不同的是，它从 `0.8` 开始放大 —— 考虑到过渡过程不应太吸引眼球，一点点就好：
+
+<img
+  className="block max-w-full mx-auto my-8 w-full overflow-hidden rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/abc-dialog-origin-1.gif"
+/>
+
+### 自动缩放
+
+我觉得自动缩放是一个非常好的功能。当弹窗高度超出屏幕高度时，我们会用滚动条的方式处理。
+
+但是在这之前，我们可以先尝试缩小一点点。同理其实我认为也可以放大一点点。设计师并不是不能接受一定程度的缩放，这样还能适配更多屏幕高度。等到缩小到 0.9 倍时仍然超出屏幕高度，才使用滚动条：
+
+<img
+  className="block max-w-full mx-auto my-8 w-full overflow-hidden rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/abc-dialog-scale-1.gif"
+/>
+
+## 抽屉 Drawer
+
+`Drawer` 之前也写过几回：[《关于 Drawer 组件的发散》](https://wxad.design/abc/drawer) 和 [Functional Motion](https://wxad.design/abc/functional-motion)。这次算是搞了一个整合，将 features（内边距、层级提升和步骤）规整到了同一个组件。
+
+我录个屏，就不展开了：
+
+<img
+  className="block max-w-full mx-auto my-8 w-full overflow-hidden rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/abc-drawer.gif"
+/>
+
+## 全局提醒 Message
+
+`Message` 在 [Functional Motion](https://wxad.design/abc/functional-motion) 中也写过。在可折叠的基础上，我加入了相同类别折叠的功能：
+
+这个功能还是比较草稿阶段的。需求出现的频率肯定是几乎为零，甚至出现两条都是不太可能的。但这样的应用还挺合理的感觉：
+
+<img
+  className="block max-w-[600px] mx-auto my-8 w-full overflow-hidden rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/abc-message-collapse.gif"
+/>
+
+实际业务应用：
+
+<img
+  className="block max-w-full mx-auto my-8 w-full overflow-hidden rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/abc-message-demo.gif"
+/>
+
+## 总结
+
+“发芽”和“跳跃”是两个很小的主题。作为一个工程师我也很纠结，因为它们背后是“组件库”这个非常大的概念。实现的过程我确实非常纠结和无奈。我不清楚最好的方式是什么，我选择把自己想做的先做了再说。
+
+这两天 WWDC25 正在进行，这篇文章我也是心力不足草草结束吧。我要去研究 liquid glass 了。虽然被喷惨了，但 Apple 想要在 UI 这件事的抱负我很佩服，这本身也是我的方向和理想。不管怎样，哪怕 liquid glass 是一个彻头彻尾的失败，我仍然敬佩 Apple 的设计与工程团队，至少他们在 craft something。
