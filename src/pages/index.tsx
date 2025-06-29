@@ -19,9 +19,20 @@ import MakingFluidInterfacesCover from "@/components/making-fluid-interfaces/Cov
 import MakingFluidInterfacesCover2 from "@/components/making-fluid-interfaces/Cover2"
 import SpringenCover from "@/components/springen/SpringenCover"
 import SprossCover from "@/components/spross/SprossCover"
+import QualityOfUICover from "@/components/quality-of-ui/QualityOfUICover"
 import NextLink from "next/link"
 
 const posts = [
+  {
+    title: "用户界面的品质",
+    description: "在我的个人叙事中，用户界面的品质是体验、打磨，以及尽可能完整化的三者结合。",
+    slug: "quality-of-ui",
+    publishedAt: "2025-06-29",
+    editedAt: "2025-06-29",
+    author: "Aragakey.",
+    authorLink: "https://codepen.io/aragakey",
+    children: <QualityOfUICover />,
+  },
   {
     title: "一类叫作“发芽”的 UI 组件",
     description:
