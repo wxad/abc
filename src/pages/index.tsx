@@ -20,12 +20,25 @@ import MakingFluidInterfacesCover2 from "@/components/making-fluid-interfaces/Co
 import SpringenCover from "@/components/springen/SpringenCover"
 import SprossCover from "@/components/spross/SprossCover"
 import QualityOfUICover from "@/components/quality-of-ui/QualityOfUICover"
+import SvgLiquidGlassCover from "@/components/svg-liquid-glass/SvgLiquidGlassCover"
 import NextLink from "next/link"
 
 const posts = [
   {
+    title: "使用 SVG 模拟 Apple Liquid Glass",
+    description:
+      "最近浅浅输入了一波 SVG 如何模拟 Apple Liquid Glass 的知识，记录一下。注：本文只适合 Chromium 内核浏览器浏览。",
+    slug: "svg-liquid-glass",
+    publishedAt: "2025-07-15",
+    editedAt: "2025-07-15",
+    author: "Aragakey.",
+    authorLink: "https://codepen.io/aragakey",
+    children: <SvgLiquidGlassCover />,
+  },
+  {
     title: "用户界面的品质",
-    description: "在我的个人叙事中，用户界面的品质是体验、打磨，以及尽可能完整化的三者结合。",
+    description:
+      "在我的个人叙事中，用户界面的品质是体验、打磨，以及尽可能完整化的三者结合。",
     slug: "quality-of-ui",
     publishedAt: "2025-06-29",
     editedAt: "2025-06-29",

@@ -1,0 +1,206 @@
+---
+  title: "使用 SVG 模拟 Apple Liquid Glass"
+  description: "最近浅浅输入了一波 SVG 如何模拟 Apple Liquid Glass 的知识，记录一下。"
+  slug: "svg-liquid-glass"
+  publishedAt: "2025-07-15"
+  editedAt: "2025-07-15"
+  author: "Aragakey."
+  authorLink: "https://codepen.io/aragakey"
+---
+
+import Turbulence from "@/components/svg-liquid-glass/Turbulence"
+import NeutralColors from "@/components/svg-liquid-glass/NeutralColors"
+import DisplacementDemo from "@/components/svg-liquid-glass/DisplacementDemo"
+import DisplacementSteps from "@/components/svg-liquid-glass/DisplacementSteps"
+import DisplacementFinal from "@/components/svg-liquid-glass/DisplacementFinal"
+import Blend0 from "@/components/svg-liquid-glass/Blend0"
+import BeamBorder from "@/components/svg-liquid-glass/BeamBorder"
+import Final from "@/components/svg-liquid-glass/Final"
+
+> **注：本文只适合 Chromium 内核浏览器浏览**。
+
+每年 WWDC25 结束后，我会在组内进行一次分享。许多人或许认为 WWDC 只是 Apple 的软件发布会。而既然叫“全球开发者大会”，那么自然不仅仅是一场发布会。这场持续 4-5 天的活动会有一些 [实验室](https://developer.apple.com/cn/wwdc25/sessions-and-labs/group-labs)，以及放出 100 多个 [sessions](<[https://](https://developer.apple.com/cn/wwdc25/sessions-and-labs/session-videos)>)。可以理解为 Apple 是在借一年一次的机会，指导开发者们该如何以官方最佳实践的方式来制作 App。虽然大部分视频是关于功能与开发的，但还是有一些在设计上值得输入。我会粗略地将所有 sessions 看一遍，从中挑选一些适合的分享。
+
+今年的 liquid glass 更适合组内擅长 3D 的设计师。我与他一拍即合，他果然完成得特别好，观点很有见解与分量 —— 幸好找他了。我就作为“绿叶”，负责了 sessions 的部分介绍。
+
+事情本来到此结束，中心同事又邀请我一起做一些 liquid glass 技术向的分享。虽然我也每天在 twitter 上看大家玩得热闹，但没怎么研究。他已通过 [WebGL](https://liquid-glass-studio.vercel.app/) 解剖得相当好，推荐我可以补充看看 SVG 的相关实现。我觉得这样分工挺好。可当时分享确实匆忙，还是想在此记录一下对于折射、色散与高光的相关学习。
+
+先展示最终效果：
+
+<Final />
+
+## 折射：feDisplacement
+
+在对网上进行了一波冲浪后，会发现很多人在湍流滤镜 `feTurbulence` 的基础上模拟，但这个方向不太对。湍流滤镜的使用场景本身是制造一些噪音。
+
+```html
+<feTurbulence baseFrequency="0.04" numOctaves="2" seed="92" result="noise" />
+```
+
+通过不同程度的噪音，可以做一些文字扭曲特效：
+
+![文字扭曲](https://wxa.wxs.qq.com/wxad-design/yijie/b7w.gif)
+
+或是噪音不动，原始图像做运动：
+
+![图像扭曲](https://wxa.wxs.qq.com/wxad-design/yijie/svg-filters-love.gif)
+
+用湍流滤镜模拟的效果就会出现整个背景的扭曲，我这里也写个 demo 方便体验与调试：
+
+<Turbulence />
+
+这可以是一种风格，但显然不是 liquid glass，即使是在 [secondaryLabel](https://developer.apple.com/documentation/UIKit/UIVibrancyEffectStyle/secondaryLabel) 这种背景较模糊的情况下，也不存在整体的扭曲。我们需要的是映射置换滤镜 `feDisplacementMap`。
+
+---
+
+顾名思义，映射置换滤镜就是遍历图形的所有像素点，去生成一个新的图形。工作方式和湍流不一样。对于每一个像素点，一一地去替换到目标位置上：
+
+![](https://wxa.wxs.qq.com/wxad-design/yijie/2-sagrada-to-mona.png)
+
+从观感上两张图似乎进行了某种混合模式，实际上每一个像素点的位移都基于一个公式：
+
+```
+P'(x,y) = P(x + scale * (XC(x,y) - 0.5), y + scale * (YC(x,y) - 0.5))
+```
+
+这个公式看起来复杂，实际上拆解下来是简单的。
+
+1. `P'(x,y)`：转换之后的坐标；
+2. `XC(x,y)`：当前坐标点其 X 上对应通道的计算值 `R(G,B)/255`，范围为 0~1；
+3. `YC(x,y)`：当前坐标点其 Y 上对应通道的计算值 `R(G,B)/255`，范围为 0~1；
+4. `-0.5`：偏移值，因此 `XC(x,y) - 0.5` 范围是 -0.5~0.5，`YC(x,y) - 0.5` 范围也是 -0.5~0.5；
+5. `scale`：计算后的偏移值相乘的比例，`scale` 越大，则偏移越大。
+
+首先就是一个非常重要的特性：**当通道值为 127 时，偏移值为 0，即不会发生任何位移**。
+
+一张纯灰色的 `rgb(127, 127, 127 )` map 不会发生位移，我们暂且称它为“中性灰”；类似的，因为我们至多只需要 2 个通道，那么红蓝通道为 127 的“中性紫” `rgb(127, 0, 127)` 在使用 `xChannelSelector="R"` 和 `yChannelSelector="B"` 时，也不会发生位移：
+
+<NeutralColors />
+
+接着，我们来看下面的一张 map 会呈现出向四角拉扯，而中心凹陷的视觉效果：
+
+<DisplacementDemo />
+
+我们通过公式来简单地理解一下，以三个点为例：
+
+1. 中心不断接近 `rgb(127, 0, 127)` 的中性紫，所以越是中心被拉伸得幅度越小；
+2. 左下不断接近 `rgb(255, 0, 0)` 的纯红色，x 为正值（向右移动），y 为负值（向上移动），所以左下区域会向中心拉伸；
+3. 右上不断接近 `rgb(0, 0, 255)` 的纯蓝色，x 为负值（向左移动），y 为正值（向下移动），所以右上区域会向中心拉伸。
+
+[不同的 map 就会呈现不同的效果](https://codepen.io/smashingmag/pen/XWgdpPr)，关键就在于如何画出这张 map 了。
+
+---
+
+介绍一种比较简单，也相对接近 liquid glass 的绘制方式，我通过下面的 Demo 来演示每一步的过程：
+
+<DisplacementSteps />
+
+1. 首先，在一个黑底上给一个红 90° 渐变；
+2. 接着，再给一个蓝 -45° 渐变；
+3. 然后，要保证大部分区域不扭曲，因此加一个 93% 大小的“中性灰”；
+4. 最后，应用 `feDisplacementMap` 滤镜，scale 设置为 `-50`，将 map 应用到目标元素上。
+
+另外一个我认为更接近的 map 来源于 [这个项目](https://github.com/shuding/liquid-glass)，它的画法巧妙又复杂，感兴趣可以看看，其效果如下。之后我将会在此基础上继续：
+
+<DisplacementFinal />
+
+## 色散：feColorMatrix + feBlend
+
+在模拟了折射之后，我们得到了一个边缘扭曲的效果。Apple 在某些场景下还会为 liquid glass 边缘添加色散的效果。色散本质是因为不同波长的传播速度不同，而导致波包扩散或分离的现象。既然如此，我们就可以通过剥离各个通道的颜色，然后分别做一些偏移，最后再合并回来，来试图模拟色散。
+
+在 SVG 中，需要用到的滤镜除了 `feDisplacementMap` 之外，还有 `feColorMatrix` 滤镜。它可以对图像的每个像素进行颜色矩阵变换，从而实现颜色调整、灰度化、色相旋转等功能。它的语法为：
+
+```html
+<feColorMatrix
+  in="dispRed"
+  type="matrix"
+  values="
+    1 0 0 0 0
+    0 0 0 0 0
+    0 0 0 0 0
+    0 0 0 1 0
+  "
+/>
+```
+
+上面矩阵的一行一列代表 `RR'=1`、四行四列表示 `AA'=1`，它的作用是单独剥离红色通道。而合并则是通过 `feBlend` 滤镜来实现。
+
+总的来说也很简单，我们要做的事是：
+
+1. 首先，通过 `feColorMatrix` 剥离各个通道的纯色；
+2. 接着，对每个剥离后的结果应用一个微调过后的 `feDisplacementMap`；
+3. 最后，通过 `feBlend` 以 `mode=screen` 的混合方式将每个通道的结果合并回来。
+
+<img
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/feColorMatrix+feBlend.webp"
+  alt="feColorMatrix+feBlend"
+  className="block mb-4 w-full max-w-full mix-blend-darken grayscale"
+/>
+
+我通过下面的 Demo 来简单演示红绿通道的混合过程，其他同理。你可以调节一下两个通道的变化强度，以看到合成为黄色的效果，可以看到边缘产生了一些无法重合的部分：
+
+<Blend0 />
+
+最终我选择 RGB 通道的 scale 分别为 29、26、23。因为红色通道应该使用最强的 map 偏移。
+
+## 高光：mask + mix-blend-mode
+
+最后再说一下高光的模拟。以上的模拟都没有涉及到高光，demo 中的边缘只是添加了一条 `box-shadow` 而已。
+
+如果我们要实现一个响应角度的动态高光的话，倒也没有 SVG 的事儿。现如今的 [beam border](https://magicui.design/docs/components/border-beam) 组件已不新鲜，在各种 SaaS 产品页面上非常常见。像下面的高光本质就是将一个锥形渐变裁切至元素最外层的 1px：
+
+<BeamBorder />
+
+裁切需要巧妙地应用 `mask` 的几个相关属性 `mask-composite`、`mask-clip` 完成：
+
+```jsx
+border: "1px solid transparent",
+mask: "linear-gradient(#0000, #0000), conic-gradient()",
+maskComposite: "intersect",
+maskClip: "padding-box, border-box",
+```
+
+`mask-composite` 类似于设计工具中常见的图形合成工具，有 `add`、`subtract`、`intersect`、`exclude`等。我们用到的是 `intersect`，即取两个图形的交集。
+
+`mask-clip` 的值为 `padding-box, border-box`，意味着透明背景只到 padding 部分，而锥形渐变则到 border 的 1px 部分。当两者相交后，就得到了一个 1px 的锥形高光。`exclude` 也是可以的，透明层只到 `content` 层即可。
+
+纯色的高光还不足够，liquid glass 的高光是受环境影响的。我们可以利用 `mix-blend-mode: overlay` 来模拟，其工作原理是：
+
+1. `multiply`：当背景颜色较暗时，混合模式会使元素变得更暗，效果类似于将两层颜色相乘，得到的结果比原色更深；
+2. `screen`：当背景颜色较亮时，混合模式会使元素变得更亮，效果类似于反转后相乘，得到的结果比原色更亮。
+
+`overlay` 模式会根据背景的亮度决定使用 `multiply` 还是 `screen`。
+
+为了方便演示，我这里将高光做成自动旋转：
+
+<Final />
+
+## 相关问题
+
+1. 如何模拟外侧环境光？在 Apple 的设置桌面界面中，下方的按钮会反射上方桌面的光。这里没有自动的办法，但至少可以强行模拟；
+2. 兼容性：Safari 不支持；
+3. 锯齿问题：滤镜必须以某种方式将这些坐标映射到非十进制像素值，锯齿问题一般通过 `blur` 弱化；
+4. 性能问题：尺寸变化时需要重新生一个 map；
+5. HDR：todo。
+
+## SVG 虽只是试图模拟，但我们要相信启发的力量
+
+SVG 的实现建立在 `backdrop-filter: url()` 上，这在 Safari 上又不支持。这看起来似乎有点讽刺，但实际上我认为 SVG 实现本身就属于“邪道”。如果 Webkit 真的打算哪天把 liquid glass 带到 Web 上，SVG 也未必会是解决方案。
+
+如果说 WebGL 能称为“还原”，那 SVG 只能说是试图“模拟”。滤镜家族并不新鲜，甚至应该说是古早得停滞发展了。不管是折射、色散还是高光的模拟，都给我一种强烈的没活硬整感。
+
+真要说落地，在上面所说的兼容性、性能、锯齿的问题之外，或许我们的方向就错了。然而，这并不能说是没有意义呀。我们的实现方案不完美，但 Web 标准也同样。UI 这件事仍旧新鲜有趣，这才能推动可能的发展啊。
+
+对我们自己而言，更大的意义或许是我们仍能对 UI 保持学习。Apple 的 liquid glass 只是我们的参照物，还原的结果是其次，过程才重要。去玩一些好玩的，然后相信启发的力量。
+
+> You have to trust that the dots will somehow connect in your future. —— Steve Jobs
+
+---
+
+之所以提到"启发"，就是因为在近半年时间内自己切身感受到了它的力量。启发是一件非常前期的事，身为一个设计团队内的开发者，能对设计师们直接的帮助本来就少之又少。
+
+形态创新、交互动画、设计语言、冲浪资源、小到一个具体的页面 feature... 我能做的就是尽量在各个角度发射尽可能多的光线，因为它们唯有在打在他人身上反射之后才能被我看见。原来以为这样的反射有限，事实或许也是如此，但我确实实际地看到了它们。
+
+对他人是否有意义由不得我来评判，但自己发射的光线照回到自己身上后，便切身感受到了力量。
+
+或许我还可以做得更多，至少此刻我已足够温暖。
