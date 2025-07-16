@@ -3,7 +3,7 @@ const nextConfig = {
   output: "export",
   basePath: "/abc",
   reactStrictMode: false,
-  swcMinify: false,
+  // swcMinify: false,
   experimental: {
     forceSwcTransforms: true,
     largePageDataBytes: 128 * 100000,
