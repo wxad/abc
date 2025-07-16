@@ -149,7 +149,7 @@ const Demo = () => {
               d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
             />
           </svg>
-          <div className="absolute-full text-white text-base leading-[1] font-[gilroysemibold] rotate-[-30deg] scale-90">
+          <div className="absolute-full text-white text-base leading-none font-[gilroysemibold] rotate-[-30deg] scale-90">
             {params.name.split("").map((char, index) => {
               if (!positions[index]) return null
               return (

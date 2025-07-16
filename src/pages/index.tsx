@@ -303,7 +303,7 @@ const Home = () => {
               }}
             />
             <div className="text-center 74:text-left">
-              <h1 className="relative left-[-1px] text-neutral-600 74:text-neutral-800 font-semibold text-sm 74:text-base">
+              <h1 className="relative -left-px text-neutral-600 74:text-neutral-800 font-semibold text-sm 74:text-base">
                 设计垂点
               </h1>
               <div className="mt-4 74:mt-0 text-xs text-neutral-600">
@@ -395,8 +395,8 @@ const Home = () => {
                     <div
                       className={`flex-1 min-w-0 border-solid border-neutral-200 ${
                         index % 2
-                          ? "md:pl-16 md:border-l-[1px]"
-                          : "md:pr-16 md:border-r-[1px]"
+                          ? "md:pl-16 md:border-l"
+                          : "md:pr-16 md:border-r"
                       }`}
                     >
                       <div className="mb-6 font-mono text-neutral-600">
@@ -451,7 +451,7 @@ const Home = () => {
                     </div>
                   </div>
                   <hr
-                    className="flex-none h-[1px] bg-neutral-300"
+                    className="flex-none h-px bg-neutral-300"
                     style={{
                       maskImage:
                         "linear-gradient(90deg, transparent, rgb(255, 255, 255) 20%, rgb(255, 255, 255) calc(100% - 20%), transparent)",

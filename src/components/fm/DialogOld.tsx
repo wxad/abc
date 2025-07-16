@@ -14,7 +14,7 @@ export const Item = ({
     <>
       {bg && (
         <div
-          className={`absolute-full bg-black bg-opacity-30 transition-all duration-500 ${
+          className={`absolute-full bg-black/30 transition-all duration-500 ${
             show ? "opacity-100" : "opacity-0"
           }`}
         />

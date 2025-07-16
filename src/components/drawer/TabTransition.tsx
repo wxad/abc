@@ -16,7 +16,7 @@ const Demo = () => {
       <div className="h-[400px]">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
           <div
-            className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white transition-all duration-[350ms] ${
+            className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white transition-all duration-350 ${
               isMobile
                 ? "rounded-xl w-[360px] h-[56px]"
                 : "rounded-lg opacity-0 w-[676px] h-[72px]"
@@ -27,7 +27,7 @@ const Demo = () => {
             }}
           />
           <div
-            className={`relative flex items-center transition-all duration-[350ms] ${
+            className={`relative flex items-center transition-all duration-350 ${
               isMobile ? "gap-2" : "gap-3"
             }`}
           >
@@ -36,7 +36,7 @@ const Demo = () => {
                 return (
                   <div
                     key={index}
-                    className={`relative flex items-center justify-center bg-white rounded-lg transition-all duration-[350ms] ${
+                    className={`relative flex items-center justify-center bg-white rounded-lg transition-all duration-350 ${
                       isMobile ? "w-[80px] h-[40px]" : "w-[160px] h-[72px]"
                     }`}
                     style={{
@@ -50,7 +50,7 @@ const Demo = () => {
                     }}
                   >
                     <span
-                      className={`text-[18px] transition-all duration-[350ms] ${
+                      className={`text-[18px] transition-all duration-350 ${
                         isMobile
                           ? "scale-[0.7]"
                           : index === 0
@@ -65,8 +65,8 @@ const Demo = () => {
                         src="https://qzonestyle.gdtimg.com/gdt_ui_proj/imghub/dist/eqq-adResource-filter-brand-promotion.png?max_age=31536000"
                         className={`absolute bottom-0 right-0 w-[68px] aspect-square translate-x-[20.5%] translate-y-[20.5%] transition-all origin-bottom-right ${
                           isMobile
-                            ? "scale-[0.7] opacity-0 duration-[200ms]"
-                            : "duration-[350ms]"
+                            ? "scale-[0.7] opacity-0 duration-200"
+                            : "duration-350"
                         }`}
                       />
                     )}

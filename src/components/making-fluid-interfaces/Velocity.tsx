@@ -49,7 +49,7 @@ const Demo = () => {
     <div className="relative flex justify-center items-center mt-8 mb-12 gap-3">
       <div
         ref={ref}
-        className="relative w-[250px] aspect-[558/1080] rounded-xl overflow-hidden"
+        className="relative w-[250px] aspect-558/1080 rounded-xl overflow-hidden"
       >
         <video
           ref={videoRef0}
@@ -66,7 +66,7 @@ const Demo = () => {
         />
         <div
           ref={coverRef0}
-          className="absolute-full hidden items-center justify-center font-medium text-sm text-neutral-500 bg-gradient-to-bl from-white to-neutral-100 border border-sold border-neutral-200 cursor-pointer rounded-xl opacity-95 backdrop-blur-xl"
+          className="absolute-full hidden items-center justify-center font-medium text-sm text-neutral-500 bg-linear-to-bl from-white to-neutral-100 border border-sold border-neutral-200 cursor-pointer rounded-xl opacity-95 backdrop-blur-xl"
           onClick={() => {
             videoRef0.current?.play()
             coverRef0.current.style.display = "none"
@@ -81,7 +81,7 @@ const Demo = () => {
           播放视频
         </div>
       </div>
-      <div className="relative w-[250px] aspect-[558/1080] rounded-xl overflow-hidden">
+      <div className="relative w-[250px] aspect-558/1080 rounded-xl overflow-hidden">
         <video
           ref={videoRef1}
           className="absolute-full"
@@ -97,7 +97,7 @@ const Demo = () => {
         />
         <div
           ref={coverRef1}
-          className="absolute-full hidden items-center justify-center font-medium text-sm text-neutral-500 bg-gradient-to-bl from-white to-neutral-100 border border-sold border-neutral-200 cursor-pointer rounded-xl opacity-95 backdrop-blur-xl"
+          className="absolute-full hidden items-center justify-center font-medium text-sm text-neutral-500 bg-linear-to-bl from-white to-neutral-100 border border-sold border-neutral-200 cursor-pointer rounded-xl opacity-95 backdrop-blur-xl"
           onClick={() => {
             videoRef1.current?.play()
             coverRef1.current.style.display = "none"

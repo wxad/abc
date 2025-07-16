@@ -58,7 +58,7 @@ const Demo = () => (
           />
           <div className="text-sm font-semibold">微品牌</div>
         </div>
-        <HoverFill bgClassName="rounded-sm">
+        <HoverFill bgClassName="rounded-xs">
           <div className="flex items-center justify-center size-[26px]">
             <svg
               width="18"
@@ -312,7 +312,7 @@ const Demo = () => (
             操作
           </div>
           <div className="flex items-center pl-3 h-[44px] border-b border-neutral-100">
-            <HoverFill bgClassName="rounded-sm">
+            <HoverFill bgClassName="rounded-xs">
               <div className="flex items-center justify-center size-[26px]">
                 <svg
                   width="18"
@@ -331,7 +331,7 @@ const Demo = () => (
                 </svg>
               </div>
             </HoverFill>
-            <HoverFill bgClassName="rounded-sm">
+            <HoverFill bgClassName="rounded-xs">
               <div className="flex items-center justify-center size-[26px]">
                 <svg
                   width="18"
@@ -352,7 +352,7 @@ const Demo = () => (
             </HoverFill>
           </div>
           <div className="flex items-center pl-3 h-[44px] border-b border-neutral-100">
-            <HoverFill bgClassName="rounded-sm">
+            <HoverFill bgClassName="rounded-xs">
               <div className="flex items-center justify-center size-[26px]">
                 <svg
                   width="18"
@@ -371,7 +371,7 @@ const Demo = () => (
                 </svg>
               </div>
             </HoverFill>
-            <HoverFill bgClassName="rounded-sm">
+            <HoverFill bgClassName="rounded-xs">
               <div className="flex items-center justify-center size-[26px]">
                 <svg
                   width="18"
@@ -401,7 +401,7 @@ const Demo = () => (
           />
           <div className="text-sm font-semibold">菜菜美食日记</div>
         </div>
-        <HoverFill bgClassName="rounded-sm">
+        <HoverFill bgClassName="rounded-xs">
           <div className="flex items-center justify-center size-[26px]">
             <svg
               width="18"
@@ -553,7 +553,7 @@ const Demo = () => (
             操作
           </div>
           <div className="flex items-center pl-3 h-[44px]">
-            <HoverFill bgClassName="rounded-sm">
+            <HoverFill bgClassName="rounded-xs">
               <div className="flex items-center justify-center size-[26px]">
                 <svg
                   width="18"
@@ -572,7 +572,7 @@ const Demo = () => (
                 </svg>
               </div>
             </HoverFill>
-            <HoverFill bgClassName="rounded-sm">
+            <HoverFill bgClassName="rounded-xs">
               <div className="flex items-center justify-center size-[26px]">
                 <svg
                   width="18"

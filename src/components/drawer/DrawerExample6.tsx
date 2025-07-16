@@ -80,10 +80,7 @@ const Demo = () => {
         }}
       >
         <div className="absolute inset-0 bg-black overflow-hidden">
-          <div
-            className="absolute-full overflow-hidden origin-top"
-            ref={bg}
-          >
+          <div className="absolute-full overflow-hidden origin-top" ref={bg}>
             <img
               src="https://wxa.wxs.qq.com/wxad-design/yijie/list-tester-1.png"
               alt=""
@@ -119,7 +116,7 @@ const Demo = () => {
                     height="24"
                     viewBox="0 0 24 24"
                     fill="none"
-                    className="absolute top-5 left-4 bg-black bg-opacity-5 rounded-full cursor-pointer"
+                    className="absolute top-5 left-4 bg-black/5 rounded-full cursor-pointer"
                     ref={icon}
                     onClick={handleSecondClick}
                   >
@@ -136,14 +133,14 @@ const Demo = () => {
                 <div className="mb-3 text-[15px] font-medium">期望发表日期</div>
                 <div className="flex items-center">
                   <div
-                    className="flex-1 flex items-center justify-center h-[45px] text-[15px] text-black text-opacity-30 bg-[#F7F7F7] rounded-lg cursor-pointer"
+                    className="flex-1 flex items-center justify-center h-[45px] text-[15px] text-black/30 bg-[#F7F7F7] rounded-lg cursor-pointer"
                     onClick={handleToThirdClick}
                   >
                     开始日期
                   </div>
-                  <div className="flex-none mx-2 w-2 h-[1px] bg-black" />
+                  <div className="flex-none mx-2 w-2 h-px bg-black" />
                   <div
-                    className="flex-1 flex items-center justify-center h-[45px] text-[15px] text-black text-opacity-30 bg-[#F7F7F7] rounded-lg cursor-pointer"
+                    className="flex-1 flex items-center justify-center h-[45px] text-[15px] text-black/30 bg-[#F7F7F7] rounded-lg cursor-pointer"
                     onClick={handleToThirdClick}
                   >
                     结束日期
@@ -168,7 +165,7 @@ const Demo = () => {
                     <div
                       className={`flex items-center justify-center h-[45px] text-[15px] rounded-lg ${
                         o === "全部"
-                          ? "bg-[#FA9D3B] bg-opacity-10 text-[#FA9D3B] font-medium"
+                          ? "bg-[#FA9D3B]/10 text-[#FA9D3B] font-medium"
                           : "bg-[#F7F7F7]"
                       }`}
                       key={i}
@@ -209,7 +206,7 @@ const Demo = () => {
                 <div className="font-medium text-[15px] absolute top-0 left-6 w-full h-full flex items-center pointer-events-none">
                   开始日期
                 </div>
-                <div className="absolute bottom-0 left-6 right-6 h-[0.5px] bg-black bg-opacity-10" />
+                <div className="absolute bottom-0 left-6 right-6 h-[0.5px] bg-black/10" />
               </div>
               <div
                 className="px-6 w-full bg-cover"

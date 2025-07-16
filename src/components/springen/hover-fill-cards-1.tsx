@@ -117,7 +117,7 @@ const Demo = () => {
         >
           <div className="relative grid gap-[18px] grid-cols-2">
             <motion.i
-              className="absolute top-0 left-0 z-[1] w-[280px] h-[88px] bg-[#07c1600f] rounded-lg"
+              className="absolute top-0 left-0 z-1 w-[280px] h-[88px] bg-[#07c1600f] rounded-lg"
               style={{
                 x: indicatorX,
                 y: indicatorY,

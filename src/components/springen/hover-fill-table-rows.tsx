@@ -20,7 +20,7 @@ const Demo = () => (
             行业排名
           </div>
         </div>
-        <HoverFill bgClassName="rounded-sm">
+        <HoverFill bgClassName="rounded-xs">
           <div className="flex h-11 text-sm group">
             <div className="flex items-center w-[78px] pl-2 group-hover:text-[#296BEF] group-hover:font-semibold transition-colors duration-150">
               社交指数
@@ -39,7 +39,7 @@ const Demo = () => (
             </div>
           </div>
         </HoverFill>
-        <HoverFill bgClassName="rounded-sm">
+        <HoverFill bgClassName="rounded-xs">
           <div className="flex h-11 text-sm group">
             <div className="flex items-center w-[78px] pl-2 group-hover:text-[#296BEF] group-hover:font-semibold transition-colors duration-150">
               互动指数
@@ -58,7 +58,7 @@ const Demo = () => (
             </div>
           </div>
         </HoverFill>
-        <HoverFill bgClassName="rounded-sm">
+        <HoverFill bgClassName="rounded-xs">
           <div className="flex h-11 text-sm group">
             <div className="flex items-center w-[78px] pl-2 group-hover:text-[#296BEF] group-hover:font-semibold transition-colors duration-150">
               合作指数
@@ -77,7 +77,7 @@ const Demo = () => (
             </div>
           </div>
         </HoverFill>
-        <HoverFill bgClassName="rounded-sm">
+        <HoverFill bgClassName="rounded-xs">
           <div className="flex h-11 text-sm group">
             <div className="flex items-center w-[78px] pl-2 group-hover:text-[#296BEF] group-hover:font-semibold transition-colors duration-150">
               性价比指数
@@ -96,7 +96,7 @@ const Demo = () => (
             </div>
           </div>
         </HoverFill>
-        <HoverFill bgClassName="rounded-sm">
+        <HoverFill bgClassName="rounded-xs">
           <div className="flex h-11 text-sm group">
             <div className="flex items-center w-[78px] pl-2 group-hover:text-[#296BEF] group-hover:font-semibold transition-colors duration-150">
               成长指数

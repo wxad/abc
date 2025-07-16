@@ -89,8 +89,8 @@ const SwipeMock = () => {
           onTouchStart={handleTouchStart}
         >
           <div className="relative m-auto w-[240px] font-semibold text-sm text-neutral-400 overflow-hidden">
-            <div className="absolute z-10 top-0 left-0 w-[12px] h-full bg-gradient-to-r from-neutral-100" />
-            <div className="absolute z-10 top-0 right-0 w-[12px] h-full bg-gradient-to-l from-neutral-100" />
+            <div className="absolute z-10 top-0 left-0 w-[12px] h-full bg-linear-to-r from-neutral-100" />
+            <div className="absolute z-10 top-0 right-0 w-[12px] h-full bg-linear-to-l from-neutral-100" />
             <div
               ref={wrapperRef}
               className="flex gap-[10px]"
@@ -102,7 +102,7 @@ const SwipeMock = () => {
               {Array.from({ length: cardsNumber }).map((_, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-center w-[140px] h-[140px] bg-white rounded-lg shadow-sm"
+                  className="flex items-center justify-center w-[140px] h-[140px] bg-white rounded-lg shadow-xs"
                 >
                   {index}
                 </div>

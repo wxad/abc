@@ -104,7 +104,7 @@ const Demo = () => {
               className="absolute top-0 left-0 w-full cursor-pointer"
             />
             <div
-              className="absolute-full bg-black bg-opacity-50 pointer-events-none"
+              className="absolute-full bg-black/50 pointer-events-none"
               ref={maskRef}
             />
           </div>

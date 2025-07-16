@@ -89,7 +89,7 @@ const Footer = () => {
 
   return (
     <>
-      <div className="footer-animation fixed bottom-2 left-1/2 z-20 flex h-14 bg-white bg-opacity-60 rounded-full shadow-lg backdrop-blur-sm">
+      <div className="footer-animation fixed bottom-2 left-1/2 z-20 flex h-14 bg-white/60 rounded-full shadow-lg backdrop-blur-xs">
         <div
           className="flex items-end gap-2 p-2"
           onMouseMove={handleMouseMove}
@@ -116,7 +116,7 @@ const Footer = () => {
             </svg>
           </FooterItem>
           <hr
-            className="flex-none w-[1px] h-9 bg-neutral-200"
+            className="flex-none w-px h-9 bg-neutral-200"
             style={{
               maskImage:
                 "linear-gradient(0deg, transparent, rgb(255, 255, 255) 16px, rgb(255, 255, 255) calc(100% - 16px), transparent)",
@@ -156,7 +156,7 @@ const Footer = () => {
         </div>
       </div>
       <div
-        className="fixed bottom-0 left-0 w-full pointer-events-none z-10 backdrop-blur"
+        className="fixed bottom-0 left-0 w-full pointer-events-none z-10 backdrop-blur-sm"
         style={{
           maskImage: "linear-gradient(to top, rgb(0, 0, 0) 15%, transparent)",
           height: "clamp(80px, 10vh, 200px)",

@@ -73,7 +73,7 @@ const Item = ({ show, forward }: { show: boolean; forward?: boolean }) => {
             <div
               className={`flex items-center justify-center w-16 h-8 text-xs rounded-md border border-neutral-300 ${
                 !forward
-                  ? "outline outline-2 outline-offset-2 outline-neutral-900"
+                  ? "outline-solid outline-2 outline-offset-2 outline-neutral-900"
                   : ""
               }`}
             >
@@ -82,7 +82,7 @@ const Item = ({ show, forward }: { show: boolean; forward?: boolean }) => {
             <div
               className={`flex items-center justify-center w-16 h-8 text-xs rounded-md text-white bg-neutral-900 ${
                 forward
-                  ? "outline outline-2 outline-offset-2 outline-neutral-900"
+                  ? "outline-solid outline-2 outline-offset-2 outline-neutral-900"
                   : ""
               }`}
             >
@@ -117,7 +117,7 @@ const DialogNew = () => {
   return (
     <DemoBox className="h-[420px] overflow-hidden">
       <div
-        className={`absolute-full bg-black bg-opacity-30 transition-all duration-500 ${
+        className={`absolute-full bg-black/30 transition-all duration-500 ${
           show ? "opacity-100" : "opacity-0"
         }`}
       />

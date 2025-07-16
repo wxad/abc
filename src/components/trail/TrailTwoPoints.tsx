@@ -57,7 +57,7 @@ const Trail = ({ showHeart = false }: { showHeart?: boolean }) => {
   })
   return (
     <DemoBox className="pt-36 pb-10 text-center">
-      <div className="relative m-auto w-[260px] h-0.5 bg-neutral-200 rounded-sm">
+      <div className="relative m-auto w-[260px] h-0.5 bg-neutral-200 rounded-xs">
         {showHeart && (
           <div
             className="absolute bottom-[20px] left-[-40px] w-[80px] h-[72px] touch-none select-none origin-bottom"

@@ -33,7 +33,7 @@ const Demo = ({
         <div className="absolute top-1/2 left-8 -mt-1 size-2 bg-neutral-400 rounded-full" />
         <div className="absolute top-1/2 right-8 -mt-1 size-2 bg-neutral-400 rounded-full" />
         <motion.div
-          className="absolute top-1/2 left-0 -mt-9 size-[72px] bg-white rounded-full shadow cursor-move"
+          className="absolute top-1/2 left-0 -mt-9 size-[72px] bg-white rounded-full shadow-sm cursor-move"
           style={{
             x,
             y,

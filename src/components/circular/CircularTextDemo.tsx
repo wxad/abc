@@ -14,7 +14,7 @@ const CircularTextDemo = () => {
     >
       <div className="relative w-60 h-60 rounded-2xl">
         <div
-          className="absolute-full text-[16px] leading-[1] rotate-[-30deg]"
+          className="absolute-full text-[16px] leading-none rotate-[-30deg]"
           style={{
             // @ts-ignore
             "--char-count": texts.join("").length,

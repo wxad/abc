@@ -50,7 +50,7 @@ const NavigationMenu = () => {
   return (
     <DemoBox className="flex flex-col h-[500px]">
       <div className="flex-none flex items-center px-6 h-16 bg-white border-b border-neutral-300">
-        <svg className="block w-[6.5rem] h-auto" viewBox="0 0 1618 262">
+        <svg className="block w-26 h-auto" viewBox="0 0 1618 262">
           <path
             fillRule="evenodd"
             clipRule="evenodd"
@@ -73,7 +73,7 @@ const NavigationMenu = () => {
         </svg>
         <div className="relative flex ml-6 text-sm">
           <div
-            className="absolute top-0 left-0 h-full bg-neutral-200 bg-opacity-50 rounded-2xl pointer-events-none transition-all duration-300 cursor-pointer"
+            className="absolute top-0 left-0 h-full bg-neutral-200/50 rounded-2xl pointer-events-none transition-all duration-300 cursor-pointer"
             ref={indicator}
           />
           {["商业推广", "流量变现", "优秀案例"].map((item, index) => {
@@ -100,7 +100,7 @@ const NavigationMenu = () => {
           const active = activeIndex === index
           return (
             <img
-              className={`absolute-full object-cover shadow-sm rounded-lg overflow-hidden
+              className={`absolute-full object-cover shadow-xs rounded-lg overflow-hidden
                 ${
                   active
                     ? "wipe-in-animation opacity-100"

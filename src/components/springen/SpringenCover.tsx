@@ -3,7 +3,7 @@ const Cover = () => {
     <div className="relative">
       <div className="pt-[100%]" />
       <div
-        className="absolute flex items-center justify-center inset-0 bg-[length:40px_40px] border border-neutral-300 overflow-hidden rounded-full text-neutral-400"
+        className="absolute flex items-center justify-center inset-0 bg-size-[40px_40px] border border-neutral-300 overflow-hidden rounded-full text-neutral-400"
         style={{
           backgroundImage: "url(/abc/grid.svg)",
         }}

@@ -12,7 +12,7 @@ const Demo = () => {
       <HoverFill bgClassName="rounded-md">
         <div>
           <input
-            className="p-2 w-[204px] h-[30px] bg-transparent outline-none transition-colors focus:bg-white focus:shadow-[0_0_0_1px_black] rounded-md"
+            className="p-2 w-[204px] h-[30px] bg-transparent outline-hidden transition-colors focus:bg-white focus:shadow-[0_0_0_1px_black] rounded-md"
             value={value}
             onChange={(e) => {
               setValue(e.target.value)

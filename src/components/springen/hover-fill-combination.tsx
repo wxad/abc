@@ -124,7 +124,7 @@ const Basic = () => {
                           </>
                         )}
                         {!info.endTime && (
-                          <div className="ml-2 flex items-center px-1.5 h-[22px] text-[13px] text-[#FF6146] bg-[#ff6146] bg-opacity-[0.12] rounded">
+                          <div className="ml-2 flex items-center px-1.5 h-[22px] text-[13px] text-[#FF6146] bg-[#ff6146]/12 rounded-sm">
                             进行中
                           </div>
                         )}
@@ -156,15 +156,13 @@ const Basic = () => {
             <div className="flex items-center">
               <div className="flex items-center mr-4 text-base leading-7">
                 <div className="mr-2">开播时间</div>
-                <div className="mr-5 text-black text-opacity-[0.58]">
-                  2024-12-17 15:03
-                </div>
+                <div className="mr-5 text-black/58">2024-12-17 15:03</div>
                 <div className="mr-2">直播时长</div>
-                <div className="w-[66px] whitespace-nowrap text-black text-opacity-[0.58]">
+                <div className="w-[66px] whitespace-nowrap text-black/58">
                   03:48:08
                 </div>
               </div>
-              <div className="flex items-center mr-4 px-2 h-6 rounded text-sm text-[#FF6146] bg-[#ff6146] bg-opacity-[0.12]">
+              <div className="flex items-center mr-4 px-2 h-6 rounded-sm text-sm text-[#FF6146] bg-[#ff6146]/12">
                 进行中
               </div>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">

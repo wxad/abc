@@ -141,7 +141,7 @@ const Demo = () => {
             />
             <div
               className={`absolute top-1/2 left-1/2 translate-x-[-49.5%] translate-y-[-56.5%] w-[100px] h-[100px] transition-opacity duration-700 ${
-                scene === "channels" ? "opacity-0 z-[1]" : "opacity-100 z-10"
+                scene === "channels" ? "opacity-0 z-1" : "opacity-100 z-10"
               }`}
               style={{
                 backgroundImage:
@@ -151,7 +151,7 @@ const Demo = () => {
             />
             <div
               className={`absolute top-1/2 left-1/2 translate-x-[-49.5%] translate-y-[-56.5%] w-[100px] h-[100px] transition-opacity duration-700 ${
-                scene === "moments" ? "opacity-0 z-[1]" : "opacity-100 z-10"
+                scene === "moments" ? "opacity-0 z-1" : "opacity-100 z-10"
               }`}
               style={{
                 backgroundImage:

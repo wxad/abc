@@ -22,18 +22,18 @@ const Demo = () => {
       >
         <div
           className={cn(
-            "absolute top-0 left-0 w-full h-full bg-black bg-opacity-25 transition-all duration-[500ms] ease-[cubic-bezier(0.32,0.72,0,1)] cursor-pointer"
+            "absolute top-0 left-0 w-full h-full bg-black/25 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] cursor-pointer"
           )}
         />
         <div
           className={cn(
-            "absolute top-0 left-0 w-full h-full bg-white transition-all duration-[500ms] ease-[cubic-bezier(0.32,0.72,0,1)]",
+            "absolute top-0 left-0 w-full h-full bg-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]",
             expanded ? "translate-y-0" : "translate-y-[451px] rounded-t-2xl"
           )}
         >
           <div
             className={cn(
-              "relative h-16 transition-all duration-[500ms] ease-[cubic-bezier(0.32,0.72,0,1)]",
+              "relative h-16 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]",
               expanded ? "translate-y-[32px]" : "translate-y-0"
             )}
           >

@@ -79,11 +79,11 @@ const Demo = ({
           onMouseLeave={handleMouseLeave}
         >
           <div
-            className="relative w-[300px] h-1 bg-neutral-200 rounded-sm cursor-pointer"
+            className="relative w-[300px] h-1 bg-neutral-200 rounded-xs cursor-pointer"
             ref={sliderRef}
           >
             <div
-              className="absolute bg-neutral-400 rounded-sm"
+              className="absolute bg-neutral-400 rounded-xs"
               style={{
                 inset: `0 ${100 - range[1]}% 0 ${range[0]}%`,
               }}
@@ -131,7 +131,7 @@ const Demo = ({
                   {value0}°C
                 </div>
               )}
-              <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 rotate-45 w-4 h-4 rounded-sm bg-black" />
+              <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 rotate-45 w-4 h-4 rounded-xs bg-black" />
             </div>
             <div
               className={`absolute bottom-5 w-14 h-9 text-sm text-white bg-black rounded-md transform transition-[opacity,visibility] duration-500 -translate-x-1/2 ${
@@ -167,7 +167,7 @@ const Demo = ({
                   {value1}°C
                 </div>
               )}
-              <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 rotate-45 w-4 h-4 rounded-sm bg-black" />
+              <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 rotate-45 w-4 h-4 rounded-xs bg-black" />
             </div>
           </div>
         </div>

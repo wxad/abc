@@ -128,7 +128,7 @@ const NavigationMenu = () => {
         </svg>
         <div className="relative flex ml-6 text-sm">
           <div
-            className="absolute top-0 left-0 h-full bg-neutral-200 bg-opacity-50 rounded-2xl pointer-events-none transition-all duration-300"
+            className="absolute top-0 left-0 h-full bg-neutral-200/50 rounded-2xl pointer-events-none transition-all duration-300"
             ref={indicator}
           />
           {["商业推广", "广告技术", "成功案例"].map((item, index) => {

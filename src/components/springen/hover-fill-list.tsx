@@ -11,7 +11,7 @@ const Basics = () => {
         <div className="w-[366px] max-w-[95%] bg-white">
           <div className="flex items-center justify-between px-5 h-[62px]">
             <div className="flex items-center">
-              <HoverFill bgClassName="rounded-sm">
+              <HoverFill bgClassName="rounded-xs">
                 <div className="flex items-center justify-center size-[30px]">
                   <svg
                     width="24"
@@ -30,7 +30,7 @@ const Basics = () => {
               <i className="ml-3 mr-4 w-px h-[26px] bg-neutral-200" />
               <div className="text-[18px] font-semibold">自定义列表</div>
             </div>
-            <HoverFill bgClassName="rounded-sm">
+            <HoverFill bgClassName="rounded-xs">
               <div className="flex items-center justify-center w-[46px] h-[30px] font-medium text-[13px] text-neutral-500">
                 重置
               </div>
@@ -50,7 +50,7 @@ const Basics = () => {
               <HoverFill bgClassName="rounded-lg" key={item}>
                 <div className="flex items-center justify-between pl-3 pr-2 h-12 text-sm">
                   {item}
-                  <div className="flex items-center justify-center size-8 rounded-sm hover:bg-neutral-200 transition-all">
+                  <div className="flex items-center justify-center size-8 rounded-xs hover:bg-neutral-200 transition-all">
                     <svg
                       width="32"
                       height="32"

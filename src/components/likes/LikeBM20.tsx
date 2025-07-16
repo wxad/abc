@@ -14,7 +14,7 @@ const Demo = (props: {}) => {
       <div className="flex items-center justify-center gap-4 text-xs text-neutral-400">
         <div>
           <video
-            className="w-[300px] outline -outline-offset-8 outline-8 outline-white overflow-hidden rounded-[40px]"
+            className="w-[300px] outline-solid -outline-offset-8 outline-8 outline-white overflow-hidden rounded-[40px]"
             ref={video1Ref}
             preload="auto"
             x-webkit-airplay="true"

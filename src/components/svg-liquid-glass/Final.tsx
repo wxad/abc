@@ -161,7 +161,7 @@ const Demo = () => {
             >
               <div className="absolute inset-0 blur-[2px]">
                 <div
-                  className="absolute rounded-2xl inset-[-1px] border border-solid border-transparent bg-fixed"
+                  className="absolute rounded-2xl -inset-px border border-solid border-transparent bg-fixed"
                   style={
                     {
                       "--spread": 64,
@@ -174,7 +174,7 @@ const Demo = () => {
                 />
               </div>
               <div
-                className="absolute rounded-2xl inset-[-1px] border border-solid border-transparent bg-fixed"
+                className="absolute rounded-2xl -inset-px border border-solid border-transparent bg-fixed"
                 style={
                   {
                     "--spread": 32,

@@ -17,7 +17,7 @@ const Demo = () => {
       </svg>
       <img
         src="https://wxa.wxs.qq.com/wxad-design/yijie/bad-slider-11333.gif"
-        className="block w-full outline -outline-offset-8 outline-8 outline-white overflow-hidden rounded-xl mix-blend-darken grayscale"
+        className="block w-full outline-solid -outline-offset-8 outline-8 outline-white overflow-hidden rounded-xl mix-blend-darken grayscale"
       />
     </DemoBox>
   )

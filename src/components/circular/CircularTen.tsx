@@ -36,7 +36,7 @@ const Demo = () => {
           </svg>
           <div className="absolute-full scale-75">
             <div
-              className="absolute-full text-[16px] leading-[1] rotate-[-30deg]"
+              className="absolute-full text-[16px] leading-none rotate-[-30deg]"
               style={{
                 // @ts-ignore
                 "--char-count": 22,

@@ -9,7 +9,7 @@ const Item = ({ style }: { style?: React.CSSProperties }) => {
       className="absolute flex items-center justify-between p-4 w-80 bg-white border border-neutral-200 shadow-md rounded-lg"
       style={style}
     >
-      <div className="text-[13px] leading-[1.5]">
+      <div className="text-[13px] leading-normal">
         <div className="mb-[2px] font-medium">提示信息</div>
         <div>这是一条提示信息。</div>
       </div>

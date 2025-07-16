@@ -161,7 +161,7 @@ const Demo = () => {
           // }}
           // data-role="beforeOpacityElement"
         />
-        <div className="relative z-[1] pt-[47px]">
+        <div className="relative z-1 pt-[47px]">
           <div
             className="relative flex items-center justify-center h-[44px]"
             // data-role="beforeOpacityElement"
@@ -387,12 +387,12 @@ const Demo = () => {
                 />
               </svg>
 
-              <div className="relative z-[1] p-4 mt-0" ref={contentRef}>
+              <div className="relative z-1 p-4 mt-0" ref={contentRef}>
                 <div
                   className="absolute top-[178px] left-[12px] w-[366px] h-[162px] bg-white rounded-lg opacity-0 pointer-events-none"
                   ref={innerCardBgRef}
                 />
-                <div className="absolute top-[193px] left-[24px] flex flex-col gap-4 z-[1]">
+                <div className="absolute top-[193px] left-[24px] flex flex-col gap-4 z-1">
                   <div className="flex items-center justify-between">
                     <span className="text-[17px] font-medium">
                       耐克中国有限公司 - 耐克

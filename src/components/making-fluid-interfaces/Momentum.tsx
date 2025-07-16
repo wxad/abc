@@ -32,7 +32,7 @@ const Demo = () => {
   return (
     <div
       ref={ref}
-      className="relative mt-8 mb-12 mx-auto w-[250px] aspect-[390/844]"
+      className="relative mt-8 mb-12 mx-auto w-[250px] aspect-390/844"
     >
       <video
         ref={videoRef}
@@ -49,7 +49,7 @@ const Demo = () => {
       />
       <div
         ref={coverRef}
-        className="absolute-full hidden items-center justify-center font-medium text-sm text-neutral-500 bg-gradient-to-bl from-white to-neutral-100 border border-sold border-neutral-200 cursor-pointer rounded-xl opacity-95 backdrop-blur-xl"
+        className="absolute-full hidden items-center justify-center font-medium text-sm text-neutral-500 bg-linear-to-bl from-white to-neutral-100 border border-sold border-neutral-200 cursor-pointer rounded-xl opacity-95 backdrop-blur-xl"
         onClick={() => {
           videoRef.current?.play()
           coverRef.current.style.display = "none"

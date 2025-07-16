@@ -30,7 +30,7 @@ const Select = ({ slow }: { slow?: boolean }) => {
         选择器 Select
       </div>
       <div
-        className={`absolute left-0 w-full top-[calc(100%_+_8px)] text-xs leading-7 bg-white px-2 py-1 rounded-md transition-all ${
+        className={`absolute left-0 w-full top-[calc(100%+8px)] text-xs leading-7 bg-white px-2 py-1 rounded-md transition-all ${
           slow ? "duration-500" : "duration-300"
         }`}
         style={{

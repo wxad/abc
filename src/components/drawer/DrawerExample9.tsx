@@ -108,7 +108,7 @@ const Demo = () => {
               className="absolute top-0 left-0 w-full cursor-pointer"
             />
             <div
-              className="absolute-full bg-black bg-opacity-50 pointer-events-none"
+              className="absolute-full bg-black/50 pointer-events-none"
               ref={maskRef}
             />
           </div>
@@ -130,11 +130,11 @@ const Demo = () => {
                   期望发表日期
                 </div>
                 <div className="flex items-center">
-                  <div className="flex-1 flex items-center justify-center h-[45px] text-[15px] text-black text-opacity-30 bg-[#F7F7F7] rounded-lg cursor-pointer">
+                  <div className="flex-1 flex items-center justify-center h-[45px] text-[15px] text-black/30 bg-[#F7F7F7] rounded-lg cursor-pointer">
                     开始日期
                   </div>
-                  <div className="flex-none mx-2 w-2 h-[1px] bg-black" />
-                  <div className="flex-1 flex items-center justify-center h-[45px] text-[15px] text-black text-opacity-30 bg-[#F7F7F7] rounded-lg cursor-pointer">
+                  <div className="flex-none mx-2 w-2 h-px bg-black" />
+                  <div className="flex-1 flex items-center justify-center h-[45px] text-[15px] text-black/30 bg-[#F7F7F7] rounded-lg cursor-pointer">
                     结束日期
                   </div>
                 </div>
@@ -147,7 +147,7 @@ const Demo = () => {
                       <div
                         className={`flex items-center justify-center h-[45px] text-[15px] rounded-lg ${
                           o === "全部"
-                            ? "bg-[#FA9D3B] bg-opacity-10 text-[#FA9D3B] font-medium"
+                            ? "bg-[#FA9D3B]/10 text-[#FA9D3B] font-medium"
                             : "bg-[#F7F7F7]"
                         }`}
                         key={i}

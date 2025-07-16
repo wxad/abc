@@ -28,10 +28,10 @@ const Demo = () => {
               正式发表前，若需修改视频，请在电脑端操作（修改后将重新发起审核确认流程）操作指引
             </div>
             <div className="mt-16 p-5 h-44 bg-white rounded-xl">
-              <div className="mt-5 w-1/2 bg-neutral-200 h-5 rounded" />
-              <div className="mt-5 bg-neutral-100 h-3 rounded" />
-              <div className="mt-2 bg-neutral-100 h-3 rounded" />
-              <div className="mt-2 w-1/2 bg-neutral-100 h-3 rounded" />
+              <div className="mt-5 w-1/2 bg-neutral-200 h-5 rounded-sm" />
+              <div className="mt-5 bg-neutral-100 h-3 rounded-sm" />
+              <div className="mt-2 bg-neutral-100 h-3 rounded-sm" />
+              <div className="mt-2 w-1/2 bg-neutral-100 h-3 rounded-sm" />
             </div>
           </div>
           <div
@@ -50,7 +50,7 @@ const Demo = () => {
             />
             <div
               className={cn(
-                "absolute top-0 left-0 w-full h-full bg-black bg-opacity-25 opacity-0 transition-all duration-[400ms] ease-[cubic-bezier(0.32,0.72,0,1)] cursor-pointer",
+                "absolute top-0 left-0 w-full h-full bg-black/25 opacity-0 transition-all duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] cursor-pointer",
                 expanded && "opacity-100"
               )}
               onClick={() => {
@@ -59,7 +59,7 @@ const Demo = () => {
             />
             <div
               className={cn(
-                "absolute bottom-0 left-0 w-full bg-white rounded-t-2xl transition-all duration-[400ms] ease-[cubic-bezier(0.32,0.72,0,1)]",
+                "absolute bottom-0 left-0 w-full bg-white rounded-t-2xl transition-all duration-400 ease-[cubic-bezier(0.32,0.72,0,1)]",
                 expanded
                   ? "translate-y-0 opacity-100"
                   : "translate-y-[30%] opacity-0"
@@ -102,7 +102,7 @@ const Demo = () => {
             </div>
             <div
               className={cn(
-                "absolute left-[32px] bottom-[42px] flex items-center justify-center h-[48px] rounded-[8px] text-black bg-[#e5e5e5] text-[14px] font-medium cursor-pointer transition-all duration-[400ms] ease-[cubic-bezier(0.32,0.72,0,1)] origin-left",
+                "absolute left-[32px] bottom-[42px] flex items-center justify-center h-[48px] rounded-[8px] text-black bg-[#e5e5e5] text-[14px] font-medium cursor-pointer transition-all duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] origin-left",
                 expanded
                   ? "w-[156px] translate-y-[-22px] opacity-100"
                   : "w-[40px] translate-y-0 opacity-0"
@@ -115,7 +115,7 @@ const Demo = () => {
             </div>
             <div
               className={cn(
-                "absolute right-[32px] bottom-[42px] flex items-center justify-center w-[326px] h-[48px] rounded-[8px] text-white text-[14px] font-medium bg-[#FA9D3B] cursor-pointer transition-all duration-[400ms] ease-[cubic-bezier(0.32,0.72,0,1)] origin-left",
+                "absolute right-[32px] bottom-[42px] flex items-center justify-center w-[326px] h-[48px] rounded-[8px] text-white text-[14px] font-medium bg-[#FA9D3B] cursor-pointer transition-all duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] origin-left",
                 expanded && "w-[156px] translate-y-[-22px]"
               )}
               onClick={() => {

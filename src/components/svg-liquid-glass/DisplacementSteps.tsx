@@ -73,19 +73,19 @@ const Demo = () => {
           <div className="absolute-full bg-black" />
           <div
             className={cn(
-              "absolute-full bg-gradient-to-r from-[#ff0000] to-transparent transition-all duration-500 opacity-0",
+              "absolute-full bg-linear-to-r from-[#ff0000] to-transparent transition-all duration-500 opacity-0",
               step > 0 && "opacity-100"
             )}
           />
           <div
             className={cn(
-              "absolute-full bg-gradient-to-tl from-[#0000ff] to-transparent transition-all duration-500 opacity-0",
+              "absolute-full bg-linear-to-tl from-[#0000ff] to-transparent transition-all duration-500 opacity-0",
               step > 1 && "opacity-100"
             )}
           />
           <div
             className={cn(
-              "absolute inset-0 m-auto size-[134px] bg-[#7f7f7f] rounded-xl blur transition-all duration-500 opacity-0",
+              "absolute inset-0 m-auto size-[134px] bg-[#7f7f7f] rounded-xl blur-sm transition-all duration-500 opacity-0",
               step > 2 && "opacity-100"
             )}
           />

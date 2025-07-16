@@ -14,7 +14,7 @@ const Demo = (props: {}) => {
     <DemoBox className="py-10 text-center">
       <div className="flex items-center justify-center gap-4">
         <video
-          className="w-1/3 outline -outline-offset-2 outline-2 outline-neutral-200 overflow-hidden rounded-xl"
+          className="w-1/3 outline-solid -outline-offset-2 outline-2 outline-neutral-200 overflow-hidden rounded-xl"
           ref={video1Ref}
           preload="auto"
           x-webkit-airplay="true"
@@ -29,7 +29,7 @@ const Demo = (props: {}) => {
           />
         </video>
         <img
-          className="w-1/3 outline -outline-offset-2 outline-2 outline-neutral-200 overflow-hidden rounded-xl"
+          className="w-1/3 outline-solid -outline-offset-2 outline-2 outline-neutral-200 overflow-hidden rounded-xl"
           src="https://wxa.wxs.qq.com/wxad-design/yijie/2023-bmy-mask.webp"
           alt=""
         />

@@ -17,7 +17,7 @@ const Demo = (props: {}) => {
         </div>
         <div>
           <video
-            className="w-[300px] outline -outline-offset-4 outline-4 outline-white overflow-hidden rounded-xl mix-blend-darken"
+            className="w-[300px] outline-solid -outline-offset-4 outline-4 outline-white overflow-hidden rounded-xl mix-blend-darken"
             ref={video1Ref}
             preload="auto"
             x-webkit-airplay="true"

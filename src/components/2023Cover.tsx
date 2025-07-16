@@ -3,7 +3,7 @@ const Cover2023 = () => {
     <div className="relative">
       <div className="pt-[100%]" />
       <div
-        className="absolute inset-0 bg-[length:40px_40px] border border-gray-300 overflow-hidden rounded-full"
+        className="absolute inset-0 bg-size-[40px_40px] border border-gray-300 overflow-hidden rounded-full"
         style={{
           backgroundImage: "url(/abc/grid.svg)",
         }}
@@ -18,7 +18,7 @@ const Cover2023 = () => {
           src="https://wxa.wxs.qq.com/wxad-design/yijie/triangle-0.webp"
           loading="lazy"
           alt="cover"
-          className="absolute top-1/2 left-1/2 translate-x-[-100%] translate-y-[-35%] w-[40%] h-[40%] mix-blend-darken"
+          className="absolute top-1/2 left-1/2 -translate-x-full translate-y-[-35%] w-[40%] h-[40%] mix-blend-darken"
         />
         <img
           src="https://wxa.wxs.qq.com/wxad-design/yijie/triangle-1.webp"

@@ -3,12 +3,12 @@ const CarouselCover = () => {
     <div className="relative">
       <div className="pt-[100%]" />
       <div
-        className="absolute inset-0 bg-[length:40px_40px] border border-neutral-300 overflow-hidden rounded-full"
+        className="absolute inset-0 bg-size-[40px_40px] border border-neutral-300 overflow-hidden rounded-full"
         style={{
           backgroundImage: "url(/abc/grid.svg)",
         }}
       >
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 translate-y-10 w-[200px] h-0.5 bg-neutral-200 rounded-sm">
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 translate-y-10 w-[200px] h-0.5 bg-neutral-200 rounded-xs">
           <div
             className="absolute bottom-[20px] left-[-40px] w-[80px] h-[72px] touch-none select-none origin-bottom"
             style={{

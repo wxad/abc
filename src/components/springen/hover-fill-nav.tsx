@@ -21,7 +21,7 @@ const Basics = () => {
               >
                 <div className="relative w-[18px] h-[15px] border-2 border-black rounded-[2px]">
                   <i
-                    className={`absolute top-0 left-1 w-[2px] h-full bg-black transition-all duration-[400ms] ease-[cubic-bezier(0.32,0.72,0,1)] ${
+                    className={`absolute top-0 left-1 w-[2px] h-full bg-black transition-all duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] ${
                       collapsed && "-translate-x-0.5 scale-y-[0.7]"
                     }`}
                   />
@@ -36,9 +36,9 @@ const Basics = () => {
               />
             </svg>
           </div>
-          <div className="flex text-base text-black text-opacity-60">
+          <div className="flex text-base text-black/60">
             <div
-              className={`flex flex-col gap-3 ml-5 mr-14 transition-all duration-[400ms] ease-[cubic-bezier(0.32,0.72,0,1)] ${
+              className={`flex flex-col gap-3 ml-5 mr-14 transition-all duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] ${
                 collapsed ? "w-10" : "w-[186px]"
               }`}
             >
@@ -46,7 +46,7 @@ const Basics = () => {
                 <div className="relative flex items-center gap-2 h-10 overflow-hidden font-medium">
                   <svg
                     viewBox="0 0 20 20"
-                    className={`absolute left-4 top-2.5 size-5 transition-all duration-[400ms] ease-[cubic-bezier(0.32,0.72,0,1)] ${
+                    className={`absolute left-4 top-2.5 size-5 transition-all duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] ${
                       collapsed && "-translate-x-1.5"
                     }`}
                   >
@@ -58,7 +58,7 @@ const Basics = () => {
                     />
                   </svg>
                   <div
-                    className={`absolute left-11 transition-all duration-[400ms] ease-[cubic-bezier(0.32,0.72,0,1)] ${
+                    className={`absolute left-11 transition-all duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] ${
                       collapsed && "opacity-0 -translate-x-1.5"
                     }`}
                   >
@@ -74,7 +74,7 @@ const Basics = () => {
                 <div className="relative flex items-center gap-2 h-10 overflow-hidden font-medium">
                   <svg
                     viewBox="0 0 20 20"
-                    className={`absolute left-4 top-2.5 size-5 transition-all duration-[400ms] ease-[cubic-bezier(0.32,0.72,0,1)] ${
+                    className={`absolute left-4 top-2.5 size-5 transition-all duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] ${
                       collapsed && "-translate-x-1.5"
                     }`}
                     fill="none"
@@ -117,7 +117,7 @@ const Basics = () => {
                     />
                   </svg>
                   <div
-                    className={`absolute left-11 transition-all duration-[400ms] ease-[cubic-bezier(0.32,0.72,0,1)] ${
+                    className={`absolute left-11 transition-all duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] ${
                       collapsed && "opacity-0 -translate-x-1.5"
                     }`}
                   >
@@ -133,7 +133,7 @@ const Basics = () => {
                 <div className="relative flex items-center gap-2 h-10 overflow-hidden font-medium">
                   <svg
                     viewBox="0 0 20 20"
-                    className={`absolute left-4 top-2.5 size-5 transition-all duration-[400ms] ease-[cubic-bezier(0.32,0.72,0,1)] ${
+                    className={`absolute left-4 top-2.5 size-5 transition-all duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] ${
                       collapsed && "-translate-x-1.5"
                     }`}
                     fill="none"
@@ -146,7 +146,7 @@ const Basics = () => {
                     />
                   </svg>
                   <div
-                    className={`absolute left-11 transition-all duration-[400ms] ease-[cubic-bezier(0.32,0.72,0,1)] ${
+                    className={`absolute left-11 transition-all duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] ${
                       collapsed && "opacity-0 -translate-x-1.5"
                     }`}
                   >
@@ -162,7 +162,7 @@ const Basics = () => {
                 <div className="relative flex items-center gap-2 h-10 overflow-hidden font-medium">
                   <svg
                     viewBox="0 0 20 20"
-                    className={`absolute left-4 top-2.5 size-5 transition-all duration-[400ms] ease-[cubic-bezier(0.32,0.72,0,1)] ${
+                    className={`absolute left-4 top-2.5 size-5 transition-all duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] ${
                       collapsed && "-translate-x-1.5"
                     }`}
                     fill="currentColor"
@@ -189,7 +189,7 @@ const Basics = () => {
                     </defs>
                   </svg>
                   <div
-                    className={`absolute left-11 transition-all duration-[400ms] ease-[cubic-bezier(0.32,0.72,0,1)] ${
+                    className={`absolute left-11 transition-all duration-400 ease-[cubic-bezier(0.32,0.72,0,1)] ${
                       collapsed && "opacity-0 -translate-x-1.5"
                     }`}
                   >
@@ -199,7 +199,7 @@ const Basics = () => {
               </HoverFill>
             </div>
             <div className="flex-1 mr-4 mb-4">
-              <div className="mb-6 text-[36px] font-semibold text-black text-opacity-[0.96]">
+              <div className="mb-6 text-[36px] font-semibold text-black/96">
                 Apps
               </div>
               <div className="h-[300px] bg-white rounded-[12px]" />
