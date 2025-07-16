@@ -1,7 +1,7 @@
 import { bundleMDX } from "mdx-bundler"
 import * as fs from "fs"
 import * as path from "path"
-import glob from "glob"
+import { glob } from "glob"
 import matter from "gray-matter"
 import rehypePrettyCode from "rehype-pretty-code"
 
@@ -109,14 +109,4 @@ export const getAllPosts = async (): Promise<PostMetadata[]> => {
   )
 }
 
-const getAllPostPaths = () => {
-  return new Promise<string[]>((resolve, reject) => {
-    glob("src/content/**/index.mdx", (err, matches) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(matches)
-      }
-    })
-  })
-}
+const getAllPostPaths = async () => glob("src/content/**/index.mdx")
