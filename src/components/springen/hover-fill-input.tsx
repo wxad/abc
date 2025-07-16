@@ -20,7 +20,6 @@ const Demo = () => {
           />
           <svg
             className="absolute right-2 top-1/2 -translate-y-1/2"
-            data-spross-date-picker-icon
             width="18"
             height="18"
             viewBox="0 0 18 18"
