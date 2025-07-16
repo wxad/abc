@@ -361,7 +361,7 @@ const PopBase: React.FC<PopoverProps & { type: "popover" | "tooltip" }> = ({
       children,
       getReferenceProps({
         ref,
-        ...children.props,
+        ...(children.props as any),
         "data-spross-open": context.open ? true : undefined,
       })
     )

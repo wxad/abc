@@ -15,7 +15,7 @@ const useDoodle = (
   const ref = useRef<HTMLDivElement>(null)
   const [scale, setScale] = useState(1)
   const [inView, setInView] = useState(false)
-  const timer = useRef<number>()
+  const timer = useRef<number>(0)
 
   useEffect(() => {
     if (!ref.current) return
