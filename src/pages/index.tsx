@@ -233,7 +233,7 @@ const posts = [
     children: <GenCover />,
   },
   {
-    title: "我做的点赞/投票动画集合",
+    title: "制作点赞与投票动画",
     description:
       "好像在工作的这些年中，我做的最多的动画就是点赞或按钮动画。那就简单地整一个集合吧。",
     slug: "likes",
