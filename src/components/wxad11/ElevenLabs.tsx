@@ -19,15 +19,9 @@ const Demo = () => {
     "Intense cinematic boom",
   ]
 
-  const wheelDelta = useMotionValue(0)
-
-  const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
-    console.log(e.deltaY)
-  }
-
   return (
     <DemoBox className="overflow-hidden">
-      <motion.div className="h-[600px]" drag onDrag />
+      <motion.div className="h-[600px]" drag />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-0 select-none text-sm">
         {texts.map((text, index) => (
           <div
