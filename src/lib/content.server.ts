@@ -27,15 +27,6 @@ export type PostMetadata = {
   slug: string
 }
 
-const theme = {
-  light: JSON.parse(
-    fs.readFileSync(`${process.cwd()}/src/assets/light-colorblind.json`, "utf8")
-  ),
-  dark: JSON.parse(
-    fs.readFileSync(`${process.cwd()}/src/assets/dark-default.json`, "utf8")
-  ),
-}
-
 /**
  * Gets the post from `dist/content` and bundles it using MDX bundler
  */
@@ -54,7 +45,7 @@ export const getPost = async (slug: string): Promise<Post> => {
         [
           rehypePrettyCode,
           {
-            theme,
+            theme: "one-light",
             onVisitHighlightedLine(node: any) {
               // Each line node by default has `class="line"`.
               node.properties.className.push("highlighted")

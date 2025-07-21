@@ -34,7 +34,7 @@ import FinalDemo from "@/components/svg-liquid-glass/FinalDemo"
 
 在对网上进行了一波冲浪后，会发现很多人在湍流滤镜 `feTurbulence` 的基础上模拟，但这个方向不太对。湍流滤镜的使用场景本身是制造一些噪音。
 
-```html
+```xml
 <feTurbulence baseFrequency="0.04" numOctaves="2" seed="92" result="noise" />
 ```
 
@@ -111,7 +111,7 @@ P'(x,y) = P(x + scale * (XC(x,y) - 0.5), y + scale * (YC(x,y) - 0.5))
 
 在 SVG 中，需要用到的滤镜除了 `feDisplacementMap` 之外，还有 `feColorMatrix` 滤镜。它可以对图像的每个像素进行颜色矩阵变换，从而实现颜色调整、灰度化、色相旋转等功能。它的语法为：
 
-```html
+```xml
 <feColorMatrix
   in="dispRed"
   type="matrix"
