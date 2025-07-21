@@ -16,6 +16,7 @@ import DisplacementFinal from "@/components/svg-liquid-glass/DisplacementFinal"
 import Blend0 from "@/components/svg-liquid-glass/Blend0"
 import BeamBorder from "@/components/svg-liquid-glass/BeamBorder"
 import Final from "@/components/svg-liquid-glass/Final"
+import FinalDemo from "@/components/svg-liquid-glass/FinalDemo"
 
 > **注：本文只适合 Chromium 内核浏览器浏览**。
 
@@ -175,13 +176,24 @@ maskClip: "padding-box, border-box",
 
 <Final />
 
+更多不同背景的演示录屏：
+
+<FinalDemo src="/abc/svg-liquid-glass/highlight-demo-1.mp4" />
+
+<FinalDemo src="/abc/svg-liquid-glass/highlight-demo-2.mp4" />
+
+<FinalDemo src="/abc/svg-liquid-glass/highlight-demo-3.mp4" />
+
 ## 相关问题
+
+问题当然是非常多的，如我所说，离实际落地还差得远：
 
 1. 如何模拟外侧环境光？在 Apple 的设置桌面界面中，下方的按钮会反射上方桌面的光。这里没有自动的办法，但至少可以强行模拟；
 2. 兼容性：Safari 不支持；
 3. 锯齿问题：滤镜必须以某种方式将这些坐标映射到非十进制像素值，锯齿问题一般通过 `blur-sm` 弱化；
 4. 性能问题：尺寸变化时需要重新生一个 map；
-5. HDR：todo。
+5. morph 动画：todo；
+6. HDR：todo。
 
 ## SVG 虽只是试图模拟，但我们要相信启发的力量
 
