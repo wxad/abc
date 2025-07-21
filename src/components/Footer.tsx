@@ -96,23 +96,35 @@ const Footer = () => {
           onMouseLeave={handleMouseLeave}
         >
           <FooterItem leftOffset={leftOffset} link="/">
-            <div
-              className="w-1/2 aspect-square"
-              style={{
-                backgroundImage: "url(/abc/logo.webp)",
-                backgroundSize: "100% 100%",
-              }}
-            />
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-1/2 aspect-square text-neutral-600"
+            >
+              <path d="M2.5 16.88a1 1 0 0 1-.32-1.43l9-13.02a1 1 0 0 1 1.64 0l9 13.01a1 1 0 0 1-.32 1.44l-8.51 4.86a2 2 0 0 1-1.98 0Z" />
+              <path d="M12 2v20" />
+            </svg>
           </FooterItem>
           <FooterItem leftOffset={leftOffset} link="/crafts">
             <svg
-              className="w-1/2 aspect-square text-neutral-600"
               viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-1/2 aspect-square text-neutral-600"
             >
-              <path
-                fill="currentColor"
-                d="m8.8 10.95l2.15-2.175l-1.4-1.425l-.4.4q-.275.275-.687.288T7.75 7.75t-.3-.712t.3-.713l.375-.375L7 4.825L4.825 7zm8.2 8.225L19.175 17l-1.125-1.125l-.4.375q-.3.3-.7.3t-.7-.3t-.3-.7t.3-.7l.375-.4l-1.425-1.4l-2.15 2.15zM17.6 5l1.425 1.425zM4 21q-.425 0-.712-.288T3 20v-2.825q0-.2.075-.387t.225-.338l4.075-4.075L3.05 8.05Q2.625 7.625 2.625 7t.425-1.05l2.9-2.9q.425-.425 1.05-.412t1.05.437L12.4 7.4l3.775-3.8q.3-.3.675-.45t.775-.15t.775.15t.675.45L20.4 4.95q.3.3.45.675T21 6.4t-.15.763t-.45.662l-3.775 3.8l4.325 4.325q.425.425.425 1.05t-.425 1.05l-2.9 2.9q-.425.425-1.05.425t-1.05-.425l-4.325-4.325L7.55 20.7q-.15.15-.337.225T6.825 21zm1-2h1.4l9.8-9.775L14.775 7.8L5 17.6zM15.5 8.525l-.725-.725L16.2 9.225z"
-              />
+              <path d="M13 7 8.7 2.7a2.41 2.41 0 0 0-3.4 0L2.7 5.3a2.41 2.41 0 0 0 0 3.4L7 13" />
+              <path d="m8 6 2-2" />
+              <path d="m18 16 2-2" />
+              <path d="m17 11 4.3 4.3c.94.94.94 2.46 0 3.4l-2.6 2.6c-.94.94-2.46.94-3.4 0L11 17" />
+              <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
+              <path d="m15 5 4 4" />
             </svg>
           </FooterItem>
           <hr
@@ -126,17 +138,20 @@ const Footer = () => {
             leftOffset={leftOffset}
             link="https://codepen.io/aragakey"
           >
-            <svg className="w-1/2 grayscale" viewBox="0 0 24 24">
-              <g
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="1.5"
-              >
-                <path d="M21 9v6M3 15V9m9 12v-6m0-12v6m0 6L3 9l9-6l9 6z" />
-                <path d="m12 21l-9-6l9-6l9 6z" />
-              </g>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-1/2 aspect-square text-neutral-600"
+            >
+              <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2" />
+              <line x1="12" x2="12" y1="22" y2="15.5" />
+              <polyline points="22 8.5 12 15.5 2 8.5" />
+              <polyline points="2 15.5 12 8.5 22 15.5" />
+              <line x1="12" x2="12" y1="2" y2="8.5" />
             </svg>
           </FooterItem>
           <FooterItem

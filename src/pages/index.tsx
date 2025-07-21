@@ -295,13 +295,18 @@ const Home = () => {
       <div className="mx-auto mb-36 px-4 md:px-16 max-w-[1088px]">
         <div className="flex items-end justify-between mb-8 py-6 md:py-10">
           <div className="flex-1 flex flex-col items-center 74:flex-row">
-            <div
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               className="relative w-12 h-12 74:top-[0.15rem] 74:mr-2 74:w-10 74:h-10 opacity-80"
-              style={{
-                backgroundImage: "url(/abc/logo.webp)",
-                backgroundSize: "100% 100%",
-              }}
-            />
+            >
+              <path d="M2.5 16.88a1 1 0 0 1-.32-1.43l9-13.02a1 1 0 0 1 1.64 0l9 13.01a1 1 0 0 1-.32 1.44l-8.51 4.86a2 2 0 0 1-1.98 0Z" />
+              <path d="M12 2v20" />
+            </svg>
             <div className="text-center 74:text-left">
               <h1 className="relative -left-px text-neutral-600 74:text-neutral-800 font-semibold text-sm 74:text-base">
                 设计垂点
