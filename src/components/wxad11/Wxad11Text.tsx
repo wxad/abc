@@ -176,8 +176,7 @@ const Demo = ({}: {}) => {
 
     items.forEach((item) => {
       const id = item.getAttribute("data-item-id")
-      item.dataset.itemCurrent =
-        Number(id) === currentCenterId.current ? "true" : "false"
+      // item.dataset.itemCurrent = Number(id) === currentCenterId.current ? "true" : "false"
     })
   }
 
