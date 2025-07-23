@@ -25,17 +25,17 @@ import Wxad11Cover from "@/components/wxad11/Wxad11Cover"
 import NextLink from "next/link"
 
 const posts = [
-  {
-    title: "玩一玩微广 11 周年的 Demo",
-    description:
-      "由于我在上线当天休假，加之开发时间有限，没有太好地打磨和完成。整个活动很简单，服务的人也很少，但机会难得，我还是希望抽出一些时间再来玩一玩。",
-    slug: "wxad11",
-    publishedAt: "2025-07-23",
-    editedAt: "2025-07-23",
-    author: "Aragakey.",
-    authorLink: "https://codepen.io/aragakey",
-    children: <Wxad11Cover />,
-  },
+  // {
+  //   title: "玩一点微广 11 周年的 Demo",
+  //   description:
+  //     "由于我在上线当天休假，加之开发时间有限，没有太好地打磨和完成。整个活动很简单，服务的人也很少，但机会难得，我还是希望抽出一些时间再来玩一玩。",
+  //   slug: "wxad11",
+  //   publishedAt: "2025-07-23",
+  //   editedAt: "2025-07-23",
+  //   author: "Aragakey.",
+  //   authorLink: "https://codepen.io/aragakey",
+  //   children: <Wxad11Cover />,
+  // },
   {
     title: "使用 SVG 模拟 Apple Liquid Glass",
     description:
