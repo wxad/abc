@@ -258,6 +258,7 @@ svg {
 
 pre > code {
   display: grid;
+  zoom: 0.8;
 }
 
 code[data-line-numbers] {
@@ -1590,4 +1591,15 @@ html {
 
 [data-springen-tag-item-layer] svg {
   fill: currentColor;
+}
+
+/* wxad11 */
+@keyframes wxad11Stick {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scaleY(1) scaleX(1);
+  }
+  50% {
+    transform: translate3d(0, 4px, 0) scaleY(0.7) scaleX(1.35);
+  }
 }

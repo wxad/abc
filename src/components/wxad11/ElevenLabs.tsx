@@ -4,15 +4,13 @@ import { Pane } from "tweakpane"
 import {
   motion,
   useSpring,
-  useVelocity,
-  useScroll,
   useMotionValue,
   MotionValue,
-  PanInfo,
   animate,
   AnimationPlaybackControls,
 } from "motion/react"
 import { useEffect, useImperativeHandle, useRef, useState } from "react"
+import { cn } from "@/lib/utils"
 
 type CircularTextRef = {
   rotate: MotionValue<number>
@@ -24,12 +22,14 @@ const CircularText = ({
   texts,
   charIndex,
   step,
+  mode,
 }: {
   ref: (el: CircularTextRef | null) => void
   rotate: MotionValue<number>
   texts: string[]
   charIndex: number
   step: number
+  mode: "single" | "final"
 }) => {
   const rotate = useSpring(rotateProp, {
     visualDuration: step * charIndex,
@@ -53,7 +53,7 @@ const CircularText = ({
           key={index}
           className="absolute whitespace-nowrap top-1/2 left-25"
           style={{
-            paddingLeft: `${charIndex * 1}ch`,
+            paddingLeft: `${charIndex * (mode === "final" ? 1.65 : 1)}ch`,
             transformOrigin: "-100px 50%",
             transform: `translateY(-50%) rotate(${
               (index * 360) / texts.length
@@ -61,7 +61,13 @@ const CircularText = ({
           }}
         >
           {[...text].map((char, index) => (
-            <span key={index} className="inline-block w-[1ch]">
+            <span
+              key={index}
+              className={cn(
+                "inline-block",
+                mode === "final" ? "w-[1.65ch]" : "w-[1ch]"
+              )}
+            >
               {char}
             </span>
           ))}
@@ -91,22 +97,40 @@ const Demo = ({
   audio: boolean
 }) => {
   const audioRef = useRef<HTMLAudioElement>(null)
-  const texts = [
-    "Huge epic braam",
-    "Horses galloping by",
-    "Cat purring loudly",
-    "Rock drum fill",
-    "Tornado warning siren",
-    "Eerie mood music",
-    "A car whizzing by",
-    "Brassy tuba, staccato",
-    "Video game power-up",
-    "Mopping a floor",
-    "Small automobile weapon",
-    "Tinkling revelsings",
-    "Small tropical airplane",
-    "Intense cinematic boom",
-  ]
+  const texts =
+    mode === "single"
+      ? [
+          "Huge epic braam",
+          "Horses galloping by",
+          "Cat purring loudly",
+          "Rock drum fill",
+          "Tornado warning siren",
+          "Eerie mood music",
+          "A car whizzing by",
+          "Brassy tuba, staccato",
+          "Video game power-up",
+          "Mopping a floor",
+          "Small automobile weapon",
+          "Tinkling revelsings",
+          "Small tropical airplane",
+          "Intense cinematic boom",
+        ]
+      : [
+          "微广十一周年生日快乐",
+          "超喜欢和大家一起并肩作战的感觉！",
+          "祝微信广告越来越好！",
+          "微广十一周年生日快乐",
+          "超喜欢和大家一起并肩作战的感觉！",
+          "祝微信广告越来越好！",
+          "微广十一周年生日快乐",
+          "超喜欢和大家一起并肩作战的感觉！",
+          "祝微信广告越来越好！",
+          "微广十一周年生日快乐",
+          "超喜欢和大家一起并肩作战的感觉！",
+          "祝微信广告越来越好！",
+          "微广十一周年生日快乐",
+          "超喜欢和大家一起并肩作战的感觉！",
+        ]
 
   const splitTexts = splitByCharacter(texts)
 
@@ -275,6 +299,7 @@ const Demo = ({
             rotate={rotate}
             texts={text}
             charIndex={index}
+            mode={mode}
             step={mode === "final" ? params.step : 0}
           />
         ))}

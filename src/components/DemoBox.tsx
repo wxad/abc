@@ -11,7 +11,7 @@ const DemoBox: React.FC<IDemoBoxProps> = forwardRef(
       <div
         ref={ref}
         className={cn(
-          "relative mt-4 mb-8 bg-size-[40px_40px] border border-gray-300 rounded-md overflow-auto scrollbar-custom",
+          "relative mt-4 mb-8 bg-size-[40px_40px] border border-neutral-200 rounded-md overflow-auto scrollbar-custom",
           className
         )}
         style={{

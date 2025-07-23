@@ -3,7 +3,7 @@ const Cover2023 = () => {
     <div className="relative">
       <div className="pt-[100%]" />
       <div
-        className="absolute inset-0 bg-size-[40px_40px] border border-gray-300 overflow-hidden rounded-full"
+        className="absolute inset-0 bg-size-[40px_40px] border border-neutral-300 overflow-hidden rounded-full"
         style={{
           backgroundImage: "url(/abc/grid.svg)",
         }}

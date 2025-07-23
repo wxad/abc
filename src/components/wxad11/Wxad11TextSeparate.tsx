@@ -4,126 +4,116 @@ import { Pane } from "tweakpane"
 import {
   motion,
   useSpring,
-  useVelocity,
   useMotionValue,
   MotionValue,
   animate,
   AnimationPlaybackControls,
-  useTransform,
 } from "motion/react"
 import { useEffect, useRef, useState } from "react"
 import { cn } from "@/lib/utils"
 
 const oneLineHeight = 29
 
-const Item = ({
-  content,
-  id,
+const ItemSeparate = ({
   index,
-  deg,
-  className,
-  style,
-  velocityTransform,
-  ...others
+  content,
+  lineNumber,
+  rotate: rotateProp,
+  step,
 }: {
-  content: string
-  id: number
   index: number
-  deg: number
-  className?: string
-  style?: React.CSSProperties
-  velocityTransform: MotionValue<string>
+  content: string
+  lineNumber: number
+  rotate: MotionValue<number>
+  step: number
 }) => {
-  const [lineNumber, setLineNumber] = useState(0)
-  const contentRef = useRef<HTMLDivElement>(null)
+  const wrapperRef = useRef<HTMLDivElement>(null)
+  const charRef = useRef<HTMLSpanElement>(null)
+  const [visualDuration, setVisualDuration] = useState(0)
+
+  const rotate = useSpring(rotateProp, {
+    visualDuration,
+    bounce: 0,
+    restDelta: 0.01,
+  })
 
   useEffect(() => {
-    const resizeObserver = new ResizeObserver((entries) => {
-      const entry = entries[0]
-      const height = entry.contentRect.height
-      const lineNumber = Math.floor(height / oneLineHeight)
-      setLineNumber(lineNumber)
-    })
-    if (contentRef.current) {
-      resizeObserver.observe(contentRef.current)
+    if (charRef.current) {
+      // 拿到 charRef.current 距离容器右边多少
+      const rect = charRef.current.getBoundingClientRect()
+      const wrapperRect = wrapperRef.current.getBoundingClientRect()
+      const duration = 0.01 * (wrapperRect.right - rect.right) * step
+      setVisualDuration(duration)
     }
-    return () => {
-      resizeObserver.disconnect()
-    }
-  }, [])
+  }, [charRef.current, step])
 
   return (
-    <div
-      data-item
-      data-item-id={id}
-      data-item-index={index}
-      data-item-deg={-deg}
+    <motion.div
+      ref={wrapperRef}
       className={cn(
-        "group absolute left-0 flex flex-col items-center justify-center w-[340px] h-[170px]",
-        className
+        "absolute-full flex flex-col items-center justify-center",
+        lineNumber === 1 && "pt-[14px]"
       )}
       style={{
-        top: "calc(50% - 170px / 2)",
-        transform: `rotate(${deg}deg) translateZ(0)`,
+        rotate: step === 0 ? rotateProp : rotate,
         transformOrigin: "calc(50% * var(--depth)) 50%",
-        ...style,
       }}
-      {...others}
+      key={index}
     >
-      <motion.div
-        className={cn(
-          "relative flex flex-col items-center justify-center w-full",
-          lineNumber === 1 && "pt-[14px]"
-        )}
-        style={{
-          transform: velocityTransform,
-          transformOrigin: "90% 50%",
-        }}
-      >
-        <div className="relative">
-          <div
-            className={cn(
-              "absolute rotate-[-18deg] transition-all duration-[300ms] opacity-0 invisible group-data-[item-current=true]:opacity-100 group-data-[item-current=true]:visible",
-              lineNumber === 1 && "-top-[8px] -left-[27px] w-[10px] h-[50px]",
-              lineNumber === 2 && "top-[3px] -left-[27px] w-[10px] h-[60px]",
-              lineNumber === 3 && "top-[11px] -left-[27px] w-[10px] h-[70px]"
-            )}
-          >
-            <div className="absolute top-0 left-0 w-full h-full bg-[#00F58A]" />
-            {/* <div className="absolute top-0 left-0 w-full h-full bg-[#00F58A] tilt-n-move-shaking-animation" /> */}
-          </div>
-          <div
-            className={cn(
-              "absolute rotate-[12deg] transition-all duration-[300ms] opacity-0 invisible group-data-[item-current=true]:opacity-100 group-data-[item-current=true]:visible",
-              lineNumber === 1 &&
-                "top-[-10.5px] -right-[27px] w-[10px] h-[55px]",
-              lineNumber === 2 && "top-[1px] -right-[27px] w-[10px] h-[65px] ",
-              lineNumber === 3 && "top-[8px] -right-[27px] w-[10px] h-[75px]"
-            )}
-          >
-            <div className="absolute top-0 left-0 w-full h-full bg-[#00F58A]" />
-          </div>
-          <div
-            ref={contentRef}
-            className="relative break-words mb-5 pl-1 max-w-[270px] text-[24px] text-center font-semibold text-black bg-transparent transition-all duration-[300ms] opacity-[0.06] group-data-[item-current=true]:opacity-100 flex-none"
-            style={{
-              lineHeight: `${oneLineHeight}px`,
-              maxHeight: `${oneLineHeight * 3}px`,
-            }}
-          >
-            {content}
-            {/* {[...content].map((char, index) => (
+      <div className="relative">
+        <div
+          className={cn(
+            "absolute rotate-[-18deg] transition-all duration-[300ms] opacity-0 invisible group-data-[item-current=true]:opacity-100",
+            index === 0 && "visible",
+            lineNumber === 1 && "-top-[8px] -left-[27px] w-[10px] h-[50px]",
+            lineNumber === 2 && "top-[3px] -left-[27px] w-[10px] h-[60px]",
+            lineNumber === 3 && "top-[11px] -left-[27px] w-[10px] h-[70px]"
+          )}
+        >
+          <div className="absolute top-0 left-0 w-full h-full bg-[#00F58A]" />
+        </div>
+        <div
+          className={cn(
+            "absolute rotate-[12deg] transition-all duration-[300ms] opacity-0 invisible group-data-[item-current=true]:opacity-100",
+            index === content.length - 1 && "visible",
+            lineNumber === 1 && "top-[-10.5px] -right-[27px] w-[10px] h-[55px]",
+            lineNumber === 2 && "top-[1px] -right-[27px] w-[10px] h-[65px] ",
+            lineNumber === 3 && "top-[8px] -right-[27px] w-[10px] h-[75px]"
+          )}
+        >
+          <div className="absolute top-0 left-0 w-full h-full bg-[#00F58A]" />
+        </div>
+        <div
+          className="relative break-words mb-5 pl-1 max-w-[270px] text-[24px] text-center font-semibold text-black bg-transparent transition-all duration-[300ms] opacity-[0.06] group-data-[item-current=true]:opacity-100 flex-none"
+          style={{
+            lineHeight: `${oneLineHeight}px`,
+            maxHeight: `${oneLineHeight * 3}px`,
+          }}
+        >
+          {[...content].map((char, i) => (
             <span
-              key={index}
-              className="inline-block tilt-n-move-shaking-animation"
-              style={{
-                transitionDelay: `${index * 0.1}s`,
+              key={i}
+              className={cn(
+                "inline-block",
+                i === index ? "opacity-100" : "opacity-0"
+              )}
+              ref={(el) => {
+                if (el && i === index) {
+                  charRef.current = el
+                }
               }}
             >
               {char === " " ? "\u00A0" : char}
             </span>
-          ))} */}
-          </div>
+          ))}
+        </div>
+        <div
+          className={
+            index === Math.round((content.length - 1) / 2)
+              ? "opacity-100"
+              : "opacity-0"
+          }
+        >
           <div className="flex items-center justify-center gap-[9px] h-[25px] transition-all duration-[300ms] opacity-0 invisible group-data-[item-current=true]:opacity-100 group-data-[item-current=true]:visible">
             <div className="text-[20px] font-medium text-[#808080]">
               Aragakey.
@@ -151,14 +141,123 @@ const Item = ({
             <div>11</div>
           </div>
         </div>
+      </div>
+    </motion.div>
+  )
+}
+
+const Item = ({
+  content,
+  id,
+  index,
+  deg,
+  className,
+  style,
+  rotate,
+  step,
+  ...others
+}: {
+  content: string
+  id: number
+  index: number
+  deg: number
+  className?: string
+  style?: React.CSSProperties
+  rotate: MotionValue<number>
+  step: number
+}) => {
+  const [lineNumber, setLineNumber] = useState(0)
+  const contentRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver((entries) => {
+      const entry = entries[0]
+      const height = entry.contentRect.height
+      const lineNumber = Math.floor(height / oneLineHeight)
+      setLineNumber(lineNumber)
+    })
+    if (contentRef.current) {
+      resizeObserver.observe(contentRef.current)
+    }
+    return () => {
+      resizeObserver.disconnect()
+    }
+  }, [])
+
+  const [wrapperTransform, setWrapperTransform] = useState("")
+
+  useEffect(() => {
+    // 内部通过 getBoundingClientRect 计算每一个 char 距离容器右侧的值，这时候如果容器 rotate 了就会有问题，因此先不设置 rotate，
+    // demo 中简单处理
+
+    const timer = setTimeout(() => {
+      setWrapperTransform(`rotate(${deg}deg) translateZ(0)`)
+    }, 1000)
+
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [])
+
+  return (
+    <div
+      data-item
+      data-item-id={id}
+      data-item-index={index}
+      data-item-deg={-deg}
+      className={cn(
+        "group absolute left-0 flex flex-col items-center justify-center w-[340px] h-[170px]",
+        className
+      )}
+      style={{
+        top: "calc(50% - 170px / 2)",
+        transform: wrapperTransform,
+        transformOrigin: "calc(50% * var(--depth)) 50%",
+        ...style,
+      }}
+      {...others}
+    >
+      <motion.div
+        className={cn(
+          "relative flex flex-col items-center justify-center w-full",
+          lineNumber === 1 && "pt-[14px]"
+        )}
+      >
+        <div className="relative">
+          <div
+            ref={contentRef}
+            className="relative break-words mb-5 pl-1 max-w-[270px] text-[24px] text-center font-semibold text-black bg-transparent transition-all duration-[300ms] opacity-[0.06] group-data-[item-current=true]:opacity-100 flex-none"
+            style={{
+              lineHeight: `${oneLineHeight}px`,
+              maxHeight: `${oneLineHeight * 3}px`,
+            }}
+          >
+            {[...content].map((char, index) => (
+              <span key={index} className="inline-block opacity-0">
+                {char === " " ? "\u00A0" : char}
+              </span>
+            ))}
+          </div>
+          <div className="h-[63px]" />
+        </div>
+
+        {[...content].map((_, index) => (
+          <ItemSeparate
+            key={index}
+            index={index}
+            content={content}
+            lineNumber={lineNumber}
+            rotate={rotate}
+            step={step}
+          />
+        ))}
       </motion.div>
     </div>
   )
 }
 
-const Demo = ({ skew = false }: { skew?: boolean }) => {
+const Demo = () => {
   const wrapperRef = useRef<HTMLDivElement | null>(null)
-
   const textsSample = [
     "自强不息，厚德载物。祝微信广告十一周年生日快乐，越来越好。",
     "微广十一周年生日快乐",
@@ -180,24 +279,8 @@ const Demo = ({ skew = false }: { skew?: boolean }) => {
   const paneWrapper = useRef<HTMLDivElement | null>(null)
   const paneRef = useRef<Pane | null>(null)
   const [params, setParams] = useState({
-    skew: 0.04,
-    rotate: 0.06,
+    step: 0.07,
   })
-
-  const rotateValueVelocity = useVelocity(rotate)
-  const skewYValue = useTransform(rotateValueVelocity, (v) => -v * params.skew)
-  const rotateFinal = useTransform(
-    rotateValueVelocity,
-    (v) => -v * params.rotate
-  )
-
-  const velocityTransform = useTransform(
-    [rotateFinal, skewYValue],
-    ([rotate, skewY]) =>
-      skew
-        ? `translate3d(0, 0, 0) rotate(${rotate}deg) skewY(${skewY}deg)`
-        : `translate3d(0, 0, 0)`
-  )
 
   const handleDragComplete = (deg: number) => {
     const items = [
@@ -215,31 +298,23 @@ const Demo = ({ skew = false }: { skew?: boolean }) => {
   }, [])
 
   useEffect(() => {
-    if (skew) {
-      paneRef.current = new Pane({
-        container: paneWrapper.current,
-      })
+    paneRef.current = new Pane({
+      container: paneWrapper.current,
+    })
 
-      paneRef.current.on("change", (ev) => {
-        setParams((prev) => ({
-          ...prev,
-          // @ts-ignore
-          [ev.target.label]: ev.value,
-        }))
-      })
+    paneRef.current.on("change", (ev) => {
+      setParams((prev) => ({
+        ...prev,
+        // @ts-ignore
+        [ev.target.label]: ev.value,
+      }))
+    })
 
-      paneRef.current.addBinding(params, "skew", {
-        min: 0,
-        max: 0.1,
-        step: 0.01,
-      })
-
-      paneRef.current.addBinding(params, "rotate", {
-        min: 0,
-        max: 0.1,
-        step: 0.01,
-      })
-    }
+    paneRef.current.addBinding(params, "step", {
+      min: 0,
+      max: 0.2,
+      step: 0.01,
+    })
 
     return () => {
       if (paneRef.current) {
@@ -250,7 +325,7 @@ const Demo = ({ skew = false }: { skew?: boolean }) => {
 
   return (
     <DemoBox ref={wrapperRef}>
-      {skew && <div ref={paneWrapper} className="absolute top-1 right-1 z-1" />}
+      <div ref={paneWrapper} className="absolute top-1 right-1 z-1" />
       <div className="hidden md:flex absolute z-1 bottom-4 right-4 items-center gap-1 text-xs text-neutral-400 bg-white/10 backdrop-blur-[1px]">
         <svg className="w-4 h-4" viewBox="0 0 24 24">
           <path
@@ -359,7 +434,7 @@ const Demo = ({ skew = false }: { skew?: boolean }) => {
             <motion.div
               className="absolute left-0 will-change-transform"
               style={{
-                rotate,
+                // rotate,
                 top: "calc(340px * var(--depth) * -.5 + 170px / 2)",
                 width: "calc(340px * var(--depth))",
                 height: "calc(340px * var(--depth))",
@@ -370,9 +445,10 @@ const Demo = ({ skew = false }: { skew?: boolean }) => {
                   key={index}
                   index={index}
                   content={text}
-                  velocityTransform={velocityTransform}
                   id={index + 1}
                   deg={index * 15}
+                  rotate={rotate}
+                  step={params.step}
                 />
               ))}
             </motion.div>

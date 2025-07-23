@@ -285,10 +285,9 @@ export const Pre = ({
 }) => {
   return (
     <pre
-      className="mb-4 py-4 bg-gray-100 border border-gray-300 rounded-lg overflow-auto **:data-line:px-4 **:data-highlighted-line:bg-linear-to-r **:data-highlighted-line:from-neutral-100 **:data-highlighted-line:transparent"
+      className="mb-4 py-4 border border-neutral-200 rounded-md overflow-auto **:data-line:px-4 **:data-highlighted-line:bg-linear-to-r **:data-highlighted-line:from-neutral-100 **:data-highlighted-line:transparent"
       style={{
         ...style,
-        zoom: 0.85,
         background: "transparent",
       }}
       {...otherProps}

@@ -10,8 +10,8 @@ authorLink: "https://codepen.io/aragakey"
 
 import ElevenLabs from "@/components/wxad11/ElevenLabs"
 import Wxad11Text from "@/components/wxad11/Wxad11Text"
-
-<Wxad11Text />
+import Wxad11TextSeparate from "@/components/wxad11/Wxad11TextSeparate"
+import Wxad11Like from "@/components/wxad11/Wxad11Like"
 
 我们组在 7 月 3 日上线了微信广告 11 周年的 H5 活动。和 [去年的活动](https://wxa.wxs.qq.com/wxad-design/yijie/RPReplay_Final1720169928.gif) 类似：输入自己的话、浏览大家的话。由于我在上线当天休假，加之开发时间有限，没有太好地打磨和完成。整个活动很简单，服务的人也很少，但机会难得，我还是希望抽出一些时间再来玩一玩。
 
@@ -71,7 +71,6 @@ rotate.on("change", (value) => {
 
   if (Math.abs(nearest - value) < 3 && nearest !== lastAudioPlayedDeg.current) {
     if (audioRef.current) {
-      audioRef.current.pause()
       audioRef.current.currentTime = 0
       audioRef.current.play()
     }
@@ -86,20 +85,20 @@ rotate.on("change", (value) => {
 
 ### 多个转盘
 
-elevenlabs 是通过每一个字符分别运动实现的，但这实际上没有必要。既然字符是等宽的，我们可以把每一行中相同 index 的字符看作一个圆，这样对于上面的文字我们只需要 23 个转盘，因为最长的文字 `"Small automobile weapon"` 的长度为 23，页面上只会有 23 个元素运动。而 elevenlabs 的元素数量则需要 `23 * 14 = 322` 个。
+elevenlabs 是通过每一个字符分别运动实现的，但这可以优化一下。
+
+既然字符是 `mono` 等宽的，我们可以把每一行中相同 index 的字符看作一个圆。这样一层一层往外，形成多个同心圆。对于上面的文字我们只需要 23 个转盘，因为最长的文字 `"Small automobile weapon"` 的长度为 23，页面上只会有 23 个元素运动。而 elevenlabs 的元素数量则需要 `23 * 14 = 322` 个。
 
 ```tsx
 function splitByCharacter(arr: string[]) {
   // 找到最大字符串长度
   const maxLength = Math.max(...arr.map((text) => text.length))
   const result = []
-
   for (let i = 0; i < maxLength; i++) {
     // 获取每个字符串第 i 个字符，若超出则用空字符串代替
     const tempArr = arr.map((text) => text[i] || "")
     result.push(tempArr)
   }
-
   return result
 }
 ```
@@ -126,8 +125,70 @@ const CircularText = ({ rotate }) => {
 
 ## 我们的文字转盘
 
-我们的文字转盘如果要加上类似的效果就会变得复杂。因为我们的文字允许多行，且不等宽。这样就必须让所有字符单独运动，关键是最终效果确实不一定好。
-
-一开始，我通过 `useVelocity` 让字符整体做一个 `skew` 变换，但文字被扭曲的效果并不好：
+我们的文字允许多行，且不等宽：
 
 <Wxad11Text />
+
+因此要加上类似 elevenlabs 的效果就会变得复杂，必须让所有字符单独运动，关键是最终效果确实不一定好。
+
+简单起见，一开始我通过 `useVelocity` 让字符整体做一个 `skew` 变换，但文字被扭曲的效果并不好，或者说是另一种感觉，我们就此决定放弃：
+
+```tsx
+// 如果要用 useVelocity，就要把 useMotionValue 替换成 useSpring，否则 velocity 容易出现跳变
+// const rotateValue = useMotionValue(0)
+const rotateValue = useSpring(0, {
+  visualDuration: 0.2,
+  bounce: 0,
+  restDelta: 0.001,
+})
+const rotateValueVelocity = useVelocity(rotateValue)
+
+const skewYValue = useTransform(rotateValueVelocity, (v) => -v / 20)
+const rotateFinal = useTransform(rotateValueVelocity, (v) => -v / 25)
+
+const velocityTransform = useTransform(
+  [rotateFinal, skewYValue],
+  ([rotate, skewY]) =>
+    `translate3d(0, 0, 0) rotate(${rotate}deg) skewY(${skewY}deg)`
+)
+```
+
+<Wxad11Text skew />
+
+---
+
+那我现在就尝试一下让每个字符单独运动。首先每一个字符的容器需要分开，除了字符还需要考虑左右两个棒棒，它们也需要给到不同的 `visualDuration`。
+
+实时拿到每个字符距离容器右侧的值，越是靠右的元素，`visualDuration` 越小；越是靠左的元素，`visualDuration` 越大。也就是说左边的棒棒是最慢的，右边的棒棒是最快的：
+
+```tsx
+useEffect(() => {
+  if (charRef.current) {
+    // 拿到 charRef.current 距离容器右边多少
+    const rect = charRef.current.getBoundingClientRect()
+    const wrapperRect = wrapperRef.current.getBoundingClientRect()
+    const duration = 0.01 * (wrapperRect.right - rect.right) * 0.07
+    setVisualDuration(duration)
+  }
+}, [charRef.current])
+```
+
+这样，原先一整个转盘的动画，一下就变成了几百个元素的动画，性能一定存在问题了。Anyway, it's fun。效果如下：
+
+<Wxad11TextSeparate />
+
+## 点赞动画
+
+点赞如果只是数字的增加就太没有氛围了，我们可以把两根应援棒变成烟花棒玩玩。你应该也在首页见到了：
+
+<Wxad11Like />
+
+## 更多
+
+还有一些也值得尝试，但我精力有限。
+
+比如我们在用户输入的时候希望能够让 `textarea` 的字体大小是动态调节的，随着输入字符的增多，字体大小从 `30px` 流动变换到 `24px`，再比如对 `textarea` 多行逻辑的判断等。这些都是我没有尝试过的 UI。因为时间有限，我们也没有太深入打磨。
+
+另外入场动画第一次使用 `motion/react` 实现，API 很方便。但 JS 动画确实存在性能顾虑，总是让我不放心，但小活动嘛就用了。
+
+总之，有机会再玩！
