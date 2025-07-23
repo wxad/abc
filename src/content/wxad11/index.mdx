@@ -1,14 +1,17 @@
 ---
 title: "玩一点微广 11 周年的 Demo"
-description: ""
+description: "由于我在上线当天休假，加之开发时间有限，没有太好地打磨和完成。整个活动很简单，服务的人也很少，但机会难得，我还是希望抽出一些时间再来玩一玩。"
 slug: "wxad11"
-publishedAt: "2025-07-16"
-editedAt: "2025-07-16"
+publishedAt: "2025-07-23"
+editedAt: "2025-07-23"
 author: "Aragakey."
 authorLink: "https://codepen.io/aragakey"
 ---
 
 import ElevenLabs from "@/components/wxad11/ElevenLabs"
+import Wxad11Text from "@/components/wxad11/Wxad11Text"
+
+<Wxad11Text />
 
 我们组在 7 月 3 日上线了微信广告 11 周年的 H5 活动。和 [去年的活动](https://wxa.wxs.qq.com/wxad-design/yijie/RPReplay_Final1720169928.gif) 类似：输入自己的话、浏览大家的话。由于我在上线当天休假，加之开发时间有限，没有太好地打磨和完成。整个活动很简单，服务的人也很少，但机会难得，我还是希望抽出一些时间再来玩一玩。
 
@@ -18,12 +21,113 @@ import ElevenLabs from "@/components/wxad11/ElevenLabs"
 
 一个设计实现的背后，可能对应的是一类交互形式。对我来说，还原设计稿、完成设计团队的任务是基础要求，我自己不满足于此，意义也不来源于此 —— 我花时间精进自己。至于能服务多少人，我决定不了。而且就是因为服务的人少，我才更希望玩一玩。
 
-## 文字转盘
+## ElevenLabs 文字转盘
 
 “转盘”这个东西，从 [23 年](https://wxad.design/abc/carousel) 到 [24 年](https://wxad.design/abc/making-fluid-interfaces)，再到这一次的活动，真是一个我不断思考最佳实践的例子了。这次的文字转盘很简单，我想在其基础上玩一个类似 [elevenlabs](https://elevenlabs.io/app/sound-effects/generate) 的效果 —— 越是远离圆心的文字，延迟越大。整体文字像个八爪鱼一样。
 
 虽然这个效果并不适合活动，因为它会让浏览的体验变得打扰、低效，甚至本身都显得多余。但 —— 正如我所说 —— 我只是想玩一下，以增加一些经验。
 
-之前用 `react-spring` 的 `useTrail` 实现过类似的效果，这次单纯用 `motion` 的 `useVelocity`。我先尝试还原 elevenlabs 的效果：
+之前用 `react-spring` 的 `useTrail` 实现过类似的效果，但考虑到开源维护力度已越来越弱，这次单纯用 `motion/react` 实现。往后应该会逐渐弃用。
 
-<ElevenLabs />
+最终效果：
+
+<ElevenLabs mode="final" audio />
+
+### 单个转盘
+
+首先我们将整个转盘看作一个整体，它由一个 `MotionValue` 驱动。一个基础的框架：
+
+```tsx
+const rotate = useMotionValue(0)
+
+<motion.div
+  drag
+  {/* 拖动开始时，记录当前的旋转角度，并停止动画 */}
+  onDragStart={...}
+  {/* 拖动过程中，实时更新旋转角度 */}
+  onDrag={...}
+  {/* 拖动结束时，惯性滚动，最终结果为 power * velocity，并定位到最接近的旋转整数角度 */}
+  onDragEnd={...}
+  {/* 以下参数禁用自身的移动 */}
+  dragMomentum={false}
+  dragElastic={0}
+  dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
+/>
+```
+
+<ElevenLabs mode="single" audio={false} />
+
+### 加入声音
+
+当 `rotate` 靠近最接近的整数角度时，播放 `audio`。此时记录当前的旋转角度，以防止重复播放。
+
+```tsx
+const texts = ["Huge epic braam", ...]
+const rotate = useMotionValue(0)
+const lastAudioPlayedDeg = useRef(0)
+
+rotate.on("change", (value) => {
+  const nearest = Math.round(value / (360 / texts.length)) * (360 / texts.length)
+
+  if (Math.abs(nearest - value) < 3 && nearest !== lastAudioPlayedDeg.current) {
+    if (audioRef.current) {
+      audioRef.current.pause()
+      audioRef.current.currentTime = 0
+      audioRef.current.play()
+    }
+    lastAudioPlayedDeg.current = nearest
+  }
+})
+
+<audio ref={audioRef} />
+```
+
+<ElevenLabs mode="single" audio />
+
+### 多个转盘
+
+elevenlabs 是通过每一个字符分别运动实现的，但这实际上没有必要。既然字符是等宽的，我们可以把每一行中相同 index 的字符看作一个圆，这样对于上面的文字我们只需要 23 个转盘，因为最长的文字 `"Small automobile weapon"` 的长度为 23，页面上只会有 23 个元素运动。而 elevenlabs 的元素数量则需要 `23 * 14 = 322` 个。
+
+```tsx
+function splitByCharacter(arr: string[]) {
+  // 找到最大字符串长度
+  const maxLength = Math.max(...arr.map((text) => text.length))
+  const result = []
+
+  for (let i = 0; i < maxLength; i++) {
+    // 获取每个字符串第 i 个字符，若超出则用空字符串代替
+    const tempArr = arr.map((text) => text[i] || "")
+    result.push(tempArr)
+  }
+
+  return result
+}
+```
+
+每一个转盘都接收外层的 `rotate` 作为参数，在组件内部通过 `motion/react` 提供的非常方便的 `useSpring` 将其转换为不同 `visualDuration` 的 `MotionValue`。
+
+```tsx
+{
+  splitTexts.map((text, index) => (
+    <CircularText key={index} rotate={rotate} texts={text} charIndex={index} />
+  ))
+}
+
+const CircularText = ({ rotate }) => {
+  const rotate = useSpring(rotateProp, {
+    visualDuration: step * charIndex,
+    bounce: 0,
+    restDelta: 0.01,
+  })
+}
+```
+
+<ElevenLabs mode="final" audio />
+
+## 我们的文字转盘
+
+我们的文字转盘如果要加上类似的效果就会变得复杂。因为我们的文字允许多行，且不等宽。这样就必须让所有字符单独运动，关键是最终效果确实不一定好。
+
+一开始，我通过 `useVelocity` 让字符整体做一个 `skew` 变换，但文字被扭曲的效果并不好：
+
+<Wxad11Text />

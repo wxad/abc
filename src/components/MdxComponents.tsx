@@ -22,7 +22,11 @@ export const H2: React.FC<{ children: string }> = ({
 export const H3 = ({ children, ...otherProps }: { children: string }) => {
   const id = getId(children)
   return (
-    <h3 id={id} className="text-lg md:text-xl mt-12 mb-4 font-medium" {...otherProps}>
+    <h3
+      id={id}
+      className="text-lg md:text-xl mt-12 mb-4 font-medium"
+      {...otherProps}
+    >
       {children}
     </h3>
   )
@@ -271,10 +275,22 @@ export const A = ({
   )
 }
 
-export const Pre = ({ children, ...otherProps }: { children: string }) => {
+export const Pre = ({
+  children,
+  style,
+  ...otherProps
+}: {
+  children: string
+  style?: React.CSSProperties
+}) => {
   return (
     <pre
-      className="mb-4 p-4 bg-gray-100 border border-gray-300 rounded-md overflow-auto"
+      className="mb-4 py-4 bg-gray-100 border border-gray-300 rounded-lg overflow-auto **:data-line:px-4 **:data-highlighted-line:bg-linear-to-r **:data-highlighted-line:from-neutral-100 **:data-highlighted-line:transparent"
+      style={{
+        ...style,
+        zoom: 0.85,
+        background: "transparent",
+      }}
       {...otherProps}
     >
       {children}

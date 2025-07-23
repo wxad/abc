@@ -45,11 +45,7 @@ export const getPost = async (slug: string): Promise<Post> => {
         [
           rehypePrettyCode,
           {
-            theme: "one-light",
-            onVisitHighlightedLine(node: any) {
-              // Each line node by default has `class="line"`.
-              node.properties.className.push("highlighted")
-            },
+            theme: "github-light",
           },
         ],
       ]
