@@ -31,8 +31,7 @@ const posts = [
       "由于我在上线当天休假，加之开发时间有限，没有太好地打磨和完成。整个活动很简单，服务的人也很少，但机会难得，我还是希望抽出一些时间再来玩一玩。",
     slug: "wxad11",
     publishedAt: "2025-07-23",
-    editedAt: "2025-07-23",
-    author: "Aragakey.",
+    author: "Aragakey. & wxad.design",
     authorLink: "https://codepen.io/aragakey",
     children: <Wxad11Cover />,
   },
@@ -42,7 +41,6 @@ const posts = [
       "最近浅浅输入了一波 SVG 如何模拟 Apple Liquid Glass 的知识，记录一下。注：本文只适合 Chromium 内核浏览器浏览。",
     slug: "svg-liquid-glass",
     publishedAt: "2025-07-15",
-    editedAt: "2025-07-15",
     author: "Aragakey.",
     authorLink: "https://codepen.io/aragakey",
     children: <SvgLiquidGlassCover />,
@@ -53,7 +51,6 @@ const posts = [
       "在我的个人叙事中，用户界面的品质是体验、打磨，以及尽可能完整化的三者结合。",
     slug: "quality-of-ui",
     publishedAt: "2025-06-29",
-    editedAt: "2025-06-29",
     author: "Aragakey.",
     authorLink: "https://codepen.io/aragakey",
     children: <QualityOfUICover />,
@@ -64,7 +61,6 @@ const posts = [
       "以一种统一的交互表现，而不是以一个完整的组件库的方式去归纳组件，对我来说是一件很有趣的事情。发芽，就是与临时浮层、弹出相关的一系列 UI 组件。",
     slug: "spross",
     publishedAt: "2025-06-10",
-    editedAt: "2025-06-10",
     author: "Aragakey.",
     authorLink: "https://codepen.io/aragakey",
     children: <SprossCover />,
@@ -75,7 +71,6 @@ const posts = [
       "以一种统一的交互表现，而不是以一个完整的组件库的方式去归纳组件，对我来说是一件很有趣的事情。跳跃，就是与状态变化、切换相关的一系列 UI 动效。",
     slug: "springen",
     publishedAt: "2025-06-04",
-    editedAt: "2025-06-04",
     author: "Aragakey.",
     authorLink: "https://codepen.io/aragakey",
     children: <SpringenCover />,
@@ -86,7 +81,6 @@ const posts = [
       "整理自《制作流畅界面》👇。我个人在移动端制作交互动画的一些经验、心得与建议。一开始叫“指南”，也是给自己脸了，确实没有这么大权威。",
     slug: "https://wxad.design/making-fluid-interfaces/",
     publishedAt: "2025-01-16",
-    editedAt: "2025-01-16",
     author: "Aragakey.",
     authorLink: "https://codepen.io/aragakey",
     children: <MakingFluidInterfacesCover2 />,
@@ -97,7 +91,6 @@ const posts = [
       "WWDC18 的《设计流畅界面 Designing Fluid Interfaces》对我职业发展影响巨大，我将通过 2 个项目，分享自己是如何学习与制作流畅界面的。希望这个被我视为灯塔的视频，也能让你觉得有所收获。",
     slug: "making-fluid-interfaces",
     publishedAt: "2025-01-15",
-    editedAt: "2025-01-15",
     author: "Aragakey.",
     authorLink: "https://codepen.io/aragakey",
     children: <MakingFluidInterfacesCover />,
@@ -108,7 +101,6 @@ const posts = [
       "滑进瞳孔的一盏盏路灯不是星星，热带的太阳鸟也不会落在我的树上。我只需面向暖流走向海。难得了，足够了。\n我知道顾城说的执者失之。你想当一个诗人的时候，你就失去了诗。你想成为一个人的时候，你就失去了你自己。在你什么也不想要的时候，或许一切才如期而来。",
     slug: "deng",
     publishedAt: "2024-11-27",
-    editedAt: "2024-11-27",
     author: "Aragakey.",
     authorLink: "https://codepen.io/aragakey",
     cover: "https://wxa.wxs.qq.com/wxad-design/yijie/deng-cover-1.webp",
@@ -120,7 +112,6 @@ const posts = [
       "最近在视频号互选移动端和设计师尝试了一个 Drawer，想借此延展开讨论 Drawer 这个 UI 形式的可能性，稍许发散发散。",
     slug: "drawer",
     publishedAt: "2024-11-11",
-    editedAt: "2024-11-11",
     author: "Aragakey.",
     authorLink: "https://codepen.io/aragakey",
     children: <DrawerCover />,
@@ -131,7 +122,6 @@ const posts = [
       "我认为 shadcn/ui 的取巧之处在于两点：对最佳实践的探讨，自由度和掌控感的建立。",
     slug: "shadcn",
     publishedAt: "2024-09-04",
-    editedAt: "2024-09-04",
     author: "Aragakey.",
     authorLink: "https://codepen.io/aragakey",
     children: <ShadcnCover />,
@@ -142,7 +132,6 @@ const posts = [
       "这篇文章将介绍利用 inertia + 手势动画尽可能模拟 iOS 原生滚动体验的方法，以及这样做的原因。",
     slug: "scroll-mock",
     publishedAt: "2024-08-27",
-    editedAt: "2024-08-27",
     author: "Aragakey.",
     authorLink: "https://codepen.io/aragakey",
     children: <ScrollMockCover />,
@@ -153,7 +142,6 @@ const posts = [
       "所谓“感觉很好”的二维 UI 设计，基本来源于人们对真实三维世界的认知。只不过是在此之上，或效仿，或衍伸。这篇文章的主题是层级，是我反向地从 UI 出发，去寻找关于层级的原型的一次尝试。",
     slug: "designing-depth",
     publishedAt: "2024-08-03",
-    editedAt: "2024-08-03",
     author: "Aragakey.",
     authorLink: "https://codepen.io/aragakey",
     children: <DepthCover />,
@@ -163,41 +151,37 @@ const posts = [
   //   description: "asd",
   //   slug: "circular-animation",
   //   publishedAt: "2024-07-30",
-  //   editedAt: "2024-07-30",
   //   author: "Aragakey.",
   //   authorLink: "https://codepen.io/aragakey",
   //   children: <BmCover />,
   // },
   {
-    title: "回顾：制作朋友圈广告年度评选",
+    title: "回顾: 制作朋友圈广告年度评选",
     description:
       "我享受和设计师合作的创作过程。我们职责互补，但不模糊。我们忘却时间，将对个人实现的追求托付于我们的作品。我这个人很简单，只想要做优雅和精致的 UI。我很庆幸遇到这样适配自己特长的项目。",
     slug: "bm",
     publishedAt: "2024-07-22",
-    editedAt: "2024-07-22",
-    author: "Aragakey.",
+    author: "Aragakey. & wxad.design",
     authorLink: "https://codepen.io/aragakey",
     children: <BmCover />,
   },
   {
-    title: "回顾：制作微信广告官网",
+    title: "回顾: 制作微信广告官网",
     description:
       "微信广告官网是一个非常完整的项目。我将总结自己在设计、前端及支撑其内容的后台系统上的工作，全面地回顾官网的开发历程。",
     slug: "wxad",
     publishedAt: "2024-07-16",
-    editedAt: "2024-07-16",
-    author: "Aragakey.",
+    author: "Aragakey. & wxad.design",
     authorLink: "https://codepen.io/aragakey",
     children: <WxadCover />,
   },
   {
-    title: "回顾：制作微信广告设计语言 AD UI",
+    title: "回顾: 制作微信广告设计语言 AD UI",
     description:
       "我对设计语言的价值观，主要分为设计、组件、效能、流程这四个方面。我将从这四个方面阐述我对设计语言的理解，以及我的具体工作。",
     slug: "adui",
     publishedAt: "2024-07-10",
-    editedAt: "2024-07-10",
-    author: "Aragakey.",
+    author: "Aragakey. & wxad.design",
     authorLink: "https://codepen.io/aragakey",
     children: <AduiCover />,
   },
@@ -207,7 +191,6 @@ const posts = [
       "2024 年 7 月 5 日是微信广告十周年的日子。做了一些围绕“文字圆形环绕”（实在不知道如何取名）的 UI 及过渡。当时做得不够好，我在这里完善一下。",
     slug: "circular-text",
     publishedAt: "2024-07-09",
-    editedAt: "2024-07-09",
     author: "Aragakey.",
     authorLink: "https://codepen.io/aragakey",
     children: <CircularCover />,
@@ -218,17 +201,15 @@ const posts = [
       "随着今年微信广告榜单页面的升级，我和设计师一起完成了基于 conic-gradient 的旋转动画。这篇文章中，我将简单总结使用 motion/react 逐步优化的过程。",
     slug: "conic-gradient",
     publishedAt: "2024-06-21",
-    editedAt: "2024-06-21",
     author: "Aragakey.",
     authorLink: "https://codepen.io/aragakey",
     children: <ConicCover />,
   },
   {
-    title: "Functional Motion：UI 组件库的动效设计细节",
+    title: "Functional Motion: UI 组件库的动效设计细节",
     slug: "functional-motion",
     description: "功能优先的动效设计。you see, fun is in functional.",
     publishedAt: "2024-06-06",
-    editedAt: "2024-06-06",
     author: "Aragakey.",
     authorLink: "https://codepen.io/aragakey",
     children: <FmCover />,
@@ -239,7 +220,6 @@ const posts = [
     description:
       "在 2019 年第五届 CSS 大会上，一位名为 yuanchuan 的分享者花了 10 分钟的时间差点让我睡着。但是在这之后的时间里，我被他的 CSS 艺术世界深深地震撼，直到今天也是。",
     publishedAt: "2024-06-02",
-    editedAt: "2024-06-02",
     author: "Aragakey.",
     authorLink: "https://codepen.io/aragakey",
     children: <GenCover />,
@@ -250,8 +230,8 @@ const posts = [
       "好像在工作的这些年中，我做的最多的动画就是点赞或按钮动画。那就简单地整一个集合吧。",
     slug: "likes",
     publishedAt: "2024-04-30",
-    editedAt: "2024-04-30",
-    author: "Aragakey.",
+    editedAt: "2025-07-24",
+    author: "Aragakey. & wxad.design",
     authorLink: "https://codepen.io/aragakey",
     children: <LikesCover />,
   },
@@ -261,29 +241,26 @@ const posts = [
       "最近我为设计垂点的链接文字加入了一个交互动画。思考一个有趣的交互动画并且将它实现，是一件让人快乐的事。",
     slug: "trail",
     publishedAt: "2024-04-16",
-    editedAt: "2024-04-16",
     author: "Aragakey.",
     authorLink: "https://codepen.io/aragakey",
     children: <TrailCover />,
   },
   {
-    title: "转盘交互动画：以关键参数，细化我们的感受",
+    title: "转盘交互动画: 以关键参数，细化我们的感受",
     slug: "carousel",
     description:
       "我们将通过文字和交互式 demo 穿插的方式，一起思考和体验：有哪些关键参数影响着最终结果。以此细化对交互动画的感受，体会“对”或“不对”之间的具体差异。",
     publishedAt: "2024-03-16",
-    editedAt: "2024-03-16",
     author: "Aragakey.",
     authorLink: "https://codepen.io/aragakey",
     children: <CarouselCover />,
   },
   {
-    title: "2023：面对自我的提问与面对自我的回答",
+    title: "2023: 面对自我的提问与面对自我的回答",
     slug: "2023",
     description:
       "记录了我于 2023 一整年间，断断续续自说自话的一些文字。我喜欢，并且需要用文字的形式梳理思绪。",
     publishedAt: "2023-12-31",
-    editedAt: "2023-12-31",
     author: "Aragakey.",
     authorLink: "https://codepen.io/aragakey",
     children: <Cover2023 />,
@@ -294,9 +271,9 @@ const posts = [
       "一个设计团队，存在一些需要标准化的课题。字体，也许是其中最为基础的一环。",
     slug: "font-family",
     publishedAt: "2016-09-26",
-    editedAt: "2016-09-26",
-    author: "Aragakey.",
-    authorLink: "https://codepen.io/aragakey",
+    editedAt: "2024-07-10",
+    author: "Aragakey. & Don",
+    authorLink: "https://dondon.design/",
     children: <FontFamilyCover />,
   },
 ]
@@ -396,6 +373,7 @@ const Home = () => {
                 description,
                 children,
                 slug,
+                publishedAt,
                 editedAt,
                 author,
                 authorLink,
@@ -416,14 +394,18 @@ const Home = () => {
                           : "md:pr-16 md:border-r"
                       }`}
                     >
-                      <div className="mb-6 font-mono text-neutral-600">
-                        {new Intl.DateTimeFormat("zh-CN", {
-                          month: "long",
-                          year: "numeric",
-                          day: "numeric",
-                        }).format(new Date(editedAt))}
+                      <div className="flex flex-wrap gap-x-4 gap-y-1 mb-6 font-mono text-neutral-600">
+                        <span>
+                          {editedAt && "pub@"}
+                          <span>{publishedAt}</span>
+                        </span>
+                        {editedAt && (
+                          <span>
+                            upd@<span>{editedAt}</span>
+                          </span>
+                        )}
                         <a
-                          className="ml-4 hover:text-blue-500 hover:underline hover:decoration-dotted hover:decoration-current hover:underline-offset-4 transition-all"
+                          className="hover:text-blue-500 hover:underline hover:decoration-dotted hover:decoration-current hover:underline-offset-4 transition-all"
                           target="_blank"
                           href={authorLink}
                         >

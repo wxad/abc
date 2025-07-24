@@ -72,14 +72,18 @@ export default function PostPage({ content }: { content: Post }) {
             className="block mb-8 w-full rounded-lg shadow-lg"
           />
         ) : null}
-        <div className="mb-4 md:mb-8 font-mono text-gray-500">
-          {new Intl.DateTimeFormat("zh-CN", {
-            month: "long",
-            year: "numeric",
-            day: "numeric",
-          }).format(new Date(frontmatter.editedAt))}
+        <div className="flex flex-wrap gap-x-4 gap-y-1 mb-4 md:mb-8 font-mono text-gray-500">
+          <span>
+            {frontmatter.editedAt && "pub@"}
+            <span>{frontmatter.publishedAt}</span>
+          </span>
+          {frontmatter.editedAt && (
+            <span>
+              upd@<span>{frontmatter.editedAt}</span>
+            </span>
+          )}
           <a
-            className="ml-4 hover:text-blue-500 hover:underline hover:decoration-dotted hover:decoration-current hover:underline-offset-4 transition-all"
+            className="hover:text-blue-500 hover:underline hover:decoration-dotted hover:decoration-current hover:underline-offset-4 transition-all"
             target="_blank"
             href={frontmatter.authorLink}
           >

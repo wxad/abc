@@ -3,7 +3,6 @@
   description: "这篇文章将介绍利用 inertia + 手势动画尽可能模拟 iOS 原生滚动体验的方法，以及这样做的原因。"
   slug: "scroll-mock"
   publishedAt: "2024-08-27"
-  editedAt: "2024-08-27"
   author: "Aragakey."
   authorLink: "https://codepen.io/aragakey"
 ---
@@ -30,7 +29,7 @@ const handleScroll = () => {
 
 ---
 
-实际上，模拟一个移动端滚动，无非是以 `transform` 属性为核心，通过弹簧动画来模拟。这类似于我在 [转盘交互动画：以关键参数，细化我们的感受
+实际上，模拟一个移动端滚动，无非是以 `transform` 属性为核心，通过弹簧动画来模拟。这类似于我在 [转盘交互动画: 以关键参数，细化我们的感受
 ](https://wxad.design/abc/carousel) 这篇文章中所做的事。
 
 ## 为什么不直接用 motion/react 的 dragConstraints 属性
