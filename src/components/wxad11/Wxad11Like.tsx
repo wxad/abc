@@ -13,6 +13,7 @@ const Demo = () => {
 
   const leftRef = useRef<HTMLDivElement>(null)
   const rightRef = useRef<HTMLDivElement>(null)
+  const textRef = useRef<HTMLDivElement>(null)
 
   const [ref, { entry }] = useIntersectionObserver({
     threshold: 0.5,
@@ -69,14 +70,19 @@ const Demo = () => {
         ...commmonProps,
       })
     }, 100)
-    ;[leftRef.current, rightRef.current].forEach((ref) => {
-      if (ref) {
-        ref.style.animation = "none"
-        setTimeout(() => {
-          ref.style.animation = "wxad11Stick 0.2s ease both"
-        }, 50)
+    ;[leftRef.current, rightRef.current, textRef.current].forEach(
+      (ref, index) => {
+        if (ref) {
+          ref.style.animation = "none"
+          setTimeout(() => {
+            ref.style.animation =
+              index === 2
+                ? "wxad11Text 0.2s ease both"
+                : "wxad11Stick 0.2s ease both"
+          }, 50)
+        }
       }
-    })
+    )
   }
 
   useEffect(() => {
@@ -129,6 +135,7 @@ const Demo = () => {
               />
             </div>
             <div
+              ref={textRef}
               className="relative break-words mb-5 pl-1 max-w-[270px] text-[24px] text-center font-semibold text-black bg-transparent flex-none"
               style={{
                 lineHeight: `${oneLineHeight}px`,

@@ -8,9 +8,11 @@ author: "Aragakey. & wxad.design"
 authorLink: "https://codepen.io/aragakey"
 ---
 
+import LikeBM24Final from "@/components/likes/LikeBM24Final"
 import LikeBM24 from "@/components/likes/LikeBM24"
-import LikeBM24Curve from "@/components/likes/LikeBM24Curve"
-import LikeBM24Mask from "@/components/likes/LikeBM24Mask"
+import LikeBM23 from "@/components/likes/LikeBM23"
+import LikeBM23Curve from "@/components/likes/LikeBM23Curve"
+import LikeBM23Mask from "@/components/likes/LikeBM23Mask"
 import LikeBM2404 from "@/components/likes/LikeBM2404"
 import LikeBM2404Compare from "@/components/likes/LikeBM2404Compare"
 import LikeBM23Heart from "@/components/likes/LikeBM23Heart"
@@ -30,7 +32,49 @@ import Wxad11Like from "@/components/wxad11/Wxad11Like"
 
 ## 微广 11 周年
 
+来自于 [微信广告 11 周年活动](https://wxad.design/abc/wxad11#点赞动画)。点赞如果只是数字的增加就太没有氛围了，我们可以把两根应援棒变成烟花棒玩玩：
+
 <Wxad11Like />
+
+在发射 confetti 之前，先进行一个压缩：
+
+```css
+@keyframes wxad11Stick {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scaleY(1) scaleX(1);
+  }
+  50% {
+    transform: translate3d(0, 4px, 0) scaleY(0.7) scaleX(1.35);
+  }
+}
+```
+
+## 评选 24
+
+24 年评选的点赞动画最初是这样的：
+
+<LikeBM24 src="/abc/likes/likebm24-0.mp4" aspectRatio="494 / 1080" />
+
+上面的氛围感有点不足，因此我和设计师加大了一些爱心的尺寸：
+
+<LikeBM24 src="/abc/likes/likebm24-1.mp4" aspectRatio="554 / 1080" />
+
+但票数和爱心之间没有关联。我们需要投票 -> 动画 -> 票数增加的示意更加明确，因此我们需要一个类似于这样汇聚到上方的动画，在汇聚后票数增加：
+
+<LikeBM24 src="/abc/likes/likebm24-2.mp4" aspectRatio="554 / 1080" />
+
+最后设计师为我绘制了两套路径，整个动画通过 `offset-path` 配合 `motion/react` 实现：
+
+<LikeBM24Final
+  videoSrc="/abc/likes/likebm24-3.mp4"
+  imgSrc="/abc/likes/likebm24-path-0.webp"
+/>
+
+<LikeBM24Final
+  videoSrc="/abc/likes/likebm24-4.mp4"
+  imgSrc="/abc/likes/likebm24-path-1.webp"
+/>
 
 ## 榜单 v3
 
@@ -41,7 +85,8 @@ import Wxad11Like from "@/components/wxad11/Wxad11Like"
 
 ```css
 @keyframes bouncy {
-  0% {
+  0%,
+  100% {
     scale: 1;
   }
   25% {
@@ -53,9 +98,6 @@ import Wxad11Like from "@/components/wxad11/Wxad11Like"
   75% {
     scale: 0.78;
   }
-  100% {
-    scale: 1;
-  }
 }
 ```
 
@@ -63,7 +105,7 @@ import Wxad11Like from "@/components/wxad11/Wxad11Like"
 
 ## 评选 23
 
-<LikeBM24 />
+<LikeBM23 />
 
 1. 向上加速运动，爱心旋转 `18deg`，类 `ease-in` 曲线；
 2. 撞击卡片后继续向上位移 `60px`，爱心旋转 `0deg`，最终运动到顶点，类 `ease-out` 曲线；
@@ -71,14 +113,14 @@ import Wxad11Like from "@/components/wxad11/Wxad11Like"
 
 爱心轨迹分为三个阶段的连接成为完整连贯的动画。
 
-<LikeBM24Curve />
+<LikeBM23Curve />
 
 其他的一些细节：
 
 1. 爱心先放大至 `1.2` 倍，再缩小至 `0.6` 倍，这样会更有撞击感，就像你挥拳一样，会先收拳发力，就是这样的感觉；
 2. 蒙版的设置实际上是一个很大的圆形，这样在整个运动过程中，爱心都会在蒙版的内部，无需额外的处理。
 
-<LikeBM24Mask />
+<LikeBM23Mask />
 
 ## 榜单 v2
 
