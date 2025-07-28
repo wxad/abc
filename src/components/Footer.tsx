@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/router"
 import NextLink from "next/link"
 import { useSpring, animated } from "@react-spring/web"
+import { DraftingCompass, Paintbrush, Pyramid, ContactRound } from "lucide-react"
 
 const FooterItem = ({
   link,
@@ -96,36 +97,18 @@ const Footer = () => {
           onMouseLeave={handleMouseLeave}
         >
           <FooterItem leftOffset={leftOffset} link="/">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="w-1/2 aspect-square text-neutral-600"
-            >
-              <path d="M2.5 16.88a1 1 0 0 1-.32-1.43l9-13.02a1 1 0 0 1 1.64 0l9 13.01a1 1 0 0 1-.32 1.44l-8.51 4.86a2 2 0 0 1-1.98 0Z" />
-              <path d="M12 2v20" />
-            </svg>
+            <Pyramid
+              width={undefined}
+              height={undefined}
+              className="size-1/2 text-neutral-600"
+            />
           </FooterItem>
           <FooterItem leftOffset={leftOffset} link="/crafts">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="w-1/2 aspect-square text-neutral-600"
-            >
-              <path d="M13 7 8.7 2.7a2.41 2.41 0 0 0-3.4 0L2.7 5.3a2.41 2.41 0 0 0 0 3.4L7 13" />
-              <path d="m8 6 2-2" />
-              <path d="m18 16 2-2" />
-              <path d="m17 11 4.3 4.3c.94.94.94 2.46 0 3.4l-2.6 2.6c-.94.94-2.46.94-3.4 0L11 17" />
-              <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
-              <path d="m15 5 4 4" />
-            </svg>
+            <DraftingCompass
+              width={undefined}
+              height={undefined}
+              className="size-1/2 text-neutral-600"
+            />
           </FooterItem>
           <hr
             className="flex-none w-px h-9 bg-neutral-200"
@@ -138,21 +121,11 @@ const Footer = () => {
             leftOffset={leftOffset}
             link="https://codepen.io/aragakey"
           >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="w-1/2 aspect-square text-neutral-600"
-            >
-              <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2" />
-              <line x1="12" x2="12" y1="22" y2="15.5" />
-              <polyline points="22 8.5 12 15.5 2 8.5" />
-              <polyline points="2 15.5 12 8.5 22 15.5" />
-              <line x1="12" x2="12" y1="2" y2="8.5" />
-            </svg>
+            <Paintbrush
+              width={undefined}
+              height={undefined}
+              className="size-1/2 text-neutral-600"
+            />
           </FooterItem>
           <FooterItem
             leftOffset={leftOffset}

@@ -23,6 +23,13 @@ import QualityOfUICover from "@/components/quality-of-ui/QualityOfUICover"
 import SvgLiquidGlassCover from "@/components/svg-liquid-glass/SvgLiquidGlassCover"
 import Wxad11Cover from "@/components/wxad11/Wxad11Cover"
 import NextLink from "next/link"
+import {
+  ArrowRight,
+  Pyramid,
+  Calendar,
+  CalendarClock,
+  Signature,
+} from "lucide-react"
 
 const posts = [
   {
@@ -31,7 +38,7 @@ const posts = [
       "由于我在上线当天休假，加之开发时间有限，没有太好地打磨和完成。整个活动很简单，服务的人也很少，但机会难得，我还是希望抽出一些时间再来玩一玩。",
     slug: "wxad11",
     publishedAt: "2025-07-23",
-    author: "Aragakey. & wxad.design",
+    author: "Aragakey.@wxad.design",
     authorLink: "https://codepen.io/aragakey",
     children: <Wxad11Cover />,
   },
@@ -162,7 +169,7 @@ const posts = [
       "我享受和设计师合作的创作过程。我们职责互补，但不模糊。我们忘却时间，将对个人实现的追求托付于我们的作品。我这个人很简单，只想要做优雅和精致的 UI。我很庆幸遇到这样适配自己特长的项目。",
     slug: "bm",
     publishedAt: "2024-07-22",
-    author: "Aragakey. & wxad.design",
+    author: "Aragakey.@wxad.design",
     authorLink: "https://codepen.io/aragakey",
     children: <BmCover />,
   },
@@ -172,7 +179,7 @@ const posts = [
       "微信广告官网是一个非常完整的项目。我将总结自己在设计、前端及支撑其内容的后台系统上的工作，全面地回顾官网的开发历程。",
     slug: "wxad",
     publishedAt: "2024-07-16",
-    author: "Aragakey. & wxad.design",
+    author: "Aragakey.@wxad.design",
     authorLink: "https://codepen.io/aragakey",
     children: <WxadCover />,
   },
@@ -182,7 +189,7 @@ const posts = [
       "我对设计语言的价值观，主要分为设计、组件、效能、流程这四个方面。我将从这四个方面阐述我对设计语言的理解，以及我的具体工作。",
     slug: "adui",
     publishedAt: "2024-07-10",
-    author: "Aragakey. & wxad.design",
+    author: "Aragakey.@wxad.design",
     authorLink: "https://codepen.io/aragakey",
     children: <AduiCover />,
   },
@@ -232,7 +239,7 @@ const posts = [
     slug: "likes",
     publishedAt: "2024-04-30",
     editedAt: "2025-07-24",
-    author: "Aragakey. & wxad.design",
+    author: "Aragakey.@wxad.design",
     authorLink: "https://codepen.io/aragakey",
     children: <LikesCover />,
   },
@@ -285,18 +292,7 @@ const Home = () => {
       <div className="mx-auto mb-36 px-4 md:px-16 max-w-[1088px]">
         <div className="flex items-end justify-between mb-8 py-6 md:py-10">
           <div className="flex-1 flex flex-col items-center 74:flex-row">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="relative w-12 h-12 74:top-[0.15rem] 74:mr-2 74:w-10 74:h-10 opacity-80"
-            >
-              <path d="M2.5 16.88a1 1 0 0 1-.32-1.43l9-13.02a1 1 0 0 1 1.64 0l9 13.01a1 1 0 0 1-.32 1.44l-8.51 4.86a2 2 0 0 1-1.98 0Z" />
-              <path d="M12 2v20" />
-            </svg>
+            <Pyramid className="relative w-12 h-12 74:top-[0.15rem] 74:mr-2 74:w-10 74:h-10 opacity-80" />
             <div className="text-center 74:text-left">
               <h1 className="relative -left-px text-neutral-600 74:text-neutral-800 font-semibold text-sm 74:text-base">
                 设计垂点
@@ -395,23 +391,33 @@ const Home = () => {
                           : "md:pr-16 md:border-r"
                       }`}
                     >
-                      <div className="flex flex-wrap gap-x-4 gap-y-1 mb-6 font-mono text-neutral-600">
-                        <span>
-                          {editedAt && "pub@"}
+                      <div
+                        className={`flex flex-wrap gap-x-4 gap-y-1 mb-6 font-mono text-neutral-600 ${
+                          editedAt ? "flex-col" : ""
+                        }`}
+                      >
+                        <span className="flex items-center gap-1">
+                          <Calendar className="size-3.5" />
                           <span>{publishedAt}</span>
+                          {editedAt && (
+                            <span className="ml-4">
+                              <span className="flex items-center gap-1">
+                                <CalendarClock className="size-3.5" />
+                                <span>{editedAt}</span>
+                              </span>
+                            </span>
+                          )}
                         </span>
-                        {editedAt && (
-                          <span>
-                            upd@<span>{editedAt}</span>
-                          </span>
-                        )}
-                        <a
-                          className="hover:text-blue-500 hover:underline hover:decoration-dotted hover:decoration-current hover:underline-offset-4 transition-all"
-                          target="_blank"
-                          href={authorLink}
-                        >
-                          @{author}
-                        </a>
+                        <span className="flex items-center gap-1">
+                          <Signature className="size-3.5" />
+                          <a
+                            className="hover:text-blue-500 hover:underline hover:decoration-dotted hover:decoration-current hover:underline-offset-4 transition-all"
+                            target="_blank"
+                            href={authorLink}
+                          >
+                            {author}
+                          </a>
+                        </span>
                       </div>
                       <NextLink
                         href={slug}
@@ -424,22 +430,10 @@ const Home = () => {
                       </div>
                       <NextLink
                         href={slug}
-                        className="inline-flex items-center mt-8 md:mt-16 gap-2 text-sm text-neutral-700 hover:text-blue-500 font-medium hover:underline hover:decoration-dotted hover:decoration-current hover:underline-offset-4 transition-all"
+                        className="inline-flex items-center mt-8 md:mt-16 gap-1 text-sm text-neutral-700 hover:text-blue-500 font-medium hover:underline hover:decoration-dotted hover:decoration-current hover:underline-offset-4 transition-all"
                       >
                         阅读文章
-                        <svg
-                          stroke="currentColor"
-                          fill="currentColor"
-                          strokeWidth="0"
-                          viewBox="0 0 16 16"
-                          width="1em"
-                          height="1em"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
-                          ></path>
-                        </svg>
+                        <ArrowRight className="size-4" />
                       </NextLink>
                     </div>
                     <div

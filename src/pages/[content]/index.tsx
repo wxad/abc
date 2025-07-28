@@ -18,6 +18,7 @@ import {
   Img,
   Hr,
 } from "@/components/MdxComponents"
+import { Pyramid, Calendar, CalendarClock, Signature } from "lucide-react"
 
 export default function PostPage({ content }: { content: Post }) {
   const { frontmatter, headings, slug, code } = content
@@ -39,18 +40,7 @@ export default function PostPage({ content }: { content: Post }) {
             href="/"
             className="inline-flex flex-col items-center text-sm font-semibold"
           >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="w-12 h-12"
-            >
-              <path d="M2.5 16.88a1 1 0 0 1-.32-1.43l9-13.02a1 1 0 0 1 1.64 0l9 13.01a1 1 0 0 1-.32 1.44l-8.51 4.86a2 2 0 0 1-1.98 0Z" />
-              <path d="M12 2v20" />
-            </svg>
+            <Pyramid className="size-12" />
             设计垂点
           </NextLink>
         </h2>
@@ -72,23 +62,29 @@ export default function PostPage({ content }: { content: Post }) {
             className="block mb-8 w-full rounded-lg shadow-lg"
           />
         ) : null}
-        <div className="flex flex-wrap gap-x-4 gap-y-1 mb-4 md:mb-8 font-mono text-gray-500">
-          <span>
-            {frontmatter.editedAt && "pub@"}
+        <div className="flex flex-wrap gap-x-4 gap-y-1 mb-4 md:mb-8 font-mono text-neutral-500">
+          <span className="flex items-center gap-1">
+            <Calendar className="size-3.5" />
             <span>{frontmatter.publishedAt}</span>
+            {frontmatter.editedAt && (
+              <span className="ml-4">
+                <span className="flex items-center gap-1">
+                  <CalendarClock className="size-3.5" />
+                  <span>{frontmatter.editedAt}</span>
+                </span>
+              </span>
+            )}
           </span>
-          {frontmatter.editedAt && (
-            <span>
-              upd@<span>{frontmatter.editedAt}</span>
-            </span>
-          )}
-          <a
-            className="hover:text-blue-500 hover:underline hover:decoration-dotted hover:decoration-current hover:underline-offset-4 transition-all"
-            target="_blank"
-            href={frontmatter.authorLink}
-          >
-            @{frontmatter.author}
-          </a>
+          <span className="flex items-center gap-1">
+            <Signature className="size-3.5" />
+            <a
+              className="hover:text-blue-500 hover:underline hover:decoration-dotted hover:decoration-current hover:underline-offset-4 transition-all"
+              target="_blank"
+              href={frontmatter.authorLink}
+            >
+              {frontmatter.author}
+            </a>
+          </span>
         </div>
         <h1 className="mb-8 font-semibold text-2xl md:text-4xl">
           {frontmatter.title}
