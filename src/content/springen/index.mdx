@@ -3,6 +3,7 @@
   description: "以一种统一的交互表现，而不是以一个完整的组件库的方式去归纳组件，对我来说是一件很有趣的事情。跳跃，就是与状态变化、切换相关的一系列 UI 动效。"
   slug: "springen"
   publishedAt: "2025-06-04"
+  editedAt: "2025-07-28"
   author: "Aragakey."
   authorLink: "https://codepen.io/aragakey"
 ---
@@ -28,6 +29,10 @@ import NavigationMenu from "@/components/fm/NavigationMenu"
 import HoverFillHuxuan from "@/components/springen/hover-fill-huxuan"
 import TabsDefault from "@/components/springen/tabs-default"
 import TabsVertical from "@/components/springen/tabs-vertical"
+import NumberFlowVideo from "@/components/springen/number-flow-video"
+import TextSwapBasic from "@/components/springen/text-swap-basic"
+import TextSwapDecimal from "@/components/springen/text-swap-decimal"
+import TextSwapFlip from "@/components/springen/text-swap-flip"
 
 最近在 B 端项目中实践了一个名为“跳跃”的动效语言，由于 npm 起名字实在困难，选择了德语单词 “[Springen](https://wxad.design/springen)” 作为它们的名字。
 
@@ -256,19 +261,41 @@ import TabsVertical from "@/components/springen/tabs-vertical"
 
 当 `Popover` 发生重叠时，而且是如上面例子的大面积重叠时，合并弹出层的做法就显得尤为重要。
 
----
-
 从悬浮填充出发，从共享背景到共享层级，尽可能让“跳跃”的设计语言完整，**在体验上的目标是流畅与连续；在功能上的意义是减少层级数量，或让那些本就成组的元素更像一组。**。
 
 一定是两者的结合，才能传达关乎产品的不空洞的“品质”或“性格”。比如在上面 `HoverFill` 多行表格的简单例子之上，我们在实际业务上的运用结合了图表和 `Popover`：
 
 ![table-hover-popover](https://wxa.wxs.qq.com/wxad-design/yijie/table-Popover-1.gif)
 
-## 总结
+---
 
 `HoverFill` 当然最初来源于我的个人兴趣。通过和实际功能的结合，我希望所谓的“跳跃”不仅仅是形式。
 
 而它其实非常简单，最让我感到有趣的过程，就是不断延伸它的使用边界，将一个看起来那么简单的形式，扩展成一种尽可能完整的语言。
+
+## 数字滚动 NumberFlow
+
+当一个数字发生变化、尤其不是由用户操作触发时，我们可以使用 NumberFlow 来表达这种动态变化，否则用户不知道发生了什么。
+
+比如随着直播时长的变化，观看人数、花费等指标会在某个时间点发生变化：
+
+<NumberFlowVideo />
+
+## 文字替换 TextSwap
+
+`NumberFlow` 应用于数字，而 `TextSwap` 更为通用地应用于所有文本类型：
+
+<TextSwapBasic />
+
+在表现上相比 `NumberFlow`，`TextSwap` 更为轻量。因为文本替换只发生于前后两个字符之间，不会像数字滚动那样保持一个连续的变化。我认为 `TextSwap` 更简洁明确：
+
+<TextSwapDecimal />
+
+我们还可以实现一个翻转的展示效果。可通过下方参数调整这种固定的展示效果：
+
+<TextSwapFlip />
+
+## 总结
 
 除了“跳跃”，我还做了一系列叫“[发芽 🌱](https://wxad.design/abc/spross)”的组件，那就是另一个主题了。
 
