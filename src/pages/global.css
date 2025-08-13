@@ -1643,3 +1643,8 @@ html {
     transform: translate3d(0, 4px, 0) scale(0.95);
   }
 }
+
+.utterances {
+  margin: 0;
+  max-width: 100%;
+}

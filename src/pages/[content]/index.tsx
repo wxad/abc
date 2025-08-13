@@ -18,6 +18,8 @@ import {
   Img,
   Hr,
 } from "@/components/MdxComponents"
+import { Comments } from "@/components/Comments"
+import { siteConfig } from "@/lib/config"
 import { Pyramid, Calendar, CalendarClock, Signature } from "lucide-react"
 
 export default function PostPage({ content }: { content: Post }) {
@@ -104,6 +106,15 @@ export default function PostPage({ content }: { content: Post }) {
             hr: Hr as any,
           }}
         />
+
+        {/* GitHub 评论区域 */}
+        {siteConfig.comments.enabled && (
+          <Comments
+            repo={siteConfig.github.repo}
+            theme={siteConfig.comments.theme}
+            issueTerm={siteConfig.comments.issueTerm}
+          />
+        )}
       </div>
     </div>
   )
