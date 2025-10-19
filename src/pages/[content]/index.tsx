@@ -108,13 +108,13 @@ export default function PostPage({ content }: { content: Post }) {
         />
 
         {/* GitHub 评论区域 */}
-        {siteConfig.comments.enabled && (
+        {/* {siteConfig.comments.enabled && (
           <Comments
             repo={siteConfig.github.repo}
             theme={siteConfig.comments.theme}
             issueTerm={siteConfig.comments.issueTerm}
           />
-        )}
+        )} */}
       </div>
     </div>
   )

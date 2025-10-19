@@ -32,6 +32,15 @@ import {
 } from "lucide-react"
 
 const posts = [
+  // {
+  //   title: "让我们继续“跳跃”",
+  //   description: "我们接着在 UI 中玩一玩“跳跃”，并扩展到图表中。",
+  //   slug: "springen2",
+  //   publishedAt: "2025-10-20",
+  //   author: "Aragakey.",
+  //   authorLink: "https://codepen.io/aragakey",
+  //   children: <SpringenCover />,
+  // },
   {
     title: "玩一点微广 11 周年的 Demo",
     description:
