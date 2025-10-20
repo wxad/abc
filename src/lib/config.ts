@@ -9,7 +9,7 @@ export const siteConfig = {
   // 评论系统配置
   comments: {
     enabled: true,
-    theme: 'dark-blue' as 'github-light' | 'dark-blue',
+    theme: 'github-light' as 'github-light' | 'github-dark',
     issueTerm: 'pathname' as 'pathname' | 'url' | 'title' | 'og:title',
   },
 
