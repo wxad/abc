@@ -1,5 +1,11 @@
 import DemoBox from "../DemoBox"
-import { motion, useTransform, useSpring, useMotionValue } from "motion/react"
+import {
+  motion,
+  useTransform,
+  useSpring,
+  useMotionValue,
+  animate,
+} from "motion/react"
 import { useEffect, useRef, useState } from "react"
 import { Pane } from "tweakpane"
 
@@ -13,7 +19,7 @@ const Demo = () => {
   const paneRef = useRef<Pane | null>(null)
   const timerRef = useRef<number>(0)
   const [params, setParams] = useState({
-    visualDuration: 0.35,
+    visualDuration: 0.25,
     resetWhenMouseLeave: true,
     areaFilled: false,
     priceGap: 10,
@@ -70,16 +76,6 @@ const Demo = () => {
     bounce: 0,
   })
 
-  const maxPriceLabelFontSize = useSpring("20px", {
-    visualDuration: 0.2,
-    bounce: 0,
-  })
-
-  const minPriceLabelFontSize = useSpring("20px", {
-    visualDuration: 0.2,
-    bounce: 0,
-  })
-
   const minPriceLabelColorValue = useSpring(0, {
     visualDuration: 0.2,
     bounce: 0,
@@ -88,18 +84,25 @@ const Demo = () => {
   const minPriceLabelColor = useTransform(
     minPriceLabelColorValue,
     [0, 1],
-    ["rgba(250, 157, 59, 1)", "rgba(0, 0, 0, 0.15)"]
+    ["rgba(250, 157, 59, 1)", "rgba(0, 0, 0, 0.3)"]
+  )
+
+  const minPriceLabelFontWeight = useTransform(
+    minPriceLabelColorValue,
+    [0, 1],
+    [500, 400]
   )
 
   const currentPriceOpacity = useSpring(0, {
     visualDuration: 0.2,
     bounce: 0,
   })
-  const maxPriceOpacity = useSpring(1, {
+
+  const maxPriceOpacity = useSpring(0.3, {
     visualDuration: 0.2,
     bounce: 0,
   })
-  const minPriceOpacity = useSpring(1, {
+  const minPriceOpacity = useSpring(0.3, {
     visualDuration: 0.2,
     bounce: 0,
   })
@@ -221,15 +224,15 @@ const Demo = () => {
 
   const currentPriceY = useTransform(offset, (v) => {
     if (v < 21.05) {
-      return 62
+      return 66
     } else if (v < 31) {
-      // v 21.05 -> 31, currentPriceY 62 -> 52
-      return 62 + ((52 - 62) * (v - 21.05)) / (31 - 21.05)
+      // v 21.05 -> 31, currentPriceY 66 -> 52
+      return 66 + ((52 - 66) * (v - 21.05)) / (31 - 21.05)
     } else if (v < 65.78) {
-      // v 31 -> 65.78, currentPriceY 52 -> 0
-      return 52 + ((0 - 52) * (v - 31)) / (65.78 - 31)
+      // v 31 -> 65.78, currentPriceY 52 -> -13
+      return 52 + ((-13 - 52) * (v - 31)) / (65.78 - 31)
     }
-    return 0
+    return -13
   })
 
   offset.on("change", (v) => {
@@ -280,13 +283,13 @@ const Demo = () => {
       minPriceOpacity.set(1)
     }
 
-    if (isHovering.current && v > 54) {
+    if (isHovering.current && v > 58) {
       maxPriceLabelOpacity.set(0)
     } else {
       maxPriceLabelOpacity.set(1)
     }
 
-    if (isHovering.current && v < 36) {
+    if (isHovering.current && v < 32) {
       minPriceLabelOpacity.set(0)
     } else {
       minPriceLabelOpacity.set(1)
@@ -316,8 +319,6 @@ const Demo = () => {
     const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100))
     offset.set(percentage)
     // priceLabelOpacity.set(0)
-    maxPriceLabelFontSize.set("14px")
-    minPriceLabelFontSize.set("14px")
     minPriceLabelColorValue.set(1)
     currentPriceOpacity.set(1)
 
@@ -329,7 +330,14 @@ const Demo = () => {
     if (!params.resetWhenMouseLeave) return
     timerRef.current = window.setTimeout(() => {
       isHovering.current = false
-      offset.set(offsetInitial)
+      animate(offset.get(), offsetInitial, {
+        type: "spring",
+        visualDuration: 0.35,
+        bounce: 0,
+        onUpdate: (v) => {
+          offset.jump(v)
+        },
+      })
       // priceLabelOpacity.set(1)
       maxPriceLabelOpacity.jump(1)
       minPriceLabelOpacity.jump(1)
@@ -340,17 +348,6 @@ const Demo = () => {
       minNumberOpacity.jump(1)
       maxNumberOpacity.jump(1)
 
-      if (offset.get() > 65.78) {
-        maxPriceLabelFontSize.jump("20px")
-      } else {
-        maxPriceLabelFontSize.set("20px")
-      }
-
-      if (offset.get() < 21.05) {
-        minPriceLabelFontSize.jump("20px")
-      } else {
-        minPriceLabelFontSize.set("20px")
-      }
       minPriceLabelColorValue.jump(0)
       currentPriceOpacity.jump(0)
     }, 200)
@@ -459,7 +456,7 @@ const Demo = () => {
               strokeDasharray="4 4"
             />
           </svg>
-          <div className="absolute -top-4 left-[46px] text-xs text-black/30">
+          <div className="absolute top-0.5 left-20 text-xs text-black/30">
             达人收入
           </div>
           <div className="absolute bottom-4 -right-9 text-xs text-black/30">
@@ -512,35 +509,27 @@ const Demo = () => {
               strokeLinejoin="round"
             />
           </motion.svg>
-          <motion.div
-            className="absolute right-[264px] bottom-[129px] text-right"
-            style={
-              {
-                // y: maxPriceY,
-              }
-            }
-          >
+          <motion.div className="absolute right-[264px] bottom-[140px] text-right">
             <motion.div
-              className="text-xs"
-              style={{
-                opacity: maxPriceOpacity,
-              }}
+              className="text-xs text-black"
+              style={{ opacity: maxPriceOpacity }}
             >
               封顶价
             </motion.div>
             <motion.div
-              className="text-[#FA9D3B] text-[20px] leading-[22px] font-[WeChat_Sans_Std_Medium]"
+              className="text-[#FA9D3B] text-sm leading-[20px]"
               style={{
+                fontFamily: "WeChat Sans Std",
                 opacity: maxPriceLabelOpacity,
-                fontSize: maxPriceLabelFontSize,
                 color: minPriceLabelColor,
+                fontWeight: minPriceLabelFontWeight,
               }}
             >
               ￥{maxPrice.toLocaleString()}
             </motion.div>
           </motion.div>
           <motion.div
-            className="absolute right-[264px] bottom-[51px] text-right"
+            className="absolute right-[264px] bottom-[44px] text-right"
             style={
               {
                 // y: minPriceY,
@@ -548,17 +537,18 @@ const Demo = () => {
             }
           >
             <motion.div
-              className="leading-[22px] font-[WeChat_Sans_Std_Medium]"
+              className="text-sm leading-[20px]"
               style={{
+                fontFamily: "WeChat Sans Std",
                 opacity: minPriceLabelOpacity,
-                fontSize: minPriceLabelFontSize,
                 color: minPriceLabelColor,
+                fontWeight: minPriceLabelFontWeight,
               }}
             >
               ￥{minPrice.toLocaleString()}
             </motion.div>
             <motion.div
-              className="text-xs"
+              className="text-xs text-black"
               style={{ opacity: minPriceOpacity }}
             >
               保底价
@@ -642,10 +632,10 @@ const Demo = () => {
             />
           </motion.svg>
           <motion.div
-            className="absolute left-0 bottom-[129px] text-right"
+            className="absolute left-[19px] bottom-[129px] text-right"
             style={{ opacity: currentPriceOpacity, y: currentPriceY }}
           >
-            <motion.div className="text-[#FA9D3B] text-[20px] leading-[22px] font-[WeChat_Sans_Std_Medium]">
+            <motion.div className="text-[#FA9D3B] text-sm leading-[15px] font-[WeChat_Sans_Std_Medium]">
               ￥<motion.span>{currentPriceText}</motion.span>
             </motion.div>
           </motion.div>
@@ -661,12 +651,29 @@ const Demo = () => {
             </motion.div>
           </motion.div>
           <motion.div
-            className="absolute left-20 bottom-10 w-[60px] h-6 flex items-center justify-center text-xs text-[#FA9D3B] font-semibold bg-[#FA9D3B]/16 rounded"
+            className="absolute left-[86px] bottom-[58px] w-[60px] h-6 flex items-center justify-center text-xs text-[#FA9D3B] font-semibold bg-[#FA9D3B]/16 rounded"
             style={{
               transform: circleTransform,
             }}
           >
             结算价格
+            <svg
+              className="absolute right-[calc(100%-1px)] top-1/2 -translate-y-1/2"
+              width="4"
+              height="10"
+              viewBox="0 0 4 10"
+              fill="none"
+            >
+              <path
+                d="M4 0.5L0.300442 4.26236C-0.100146 4.66975 -0.100147 5.33025 0.300442 5.73764L4 9.5L4 0.5Z"
+                fill="white"
+              />
+              <path
+                d="M4 0.5L0.300442 4.26236C-0.100146 4.66975 -0.100147 5.33025 0.300442 5.73764L4 9.5L4 0.5Z"
+                fill="#FA9D3B"
+                fillOpacity="0.16"
+              />
+            </svg>
           </motion.div>
         </div>
       </motion.div>

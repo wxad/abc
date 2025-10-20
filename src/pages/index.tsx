@@ -34,7 +34,7 @@ import {
 const posts = [
   // {
   //   title: "让我们继续“跳跃”",
-  //   description: "我们接着在 UI 中玩一玩“跳跃”，并扩展到图表中。",
+  //   description: "我们接着在 UI 中玩一玩“跳跃”，并将它扩展到图表中。",
   //   slug: "springen2",
   //   publishedAt: "2025-10-20",
   //   author: "Aragakey.",
