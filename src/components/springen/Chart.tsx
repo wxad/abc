@@ -403,7 +403,7 @@ const Demo = () => {
 
   return (
     <DemoBox
-      className="flex justify-center items-center gap-4 p-10 pt-42 text-sm"
+      className="mb-100 flex justify-center items-center gap-4 p-10 pt-42 text-sm"
       style={{
         background: "#fff",
       }}
