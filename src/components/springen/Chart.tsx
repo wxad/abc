@@ -5,6 +5,7 @@ import {
   useSpring,
   useMotionValue,
   animate,
+  AnimationPlaybackControls,
 } from "motion/react"
 import { useEffect, useRef, useState } from "react"
 import { Pane } from "tweakpane"
@@ -21,7 +22,7 @@ const Demo = () => {
   const [params, setParams] = useState({
     visualDuration: 0.25,
     resetWhenMouseLeave: true,
-    areaFilled: false,
+    areaFilled: true,
     priceGap: 10,
     numberGap: 1000,
   })
@@ -29,6 +30,8 @@ const Demo = () => {
   const isHovering = useRef(false)
   const currentPrice = useMotionValue(minPrice)
   const currentPriceText = useTransform(currentPrice, (v) => v.toLocaleString())
+
+  const animationRef = useRef<AnimationPlaybackControls | null>(null)
 
   const currentNumber = useMotionValue(minNumber)
   const currentNumberText = useTransform(currentNumber, (v) => {
@@ -44,18 +47,22 @@ const Demo = () => {
   const minNumberOpacity = useSpring(1, {
     visualDuration: 0.2,
     bounce: 0,
+    restDelta: 0.001,
   })
   const maxNumberOpacity = useSpring(1, {
     visualDuration: 0.2,
     bounce: 0,
+    restDelta: 0.001,
   })
   const minNumberColor = useSpring(1, {
     visualDuration: 0.2,
     bounce: 0,
+    restDelta: 0.001,
   })
   const maxNumberColor = useSpring(1, {
     visualDuration: 0.2,
     bounce: 0,
+    restDelta: 0.001,
   })
   const minNumberColorValue = useTransform(
     minNumberColor,
@@ -69,16 +76,19 @@ const Demo = () => {
   const maxPriceLabelOpacity = useSpring(1, {
     visualDuration: 0.2,
     bounce: 0,
+    restDelta: 0.001,
   })
 
   const minPriceLabelOpacity = useSpring(1, {
     visualDuration: 0.2,
     bounce: 0,
+    restDelta: 0.001,
   })
 
   const minPriceLabelColorValue = useSpring(0, {
     visualDuration: 0.2,
     bounce: 0,
+    restDelta: 0.001,
   })
 
   const minPriceLabelColor = useTransform(
@@ -96,21 +106,25 @@ const Demo = () => {
   const currentPriceOpacity = useSpring(0, {
     visualDuration: 0.2,
     bounce: 0,
+    restDelta: 0.001,
   })
 
   const maxPriceOpacity = useSpring(0.3, {
     visualDuration: 0.2,
     bounce: 0,
+    restDelta: 0.001,
   })
   const minPriceOpacity = useSpring(0.3, {
     visualDuration: 0.2,
     bounce: 0,
+    restDelta: 0.001,
   })
 
   const offsetInitial = 43
   const offset = useSpring(offsetInitial, {
     visualDuration: params.visualDuration || 0.01,
     bounce: 0,
+    restDelta: 0.001,
   })
   const chartSvgRef = useRef<SVGSVGElement>(null)
   const chartClipPath = useTransform(offset, (v) => `inset(0 ${100 - v}% 0 0)`)
@@ -196,43 +210,17 @@ const Demo = () => {
     return `translate3d(${v[0]}px, ${v[1]}px, 0)`
   })
 
-  const minPriceY = useTransform(offset, (v) => {
-    if (!isHovering.current) {
-      return 0
-    }
-    if (v < 21.05) {
-      return 0
-    } else if (v < 31) {
-      // v 21.05 -> 31, minPriceY 0 -> -10
-      return 0 + ((-10 + 0) * (v - 21.05)) / (31 - 21.05)
-    }
-    return -10
-  })
-
-  const maxPriceY = useTransform(offset, (v) => {
-    if (!isHovering.current) {
-      return 0
-    }
-    if (v > 65.78) {
-      return 0
-    } else if (v > 55.78) {
-      // 55.78 -> 65.78, maxPriceY -10 -> 0
-      return 10 + ((0 - 10) * (v - 55.78)) / (65.78 - 55.78)
-    }
-    return 10
-  })
-
   const currentPriceY = useTransform(offset, (v) => {
     if (v < 21.05) {
-      return 66
+      return 66.5
     } else if (v < 31) {
-      // v 21.05 -> 31, currentPriceY 66 -> 52
-      return 66 + ((52 - 66) * (v - 21.05)) / (31 - 21.05)
+      // v 21.05 -> 31, currentPriceY 66.5 -> 52
+      return 66.5 + ((52 - 66.5) * (v - 21.05)) / (31 - 21.05)
     } else if (v < 65.78) {
-      // v 31 -> 65.78, currentPriceY 52 -> -13
-      return 52 + ((-13 - 52) * (v - 31)) / (65.78 - 31)
+      // v 31 -> 65.78, currentPriceY 52 -> -13.5
+      return 52 + ((-13.5 - 52) * (v - 31)) / (65.78 - 31)
     }
-    return -13
+    return -13.5
   })
 
   offset.on("change", (v) => {
@@ -312,6 +300,8 @@ const Demo = () => {
     clearTimeout(timerRef.current)
     if (!chartSvgRef.current) return
 
+    animationRef.current?.stop()
+
     isHovering.current = true
 
     const rect = chartSvgRef.current.getBoundingClientRect()
@@ -330,10 +320,12 @@ const Demo = () => {
     if (!params.resetWhenMouseLeave) return
     timerRef.current = window.setTimeout(() => {
       isHovering.current = false
-      animate(offset.get(), offsetInitial, {
+      animationRef.current?.stop()
+      animationRef.current = animate(offset.get(), offsetInitial, {
         type: "spring",
         visualDuration: 0.35,
         bounce: 0,
+        restDelta: 0.001,
         onUpdate: (v) => {
           offset.jump(v)
         },
@@ -399,12 +391,7 @@ const Demo = () => {
   }, [])
 
   return (
-    <DemoBox
-      className="mb-100 flex justify-center items-center gap-4 p-10 pt-42 text-sm"
-      style={{
-        background: "#fff",
-      }}
-    >
+    <DemoBox className="flex justify-center items-center gap-4 p-10 pt-42 text-sm">
       <div ref={paneWrapper} className="absolute top-1 right-1" />
       <motion.div
         className="relative -my-10 px-8 py-10 cursor-crosshair"
@@ -528,14 +515,7 @@ const Demo = () => {
               ￥{maxPrice.toLocaleString()}
             </motion.div>
           </motion.div>
-          <motion.div
-            className="absolute right-[264px] bottom-[44px] text-right"
-            style={
-              {
-                // y: minPriceY,
-              }
-            }
-          >
+          <motion.div className="absolute right-[264px] bottom-[44px] text-right">
             <motion.div
               className="text-sm leading-[20px]"
               style={{
@@ -658,16 +638,12 @@ const Demo = () => {
           >
             结算价格
             <svg
-              className="absolute right-[calc(100%-1px)] top-1/2 -translate-y-1/2"
+              className="absolute right-full top-1/2 -translate-y-1/2"
               width="4"
               height="10"
               viewBox="0 0 4 10"
               fill="none"
             >
-              <path
-                d="M4 0.5L0.300442 4.26236C-0.100146 4.66975 -0.100147 5.33025 0.300442 5.73764L4 9.5L4 0.5Z"
-                fill="white"
-              />
               <path
                 d="M4 0.5L0.300442 4.26236C-0.100146 4.66975 -0.100147 5.33025 0.300442 5.73764L4 9.5L4 0.5Z"
                 fill="#FA9D3B"

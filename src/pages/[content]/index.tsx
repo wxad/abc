@@ -20,7 +20,7 @@ import {
 } from "@/components/MdxComponents"
 import { Comments } from "@/components/Comments"
 import { siteConfig } from "@/lib/config"
-import { Pyramid, Calendar, CalendarClock, Signature } from "lucide-react"
+import { Pyramid, Calendar, CalendarSync, Signature } from "lucide-react"
 
 export default function PostPage({ content }: { content: Post }) {
   const { frontmatter, headings, slug, code } = content
@@ -71,7 +71,7 @@ export default function PostPage({ content }: { content: Post }) {
             {frontmatter.editedAt && (
               <span className="ml-4">
                 <span className="flex items-center gap-1">
-                  <CalendarClock className="size-3.5" />
+                  <CalendarSync className="size-3.5" />
                   <span>{frontmatter.editedAt}</span>
                 </span>
               </span>
