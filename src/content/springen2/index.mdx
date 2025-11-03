@@ -2,17 +2,133 @@
   title: "让我们继续“跳跃”"
   description: "我们继续在 UI 中玩一玩“跳跃”，并将它扩展到图表中。"
   slug: "springen2"
-  publishedAt: "2025-10-20"
+  publishedAt: "2025-11-03"
   author: "Aragakey."
   authorLink: "https://codepen.io/aragakey"
 ---
 
+import InputOtpBasic from "@/components/springen/input-otp-basic"
+import AvatarGroupBasic from "@/components/springen/avatar-group-basic"
+import CollapseBasic from "@/components/springen/collapse-basic"
+import TextSwapPassword from "@/components/springen/text-swap-password"
 import Chart from "@/components/springen/Chart"
+import CrystalBall from "@/components/springen/crystal-ball"
+import CrystalBallBig from "@/components/springen/crystal-ball-big"
+import SpringenChart0 from "@/components/springen/springen-chart-0"
+import IOS7OpeningApp from "@/components/springen/ios7-opening-app"
+import IOS26OpeningApp from "@/components/springen/ios26-opening-app"
+import IOS7Multi from "@/components/springen/ios7-multi"
+import IOS26Multi from "@/components/springen/ios26-multi"
 
 今年，我为我们的设计语言归纳了一批行为内核一致的动效，名为“跳跃”：《[一类叫作“跳跃”的 UI 动效](https://wxad.design/abc/springen)》，实际就是状态共享。所有关于状态共享的交互行为，我都归类为“跳跃”。
 
-它们的设计往往看着很简单，也正是因为简单，才给人非常自然、正确、理应如此的感受。组件动效的魅力就在于此，它没有华丽的视觉效果，而是应该追求恰到好处的舒适。
+它们的设计往往看着很简单，而给人正确、理应如此的感受。组件动效的魅力就在于此，它没有华丽的视觉效果，而是应该追求恰到好处的舒适。
 
-我们继续在这里玩一玩“跳跃”，并将它扩展到图表中。
+我们继续在这里玩一玩“跳跃”，并将它扩展到图表中。我们来看一些具体的细节。
+
+## 验证码输入 InputOtp
+
+随着用户输入每一位验证码，每个输入框都会先后自动地聚焦。我们用类似于 [分页器 Pagination](https://wxad.design/abc/springen#%E5%88%86%E9%A1%B5%E5%99%A8-pagination) 横向移动的表现来展示这样的变化：
+
+<InputOtpBasic />
+
+当用户输入错误后，光标再从最后一个平移到第一个，并以颜色变化 + 左右震动的方式提示错误。
+
+## 头像 Avatar
+
+要为一个头像组加入提示文字，我们可以直接复用 [工具提示 Tooltip](https://wxad.design/abc/springen#%E5%B7%A5%E5%85%B7%E6%8F%90%E7%A4%BA-tooltip) 的表现。
+
+在默认情况下，头像组相互重叠；我们可以在 hover 的过程中相互挤压，以完全展示当前的用户头像：
+
+<AvatarGroupBasic />
+
+## 折叠面板 Collapse
+
+接下来我们来看一个比较“形式化”的折叠面板。在当前项展开后，它会从原来的面板中分离出来，增加自己的边框及上下外边距：
+
+<CollapseBasic />
+
+## 文字替换 TextSwap
+
+[文字替换 TextSwap](https://wxad.design/abc/springen#%E6%96%87%E5%AD%97%E6%9B%BF%E6%8D%A2-textswap) 是一个可以应用于文本发生替换时的通用组件，在上篇文章中我已展示了几种应用。
+
+我们还可以用它来隐藏与展示密码、金额等敏感信息：
+
+<TextSwapPassword />
+
+---
+
+以上都是一些非常直观的 Demo，接下来我们来看两个更加具体的图表。
+
+## 图表案例 1：达人收入预估
+
+随着 x 轴（自然播放量）的变化，y 轴（达人收入）也随之变化。我们可以在静态图表的基础上，增加鼠标悬停的实时反馈。当鼠标在图表上移动时，会计算并显示出两个轴的关系。同时在达到封顶价或保底价时，也会进行优雅与明确地展示。
+
+我设置了几种可以调整的参数，它们代表了我和设计师共同讨论的过程，比如图表是否需要填充色？跟手速度应该适当地慢吗？以及坐标轴 label 重叠时应该如何处理？
 
 <Chart />
+
+关于“参数化 Demo”的输出，之前我就一直在做。今年，我更把它作为自己输出的基本要求。一部分是对 [jhey](https://x.com/jh3yy) 的效仿，而更重要的是这能帮助我们更好地完成设计。
+
+比如，起初设计师的稿子如下：
+
+<img
+  className="block mx-auto mb-8 w-[328px] rounded-xl "
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/springen-chart-original.webp"
+/>
+
+在有了 demo 输出后，我们才可能开始反过来更改设计稿，你可以对比看到坐标轴的一些变化。尤其是对于坐标轴 label 重叠的问题，启发于 [Screen Studio](https://wxa.wxs.qq.com/wxad-design/yijie/screen-studio-detail.mp4) 的处理，我还尝试过这样：
+
+<SpringenChart0 />
+
+毫无疑问，这并不好、让体验变得更加复杂了，然而过程亦有意义。交互式动画的力量，在这样一个相对简单的例子中已能很好地体现。
+
+## 图表案例 2：水晶球
+
+这个叫「水晶球」的图表案例则相对复杂一些。在一个水晶球上分布了六组数据，用户点击其中的每一项可以进行下钻分析：
+
+<CrystalBall />
+
+这是一个较为复杂的动画，且考量的细节可以非常多，这里我也不会全部展开。
+
+首先是对于最重要的下钻过渡形式，上面我采用了“单独浮起、水晶球后退”的方案。而在一开始我和设计师都认为“整体放大”既更符合“下钻”的语义，又更直观、易理解一些。就像这样：
+
+<CrystalBallBig />
+
+我认为放大的过渡形式不够优雅，因为我们的 UI 本身确实有一些太复杂了（当然这可能是我没有进行充分的调优），但或许它确实是更符合语义的。
+
+---
+
+对于背景是放大还是缩小，这是一个对我来说，显而易见地需要抉择的问题。因为这里的逻辑和 iOS 打开 App 的逻辑相似。我们可以在这里稍微延展一下它们的来源。
+
+背景放大的逻辑来源于 iOS 7 的做法：
+
+<IOS7OpeningApp />
+
+背景缩小的逻辑来源于我们早已熟悉的近几代 iOS 的做法：
+
+<IOS26OpeningApp />
+
+我们再延展一下：为什么 iOS 会做出这样的改变呢？那就需要看一下 iOS 7 是如何做多任务处理的：
+
+<IOS7Multi />
+
+在打开 App 时，iOS 7 将桌面处理为与 App 同级，本质上并不是 App 的层级提升了，而是我们自己“钻进去”了。此时 App 和 桌面不光在同一个层级，而是不分割地处在同一个空间中。但这个逻辑在多任务处理时变得矛盾，因为此时 App 和 桌面又变成了并列的、分离的状态。
+
+对于 iOS 26 而言，桌面在这两种场景下都保持回退的一致逻辑：
+
+<IOS26Multi />
+
+---
+
+当然，我们的水晶球不存在这样的矛盾，因此不管是放大还是缩小，都是可以选择的。我只是通过 iOS 的例子向你说明：我们需要选择这两种不同的处理方式。
+
+其他的许多细节我都不再展开。
+
+## 最后
+
+我今天看了一篇 [批评灵动岛的文章](https://shud.in/thoughts/on-dynamic-island)，作者认为它不是好的设计，因为它存在感过强且经不起时间考验。他举了一个方角引号「」的例子，认为它虽然也有强调的作用，但这种强调并没有让人分散注意力，而只是凸显了引用内容本身，使得表达者更好地传达了信息。作者认为这就是一种好的设计。
+
+对于他的观点我大部分认同。对于“跳跃”的语言，我明白它在一定程度上还是存在“是否多余”的探讨空间，但我明白我和从前乐于表现的自己早已不同。
+
+好的设计不需复杂，好的设计应该看起来理应如此，给你恰到好处的舒适。因此好的设计也不需再多展开。

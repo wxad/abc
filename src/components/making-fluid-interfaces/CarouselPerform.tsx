@@ -30,10 +30,7 @@ const Demo = () => {
   }, [inView])
 
   return (
-    <div
-      ref={ref}
-      className="relative mt-8 mb-12 mx-auto aspect-2848/1080"
-    >
+    <div ref={ref} className="relative mt-4 mb-12 mx-auto aspect-2848/1080">
       <video
         ref={videoRef}
         className="absolute-full rounded-xl"

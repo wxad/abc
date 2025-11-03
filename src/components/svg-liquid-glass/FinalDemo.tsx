@@ -32,7 +32,7 @@ const Demo = ({ src }: { src: string }) => {
   return (
     <div
       ref={ref}
-      className="relative mt-8 mb-12 mx-auto w-full aspect-3120/1440"
+      className="relative mt-4 mb-12 mx-auto w-full aspect-3120/1440"
     >
       <video
         ref={videoRef}

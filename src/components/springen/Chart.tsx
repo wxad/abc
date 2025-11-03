@@ -25,6 +25,7 @@ const Demo = () => {
     areaFilled: true,
     priceGap: 10,
     numberGap: 1000,
+    labelTransitionType: "fade" as "fade" | "move",
   })
 
   const isHovering = useRef(false)
@@ -45,6 +46,16 @@ const Demo = () => {
   })
 
   const minNumberOpacity = useSpring(1, {
+    visualDuration: 0.2,
+    bounce: 0,
+    restDelta: 0.001,
+  })
+  const minNumberY = useSpring(0, {
+    visualDuration: 0.2,
+    bounce: 0,
+    restDelta: 0.001,
+  })
+  const maxNumberY = useSpring(0, {
     visualDuration: 0.2,
     bounce: 0,
     restDelta: 0.001,
@@ -80,6 +91,18 @@ const Demo = () => {
   })
 
   const minPriceLabelOpacity = useSpring(1, {
+    visualDuration: 0.2,
+    bounce: 0,
+    restDelta: 0.001,
+  })
+
+  const maxPriceLabelX = useSpring(0, {
+    visualDuration: 0.2,
+    bounce: 0,
+    restDelta: 0.001,
+  })
+
+  const minPriceLabelX = useSpring(0, {
     visualDuration: 0.2,
     bounce: 0,
     restDelta: 0.001,
@@ -271,28 +294,56 @@ const Demo = () => {
       minPriceOpacity.set(1)
     }
 
-    if (isHovering.current && v > 58) {
-      maxPriceLabelOpacity.set(0)
+    if (params.labelTransitionType === "move") {
+      if (isHovering.current && v > 58) {
+        maxPriceLabelX.set(-48)
+      } else {
+        maxPriceLabelX.set(0)
+      }
+
+      if (isHovering.current && v < 32) {
+        minPriceLabelX.set(-48)
+      } else {
+        minPriceLabelX.set(0)
+      }
     } else {
-      maxPriceLabelOpacity.set(1)
+      if (isHovering.current && v > 58) {
+        maxPriceLabelOpacity.set(0)
+      } else {
+        maxPriceLabelOpacity.set(1)
+      }
+
+      if (isHovering.current && v < 32) {
+        minPriceLabelOpacity.set(0)
+      } else {
+        minPriceLabelOpacity.set(1)
+      }
     }
 
-    if (isHovering.current && v < 32) {
-      minPriceLabelOpacity.set(0)
-    } else {
-      minPriceLabelOpacity.set(1)
-    }
+    if (params.labelTransitionType === "move") {
+      if (isHovering.current && v < 42) {
+        minNumberY.set(16)
+      } else {
+        minNumberY.set(0)
+      }
 
-    if (isHovering.current && v < 42) {
-      minNumberOpacity.set(0)
+      if (isHovering.current && v > 44 && v < 88) {
+        maxNumberY.set(16)
+      } else {
+        maxNumberY.set(0)
+      }
     } else {
-      minNumberOpacity.set(1)
-    }
+      if (isHovering.current && v < 42) {
+        minNumberOpacity.set(0)
+      } else {
+        minNumberOpacity.set(1)
+      }
 
-    if (isHovering.current && v > 44 && v < 88) {
-      maxNumberOpacity.set(0)
-    } else {
-      maxNumberOpacity.set(1)
+      if (isHovering.current && v > 44 && v < 88) {
+        maxNumberOpacity.set(0)
+      } else {
+        maxNumberOpacity.set(1)
+      }
     }
   })
 
@@ -340,6 +391,12 @@ const Demo = () => {
       minNumberOpacity.jump(1)
       maxNumberOpacity.jump(1)
 
+      minNumberY.jump(0)
+      maxNumberY.jump(0)
+
+      maxPriceLabelX.jump(0)
+      minPriceLabelX.jump(0)
+
       minPriceLabelColorValue.jump(0)
       currentPriceOpacity.jump(0)
     }, 200)
@@ -371,6 +428,14 @@ const Demo = () => {
 
     paneRef.current.addBinding(params, "areaFilled", {
       label: "填充色",
+    })
+
+    paneRef.current.addBinding(params, "labelTransitionType", {
+      label: "坐标重叠处理",
+      options: {
+        隐藏: "fade",
+        位移: "move",
+      },
     })
 
     paneRef.current.addBinding(params, "priceGap", {
@@ -508,6 +573,7 @@ const Demo = () => {
               style={{
                 fontFamily: "WeChat Sans Std",
                 opacity: maxPriceLabelOpacity,
+                x: maxPriceLabelX,
                 color: minPriceLabelColor,
                 fontWeight: minPriceLabelFontWeight,
               }}
@@ -521,6 +587,7 @@ const Demo = () => {
               style={{
                 fontFamily: "WeChat Sans Std",
                 opacity: minPriceLabelOpacity,
+                x: minPriceLabelX,
                 color: minPriceLabelColor,
                 fontWeight: minPriceLabelFontWeight,
               }}
@@ -538,6 +605,7 @@ const Demo = () => {
             className="absolute bottom-0 left-[96px] text-xs leading-[20px] font-[WeChat_Sans_Std]"
             style={{
               opacity: minNumberOpacity,
+              y: minNumberY,
               color: minNumberColorValue,
             }}
           >
@@ -548,6 +616,7 @@ const Demo = () => {
             style={{
               opacity: maxNumberOpacity,
               color: maxNumberColorValue,
+              y: maxNumberY,
             }}
           >
             {maxNumber.toLocaleString()}

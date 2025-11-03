@@ -3,13 +3,16 @@ const nextConfig = {
   output: "export",
   basePath: "/abc",
   reactStrictMode: false,
+  reactCompiler: true,
+  forceSwcTransforms: true,
+  largePageDataBytes: 128 * 100000,
+  cacheComponents: true,
   // swcMinify: false,
-  experimental: {
-    forceSwcTransforms: true,
-    largePageDataBytes: 128 * 100000,
-  },
   images: {
     domains: ["avatars.githubusercontent.com"],
+  },
+  experimental: {
+    turbopackFileSystemCacheForDev: true,
   },
 }
 

@@ -37,7 +37,7 @@ const Basics = () => {
   return (
     <div
       ref={ref}
-      className="relative mt-8 mb-12 mx-auto w-full aspect-3840/1598"
+      className="relative mt-4 mb-12 mx-auto w-full aspect-3840/1598"
     >
       <video
         ref={videoRef}

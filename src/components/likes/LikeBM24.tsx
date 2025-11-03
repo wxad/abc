@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react"
 import { useIntersectionObserver } from "react-intersection-observer-hook"
 
-const Demo = (props: { src: string, aspectRatio: number }) => {
+const Demo = (props: { src: string; aspectRatio: number }) => {
   const { src, aspectRatio } = props
 
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -34,8 +34,8 @@ const Demo = (props: { src: string, aspectRatio: number }) => {
   return (
     <div
       ref={ref}
-      className="relative mt-8 mb-12 mx-auto w-[250px]"
-      style={{ aspectRatio, }}
+      className="relative mt-4 mb-12 mx-auto w-[250px]"
+      style={{ aspectRatio }}
     >
       <video
         ref={videoRef}
