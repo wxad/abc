@@ -314,7 +314,11 @@ const Home = () => {
             </div>
           </div>
           <div className="flex-col items-end hidden 74:flex">
-            <a href="https://jiangyijie27.github.io/aragakey" target="_blank">
+            <a
+              href="https://jiangyijie27.github.io/aragakey"
+              target="_blank"
+              aria-label="访问 Aragakey 个人主页"
+            >
               <svg
                 width="114"
                 height="51"
