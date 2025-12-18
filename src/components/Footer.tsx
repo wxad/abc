@@ -4,7 +4,12 @@ import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/router"
 import NextLink from "next/link"
 import { useSpring, animated } from "@react-spring/web"
-import { DraftingCompass, Paintbrush, Pyramid, ContactRound } from "lucide-react"
+import {
+  DraftingCompass,
+  Paintbrush,
+  Pyramid,
+  ContactRound,
+} from "lucide-react"
 
 const FooterItem = ({
   link,
@@ -59,7 +64,7 @@ const FooterItem = ({
           {children}
         </div>
         {active && (
-          <div className="absolute bottom-0 left-1/2 w-1 h-1 bg-neutral-200 rounded-full -translate-x-1/2 translate-y-[6px]" />
+          <div className="absolute bottom-0 left-1/2 size-1 bg-neutral-200 rounded-full -translate-x-1/2 translate-y-[6px]" />
         )}
         <div
           className="absolute-full rounded-full opacity-95"

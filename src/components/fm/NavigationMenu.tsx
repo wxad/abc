@@ -84,11 +84,7 @@ const NavigationMenu = () => {
   return (
     <DemoBox className="h-96">
       <div className="flex items-center px-6 h-16 bg-white border-b border-neutral-300">
-        <svg
-          className="block w-16 h-auto"
-          viewBox="0 0 50 12"
-          fill="none"
-        >
+        <svg className="block w-16 h-auto" viewBox="0 0 50 12" fill="none">
           <path
             d="M48.3359 8.31445C48.3359 7.875 48.6934 7.51172 49.1387 7.51172C49.5781 7.51172 49.9414 7.875 49.9414 8.31445C49.9414 8.75977 49.5781 9.12305 49.1387 9.12305C48.6934 9.12305 48.3359 8.75977 48.3359 8.31445Z"
             fill="black"
@@ -167,7 +163,7 @@ const NavigationMenu = () => {
                   <div className="flex items-center">
                     <div className="mr-2 flex items-center justify-center w-8 h-8 rounded-md border border-neutral-200">
                       <svg
-                        className="w-5 h-5 grayscale"
+                        className="size-5 grayscale"
                         viewBox="0 0 28 28"
                         fill="none"
                       >
@@ -231,7 +227,7 @@ const NavigationMenu = () => {
                   <div className="flex items-center">
                     <div className="mr-2 flex items-center justify-center w-8 h-8 rounded-md border border-neutral-200">
                       <svg
-                        className="w-5 h-5 grayscale"
+                        className="size-5 grayscale"
                         viewBox="0 0 28 28"
                         fill="none"
                       >
@@ -253,7 +249,7 @@ const NavigationMenu = () => {
                   <div className="flex items-center">
                     <div className="mr-2 flex items-center justify-center w-8 h-8 rounded-md border border-neutral-200">
                       <svg
-                        className="w-5 h-5 grayscale"
+                        className="size-5 grayscale"
                         viewBox="0 0 28 28"
                         fill="none"
                       >
@@ -317,7 +313,7 @@ const NavigationMenu = () => {
                   <div className="flex items-center">
                     <div className="mr-2 flex items-center justify-center w-8 h-8 rounded-md border border-neutral-200">
                       <svg
-                        className="w-5 h-5 grayscale"
+                        className="size-5 grayscale"
                         viewBox="0 0 28 28"
                         fill="none"
                       >
@@ -339,7 +335,7 @@ const NavigationMenu = () => {
                   <div className="flex items-center">
                     <div className="mr-2 flex items-center justify-center w-8 h-8 rounded-md border border-neutral-200">
                       <svg
-                        className="w-5 h-5 grayscale"
+                        className="size-5 grayscale"
                         viewBox="0 0 28 28"
                         fill="none"
                       >
@@ -403,7 +399,7 @@ const NavigationMenu = () => {
                   <div className="flex items-center">
                     <div className="mr-2 flex items-center justify-center w-8 h-8 rounded-md border border-neutral-200">
                       <svg
-                        className="w-5 h-5 grayscale"
+                        className="size-5 grayscale"
                         viewBox="0 0 28 28"
                         fill="none"
                       >
@@ -439,7 +435,7 @@ const NavigationMenu = () => {
                   <div className="flex items-center">
                     <div className="mr-2 flex items-center justify-center w-8 h-8 rounded-md border border-neutral-200">
                       <svg
-                        className="w-5 h-5 grayscale"
+                        className="size-5 grayscale"
                         viewBox="0 0 28 28"
                         fill="none"
                       >
@@ -503,7 +499,7 @@ const NavigationMenu = () => {
                   <div className="flex items-center">
                     <div className="mr-2 flex items-center justify-center w-8 h-8 rounded-md border border-neutral-200">
                       <svg
-                        className="w-5 h-5 grayscale"
+                        className="size-5 grayscale"
                         viewBox="0 0 28 28"
                         fill="none"
                       >
@@ -525,7 +521,7 @@ const NavigationMenu = () => {
                   <div className="flex items-center">
                     <div className="mr-2 flex items-center justify-center w-8 h-8 rounded-md border border-neutral-200">
                       <svg
-                        className="w-5 h-5 grayscale"
+                        className="size-5 grayscale"
                         viewBox="0 0 28 28"
                         fill="none"
                       >
@@ -589,7 +585,7 @@ const NavigationMenu = () => {
                   <div className="flex items-center">
                     <div className="mr-2 flex items-center justify-center w-8 h-8 rounded-md border border-neutral-200">
                       <svg
-                        className="w-5 h-5 grayscale"
+                        className="size-5 grayscale"
                         viewBox="0 0 28 28"
                         fill="none"
                       >
@@ -611,7 +607,7 @@ const NavigationMenu = () => {
                   <div className="flex items-center">
                     <div className="mr-2 flex items-center justify-center w-8 h-8 rounded-md border border-neutral-200">
                       <svg
-                        className="w-5 h-5 grayscale"
+                        className="size-5 grayscale"
                         viewBox="0 0 28 28"
                         fill="none"
                       >
@@ -675,7 +671,7 @@ const NavigationMenu = () => {
                   <div className="flex items-center">
                     <div className="mr-2 flex items-center justify-center w-8 h-8 rounded-md border border-neutral-200">
                       <svg
-                        className="w-5 h-5 grayscale"
+                        className="size-5 grayscale"
                         viewBox="0 0 28 28"
                         fill="none"
                       >
@@ -697,7 +693,7 @@ const NavigationMenu = () => {
                   <div className="flex items-center">
                     <div className="mr-2 flex items-center justify-center w-8 h-8 rounded-md border border-neutral-200">
                       <svg
-                        className="w-5 h-5 grayscale"
+                        className="size-5 grayscale"
                         viewBox="0 0 28 28"
                         fill="none"
                       >
@@ -773,7 +769,7 @@ const NavigationMenu = () => {
                   <div className="flex items-center">
                     <div className="mr-2 flex items-center justify-center w-8 h-8 rounded-md border border-neutral-200">
                       <svg
-                        className="w-5 h-5 grayscale"
+                        className="size-5 grayscale"
                         viewBox="0 0 28 28"
                         fill="none"
                       >
@@ -837,7 +833,7 @@ const NavigationMenu = () => {
                   <div className="flex items-center">
                     <div className="mr-2 flex items-center justify-center w-8 h-8 rounded-md border border-neutral-200">
                       <svg
-                        className="w-5 h-5 grayscale"
+                        className="size-5 grayscale"
                         viewBox="0 0 28 28"
                         fill="none"
                       >
@@ -859,7 +855,7 @@ const NavigationMenu = () => {
                   <div className="flex items-center">
                     <div className="mr-2 flex items-center justify-center w-8 h-8 rounded-md border border-neutral-200">
                       <svg
-                        className="w-5 h-5 grayscale"
+                        className="size-5 grayscale"
                         viewBox="0 0 28 28"
                         fill="none"
                       >
@@ -923,7 +919,7 @@ const NavigationMenu = () => {
                   <div className="flex items-center">
                     <div className="mr-2 flex items-center justify-center w-8 h-8 rounded-md border border-neutral-200">
                       <svg
-                        className="w-5 h-5 grayscale"
+                        className="size-5 grayscale"
                         viewBox="0 0 28 28"
                         fill="none"
                       >

@@ -64,7 +64,7 @@ const Trail = (props: {}) => {
         />
         <div
           ref={handleRef}
-          className="absolute top-[-7px] -left-2 w-4 h-4 bg-white border border-neutral-300 rounded-full cursor-grab hover:shadow-lg touch-none"
+          className="absolute top-[-7px] -left-2 size-4 bg-white border border-neutral-300 rounded-full cursor-grab hover:shadow-lg touch-none"
           // @ts-ignore
           {...bindDrag()}
         >

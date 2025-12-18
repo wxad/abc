@@ -131,7 +131,7 @@ const Demo = ({
                   {value0}°C
                 </div>
               )}
-              <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 rotate-45 w-4 h-4 rounded-xs bg-black" />
+              <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 rotate-45 size-4 rounded-xs bg-black" />
             </div>
             <div
               className={`absolute bottom-5 w-14 h-9 text-sm text-white bg-black rounded-md transform transition-[opacity,visibility] duration-500 -translate-x-1/2 ${
@@ -167,7 +167,7 @@ const Demo = ({
                   {value1}°C
                 </div>
               )}
-              <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 rotate-45 w-4 h-4 rounded-xs bg-black" />
+              <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 rotate-45 size-4 rounded-xs bg-black" />
             </div>
           </div>
         </div>

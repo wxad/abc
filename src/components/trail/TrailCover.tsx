@@ -28,7 +28,7 @@ const CarouselCover = () => {
             />
           </div>
           <div
-            className="absolute top-[-7px] left-[-8px] w-4 h-4 bg-neutral-300 border-2 border-white rounded-full touch-none"
+            className="absolute top-[-7px] left-[-8px] size-4 bg-neutral-300 border-2 border-white rounded-full touch-none"
             style={{
               animation: "traildot 4s ease both infinite",
             }}

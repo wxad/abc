@@ -71,7 +71,7 @@ const Trail = ({ showHeart = false }: { showHeart?: boolean }) => {
         )}
         <div
           ref={element1}
-          className={`absolute -left-3 -top-10 flex items-center justify-center w-6 h-6 text-white text-sm font-semibold bg-neutral-700 rounded-full ${
+          className={`absolute -left-3 -top-10 flex items-center justify-center size-6 text-white text-sm font-semibold bg-neutral-700 rounded-full ${
             showHeart ? "opacity-80" : ""
           }`}
         >
@@ -79,7 +79,7 @@ const Trail = ({ showHeart = false }: { showHeart?: boolean }) => {
         </div>
         <div
           ref={element2}
-          className={`absolute -left-3 -top-24 flex items-center justify-center w-6 h-6 text-white text-sm font-semibold bg-neutral-700 rounded-full ${
+          className={`absolute -left-3 -top-24 flex items-center justify-center size-6 text-white text-sm font-semibold bg-neutral-700 rounded-full ${
             showHeart ? "opacity-80" : ""
           }`}
         >
@@ -87,7 +87,7 @@ const Trail = ({ showHeart = false }: { showHeart?: boolean }) => {
         </div>
         <div
           ref={handleRef}
-          className="absolute top-[-7px] -left-2 w-4 h-4 bg-white border border-neutral-300 rounded-full cursor-grab hover:shadow-lg touch-none"
+          className="absolute top-[-7px] -left-2 size-4 bg-white border border-neutral-300 rounded-full cursor-grab hover:shadow-lg touch-none"
           // @ts-ignore
           {...bindDrag()}
         >

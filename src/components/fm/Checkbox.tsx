@@ -63,7 +63,7 @@ const Checkbox = ({
   return (
     <div className="inline-flex items-center cursor-pointer">
       <div
-        className={`relative mr-1 w-4 h-4 border rounded-xs ${indicatorBorderClass} ${indicatorBgClass} ${
+        className={`relative mr-1 size-4 border rounded-xs ${indicatorBorderClass} ${indicatorBgClass} ${
           shortAnimation ? "transition-all duration-300" : ""
         }`}
         ref={indicatorRef}
