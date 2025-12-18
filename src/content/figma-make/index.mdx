@@ -1,0 +1,200 @@
+---
+  title: "Figma Make 的使用建议与更多 AI 的思考"
+  description: "最近我在 Figma Make 中单纯通过口喷制作了一些粗糙的朋友圈形态 Demo，想在这里记录一下我的使用建议，并更多地分享我对 AI 的思考。"
+  slug: "figma-make"
+  publishedAt: "2025-12-18"
+  author: "Aragakey."
+  authorLink: "https://codepen.io/aragakey"
+---
+
+import Demos from "@/components/figma-make/Demos"
+import History from "@/components/figma-make/History"
+import File from "@/components/figma-make/File"
+import Select from "@/components/figma-make/Select"
+import DarkMode from "@/components/figma-make/DarkMode"
+
+最近我在 Figma Make 中单纯通过口喷制作了一些粗糙的朋友圈形态 Demo，想在这里记录一下我的使用建议。它虽然是一套深度绑定 Figma 自身的工具，但经验值得复用。
+
+这是我想在文章中分享的第一点。
+
+另外，Cursor 发布了 [可视化编辑器](https://cursor.com/cn/blog/browser-visual-editor) 的两天后，linear 的 CEO Karri Saarinen
+在 Twitter 分享了两篇 [关于设计师工作方式的思考](https://x.com/karrisaarinen/status/1999730838280503775)。看起来，他对如今的“AI 设计时代”有一些意见。这也很正常 —— 正如同今年他在 [Figma Config](https://www.youtube.com/watch?v=pCil7YNhNCU&t=662s) 上仍然不提 AI，而只说品质那样 —— 他始终以品质自居。我也在这篇[《用户界面的品质》](https://wxad.design/abc/quality-of-ui) 中分享了我对品质与 AI 的看法。
+
+Cursor 设计负责人 Ryo [回复了一条长推](https://x.com/ryolu_/status/2000557301695226265)。两人又在之后 [回复了对方](https://x.com/karrisaarinen/status/2000622512343032075)。
+
+整个讨论的过程非常有趣，在 Twitter 上很少看到两个身居要职的人以文章和长推的形式进行这样认真的讨论。虽说两人的观点并不矛盾甚至互为补充，但不管是立场和理念的不同，他们有自己所侧重的坚持。透过他们的话，看到背后的思维方式，为我们自己所用。
+
+这是我想在文章中分享的第二点。
+
+---
+
+## Demos
+
+<Demos />
+
+这 4 个 Demo 的实现方式有所侧重，从左至右地：
+
+1. [轮播](https://carousel-0.figma.site)：单张参考图 + 10 轮对话；
+2. [话题](https://topic.figma.site)：链接 Figma + 15 轮对话；
+3. [粒子](https://particle.figma.site)：50 轮对话；
+4. [圆柱贴图](https://cylinder0.figma.site)：50 轮对话。
+
+如果你能够通过 Tencent 账号登录 Figma，可以点击上面的链接体验。在整个过程中没有敲任何代码。完成 50 轮对话我大概需要 4 小时左右。
+
+---
+
+Ryo [乐此不疲地说](https://www.youtube.com/watch?v=3JiVDYL20G4) agents 填补了我们与代码之间的 gap，让代码不再那样吓人。但是，他毕竟是一个从 11 岁就开始开发网站的人。
+
+以及他今年的 KPI 就是 [把所有设计师都变成开发者](https://youtu.be/3JiVDYL20G4?t=245)。但是，对于一个不懂域名和后台、不知道 Vercel 和 Cloudflare 的人，他要如何通过 Cursor 发布页面呢？我认为 Cursor 的可视化编辑器只是第一步，但还缺少很多能让设计师独自完成任务的功能。
+
+这正是我目前在产品功能上更推荐 Figma Make 的原因，它有如下的优势（这些优势并不是 Figma 独有的，但集成得确实方便）：
+
+## 协作与完整的对话历史
+
+分享一个 Figma Make 文件就像分享一个 Figma Design 文件一样，不同的人可以在同一个项目中协作。并且我们可以在同一个列表中查看所有的对话历史，不必担心遗忘或丢失：
+
+<History />
+
+## 连接 Figma Design
+
+Figma 管理的就是设计资产，不管是设计稿本身，还是承载 Design Tokens 的 Library。只要我们所要制作的内容是需要由设计规范驱动的，Figma 在这个时代仍然有很大优势。
+
+我们可以右键一个 Frame，发送到 Figma Make，再选择一个模板 Remix，快速地开始还原工作：
+
+<File />
+
+## 快速选择元素修改
+
+这个就和 Cursor 的新功能有点像了，不过 Cursor 做得更偏 Webflow 或 Framer，Figma 做得相对简单。我们可以快速修改样式，或者选择元素让 AI 帮我们完成：
+
+<Select />
+
+## 模板与 Guidelines
+
+上文提到，我们会同过一个模板 Remix，而不是从头开始。这个模板包含了：
+
+1. Guidelines 规范：AI 会根据 Guidelines 规范执行任务；
+2. 设计规范：内置了颜色、字体、间距等设计规范，于 Guidelines 中声明；
+3. 设计资产：内置了图标、朋友圈 Web 组件、以及可供 AI 参考的示例代码，以保证它更加可控。
+
+这三者结合后，我的朋友圈模板提供了两张模式：还原模式与创新模式。
+
+---
+
+在还原模式下，会根据规范与资产还原设计稿，将颜色等使用规范过后的类名实现：
+
+<img
+  className="block mx-auto my-8 w-[320px] rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/figma-guidelines-0.webp"
+  alt="还原模式"
+/>
+
+可以在 Reasoning 的输出中看到，AI 知道自己要完成的是“还原模式”，“完全沉浸到 Guidelines.md” 中，且会利用提供的 `MomentAd` 与 `MomentWrapper` 组件搭建页面。
+
+要以一个相对高质量的方式开始工作，否则我们可能还原出这样的一个结果：
+
+<img
+  className="block mx-auto my-8 w-full rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/figma-no-template.webp"
+  alt="还原模式"
+/>
+
+有一些明显的 UI 问题，字重也不对，以及 AI 不会理解绿色是主题色、蓝色是链接色，这些都需要我们通过 Guidelines.md 声明，才能一次就还原出一个自动支持暗黑模式的结果：
+
+<DarkMode />
+
+---
+
+在创新模式下，提供了自己过往做过的 10 个案例：
+
+<img
+  className="block mx-auto my-8 w-full rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/figma-examples.webp"
+  alt="创新模式参考案例"
+/>
+
+为了让 AI 更好地理解创新方向，让 AI 对概念、思路、特点、解决的问题、视觉、交互及技术要点做一个大概的分析：
+
+<img
+  className="block mx-auto my-8 w-[260px] rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/figma-details.webp"
+  alt="创新模式细节分析"
+/>
+
+实际上让 AI 理解创新方向我是觉得没什么用。如果让它从零创新自然不可能契合业务方向；如果提供了 10 个案例，它又总是想要模仿。更重要的意义还是规范好技术栈，这样在实现质量上也能得到一定保证。
+
+---
+
+把这些都规整起来，最终我们的 Guidelines.md 实际长达 1000 行。
+
+## Gemini 3 Pro
+
+可在 Experiment with AI models 中开启 Gemini 3 Pro，开启后面板中会显示一个实验的 Icon。
+
+## 脏活：发布、后台、版本管理等
+
+1. 发布：页面直接发布到 xxx.figma.site 下，更新后也能即时生效；
+2. 后台：集成 Supabse，非常方便地创建仓库；
+3. 版本管理：每一次对话都记录一个版本，可以回退到任意版本。
+
+这些都属于“脏活”，上面所说的模板其实也是脏活之一。必须要有一个人来做这些事情，才能让使用者更专注于真正的功能。
+
+## 连接 Github
+
+集成 Github 账户，如此设计师与设计师之间可以通过 Figma 协作，同时设计师与工程师之间又可以通过 Github 交叉协作。
+
+---
+
+从目前的产品功能来看，Figma Make 比 Cursor 或 Codebuddy 确实友好不少。
+
+## Figma Make 的劣势
+
+1. 网站权限和 Figma 文件权限类似，必须由公司账号登录；
+2. 只能上传图片。我想上传个不跨域的视频，但没找到通过 Prompt 绕过限制帮我上传的方法；
+3. 只能建两个免费数据库，且速度极慢（5, 6 秒）；
+4. 既不是一个面向生产的平台，也不是一个非常自由的工具。更适合做一些纯前端的 Demo。
+
+## 使用建议
+
+1. 学习工具，用好工具。
+   模板、适合自己的不同的 guidelines、协作、连接设计稿、版本管理等等，我认为这些对于未来不管是 Figma 还是 Cursor 以及所有的工具来说，都是必须的。Figma Make 可能会被替代，可能不是团队的最佳实践，但经验是可以复用的。
+2. 先静态、再动态；先前端、再后端。
+   特别是设计师朋友们，我的建议是不要过早地做功能。当我们将前端整完以后，再以比较系统地方式整理数据字段：
+
+   <img
+     className="block mx-auto my-8 w-[320px] rounded-xl"
+     src="https://wxa.wxs.qq.com/wxad-design/yijie/figma-database.webp"
+     alt="数据库"
+   />
+
+3. 将它作为设计工具的延展与补充。
+
+## 为了让设计更好
+
+将它作为设计工具的延展与补充。这正是我想说的。
+
+说回文章开头 Karri 和 Ryo 的讨论（如果你没有点开，我还是要说非常推荐阅读），他们所说的两个观点不矛盾，无论你接不接触材料，你都可能做出好的设计。因此反过来说，除非你用真实的材料能够做出更好、更完整的设计，否则你就不要碰，不然它除了限制了你，对你没有任何好处。
+
+有什么不限制的案例？
+
+很早以前，一位设计师做一个文字颜色的适配，背景颜色是由广告主设置的，我们需要判断如果背景是暗色，文字就白色；背景是亮色，文字就黑色。
+
+我们要保证对比度达到 4.5:1 的可读性，但是这件事是否属于设计呢？开发认为属于。开发同学就和这位设计师说，你得给我一个判断规则，否则我没有办法实现。但是设计师可能就很懵：不是我不想帮你，但我已经给出了两套黑白的设计方案了，我的设计完成了，具体的判断不应该交给你来实现吗？开发会想：你作为设计都不知道什么时候会出什么颜色，你的设计没有做完。
+
+我们可以把这件事推还给开发，同时我们也可以更靠近材料，让我们的设计更完整一点。
+
+---
+
+另一位设计师同事，为了实现一个 AI 中插卡片，花了非常多的时间调试 Prompt，最终制作出非常完整的 Demo。我问他：为什么你要花时间做那么完整的 demo，这些 demo 真的推到了开发那边能不能实现都是另说，他们也不会用你搭建的这套系统啊。你花那么多时间只是让你的 demo 更完整而已吗？
+
+他说不是，即便开发用的模型和他用的模型不同，Prompt 是可以复用的，如何调教模型的过程也是设计的一部分。
+
+我们可以把这件事推给开发，我们已经设计出了中插和 AI 完美融合的畅想了。如果你结合的不好，那就是模型不行，那就是 AI 的能力还没有达到设计的理想。我们可以这样想，我们也可以像这位设计师那样认为 Prompt 就是设计的一部分。
+
+---
+
+在 AI 出现以前，我自己一直在将真实材料和设计意图结合。不管是 [流畅界面](https://wxad.design/abc/making-fluid-interfaces)，还是 [B 端的设计语言和图表](https://wxad.design/abc/springen2)，我们的设计稿都可以更接近材料。我只是帮设计师做了更进一步的设计 —— 如果你认为我做的事情是设计的一部分的话。你可以把它交给我，这没有问题，不过这些模糊领域的设计由你们来完成，其实是一样的。
+
+事实上，我的工作过程确实就只是和 AI 对话而已。
+
+无论你接不接触材料，你都可能做出好的设计。反过来说，除非你用真实的材料能够做出更好、更完整的设计，否则你就不要碰，不然它除了限制了你，对你没有任何好处。我们去接触材料，一定是为了让设计更好。

@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react"
-import DemoBox from "../DemoBox"
 import { useIntersectionObserver } from "react-intersection-observer-hook"
 
 const Demo = () => {

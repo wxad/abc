@@ -22,6 +22,7 @@ import SprossCover from "@/components/spross/SprossCover"
 import QualityOfUICover from "@/components/quality-of-ui/QualityOfUICover"
 import SvgLiquidGlassCover from "@/components/svg-liquid-glass/SvgLiquidGlassCover"
 import Wxad11Cover from "@/components/wxad11/Wxad11Cover"
+import FigmaMakeCover from "@/components/figma-make/FigmaMakeCover"
 import NextLink from "next/link"
 import {
   ArrowRight,
@@ -32,6 +33,15 @@ import {
 } from "lucide-react"
 
 const posts = [
+  {
+    title: "Figma Make 的使用建议与更多 AI 的思考",
+    description: "最近我在 Figma Make 中单纯通过口喷制作了一些粗糙的朋友圈形态 Demo，想在这里记录一下我的使用建议，并更多地分享我对 AI 的思考。",
+    slug: "figma-make",
+    publishedAt: "2025-12-18",
+    author: "Aragakey.",
+    authorLink: "https://codepen.io/aragakey",
+    children: <FigmaMakeCover />,
+  },
   {
     title: "让我们继续“跳跃”",
     description: "我们继续在 UI 中玩一玩“跳跃”，并将它扩展到图表中。",
