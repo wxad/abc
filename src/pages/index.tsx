@@ -15,6 +15,7 @@ import ScrollMockCover from "@/components/scroll-mock/ScrollMockCover"
 import ShadcnCover from "@/components/shadcn/ShadcnCover"
 import DrawerCover from "@/components/drawer/DrawerCover"
 import DengCover from "@/components/deng/DengCover"
+import MakingFunInterfacesCover from "@/components/making-fun-interfaces/Cover"
 import MakingFluidInterfacesCover from "@/components/making-fluid-interfaces/Cover"
 import MakingFluidInterfacesCover2 from "@/components/making-fluid-interfaces/Cover2"
 import SpringenCover from "@/components/springen/SpringenCover"
@@ -34,8 +35,19 @@ import {
 
 const posts = [
   {
+    title: "制作有趣的界面：朋友圈广告年度评选 2025",
+    description:
+      "基于《制作流畅界面》，今年的活动在“速度、碰撞、节奏”上做了更多尝试。让界面在流畅之上，表达更多的趣味。",
+    slug: "making-fun-interfaces",
+    publishedAt: "2026-01-26",
+    author: "Aragakey.",
+    authorLink: "https://codepen.io/aragakey",
+    children: <MakingFunInterfacesCover />,
+  },
+  {
     title: "Figma Make 的使用建议与更多 AI 的思考",
-    description: "最近我在 Figma Make 中单纯通过口喷制作了一些粗糙的朋友圈形态 Demo，想在这里记录一下我的使用建议，并更多地分享我对 AI 的思考。",
+    description:
+      "最近我在 Figma Make 中单纯通过口喷制作了一些粗糙的朋友圈形态 Demo，想在这里记录一下我的使用建议，并更多地分享我对 AI 的思考。",
     slug: "figma-make",
     publishedAt: "2025-12-18",
     author: "Aragakey.",
@@ -398,7 +410,7 @@ const Home = () => {
                 author,
                 authorLink,
               },
-              index
+              index,
             ) => {
               return (
                 <div key={index} className="mb-12">
@@ -476,7 +488,7 @@ const Home = () => {
                   />
                 </div>
               )
-            }
+            },
           )}
         </div>
         <div className="mt-20 flex flex-col items-center">

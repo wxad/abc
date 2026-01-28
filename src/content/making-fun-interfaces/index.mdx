@@ -1,0 +1,135 @@
+---
+title: "制作有趣的界面：朋友圈广告年度评选 2025"
+description: "基于《制作流畅界面》，今年的活动在“速度、碰撞、节奏”上做了更多尝试。让界面在流畅之上，表达更多的趣味。"
+slug: "making-fun-interfaces"
+publishedAt: "2026-01-26"
+author: "Aragakey."
+authorLink: "https://codepen.io/aragakey"
+---
+
+import Intro from "@/components/making-fun-interfaces/Intro"
+import Styles from "@/components/making-fun-interfaces/Styles"
+import Vote from "@/components/making-fun-interfaces/Vote"
+import Vote10 from "@/components/making-fun-interfaces/Vote10"
+import Confirm from "@/components/making-fun-interfaces/Confirm"
+import StackInteraction from "@/components/making-fun-interfaces/StackInteraction"
+import CarouselNoChoreography from "@/components/designing-depth/CarouselNoChoreography"
+import StackParallax from "@/components/making-fun-interfaces/StackParallax"
+import StackParallaxCompare from "@/components/making-fun-interfaces/StackParallaxCompare"
+import StackEnterDemo from "@/components/making-fun-interfaces/StackEnterDemo"
+import StackEnter from "@/components/making-fun-interfaces/StackEnter"
+
+> Beautiful, fluid motions bring the interface to life, conveying status, providing feedback and instruction, and enriching the visual experience of your app or game.  
+> 美观流畅的动态效果赋予界面活力，从而传达状态、提供反馈和指示以及丰富你 App 或游戏的视觉体验。
+>
+> —— [《人机交互指南-动态效果》](https://developer.apple.com/cn/design/human-interface-guidelines/motion)
+
+在[《制作流畅界面》](https://wxad.design/abc/making-fluid-interfaces)中，我总结了流畅界面从基础到“好玩”的各个目标的具体制作方法。而正如《人机交互指南》所说，流畅的目标本就不至于基础体验，而是为了赋予更多的丰富性与活力。今年，我们在过去的基础上，将精力花在了更多“有趣”的方向上，以动量为核心，实现了关于“速度”、“碰撞”、“节奏”等具体的表达。
+
+它们仍然遵循流畅的方法，因此制作它们的过程有一种水到渠成的感觉。以下是一些具体场景的简单分析。
+
+## 入场
+
+<Intro />
+
+入场过程展示了以下过程：
+
+1. 头像从 loading 动画中衔接蹦出；
+2. 头像收回 @ 符号，将边框的蓝色传递给用户昵称。由于收回的过程存在动量，表现上更像是“砸向”用户昵称，才出现了 3 个氛围元素，并造成了用户昵称的轻微旋转 —— **这是动量的应用**；
+3. 同时，新的气泡逐个渐显，稍有一些 stagger，保持整体向上位移、视觉中心不变；
+4. “目光精准”四字由黑色刷为蓝色，蓄力后向右位移并发射出氛围图标 —— **这又是动量的应用**；
+5. 在所有气泡出现完毕后，先向下轻微位移和旋转蓄力，再向上移出页面 —— **这也是动量的应用**。
+
+---
+
+往年我们使用 3d 爱心这样的元素表达，今年的主题则放在了视线范围更小的颜文字与对话气泡上。这意味着，我们想要打造的“对话感”和关于文字本身的感觉，可能都需要通过每一个气泡去表达。
+
+因此我一开始尝试了几种文字和气泡本身的表达：
+
+<Styles />
+
+这些风格尝试包含旋转进入、容器变形、文字扫光或 stagger 进入，但它们并没有出现在入场中（或整个页面中）。因为对文字和气泡本身的修饰分散了用户对文字内容的注意力，在入场时信息相比风格更为重要。而有目的地对于动量的贯彻应用，是在不妨碍体验的同时提供了简洁、精确且真实的感受反馈。**动量是有趣的来源**。
+
+## 投票
+
+<Vote />
+
+在每个投票按钮四周，存在一些氛围元素。在以往为投票按钮增加[“气球拖拽”](https://wxad.design/abc/trail)效果的基础上，我们让氛围元素也响应用户的操作：
+
+1. 左右滑动时，元素之间有一些 x 轴上的视差；
+2. 左右滑动时，根据 velocity，旋转的速度也会加快；
+3. 按住按钮时，加速旋转蓄力；
+4. 松开按钮后，元素向外扩散，衔接 lottie 动画的同时散发出全屏动效。
+
+而以上的这些反馈，也都来源于动量、来源于用户的滑动操作和按下操作。
+
+另外，为了让氛围元素自由地响应用户一系列的操作、同时又要和 lottie 动画接上，我和设计师就需要保证 lottie 的第一帧位置与氛围元素的位置一致 —— 即便用户可能根本来不及注意到。
+
+---
+
+投满 10 票后，上方气泡摇晃出现，同时标题的颜文字也“摇晃起来”：
+
+<Vote10 />
+
+微信标题栏并不属于界面的一部分，而设计师能够想到在标题栏上做文章，和界面形成呼应、让颜文字“摇晃起来”，真是十分巧妙有趣的点子。
+
+## 确认
+
+在投票完成后，我们向用户展示生成前的信息，告诉用户已经为哪些创意投票，并最终将获得什么。一开始，我们的页面会停在以下的状态：
+
+<img
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/confirm-static.webp"
+  alt="confirm-static"
+  className="block mb-4 mx-auto w-full max-w-[320px] rounded-xl"
+/>
+
+但高亮的文字与背景色抢占了底部按钮的注意力，且气泡本身也可能误导用户是可以点击的。我们就需要在合适的时机“褪色”处理。因此这一页的气泡有别于入场页，我通过下一个气泡从下到上的撞击，让上一个气泡“褪色”，有节奏地引出最后的按钮。我们再一次地应用动量，让“弹”有意义：
+
+<Confirm />
+
+## 评委卡
+
+流程结束，用户获得评委卡。在临近上线时，我们决定将这里的方案从一张卡片改为多张卡片。因此我们做了一个堆叠的处理，我们首先确定的是堆叠的交互处理，它来源于 Apple iMessage 的做法：
+
+<StackInteraction />
+
+在[《交互动画的层级设计》](https://wxad.design/abc/designing-depth#%E7%AC%AC-2-%E7%A7%8D%E5%B1%82%E7%BA%A7%EF%BC%9A%E5%8A%A8%E7%94%BB%E7%BC%96%E6%8E%92)中我提到了关于动画编排的重要性。我们经常会看到类似于这样的轮播 UI：
+
+<CarouselNoChoreography />
+
+我说：
+
+> 这样显然不够真实和自然，因为真实世界中不可能发生一张卡片穿过另一张卡片的现象。我们可以说这样的设计是粗暴的、缺少编排的。  
+> 足够自然的编排应该考虑到两张卡片的关系。会让你会心一笑，会值得你细细把玩。
+
+为了让用户“细细把玩”，我们也为最后一张卡片的氛围元素增加了多层次的视差：
+
+<StackParallax />
+
+一开始我使用的是正向的视差（⬇️左），将氛围元素视为前景、漂浮在卡片上。而设计师提出应该成为后景，透过卡片的空间看到内部的心。对比之下，确实反向的视差 —— 将卡片作为一个动态蒙版的感觉更加自然，因为氛围元素确实是在文字后、卡片内，而不是漂浮的元素。
+
+<StackParallaxCompare />
+
+---
+
+还没结束，我们需要这叠卡做一个入场。一方面，虽然从叙事上来说，一张一张地揭开至最终卡片符合我们的叙事逻辑，但我又担心明明是最重要的却放在最后；另一方面，设计师也考虑要教育用户这是一叠可以交互的卡。
+
+于是我们开始用一张简单的封面图作为初始状态，从左至右地飘过，随后落入卡片的堆叠中，等待用户的揭开：
+
+<StackEnterDemo />
+
+但是，封面并不包含任何信息，它变得像一个单纯的视觉上的过渡，并没有表达是一张“等待被揭开”的卡片。接着我们考虑在这张封面上增加文字的轮播，让它看起来正在生成 —— 但这样分成两步好像也没有必要，反而让事情变得复杂。我们只是需要一种氛围突出最后一张卡片而已，因此最后入场变为了：
+
+<StackEnter />
+
+在入场阶段，氛围元素从底部中心旋转散开，文字也揭开。接着，它们进入卡片的堆叠中。在入场时，氛围元素从下向上运动；在左右滑动时，氛围元素又变为左右运动，响应交互。
+
+## 最后
+
+我们今年的主题是文字与气泡。回看最初我对文字和气泡的尝试，几乎没有被保留在最终的方案中。将这两点交给视觉和动画去表达有趣，而在页面的交互体验上以动量为核心去表达有趣。
+
+美观流畅的动态效果赋予界面活力，从而传达状态、提供反馈和指示以及丰富你 App 或游戏的视觉体验。
+
+这篇文章并没有像[《制作流畅界面》](https://wxad.design/abc/making-fluid-interfaces)那样，去归纳具体的原则。而只是遵循它，将我们这一次关于“速度”、“碰撞”、“节奏”等的表达、背后的尝试分享给你。
+
+今年是朋友圈广告年度评选的第九年，明年将是活动的十周年。每一次，我们时间都非常紧迫，但即便是最后一天，我和设计师仍然能用手比划着、想象地对页面体验迅速讨论，然后制作上线。这是因为我们不可替代的能力，也是因为我们不可替代的默契。
