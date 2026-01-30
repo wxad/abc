@@ -292,7 +292,7 @@ code[data-line-numbers-max-digits="4"] > [data-line]::before {
 }
 
 code:where(:not(pre) > code) {
-  padding: 2px;
+  padding: 2px 4px;
   background-color: hsl(0, 0%, 90%);
   border-radius: 2px;
 }
