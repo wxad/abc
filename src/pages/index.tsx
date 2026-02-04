@@ -40,6 +40,7 @@ const posts = [
       "基于《制作流畅界面》，今年的活动在“速度、碰撞、节奏”上做了更多尝试。让界面在流畅之上，表达更多的趣味。",
     slug: "making-fun-interfaces",
     publishedAt: "2026-01-26",
+    editedAt: "2026-02-05",
     author: "Aragakey.",
     authorLink: "https://codepen.io/aragakey",
     children: <MakingFunInterfacesCover />,
@@ -410,7 +411,7 @@ const Home = () => {
                 author,
                 authorLink,
               },
-              index,
+              index
             ) => {
               return (
                 <div key={index} className="mb-12">
@@ -488,7 +489,7 @@ const Home = () => {
                   />
                 </div>
               )
-            },
+            }
           )}
         </div>
         <div className="mt-20 flex flex-col items-center">

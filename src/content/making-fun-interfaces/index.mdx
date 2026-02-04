@@ -3,6 +3,7 @@ title: "制作有趣的界面：朋友圈广告年度评选 2025"
 description: "基于《制作流畅界面》，今年的活动在“速度、碰撞、节奏”上做了更多尝试。让界面在流畅之上，表达更多的趣味。"
 slug: "making-fun-interfaces"
 publishedAt: "2026-01-26"
+editedAt: "2026-02-05"
 author: "Aragakey."
 authorLink: "https://codepen.io/aragakey"
 ---
@@ -18,6 +19,7 @@ import StackParallax from "@/components/making-fun-interfaces/StackParallax"
 import StackParallaxCompare from "@/components/making-fun-interfaces/StackParallaxCompare"
 import StackEnterDemo from "@/components/making-fun-interfaces/StackEnterDemo"
 import StackEnter from "@/components/making-fun-interfaces/StackEnter"
+import Result from "@/components/making-fun-interfaces/Result"
 
 > Beautiful, fluid motions bring the interface to life, conveying status, providing feedback and instruction, and enriching the visual experience of your app or game.  
 > 美观流畅的动态效果赋予界面活力，从而传达状态、提供反馈和指示以及丰富你 App 或游戏的视觉体验。
@@ -108,7 +110,7 @@ import StackEnter from "@/components/making-fun-interfaces/StackEnter"
 
 <StackParallax />
 
-一开始我使用的是正向的视差（⬇️左），将氛围元素视为前景、漂浮在卡片上。而设计师提出应该成为后景，透过卡片的空间看到内部的心。对比之下，确实反向的视差 —— 将卡片作为一个动态蒙版的感觉更加自然，因为氛围元素确实是在文字后、卡片内，而不是漂浮的元素。
+一开始我使用的是正向的视差（⬇️ 左），将氛围元素视为前景、漂浮在卡片上。而设计师提出应该成为后景，透过卡片的空间看到内部的心。对比之下，确实反向的视差 —— 将卡片作为一个动态蒙版的感觉更加自然，因为氛围元素确实是在文字后、卡片内，而不是漂浮的元素。
 
 <StackParallaxCompare />
 
@@ -126,13 +128,19 @@ import StackEnter from "@/components/making-fun-interfaces/StackEnter"
 
 在入场阶段，氛围元素从底部中心旋转散开，文字也揭开。接着，它们进入卡片的堆叠中。在入场时，氛围元素从下向上运动；在左右滑动时，氛围元素又变为左右运动，响应交互。
 
+## 结果公布
+
+在 2 月 3 日，我们公布了评选结果。在最终的页面上，设计师打造了“花落谁家”的氛围动画，并随着页面滚动，从上方飘动到各个创意。在设计的想法基础上，我将今年活动的语言、视差、动量继续延用：
+
+<Result />
+
 ## 最后
 
 我们今年的主题是文字与气泡。回看最初我对文字和气泡的尝试，几乎没有被保留在最终的方案中。将这两点交给视觉和动画去表达有趣，而在页面的交互体验上以动量为核心去表达有趣。
 
->美观流畅的动态效果赋予界面活力，从而传达状态、提供反馈和指示以及丰富你 App 或游戏的视觉体验。
+> 美观流畅的动态效果赋予界面活力，从而传达状态、提供反馈和指示以及丰富你 App 或游戏的视觉体验。
 
-这更像是对一个成熟、高频使用的 App 的要求，而我们毕竟只是一年一次的运营活动。然而对我们来说，只有把有趣做得足够丰富，才可能一年仅一次地，就在这一两分钟的时间里抓住用户。
+这更像是对一个成熟、高频使用的 App 的要求，而我们毕竟只是一年一次的运营活动。然而对我们来说，只有把有趣做得足够丰富，才可能一年仅一次地，就在这一两分钟的时间里抓住用户，去表达我们的品质，这样的机会并不多。
 
 为了达到这个目标，我们做得非常细致，我们更担心做得太多，每一部分的设计与交互都被作为一块独立的体验去打磨。不包含设计输出的文件，前端项目中的动画属性（包括 `useMotionValue` `useSpring` `useTransform`）的数量接近 300 个。如果你有制作 H5 活动的经验，你会知道这是一个夸张的数量。
 
@@ -140,4 +148,4 @@ import StackEnter from "@/components/making-fun-interfaces/StackEnter"
 
 这篇文章并没有像[《制作流畅界面》](https://wxad.design/abc/making-fluid-interfaces)那样，去归纳具体的原则。而只是遵循它，将我们这一次关于“速度”、“碰撞”、“节奏”等的表达、背后的尝试分享给你。
 
-今年是朋友圈广告年度评选的第九年，明年将是活动的十周年。每一次，我们时间都非常紧迫，但即便是最后一天，我和设计师仍然能用手比划着、想象地对页面体验迅速讨论，然后制作上线。这是因为我们不可替代的能力，也是因为我们不可替代的默契。
+今年是朋友圈广告年度评选的第九年，明年将是活动的十周年。每一次，我们时间都非常紧迫，但即便是最后一天，我和设计师仍然能用手比划着、想象地对页面体验迅速讨论，然后制作上线。这是因为我们不可替代的能力，也是因为我们不可替代的默契。即便现在这个时代，（我个人感觉）人们对于 **“制作”** 本身的关注与评价有些变了味，但我们对品质的打造与细究不会改变。
