@@ -5,7 +5,7 @@ const Cover = () => {
       <div className="absolute inset-0 bg-size-[40px_40px] border border-neutral-300 overflow-hidden rounded-full">
         <img
           src="https://wxa.wxs.qq.com/wxad-design/yijie/foundations-motion-intro@2x.webp"
-          className="absolute-full object-cover mix-blend-luminosity invert"
+          className="absolute-full object-cover invert grayscale contrast-125"
           loading="lazy"
           alt="cover"
         />
