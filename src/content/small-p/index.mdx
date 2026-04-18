@@ -1,0 +1,118 @@
+---
+  title: "小 p: 一次关于 AI 的交互实验"
+  description: "我好像就是需要让自己想一些看起来没有用的事。功能可以被复制，但有趣的互动才让人印象深刻。我仍能看到自己一如既往地对“多余”的尝试。"
+  slug: "small-p"
+  publishedAt: "2026-04-17"
+  author: "Aragakey."
+  authorLink: "https://codepen.io/aragakey"
+---
+
+import PlaygroundBase from "@/components/small-p/PlaygroundBase"
+import PlaygroundFigma from "@/components/small-p/PlaygroundFigma"
+import PlaygroundJump from "@/components/small-p/PlaygroundJump"
+import PlaygroundSpace0 from "@/components/small-p/PlaygroundSpace0"
+import PlaygroundRotate from "@/components/small-p/PlaygroundRotate"
+import PlaygroundMove from "@/components/small-p/PlaygroundMove"
+import PlaygroundWorker from "@/components/small-p/PlaygroundWorker"
+import PlaypadStars from "@/components/small-p/PlaypadStars"
+import PlaypadBridge from "@/components/small-p/PlaypadBridge"
+import PlaypadPretext from "@/components/small-p/PlaypadPretext"
+import PDesktop from "@/components/small-p/PDesktop"
+
+## 一些啰嗦
+
+过去前端工程师总抱怨技术变化得快，现在 AI 让所有人都处于变化的风暴之中。
+
+我尝试做工具、工作流，如同大家一样；我为身边的人解答问题，几乎来者不拒；我做一些基础建设的工作... 这些事情太重要，可它们却“无聊”，尤其是所有人都在做时。当我们都处于风暴之中，到底是风暴在走，还是我们在走？我自称 design engineer，而当身边的设计师都好像在向这个方向靠近时，我对自己的下一步却有一些不知所措。
+
+“无聊”是一个不负面的中性词。在每一件事里发现无聊，是一种健康的审视，因为每一件事都不可能完全按照你的设想发生。它是自己与现状磨合的过程。想要去寻找一个方向，是在推特上看到 [蚂蚁写字](https://x.com/baothiento/status/2035119726574133733) 的那刻 —— 太棒了！我为什么没有在思考一些更加有趣的事情呢？
+
+我看到过一些人说 AI 改变了他的世界观与工作方式，或许他们遇到了属于自己的 [CSS Doodle](https://wxad.design/abc/generative)。我对 AI 的憧憬没有 CSS Doodle 那么高，但至少希望做一些自己想做的。
+
+让我先来说说我做了什么。
+
+## 给 AI 一个指针：小 p 是一位组员
+
+我们将组内的一些 side projects 放在一个叫 [Playground](https://wxad-design.woa.com/playground) 的地方，它是一座为想象力充电的游乐场：
+
+<PlaygroundBase />
+
+现在要将 AI 带到这个页面中，为你解答有关项目的问题。<del>很简单：在右下角增加一个弹出 Chatbot 对话框的入口。</del> 想象一下真的有一个人在页面中与你聊天，会是什么样的？我对 Playground 的第一个改造是将它 Figma 化，以缩放、拖拽的形式探索页面：
+
+<PlaygroundFigma />
+
+去项目玩玩，不再是新建一个浏览器 tab，而是切换视角，直接开玩：
+
+<PlaygroundJump />
+
+接着，很自然地，AI 在这里应该拥有一个属于自己的指针 —— 就像我们的一位组员一样。既然是 Playground，那他就叫 小 p 好了。除了聊天以外，小 p 拥有的能力只有简单的 **移动与空间感知**。可以叫他过来（或者离你远点）；可以指着一个项目问“这是什么”，因为他理应知道你在看什么：
+
+<PlaygroundSpace0 />
+
+移动与空间感知，对人来说是最基础的能力。LLM 在这里的作用就是运用 移动 这个基础的能力，去完成动作。比如你也可以让他转一圈：
+
+<PlaygroundRotate />
+
+丰富了知识库后，小 p 还可以把某个人指给你看：
+
+<PlaygroundMove />
+
+再加入 Worker，我们一起和 小 p 玩：
+
+<PlaygroundWorker />
+
+---
+
+整个项目的大部分精力都花在了 Prompt 设计上 —— 如何收集上下文、如何用简单的移动和聊天（小 p 只有这两个能力）去尽可能地完成任务。这很像是在做一款简单的游戏。他也无非是一个有一些知识库的问答助手，可和他的互动方式是有趣的部分。
+
+## 给 AI 一支画笔：和 小 p 一起画画
+
+在 Playground 之后，做 [Playpad](https://wxad-design.woa.com/playpad)。AI 不需要指针，所以赋予指针是 Playground 的难点；同样，AI 绘画不需要画笔，赋予绘制的过程就是 Playpad 的难点。一开始我尝试基于 [p5.brush](https://p5-brush.cargo.site/) 实现，但后来换成基于 [perfect-freehand](https://perfect-freehand-example.vercel.app/) 的 svg 方案，就是因为需要展示轨迹。
+
+Claude 真是太擅长绘制 svg 了：
+
+<PlaypadStars />
+
+画自由女神像和金门大桥：
+
+<PlaypadBridge />
+
+前段时间全网都在玩 [Pretext](https://github.com/chenglou/pretext)，那么我们还可以和小 p 在数学课本上乱涂乱画：
+
+<PlaypadPretext />
+
+## 给 AI 整个屏幕：桌面级小 p
+
+再来，通过 10 轮 agent 对话，用 Swift 把小 p 带到桌面端，成为一个解答你任何问题的助手：
+
+<PDesktop />
+
+当然相比起上面的两个玩具，这个就只是本地的一个 demo 了。之后我也关注到 OpenAI 的 [Computer Use](https://x.com/OpenAI/status/2044827932145897652) 就在做这样的事，相比于只是对话解答，它还能直接操控你的电脑。
+
+---
+
+还能做什么？顺着这样“拟人化”的方式向下走，还想过和小 p 一起写文章会是怎样的呢？如果一个真实的人改你的文章，他并不会像 AI 那样把一大段文字重新发给你，而是会像一个编辑一样，在文章中插入、删除、修改文字，告诉你哪里需要调整。或许像这样：
+
+<img
+  className="block mx-auto my-8 max-w-[50%] min-w-[320px] rounded-lg"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/xiao-p-article.webp"
+/>
+
+不过这好像没有之前的三个玩具那么有趣，因此我便没有继续下去。
+
+## 我在做什么？
+
+好了，我做的事情很简单，就是让 AI 表现得像人。但好像这件事好像没什么意义？
+
+1. 没有用。对于写文章而言，我真的需要 AI 帮我圈圈点点，还是改好输出给我就行了呢？对于绘画而言，为了实现 AI 路径绘制，就只能画一些简单的 SVG 简笔，无法做到更多风格的复杂绘画；
+2. 强行模拟是冗余，更是一种倒退。Figma 不会给 AI 一个指针，因为 AI 根本不需要一个指针。生图引擎也不会给 AI 一个画笔，因为只有人的创作是线性的。
+
+但...如我开头所说，这一次，对我来说什么是有趣呢？**与 AI 的联系和交互方式**。大部分人在**用** AI 去做东西，**用** AI 去完成其他事，却很少探索**和** AI 做什么 —— 真是“无聊”（不负面的中性词）。
+
+AI 对人来说是一个高效的黑盒。是的，AI 不需要“过程”。为了实现这些“过程”的模拟，我需要将所有的“过程”都作为“结果”呈现到前端，让小 p 留下痕迹。我想，把不可见的协作变得可见，说不定能让你和 AI 的关系更有温度。这种完全的多余，反而能让事情变得更有趣。把单向的指令变成双向的共创游戏，这种带着点笨拙感的互动，比直接出结果更有探索的乐趣。
+
+就像 [CSS Doodle](https://wxad.design/abc/generative) 也是无用的 —— 为什么要用 CSS 去画画啊？就像 [UI 动效](https://wxad.design/abc/springen) 是多余的 —— 我更关心你能否解决我的问题啊。
+
+嗯，我好像就是需要让自己想一些看起来没有用的事。功能可以被复制，但有趣的互动才让人印象深刻。小 p 是一次关于 AI 的交互实验，我很满足自己能够这样做。即使在现在这个时代，这份满足感并没有持续很久，但我仍能看到自己一如既往地对“多余”的尝试。
+
+现在做得还不够多、还不够好，真正的 AI 体验创新，不是让它效仿人类、不是假装会用鼠标，而是要去思考 AI 能用什么独有的方式让这些协作过程变得更有趣。接着，再让用户适应 AI 的方式。

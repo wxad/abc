@@ -24,6 +24,7 @@ import QualityOfUICover from "@/components/quality-of-ui/QualityOfUICover"
 import SvgLiquidGlassCover from "@/components/svg-liquid-glass/SvgLiquidGlassCover"
 import Wxad11Cover from "@/components/wxad11/Wxad11Cover"
 import FigmaMakeCover from "@/components/figma-make/FigmaMakeCover"
+import SmallPCover from "@/components/small-p/Cover"
 import NextLink from "next/link"
 import {
   ArrowRight,
@@ -34,6 +35,16 @@ import {
 } from "lucide-react"
 
 const posts = [
+  {
+    title: "小 p: 一次关于 AI 的交互实验",
+    description:
+      "我好像就是需要让自己想一些看起来没有用的事。功能可以被复制，但有趣的互动才让人印象深刻。我仍能看到自己一如既往地对“多余”的尝试。",
+    slug: "small-p",
+    publishedAt: "2026-04-17",
+    author: "Aragakey.",
+    authorLink: "https://codepen.io/aragakey",
+    children: <SmallPCover />,
+  },
   {
     title: "制作有趣的界面：朋友圈广告年度评选 2025",
     description:
@@ -411,7 +422,7 @@ const Home = () => {
                 author,
                 authorLink,
               },
-              index
+              index,
             ) => {
               return (
                 <div key={index} className="mb-12">
@@ -489,7 +500,7 @@ const Home = () => {
                   />
                 </div>
               )
-            }
+            },
           )}
         </div>
         <div className="mt-20 flex flex-col items-center">
