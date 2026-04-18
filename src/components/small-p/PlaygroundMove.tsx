@@ -43,8 +43,7 @@ const Demo = () => {
         webkit-playsinline="true"
         playsInline
         loop
-        crossOrigin="anonymous"
-        src="/abc/small-p/playground-move.mp4"
+        src="https://wxa.wxs.qq.com/wxad-design/yijie/playground-move.mp4"
         onTimeUpdate={handleTimeUpdate}
       />
       <div

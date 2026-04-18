@@ -43,8 +43,7 @@ const Demo = () => {
         webkit-playsinline="true"
         playsInline
         loop
-        crossOrigin="anonymous"
-        src="/abc/small-p/playground-jump.mp4"
+        src="https://wxa.wxs.qq.com/wxad-design/yijie/playground-jump.mp4"
         onTimeUpdate={handleTimeUpdate}
       />
       <div
@@ -64,7 +63,7 @@ const Demo = () => {
         播放视频
       </div>
       <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 text-sm text-neutral-400 whitespace-nowrap">
-      切换视角，直接开玩
+        切换视角，直接开玩
       </div>
     </div>
   )
