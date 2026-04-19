@@ -1,4 +1,5 @@
 import DemoBox from "@/components/DemoBox"
+import { wxad11AudioSrc } from "@/components/wxad11/audioCdn"
 import { Pane } from "tweakpane"
 
 import {
@@ -202,7 +203,9 @@ const Demo = ({
       {mode === "final" && (
         <div ref={paneWrapper} className="absolute top-1 right-1 z-1" />
       )}
-      {audio && <audio ref={audioRef} src="/abc/wxad11/elevenlabs-tick.mp3" />}
+      {audio && (
+        <audio ref={audioRef} src={wxad11AudioSrc.elevenlabsTick} />
+      )}
       <div className="hidden md:flex absolute z-1 bottom-4 right-4 items-center gap-1 text-xs text-neutral-400 bg-white/10 backdrop-blur-[1px]">
         <svg className="size-4" viewBox="0 0 24 24">
           <path

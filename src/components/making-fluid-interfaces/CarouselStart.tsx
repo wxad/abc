@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react"
 import { useIntersectionObserver } from "react-intersection-observer-hook"
 
+import { makingFluidVideoSrc } from "./videoCdn"
+
 const Demo = () => {
   const videoRef0 = useRef<HTMLVideoElement>(null)
   const coverRef0 = useRef<HTMLDivElement>(null)
@@ -59,9 +61,8 @@ const Demo = () => {
           webkit-playsinline="true"
           playsInline
           loop
-          crossOrigin="anonymous"
           onTimeUpdate={handleTimeUpdate0}
-          src="/abc/making-fluid-interfaces/carousel-start.mp4"
+          src={makingFluidVideoSrc.carouselStart}
         />
         <div
           ref={coverRef0}
@@ -90,8 +91,7 @@ const Demo = () => {
           webkit-playsinline="true"
           playsInline
           loop
-          crossOrigin="anonymous"
-          src="/abc/making-fluid-interfaces/carousel-start-1.mp4"
+          src={makingFluidVideoSrc.carouselStart1}
           onTimeUpdate={handleTimeUpdate1}
         />
         <div

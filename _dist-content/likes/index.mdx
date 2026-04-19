@@ -25,6 +25,7 @@ import LikeBM17 from "@/components/likes/LikeBM17"
 import LikeBMV1 from "@/components/likes/LikeBMV1"
 import LikeWxad from "@/components/likes/LikeWxad"
 import Wxad11Like from "@/components/wxad11/Wxad11Like"
+import { likesVideoSrc } from "@/components/likes/videoCdn"
 
 好像在工作的这些年中，我做的最多的交互式动画就是点赞或按钮动画。那就简单地整一个集合吧。
 
@@ -54,25 +55,25 @@ import Wxad11Like from "@/components/wxad11/Wxad11Like"
 
 24 年评选的点赞动画最初是这样的：
 
-<LikeBM24 src="/abc/likes/likebm24-0.mp4" aspectRatio="494 / 1080" />
+<LikeBM24 src={likesVideoSrc.likebm24_0} aspectRatio="494 / 1080" />
 
 上面的氛围感有点不足，因此我和设计师加大了一些爱心的尺寸：
 
-<LikeBM24 src="/abc/likes/likebm24-1.mp4" aspectRatio="554 / 1080" />
+<LikeBM24 src={likesVideoSrc.likebm24_1} aspectRatio="554 / 1080" />
 
 但票数和爱心之间没有关联。我们需要投票 -> 动画 -> 票数增加的示意更加明确，因此我们需要一个类似于这样汇聚到上方的动画，在汇聚后票数增加：
 
-<LikeBM24 src="/abc/likes/likebm24-2.mp4" aspectRatio="554 / 1080" />
+<LikeBM24 src={likesVideoSrc.likebm24_2} aspectRatio="554 / 1080" />
 
 最后设计师为我绘制了两套路径，整个动画通过 `offset-path` 配合 `motion/react` 实现：
 
 <LikeBM24Final
-  videoSrc="/abc/likes/likebm24-3.mp4"
+  videoSrc={likesVideoSrc.likebm24_3}
   imgSrc="/abc/likes/likebm24-path-0.webp"
 />
 
 <LikeBM24Final
-  videoSrc="/abc/likes/likebm24-4.mp4"
+  videoSrc={likesVideoSrc.likebm24_4}
   imgSrc="/abc/likes/likebm24-path-1.webp"
 />
 

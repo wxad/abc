@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react"
 import { useIntersectionObserver } from "react-intersection-observer-hook"
 
+import { springenVideoSrc } from "./videoCdn"
+
 const Demo = () => {
   const videoRef = useRef<HTMLVideoElement>(null)
   const coverRef = useRef<HTMLDivElement>(null)
@@ -43,8 +45,7 @@ const Demo = () => {
         webkit-playsinline="true"
         playsInline
         loop
-        crossOrigin="anonymous"
-        src="/abc/springen/springen-cb-big.mp4"
+        src={springenVideoSrc.springenCbBig}
         onTimeUpdate={handleTimeUpdate}
       />
       <div

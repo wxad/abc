@@ -6,6 +6,8 @@ import HoverFill from "./HoverFill"
 import { useEffect, useRef } from "react"
 import { useIntersectionObserver } from "react-intersection-observer-hook"
 
+import { springenVideoSrc } from "./videoCdn"
+
 const Basics = () => {
   const videoRef = useRef<HTMLVideoElement>(null)
   const coverRef = useRef<HTMLDivElement>(null)
@@ -48,8 +50,7 @@ const Basics = () => {
         webkit-playsinline="true"
         playsInline
         loop
-        crossOrigin="anonymous"
-        src="/abc/springen/numberflow-in-b.mp4"
+        src={springenVideoSrc.numberflowInB}
         onTimeUpdate={handleTimeUpdate}
       />
       <div

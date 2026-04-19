@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react"
 import { useIntersectionObserver } from "react-intersection-observer-hook"
 
+import { makingFluidVideoSrc } from "./videoCdn"
+
 const Demo = () => {
   const videoRef = useRef<HTMLVideoElement>(null)
   const coverRef = useRef<HTMLDivElement>(null)
@@ -43,8 +45,7 @@ const Demo = () => {
         webkit-playsinline="true"
         playsInline
         loop
-        crossOrigin="anonymous"
-        src="/abc/making-fluid-interfaces/hx-tab.mp4"
+        src={makingFluidVideoSrc.hxTab}
         onTimeUpdate={handleTimeUpdate}
       />
       <div
