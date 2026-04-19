@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react"
 import { useIntersectionObserver } from "react-intersection-observer-hook"
 
+import { figmaMakeVideoSrc } from "./videoCdn"
+
 const Demo = () => {
   const videoRef0 = useRef<HTMLVideoElement>(null)
   const coverRef0 = useRef<HTMLDivElement>(null)
@@ -90,9 +92,8 @@ const Demo = () => {
             webkit-playsinline="true"
             playsInline
             loop
-            crossOrigin="anonymous"
             onTimeUpdate={handleTimeUpdate0}
-            src="/abc/figma-make/figma-carousel.mp4"
+            src={figmaMakeVideoSrc.carousel}
           />
           <div
             ref={coverRef0}
@@ -121,8 +122,7 @@ const Demo = () => {
             webkit-playsinline="true"
             playsInline
             loop
-            crossOrigin="anonymous"
-            src="/abc/figma-make/figma-topic.mp4"
+            src={figmaMakeVideoSrc.topic}
             onTimeUpdate={handleTimeUpdate1}
           />
           <div
@@ -152,9 +152,8 @@ const Demo = () => {
             webkit-playsinline="true"
             playsInline
             loop
-            crossOrigin="anonymous"
             onTimeUpdate={handleTimeUpdate2}
-            src="/abc/figma-make/figma-particle.mp4"
+            src={figmaMakeVideoSrc.particle}
           />
           <div
             ref={coverRef2}
@@ -183,8 +182,7 @@ const Demo = () => {
             webkit-playsinline="true"
             playsInline
             loop
-            crossOrigin="anonymous"
-            src="/abc/figma-make/figma-cylinder.mp4"
+            src={figmaMakeVideoSrc.cylinder}
             onTimeUpdate={handleTimeUpdate3}
           />
           <div

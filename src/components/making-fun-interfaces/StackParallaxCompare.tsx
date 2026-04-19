@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react"
 import { useIntersectionObserver } from "react-intersection-observer-hook"
 
+import { makingFunVideoSrc } from "./videoCdn"
+
 const Demo = () => {
   const videoRef0 = useRef<HTMLVideoElement>(null)
   const coverRef0 = useRef<HTMLDivElement>(null)
@@ -59,9 +61,8 @@ const Demo = () => {
           webkit-playsinline="true"
           playsInline
           loop
-          crossOrigin="anonymous"
           onTimeUpdate={handleTimeUpdate0}
-          src="/abc/making-fun-interfaces/stack-parallax-positive.mp4"
+          src={makingFunVideoSrc.stackParallaxPositive}
         />
         <div
           ref={coverRef0}
@@ -90,8 +91,7 @@ const Demo = () => {
           webkit-playsinline="true"
           playsInline
           loop
-          crossOrigin="anonymous"
-          src="/abc/making-fun-interfaces/stack-parallax.mp4"
+          src={makingFunVideoSrc.stackParallax}
           onTimeUpdate={handleTimeUpdate1}
         />
         <div

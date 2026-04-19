@@ -1,7 +1,9 @@
 "use client"
 
-import { useEffect, useId, useState } from "react"
+import { useEffect, useId, useRef, useState } from "react"
 import { motion } from "motion/react"
+
+import DotField from "./DotField"
 
 /**
  * Playground 默认箭头（与 playground/src/cursors/default.svg 路径一致；热点 15×15）。
@@ -289,13 +291,92 @@ function SlotCursorIcon({
   return <AxisCross24CursorIcon className={className} />
 }
 
+/** 全局基准：边缘时单轴目标位移（px），再乘每格 mag / phase */
+const PARALLAX_BASE_PX = 11
+
+/**
+ * 四格明显区分开：幅度、轴向偏重、弹簧性格都不同（不随换格改变 slot 身份）。
+ */
+const PARALLAX_MAG = [1.45, 0.62, 1.22, 0.72] as const
+
+const PARALLAX_PHASE: { xa: number; ya: number }[] = [
+  { xa: 1.35, ya: 0.42 },
+  { xa: 0.38, ya: 1.38 },
+  { xa: 1.12, ya: 1.08 },
+  { xa: 0.72, ya: 0.68 },
+]
+
+/** 鼠标水平分量带来的轻微摆角（度），四格符号/幅度不同 */
+const PARALLAX_ROTATE_BY_NX = [5.2, -6, 3.8, -5.5] as const
+
+/** 弹簧底色：越大越「跟手」；与 proximity 叠加后近远差会更明显 */
+const PARALLAX_PERSONA_STIFF = [0, 24, 48, 72] as const
+
+type MouseParallax = {
+  nx: number
+  ny: number
+  /** 各 slot 当前格子中心离鼠标的接近度 0～1，越大越近 */
+  proximity: [number, number, number, number]
+}
+
 const Cover = () => {
   /** `cellOrder[c]` = 第 c 个格子当前展示第几个光标（SLOTS 下标） */
   const [cellOrder, setCellOrder] = useState<number[]>([0, 1, 2, 3])
+  const cellOrderRef = useRef(cellOrder)
+  cellOrderRef.current = cellOrder
+
+  const plateRef = useRef<HTMLDivElement>(null)
+  const [mouseParallax, setMouseParallax] = useState<MouseParallax>({
+    nx: 0,
+    ny: 0,
+    proximity: [0, 0, 0, 0],
+  })
+
+  const rafRef = useRef(0)
+  const pendingRef = useRef<{ cx: number; cy: number } | null>(null)
+
+  useEffect(() => {
+    const flush = () => {
+      rafRef.current = 0
+      const p = pendingRef.current
+      if (!p) return
+      const w = window.innerWidth || 1
+      const h = window.innerHeight || 1
+      const nx = (p.cx / w) * 2 - 1
+      const ny = (p.cy / h) * 2 - 1
+      const plate = plateRef.current
+      const proximity: [number, number, number, number] = [0, 0, 0, 0]
+      if (plate) {
+        const r = plate.getBoundingClientRect()
+        const order = cellOrderRef.current
+        const dRef = Math.hypot(w, h) * 0.36
+        for (let s = 0; s < 4; s++) {
+          const cell = order.indexOf(s)
+          const col = cell % 2
+          const row = (cell - col) / 2
+          const ccx = r.left + (col + 0.5) * (r.width / 2)
+          const ccy = r.top + (row + 0.5) * (r.height / 2)
+          const d = Math.hypot(p.cx - ccx, p.cy - ccy)
+          proximity[s] = Math.max(0, 1 - Math.min(d / dRef, 1))
+        }
+      }
+      setMouseParallax({ nx, ny, proximity })
+    }
+
+    const onMove = (e: MouseEvent) => {
+      pendingRef.current = { cx: e.clientX, cy: e.clientY }
+      if (rafRef.current) return
+      rafRef.current = requestAnimationFrame(flush)
+    }
+    window.addEventListener("mousemove", onMove, { passive: true })
+    return () => {
+      window.removeEventListener("mousemove", onMove)
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+    }
+  }, [])
 
   useEffect(() => {
     const tick = () => {
-      if (Math.random() > 0.42) return
       setCellOrder((prev) => {
         const a = Math.floor(Math.random() * 4)
         let b = Math.floor(Math.random() * 4)
@@ -305,60 +386,122 @@ const Cover = () => {
         return next
       })
     }
-    const id = window.setInterval(tick, 9500)
+    // 固定间隔 + 每次必换一对，避免「很久才随机到一次」几乎看不见
+    const id = window.setInterval(tick, 5000)
     return () => clearInterval(id)
   }, [])
 
   return (
     <div className="relative">
       <div className="pt-[100%]" />
-      <div className="absolute inset-0 overflow-hidden rounded-full bg-neutral-200/50">
-        <div className="absolute top-[10%] bottom-[12%] left-[5.5%] right-[14.5%] grid grid-cols-2 grid-rows-2">
-          {[0, 1, 2, 3].map((cell) => {
-            const slotIdx = cellOrder[cell]
+      <div className="absolute inset-0 overflow-hidden rounded-full">
+        {/* 点阵底层固定 neutral-200 */}
+        <div className="pointer-events-none absolute inset-0 z-0 rounded-full bg-neutral-200/50" />
+        <DotField
+          className="absolute inset-0 z-[1]"
+          dotRadius={2.25}
+          gradientFrom="rgba(168, 118, 228, 0.32)"
+          gradientTo="rgba(188, 165, 218, 0.26)"
+        />
+        <div
+          ref={plateRef}
+          className="absolute top-[10%] bottom-[12%] left-[5.5%] right-[14.5%] z-10 isolate"
+        >
+          {[0, 1, 2, 3].map((slotIdx) => {
+            const cell = cellOrder.indexOf(slotIdx)
+            const col = cell % 2
+            const row = (cell - col) / 2
             const slot = SLOTS[slotIdx]
             const cfg = DRIFT[slotIdx]
             const L = SLOT_LAYOUT[slot.kind]
             const lab = LABEL_FROM_HOTSPOT[slot.kind]
             const labelLeft = L.hx + lab.dx
             const labelTop = L.hy + lab.dy
+            const ph = PARALLAX_PHASE[slotIdx]
+            const mag = PARALLAX_MAG[slotIdx]
+            const prox = mouseParallax.proximity[slotIdx]
+            const stiff =
+              11 +
+              prox * 58 +
+              PARALLAX_PERSONA_STIFF[slotIdx]
             return (
-              <div key={cell} className="relative min-h-0 min-w-0">
+              <motion.div
+                key={slotIdx}
+                className="pointer-events-none absolute"
+                style={{
+                  width: "50%",
+                  height: "50%",
+                }}
+                initial={false}
+                animate={{
+                  left: `${col * 50}%`,
+                  top: `${row * 50}%`,
+                }}
+                transition={{
+                  type: "spring",
+                  visualDuration: 1,
+                  bounce: 0,
+                }}
+              >
                 <motion.div
-                  key={slotIdx}
-                  className="pointer-events-none absolute left-1/2 top-1/2"
-                  style={{
-                    width: L.w,
-                    height: L.h,
-                    marginLeft: -L.hx,
-                    marginTop: -L.hy,
-                    transformOrigin: `${L.hx}px ${L.hy}px`,
-                  }}
+                  className="pointer-events-none absolute inset-0"
+                  style={{ transformOrigin: "50% 50%" }}
                   animate={{
-                    x: [...cfg.x],
-                    y: [...cfg.y],
-                    rotate: [...cfg.rotate],
+                    x:
+                      mouseParallax.nx *
+                      PARALLAX_BASE_PX *
+                      mag *
+                      ph.xa,
+                    y:
+                      mouseParallax.ny *
+                      PARALLAX_BASE_PX *
+                      mag *
+                      ph.ya,
+                    rotate:
+                      mouseParallax.nx * PARALLAX_ROTATE_BY_NX[slotIdx],
                   }}
                   transition={{
-                    duration: cfg.duration,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: cfg.delay,
+                    type: "spring",
+                    stiffness: stiff,
+                    damping: 38 - slotIdx * 5,
+                    mass: 0.82 - slotIdx * 0.16,
                   }}
                 >
-                  <div className="relative size-full overflow-visible">
-                    <SlotCursorIcon
-                      kind={slot.kind}
-                      className="absolute left-0 top-0 z-0 size-full"
-                    />
-                    <CursorNameBubble
-                      name={slot.name}
-                      labelLeft={labelLeft}
-                      labelTop={labelTop}
-                    />
-                  </div>
+                  <motion.div
+                    className="pointer-events-none absolute left-1/2 top-1/2"
+                    style={{
+                      width: L.w,
+                      height: L.h,
+                      marginLeft: -L.hx,
+                      marginTop: -L.hy,
+                      transformOrigin: `${L.hx}px ${L.hy}px`,
+                    }}
+                    animate={{
+                      x: [...cfg.x],
+                      y: [...cfg.y],
+                      rotate: [...cfg.rotate],
+                    }}
+                    transition={{
+                      duration: cfg.duration,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: cfg.delay,
+                    }}
+                  >
+                    <div className="relative size-full overflow-visible">
+                      <SlotCursorIcon
+                        kind={slot.kind}
+                        className="absolute left-0 top-0 z-0 size-full"
+                      />
+                      <CursorNameBubble
+                        name={slot.name}
+                        labelLeft={labelLeft}
+                        labelTop={labelTop}
+                      />
+                    </div>
+                  </motion.div>
                 </motion.div>
-              </div>
+              </motion.div>
             )
           })}
         </div>
