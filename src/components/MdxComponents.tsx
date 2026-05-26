@@ -313,7 +313,7 @@ export const Ol = ({
 }) => {
   return (
     <ol
-      className="mb-4 list-none"
+      className="mb-4 list-none [&_p]:mb-1 [&_blockquote]:mb-1"
       style={{
         counterReset: "counts 0",
       }}
@@ -325,7 +325,7 @@ export const Ol = ({
           child.props ? (
             <li
               key={index}
-              className="flex mb-1 before:content-[counter(counts)_'._'] before:pr-4 before:font-mono before:font-medium before:text-gray-500"
+              className="flex mb-1.5 before:content-[counter(counts)_'._'] before:pr-4 before:font-mono before:font-medium before:text-gray-500"
               style={{
                 counterIncrement: "counts 1",
               }}
@@ -335,6 +335,35 @@ export const Ol = ({
           ) : null
         )}
     </ol>
+  )
+}
+
+export const Ul = ({
+  children,
+  ...otherProps
+}: {
+  children: React.ReactNode
+}) => {
+  return (
+    <ul
+      className="mb-4 last:mb-0 pl-5 list-disc marker:text-gray-400"
+      {...otherProps}
+    >
+      {children}
+    </ul>
+  )
+}
+
+export const Li = ({
+  children,
+  ...otherProps
+}: {
+  children: React.ReactNode
+}) => {
+  return (
+    <li className="mb-1 last:mb-0" {...otherProps}>
+      {children}
+    </li>
   )
 }
 

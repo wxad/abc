@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react"
 import { useIntersectionObserver } from "react-intersection-observer-hook"
 
-import { makingFunVideoSrc } from "./videoCdn"
+const VIDEO_SRC =
+  "https://wxa.wxs.qq.com/wxad-design/yijie/1779780766743-ec58570451ba7dcf.mp4"
 
 const Demo = () => {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -13,8 +14,7 @@ const Demo = () => {
   const inView = entry?.isIntersecting
 
   const playVideo = () => {
-    videoRef.current!.play().catch((error) => {
-      // 如果自动播放失败，显示封面
+    videoRef.current!.play().catch(() => {
       coverRef.current.style.display = "flex"
     })
   }
@@ -32,10 +32,7 @@ const Demo = () => {
   }, [inView])
 
   return (
-    <div
-      ref={ref}
-      className="relative mt-4 mb-12 mx-auto max-w-[320px] aspect-3/4"
-    >
+    <div ref={ref} className="relative mt-4 mb-12 w-full aspect-3080/2160">
       <video
         ref={videoRef}
         className="absolute-full rounded-xl"
@@ -45,7 +42,7 @@ const Demo = () => {
         webkit-playsinline="true"
         playsInline
         loop
-        src={makingFunVideoSrc.styles}
+        src={VIDEO_SRC}
         onTimeUpdate={handleTimeUpdate}
       />
       <div
@@ -65,7 +62,7 @@ const Demo = () => {
         播放视频
       </div>
       <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 text-sm text-neutral-400 whitespace-nowrap">
-        文字和气泡风格尝试
+        四种不同的标签添加动效
       </div>
     </div>
   )

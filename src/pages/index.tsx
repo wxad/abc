@@ -25,6 +25,7 @@ import SvgLiquidGlassCover from "@/components/svg-liquid-glass/SvgLiquidGlassCov
 import Wxad11Cover from "@/components/wxad11/Wxad11Cover"
 import FigmaMakeCover from "@/components/figma-make/FigmaMakeCover"
 import SmallPCover from "@/components/small-p/Cover"
+import InteractiveDesignInAICover from "@/components/interactive-design-in-ai/Cover"
 import NextLink from "next/link"
 import {
   ArrowRight,
@@ -35,6 +36,16 @@ import {
 } from "lucide-react"
 
 const posts = [
+  {
+    title: "使用 AI 制作交互动画的建议",
+    description:
+      "以制作前、制作中、制作后三个阶段，分享使用 AI 制作交互动画的案例、经验与对话记录。",
+    slug: "interactive-design-in-ai",
+    publishedAt: "2026-05-26",
+    author: "Aragakey.",
+    authorLink: "https://github.com/Aragakey",
+    children: <InteractiveDesignInAICover />,
+  },
   {
     title: "小 p: 一次关于 AI 的交互实验",
     description:

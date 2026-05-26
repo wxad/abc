@@ -67,17 +67,14 @@ export const getPost = async (slug: string): Promise<Post> => {
 }
 
 const getHeadings = (content: string): Heading[] => {
-  return (
-    content
-      .split("\n")
-      /* I only care about h2s, so explicitly look for 2 hashtags */
-      .filter((line) => line.match(/^##\s/))
-      .map((line) => line.replace("##", "").trim())
-      .map((text) => ({
-        text,
-        id: getId(text),
-      }))
-  )
+  return content
+    .split("\n")
+    .filter((line) => line.match(/^##\s/))
+    .map((line) => line.replace("##", "").trim())
+    .map((text) => ({
+      text,
+      id: getId(text),
+    }))
 }
 
 export const getAllPosts = async (): Promise<PostMetadata[]> => {

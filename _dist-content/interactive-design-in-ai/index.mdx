@@ -1,0 +1,209 @@
+---
+title: "使用 AI 制作交互动画的建议"
+slug: "interactive-design-in-ai"
+description: "以制作前、制作中、制作后三个阶段，分享使用 AI 制作交互动画的案例、经验与对话记录。"
+publishedAt: "2026-05-26"
+author: "Aragakey."
+authorLink: "https://github.com/Aragakey"
+---
+
+import CardToDialog from "@/components/interactive-design-in-ai/CardToDialog"
+import PopoverToDialog from "@/components/interactive-design-in-ai/PopoverToDialog"
+import NotificationPopoverTrigger from "@/components/interactive-design-in-ai/NotificationPopoverTrigger"
+import AutocompleteCustomize from "@/components/interactive-design-in-ai/AutocompleteCustomize"
+import TabSwitchDemo from "@/components/interactive-design-in-ai/TabSwitchDemo"
+import SwipeCardsDemo from "@/components/interactive-design-in-ai/SwipeCardsDemo"
+import DialogHeightTransition from "@/components/interactive-design-in-ai/DialogHeightTransition"
+import InputHeightClip from "@/components/interactive-design-in-ai/InputHeightClip"
+import InputExpand from "@/components/interactive-design-in-ai/InputExpand"
+import DialogHeightJump from "@/components/interactive-design-in-ai/DialogHeightJump"
+import DialogNoHeightChange from "@/components/interactive-design-in-ai/DialogNoHeightChange"
+import TadabaseDialog from "@/components/interactive-design-in-ai/TadabaseDialog"
+import TranslateVariations from "@/components/interactive-design-in-ai/TranslateVariations"
+import RuyiPopover from "@/components/interactive-design-in-ai/RuyiPopover"
+import RuyiTabs from "@/components/interactive-design-in-ai/RuyiTabs"
+import Styles from "@/components/making-fun-interfaces/Styles"
+
+最近在多个项目中几乎只使用 Cursor Agent 或 Claude Code 完成了一些交互动画。我将结合具体的案例、中间过程和真实的对话记录，分享一些使用 AI 制作交互动画的方法。
+
+我将它们分为三个阶段：制作前、制作中、制作后。
+
+## 制作前
+
+### 1. 向少数人收集想法
+
+询问评价你的人、真实的使用者、足够专业的人，这些人不必多，1-2 个就够了。这听起来有些自以为是，但交互动画是一件关于直觉感受与真实体验的事。在大家摸到手体验之前，去想象与探讨最终的成品是一件困难的事。不论他们是否专业，实际上都难以与你建立起有效的沟通。
+
+### 2. 准备好耐心与信心
+
+正因如此，你需要思考最理想的表现，要为它付出努力，一定也会经历失望。因为我们要把最好的体验，展示给最普通的用户以及最专业的同行看。准备好 [Put Your Soul Into It](https://www.youtube.com/watch?v=8ncYSGbfeyY)，扛住第一轮的对话结果给你的暴击。
+
+### 3. 想清楚最佳实践
+
+在你有了一定的经验之后，和 AI 讨论，在这个过程中明确最佳实践；如果你没有经验，可以参考 [流畅界面 Skill](https://wxad-design.woa.com/skills?skill=making-fluid-interfaces) 试试。
+
+在一开始就想清楚最佳实践很重要，否则你很可能浪费时间。比如要完成下面的 Popover/Card 变形成为 Dialog 效果，最重要的原则就是：**保证展开前后的容器是同一个**：
+
+<TadabaseDialog />
+
+你可能会说，看起来它们本来不就应该是同一个元素吗？但如果你不强调这一点，AI 几乎不可能照你设想的做：
+
+1. Card 本身在 Grid 布局中，Dialog 则是固定在屏幕中央，尺寸、位置、内容、间距所有都不一样；
+2. 同样，Popover 显示在文字上方，要如何变形为 Dialog 呢？
+
+为了达到视觉上完全连贯，最直觉也是最有效的方法就是复用同一个容器，其中的元素只是被隐藏了。**最直觉的事，往往就是最麻烦的事**，你需要让 AI 明白中间存在大量的计算。你可以查看 [完整的 Cursor 对话过程](https://cursor.com/cn/dashboard/shared-chats?shareId=dialog-component-modifications-FcOI7gg_lM_Q)，但提前明确最佳实践尤为重要。
+
+另一个值得参考的例子是 [水晶球图表](https://wxad.design/abc/springen2#%E5%9B%BE%E8%A1%A8%E6%A1%88%E4%BE%8B-2%EF%BC%9A%E6%B0%B4%E6%99%B6%E7%90%83)，它们的核心原则类似。
+
+---
+
+你可以在下方体验 Card 变形为 Dialog，观察图片的移动、文字的出现、以及右侧标签的展开与收起。它们都不是理所当然，而是反复沟通的结果：
+
+<CardToDialog />
+
+你可以在下方体验 Popover 变形为 Dialog：
+
+<PopoverToDialog />
+
+---
+
+另一个例子是实现这样的三卡轮播，它的最佳实践是：**一个循环播放的动画，手势只是控制它的播放进度**：
+
+<SwipeCardsDemo />
+
+关键的对话记录如下（以 Figma Make 完成）：
+
+<img
+  className="block mx-auto my-8 max-w-[400px] rounded-xl"
+  src="https://wxa.wxs.qq.com/wxad-design/yijie/1779779925086-99f3b95814088041.png"
+/>
+
+## 制作中
+
+### 1. 用录屏的方式调试
+
+我不止一次地看到有人跟我有同样的想法，并说：[“最强大的调试工具：录屏慢放”](https://x.com/haxfenx/status/2057478721767133442)。这种拙劣、毫无技巧的调试方式，在交互动画这件事上有效且必要。因为能否“看见”，就决定了能否问出正确的问题：
+
+- 我需要非常清楚动画的每个状态是否正确；
+- 我需要看到哪里卡了、跳帧了、哪个元素在哪一刻的状态没有衔接上；
+- 交互动画的简单直观，是许多细节叠加，最终形成的一种整体和谐。
+
+### 2. 言之有物
+
+去除“请”、“谢谢”等没有必要的话，仔细地描述问题，提供有信息量的话，而不是让 AI 去猜测。比如“闪了一下”、“没有反应”这样的描述可以改为：什么元素在什么操作下发生了什么，我的预期是什么，等等。
+
+如果你不非常在意输入的 token，那么就尽量图文并茂地描述问题 —— 尤其是我在使用语音输入时。宁愿反复具体地描述，也不要说没有信息量的“修一下”、“不太对”。
+
+### 3. 多发散尝试
+
+如果你不确定你要的“风格”是什么、没有办法决策的时候，尽可能多地发散尝试。让大家看到足够多的选择与可能性，也能够体现你的思考能力。
+
+<Styles />
+
+---
+
+<TranslateVariations />
+
+你可以在下方体验四种不同的标签添加动效：
+
+<AutocompleteCustomize />
+
+## 制作后
+
+### 1. 总结可复用的经验
+
+一篇好看的公众号文章背后，承载的是一位专业 UI 设计师对于排版的大量知识；一个常见的表格组件，是一位前端工程师上百次 Bug 修复的结果。同样，一个看起来理所当然的交互动画背后，是你对动画库 API、物理参数、手势、编排、性能的理解总和。
+
+不满足于 vibe coding 给你的结果，而是去明白为什么。只有这样，你才能锻炼自己的视力，因为“看见”并不是态度，而是能力。关于“看见”，你可以向 AI 也向自己继续提问：
+
+- 为什么这个动画舒服？
+- 为什么这个交互自然？
+- 为什么这个组件显得更高级？
+
+---
+
+另一方面，你可以学习具体的方法。你当然可以从 gsap、motion、react-spring 随便选一个给 AI，也可以从 React Bits 中搬一个效果过来，但你并没有因此获得真实的材料。你在“输出”与“提效”，但你仍然空空如也。就像我一直让 AI 帮我写后端代码，但关于运维、安全、监控，我仍然一无所知。
+
+你可以向 AI 也向自己提问：
+
+- CSS / Three / WebGL 的边界是什么？兼容性与性能究竟如何？
+- 物理动画的本质是什么？
+- 这个效果我好喜欢，到底是怎么做的？
+
+### 2. 接受难以被察觉
+
+当一个功能自然得符合预期，用户不会停下来思考，而是顺畅继续。这正是我们的目标。首先接受这一点。
+
+> All those unseen details combine to produce something that's just stunning, like a thousand barely audible voices all singing in tune.  
+> 所有那些看不见的细节共同汇聚，最终造就出一种惊人的美感。  
+> —— Paul Graham - [Hackers and Painters](https://www.paulgraham.com/hp.html)
+
+---
+
+一个符合预期的消息列表，在切换、Hover 不同区域时，都有着正确的切换：
+
+<RuyiPopover />
+
+你可以在下方体验：
+
+<NotificationPopoverTrigger />
+
+一个符合预期的 Tab 切换、拖拽排序：
+
+<RuyiTabs />
+
+
+你可以在下方体验：
+
+<TabSwitchDemo />
+
+---
+
+不要生怕你的同行、你的领导看不见，就迫不及待地解释它。每个人的想法与偏好不同，你无法期待所有人都理解你。
+
+说个题外话：前段时间看 [Rauno 与 Emil 的 Beef](https://x.com/raunofreiberg/status/2054464976664826103)，只是一个简单的需不需要 transition 的观点，却引得两人争执到底是谁“发明”了它。吃瓜群众们表示：你们两人都这么优秀，争这玩意儿干嘛？最近入职 X 的 [Benji Taylor](https://x.com/benjitaylor/status/2054959464013590557) 也就此评论：
+
+> We need to stop talking about product design in absolutes… there are no rules. Everything is made up. Do what makes sense and feels right.  
+> 我们需要停止用绝对的术语来谈论产品设计……没有规则。一切都是编造的。做那些有意义且感觉正确的事情。
+
+重要的并不是说服谁或向谁证明。很多时候，交互动画这件事，本来就不需要任何语言或文字解释。你越说，这件事就变得越无聊，因为它本来就符合预期。重要的是建立一套看起来正确的体系，自然就能说服他人。没关系，所有设计师都长期面临类似的困扰。不要急，这一次、下一次、每一次，你都会证明你自己，**你会凭借符合预期的事超越他们的预期的**。
+
+---
+
+比如，在下面的多种关于“高度变化”的例子中，我分别选择了不同的表现。
+
+第一种情况，为了防止高度大范围的突然变化，我为下面的 Dialog 内容增加了高度过渡：
+
+<DialogHeightTransition />
+
+类似地，展开输入框时也适合增加过渡：
+
+<InputExpand />
+
+而在用户输入过程中的高度变化，则不适合过渡，因为容器尺寸的变化不应该影响用户高频的键入操作：
+
+<InputHeightClip />
+
+再来，那下面的例子应该怎么处理呢？
+
+<DialogHeightJump />
+
+我的选择是：不需要发生高度变化。另外，两个 Tab 既然都有“设计私密项目”的 Switch，因此也可以选择将其放在同一个底部位置，就减少了认知成本：
+
+<DialogNoHeightChange />
+
+---
+
+总之，接受它们难以被察觉，在多个实践中做感觉正确的事情。你本来就不需要为它们解释太多。
+
+### 3. 相信美是杠杆
+
+这是一个大家都在用 AI 做东西的时代，大部分人不理解、也不会用“制作”这个说起来有些羞耻的词形容自己的工作。而那才是我们的职责。我们相信美是杠杆。我们知道它在软件世界中被低估。
+
+> People talking without speaking.  
+> People hearing without listening.  
+> —— Simon & Garfunkel - The Sound of Silence
+
+People making without crafting. 他们在做，但他们并不制作。
+
+并不是要和谁做对，或向谁证明。交互动画的领域很窄，但我们正在做的事情是值得骄傲的。

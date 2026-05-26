@@ -11,6 +11,8 @@ import {
   P,
   A,
   Ol,
+  Ul,
+  Li,
   Code,
   Strong,
   Pre,
@@ -36,7 +38,7 @@ export default function PostPage({ content }: { content: Post }) {
         <meta property="og:title" content={frontmatter.title} />
         <meta property="og:description" content={frontmatter.description} />
       </Head>
-      <nav className="fixed hidden 74:flex flex-col justify-between top-16 bottom-[7.2rem] pl-6 max-w-44 text-gray-600">
+      <nav className="fixed hidden 74:flex flex-col justify-between top-16 bottom-[8rem] pl-6 max-w-44 text-gray-600">
         <h2>
           <NextLink
             href="/"
@@ -98,6 +100,8 @@ export default function PostPage({ content }: { content: Post }) {
             p: P as any,
             a: A as any,
             ol: Ol as any,
+            ul: Ul as any,
+            li: Li as any,
             pre: Pre as any,
             code: Code as any,
             strong: Strong as any,
