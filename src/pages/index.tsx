@@ -54,7 +54,7 @@ const posts = [
     slug: "interactive-design-in-ai",
     publishedAt: "2026-05-26",
     author: "Aragakey.",
-    authorLink: "https://github.com/Aragakey",
+    authorLink: "https://codepen.io/aragakey",
     children: <InteractiveDesignInAICover />,
   },
   {
