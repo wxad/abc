@@ -13,7 +13,6 @@ import {
   useMotionValue,
   type AnimationPlaybackControls,
 } from "motion/react"
-// @ts-expect-error flubber 无官方类型
 import { interpolate } from "flubber"
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react"
 import { useIntersectionObserver } from "react-intersection-observer-hook"

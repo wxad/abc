@@ -15,7 +15,6 @@ import {
   useTransform,
   type AnimationPlaybackControls,
 } from "motion/react"
-// @ts-expect-error flubber 无官方类型
 import { interpolate } from "flubber"
 import { Pane } from "tweakpane"
 import {
@@ -43,7 +42,10 @@ const Y_MAG = 88
 const JITTER = 3
 const MOVE = { type: "spring" as const, visualDuration: 2, bounce: 0 }
 const FADE = { type: "spring" as const, visualDuration: 0.25, bounce: 0 }
-const EASE_ARC = ["easeOut", [0.58, 0.09, 0.32, 0.95]] as const
+const EASE_ARC = ["easeOut", [0.58, 0.09, 0.32, 0.95]] as [
+  "easeOut",
+  [number, number, number, number],
+]
 
 const LETTER = {
   svgW: 27,
@@ -519,7 +521,8 @@ const Wxad12Choreo = ({
     runMorph(1600)
 
     if (showSequence) {
-      run(animate(cardScale, 1.05, { duration: 2.3 * 0.6, ease: "easeOut" })).then(() => {
+      const scaleUp = run(animate(cardScale, 1.05, { duration: 2.3 * 0.6, ease: "easeOut" }))
+      scaleUp.finished.then(() => {
         if (gen !== playGen.current || !inViewRef.current) return
         run(animate(cardScale, 1, { duration: 2.3 * 0.4, ease: [0.58, 0.09, 0.32, 0.95] }))
       })
@@ -620,7 +623,7 @@ const Wxad12Choreo = ({
     pane.addBinding(params, "spread", { label: "散开", min: 0, max: 40, step: 1 })
     pane.addBinding(params, "rotate", { label: "旋转", min: 0, max: 30, step: 1 })
     pane.on("change", (ev) => {
-      const key = ev.target.key
+      const key = (ev.target as { key?: string }).key
       if (key === "name") {
         const latin = toLatinName(String(ev.value ?? ""))
         if (params.name !== latin) {
@@ -685,7 +688,11 @@ const Wxad12Choreo = ({
               </clipPath>
               <linearGradient id={`${uid}-two`} x1="494.665" y1="8.07324" x2="570.988" y2="493.65" gradientUnits="userSpaceOnUse">
                 {TWO_GRADIENT_STOPS.map((stop, index) => (
-                  <stop key={index} stopColor={stop.color} offset={stop.offset} />
+                  <stop
+                    key={index}
+                    stopColor={stop.color}
+                    offset={"offset" in stop ? stop.offset : undefined}
+                  />
                 ))}
               </linearGradient>
             </defs>
