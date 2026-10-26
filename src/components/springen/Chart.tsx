@@ -10,6 +10,21 @@ import {
 import { useEffect, useRef, useState } from "react"
 import { Pane } from "tweakpane"
 
+/** bounce 为 0 时，motion 把 visualDuration 换成的 stiffness / damping */
+function springFromVisualDuration(visualDuration: number) {
+  const duration = visualDuration || 0.01
+  const root = (2 * Math.PI) / (duration * 1.2)
+  const stiffness = root * root
+  return {
+    stiffness,
+    damping: 2 * Math.sqrt(stiffness),
+    restDelta: 0.001,
+  }
+}
+
+const labelSpring = springFromVisualDuration(0.2)
+const resetSpring = springFromVisualDuration(0.35)
+
 const Demo = () => {
   const minPrice = 4500
   const maxPrice = 6000
@@ -45,36 +60,12 @@ const Demo = () => {
     return v.toLocaleString()
   })
 
-  const minNumberOpacity = useSpring(1, {
-    visualDuration: 0.2,
-    bounce: 0,
-    restDelta: 0.001,
-  })
-  const minNumberY = useSpring(0, {
-    visualDuration: 0.2,
-    bounce: 0,
-    restDelta: 0.001,
-  })
-  const maxNumberY = useSpring(0, {
-    visualDuration: 0.2,
-    bounce: 0,
-    restDelta: 0.001,
-  })
-  const maxNumberOpacity = useSpring(1, {
-    visualDuration: 0.2,
-    bounce: 0,
-    restDelta: 0.001,
-  })
-  const minNumberColor = useSpring(1, {
-    visualDuration: 0.2,
-    bounce: 0,
-    restDelta: 0.001,
-  })
-  const maxNumberColor = useSpring(1, {
-    visualDuration: 0.2,
-    bounce: 0,
-    restDelta: 0.001,
-  })
+  const minNumberOpacity = useSpring(1, labelSpring)
+  const minNumberY = useSpring(0, labelSpring)
+  const maxNumberY = useSpring(0, labelSpring)
+  const maxNumberOpacity = useSpring(1, labelSpring)
+  const minNumberColor = useSpring(1, labelSpring)
+  const maxNumberColor = useSpring(1, labelSpring)
   const minNumberColorValue = useTransform(
     minNumberColor,
     (v) => `rgba(0, 0, 0, ${v})`
@@ -84,35 +75,15 @@ const Demo = () => {
     (v) => `rgba(0, 0, 0, ${v})`
   )
 
-  const maxPriceLabelOpacity = useSpring(1, {
-    visualDuration: 0.2,
-    bounce: 0,
-    restDelta: 0.001,
-  })
+  const maxPriceLabelOpacity = useSpring(1, labelSpring)
 
-  const minPriceLabelOpacity = useSpring(1, {
-    visualDuration: 0.2,
-    bounce: 0,
-    restDelta: 0.001,
-  })
+  const minPriceLabelOpacity = useSpring(1, labelSpring)
 
-  const maxPriceLabelX = useSpring(0, {
-    visualDuration: 0.2,
-    bounce: 0,
-    restDelta: 0.001,
-  })
+  const maxPriceLabelX = useSpring(0, labelSpring)
 
-  const minPriceLabelX = useSpring(0, {
-    visualDuration: 0.2,
-    bounce: 0,
-    restDelta: 0.001,
-  })
+  const minPriceLabelX = useSpring(0, labelSpring)
 
-  const minPriceLabelColorValue = useSpring(0, {
-    visualDuration: 0.2,
-    bounce: 0,
-    restDelta: 0.001,
-  })
+  const minPriceLabelColorValue = useSpring(0, labelSpring)
 
   const minPriceLabelColor = useTransform(
     minPriceLabelColorValue,
@@ -126,29 +97,16 @@ const Demo = () => {
     [500, 400]
   )
 
-  const currentPriceOpacity = useSpring(0, {
-    visualDuration: 0.2,
-    bounce: 0,
-    restDelta: 0.001,
-  })
+  const currentPriceOpacity = useSpring(0, labelSpring)
 
-  const maxPriceOpacity = useSpring(0.3, {
-    visualDuration: 0.2,
-    bounce: 0,
-    restDelta: 0.001,
-  })
-  const minPriceOpacity = useSpring(0.3, {
-    visualDuration: 0.2,
-    bounce: 0,
-    restDelta: 0.001,
-  })
+  const maxPriceOpacity = useSpring(0.3, labelSpring)
+  const minPriceOpacity = useSpring(0.3, labelSpring)
 
   const offsetInitial = 43
-  const offset = useSpring(offsetInitial, {
-    visualDuration: params.visualDuration || 0.01,
-    bounce: 0,
-    restDelta: 0.001,
-  })
+  const offset = useSpring(
+    offsetInitial,
+    springFromVisualDuration(params.visualDuration)
+  )
   const chartSvgRef = useRef<SVGSVGElement>(null)
   const chartClipPath = useTransform(offset, (v) => `inset(0 ${100 - v}% 0 0)`)
 
@@ -374,9 +332,7 @@ const Demo = () => {
       animationRef.current?.stop()
       animationRef.current = animate(offset.get(), offsetInitial, {
         type: "spring",
-        visualDuration: 0.35,
-        bounce: 0,
-        restDelta: 0.001,
+        ...resetSpring,
         onUpdate: (v) => {
           offset.jump(v)
         },
