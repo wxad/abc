@@ -42,7 +42,7 @@ export default function PostPage({ content }: { content: Post }) {
         <h2>
           <NextLink
             href="/"
-            className="inline-flex flex-col items-center text-sm font-semibold"
+            className="inline-flex flex-col items-center font-[Weixin] text-sm font-medium"
           >
             <Pyramid className="size-12" />
             设计垂点
@@ -90,7 +90,7 @@ export default function PostPage({ content }: { content: Post }) {
             </a>
           </span>
         </div>
-        <h1 className="mb-8 font-semibold text-2xl md:text-4xl">
+        <h1 className="mb-8 font-[Weixin] text-2xl font-medium md:text-4xl">
           {frontmatter.title}
         </h1>
         <PostContent

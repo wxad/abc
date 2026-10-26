@@ -359,7 +359,7 @@ const Home = () => {
           <div className="flex-1 flex flex-col items-center 74:flex-row">
             <Pyramid className="relative w-12 h-12 74:top-[0.15rem] 74:mr-2 74:w-10 74:h-10 opacity-80" />
             <div className="text-center 74:text-left">
-              <h1 className="relative -left-px text-neutral-600 74:text-neutral-800 font-semibold text-sm 74:text-base">
+              <h1 className="relative -left-px font-[Weixin] text-sm font-medium text-neutral-600 74:text-base 74:text-neutral-800">
                 设计垂点
               </h1>
               <div className="mt-4 74:mt-0 text-xs text-neutral-600">
@@ -490,7 +490,7 @@ const Home = () => {
                       </div>
                       <NextLink
                         href={slug}
-                        className="block mb-8 font-semibold text-2xl md:text-3xl hover:text-blue-500 active:text-blue-500 transition-all"
+                        className="mb-8 block font-[Weixin] text-2xl font-medium hover:text-blue-500 active:text-blue-500 transition-all md:text-3xl"
                       >
                         {title}
                       </NextLink>
