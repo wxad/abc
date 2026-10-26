@@ -40,7 +40,37 @@ export const P = ({ children, ...otherProps }: { children: string }) => {
   )
 }
 
-export const A = ({
+const externalLinkClassName =
+  "relative text-blue-500 hover:underline hover:decoration-dotted hover:decoration-current hover:underline-offset-4"
+
+const ExternalLinkIcon = () => (
+  <svg className="relative -top-px inline-block size-4" viewBox="0 0 24 24">
+    <path
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.75"
+      d="m6 18l2.5-2.5M18 6H9m9 0v9m0-9l-6.5 6.5"
+    />
+  </svg>
+)
+
+const SimpleExternalLink = ({
+  children,
+  ...otherProps
+}: {
+  children: string
+  href: string
+}) => (
+  <a target="_blank" className={externalLinkClassName} {...otherProps}>
+    {children}
+    <ExternalLinkIcon />
+  </a>
+)
+
+/** 带悬停预览的 MDX 链接：`文案(https://preview-url)` */
+const PreviewExternalLink = ({
   children,
   ...otherProps
 }: {
@@ -205,26 +235,14 @@ export const A = ({
       <a
         ref={linkRef}
         target="_blank"
-        className="relative text-blue-500 hover:underline hover:decoration-dotted hover:decoration-current hover:underline-offset-4"
+        className={externalLinkClassName}
         onMouseEnter={handleMouseEnter}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         {...otherProps}
       >
         {text}
-        <svg
-          className="relative -top-px inline-block size-4"
-          viewBox="0 0 24 24"
-        >
-          <path
-            fill="none"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="1.75"
-            d="m6 18l2.5-2.5M18 6H9m9 0v9m0-9l-6.5 6.5"
-          />
-        </svg>
+        <ExternalLinkIcon />
       </a>
       {isClient ? (
         <>
@@ -272,6 +290,24 @@ export const A = ({
         </>
       ) : null}
     </>
+  )
+}
+
+export const A = ({
+  children,
+  ...otherProps
+}: {
+  children: string
+  href: string
+}) => {
+  const previewSrc = children.match(/\((.*)\)/)?.[1]
+  if (!previewSrc) {
+    return (
+      <SimpleExternalLink {...otherProps}>{children}</SimpleExternalLink>
+    )
+  }
+  return (
+    <PreviewExternalLink {...otherProps}>{children}</PreviewExternalLink>
   )
 }
 

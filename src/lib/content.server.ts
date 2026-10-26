@@ -30,11 +30,28 @@ export type PostMetadata = {
 /**
  * Gets the post from `dist/content` and bundles it using MDX bundler
  */
+const readPostSource = async (slug: string) => {
+  const distFolder = path.join(CONTENT_FOLDER, slug)
+  const distFile = path.join(distFolder, POST_FILENAME)
+  try {
+    return {
+      folder: distFolder,
+      source: (await fs.promises.readFile(distFile)).toString(),
+    }
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error
+  }
+
+  // build:content 会先清空 _dist-content，空窗期改读源文件
+  const srcFolder = path.join(process.cwd(), "src/content", slug)
+  return {
+    folder: srcFolder,
+    source: (await fs.promises.readFile(path.join(srcFolder, POST_FILENAME))).toString(),
+  }
+}
+
 export const getPost = async (slug: string): Promise<Post> => {
-  const postFolder = path.join(CONTENT_FOLDER, slug)
-  const mdxSource = (
-    await fs.promises.readFile(path.join(postFolder, POST_FILENAME))
-  ).toString()
+  const { folder: postFolder, source: mdxSource } = await readPostSource(slug)
 
   const mdxOut = await bundleMDX({
     source: mdxSource,

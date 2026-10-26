@@ -23,6 +23,7 @@ import SprossCover from "@/components/spross/SprossCover"
 import QualityOfUICover from "@/components/quality-of-ui/QualityOfUICover"
 import SvgLiquidGlassCover from "@/components/svg-liquid-glass/SvgLiquidGlassCover"
 import Wxad11Cover from "@/components/wxad11/Wxad11Cover"
+import Wxad12Clock from "@/components/wxad12/Wxad12Clock"
 import FigmaMakeCover from "@/components/figma-make/FigmaMakeCover"
 import SmallPCover from "@/components/small-p/Cover"
 import InteractiveDesignInAICover from "@/components/interactive-design-in-ai/Cover"
@@ -36,6 +37,16 @@ import {
 } from "lucide-react"
 
 const posts = [
+  {
+    title: "微广 12 周年活动记录",
+    description:
+      "在每一个简单的活动中，享受制作的过程。即使它服务的人很少，但好好玩一玩的机会总是难得。",
+    slug: "wxad12",
+    publishedAt: "2026-10-26",
+    author: "Aragakey.@wxad.design",
+    authorLink: "https://codepen.io/aragakey",
+    children: <Wxad12Clock cover />,
+  },
   {
     title: "使用 AI 制作交互动画的建议",
     description:

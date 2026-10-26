@@ -1,0 +1,69 @@
+---
+title: "微广 12 周年活动记录"
+description: "在每一个简单的活动中，享受制作的过程。即使它服务的人很少，但好好玩一玩的机会总是难得。"
+slug: "wxad12"
+publishedAt: "2026-10-26"
+author: "Aragakey.@wxad.design"
+authorLink: "https://codepen.io/aragakey"
+---
+
+import Wxad12Choreo from "@/components/wxad12/Wxad12Choreo"
+import Wxad12Clock from "@/components/wxad12/Wxad12Clock"
+import Wxad12Full from "@/components/wxad12/Wxad12Full"
+import Wxad12PhotoClock from "@/components/wxad12/Wxad12PhotoClock"
+import Wxad12WordMorph from "@/components/wxad12/Wxad12WordMorph"
+
+今年是微信广告的第 12 年。
+
+在 [10 周年](https://wxad.design/abc/circular-text) 与 [11 周年](https://wxad.design/abc/wxad11) 时我们都制作了简单的 H5 活动。今年也是同样。我会在这里对活动中的两个交互做更细致的梳理。具体活动录屏如下：
+
+<Wxad12Full />
+
+## 词语重组
+
+主视觉上，设计师将 12 与字母 n 结合。一边，对数字 12 做了圆角处理，使其克制、亲和；一边，n 代表了无尽的厚度和重量，它是 now & next & new，是当下与未来：
+
+<Wxad12WordMorph />
+
+在 H5 活动中，我们会根据每个人的英文名，去生成一个含有 “n” 的单词。整个过程包含了以下行为：
+1. 重复的字母会位移到最终的位置，不重复的字母则会渐隐渐显；
+2. 字母 n 会变形成为主视觉的绿色样式；
+3. 其他元素会渐隐或渐显。
+
+要让这些变化易于理解、彼此不打架，就需要合理 [编排](https://wxad.design/abc/designing-depth#%E7%AC%AC-2-%E7%A7%8D%E5%B1%82%E7%BA%A7%EF%BC%9A%E5%8A%A8%E7%94%BB%E7%BC%96%E6%8E%92)。如果只是粗暴地“神奇移动”，就会变成这样：
+
+<Wxad12Choreo mode="flat" note="❌ 缺乏编排" />
+
+一份合理的编排，应该减少渐隐渐显元素的重叠。先渐隐 -> 其余字母落位 -> 新字母出现：
+
+<Wxad12Choreo mode="full" note="合理的编排" />
+
+最后，为了体现“重组”感，我会让字母们先向外散开，再向内聚拢；并且每个字母带一点随机的旋转。这些都加强了零零散散的感觉。你可以在下面体验一下不同参数的感受，也可以输入英文名体验一下：
+
+<Wxad12Choreo mode="play" />
+
+## 时钟转盘
+
+从 1 到 12，正是时钟的一圈刻度。我们入场动画就表达了这个概念：
+
+<Wxad12Clock />
+
+随后我们看到一个[这样的表现](https://www.xiaohongshu.com/explore/6a672ed8000000000f005464?xsec_token=ABSFSQsbsXWK72A21PhqmXt5doBXkaipa9MIAGKTWz__A=)：
+
+> 钟表不是用来显示照片的，但时间本身就像一本不断翻动的相册。
+
+这个形式非常契合我们的主题：
+
+<Wxad12PhotoClock />
+
+---
+
+在 H5 活动中，我们将这种形式和上传照片结合了起来。当你向下滑动照片时，你就将照片推入了一个时钟转盘：
+
+<Wxad12Full startAt={21} endAt={30} />
+
+其中我最喜欢的细节是：在钟表放大、旋转前，你会追上并且看到绿色秒针，最终才停下。这强化了左右交互和钟表这个意向的关联。视图只是放大了，你左右拨动的是钟表本身。
+
+## 结语
+
+在每一个简单的活动中，享受制作的过程。即使它服务的人很少，但好好玩一玩的机会总是难得。
