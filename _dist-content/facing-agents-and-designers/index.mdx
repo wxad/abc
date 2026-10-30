@@ -1,0 +1,94 @@
+---
+title: "面向 Agent，也面向设计师"
+description: "过去，我们面向「工程」，也面向「设计」；现在，我们面向「Agent」，也面向「设计师」。"
+slug: "facing-agents-and-designers"
+publishedAt: "2026-11-11"
+author: "Aragakey."
+authorLink: "https://codepen.io/aragakey"
+---
+
+import ReviewDemo from "@/components/facing-agents-and-designers/ReviewDemo"
+import { facingAgentsVideoSrc } from "@/components/facing-agents-and-designers/videoCdn"
+
+在 [小 p: 一次关于 AI 的交互实验](https://wxad.design/abc/small-p) 中，我探索了**和** AI 做些事情，赋予了 AI 鼠标指针（当时 OpenAI 的 Computer Use 还没有发布）：
+
+> 对我来说什么是有趣呢？与 AI 的联系和交互方式。大部分人在用 AI 去做东西，用 AI 去完成其他事，却很少探索和 AI 做什么 —— 真是“无聊”（不负面的中性词）。
+
+回到真实的工作流程后，我发现我们每个人都在做许多事，但好像它们只面向 Agent。我们把个人知识库、Skill、代码 Snippets 都灌给 Agent，期待它回复我们一份惊喜，即使往往会感到失望。
+
+通过接下来的三个项目，我尝试面向 Agent，也面向设计师。它们可能也像“玩具”，但希望能给你一些启发。
+
+## 讨论与走查
+
+过去的走查，是 [比对设计稿和页面](https://wxad.design/pixie/#/review?url=https://wxa.wxs.qq.com/wxad-design/wxad/22-09-16-check/index.html#/cash&breakpoints=375,1440)，现在我们往往可以给到一个预览链接。所有角色（产品、设计、开发）都围绕着这个链接，那么有什么可以尝试的呢？
+
+源于 Figma 的协作方式，我们也可以在页面中进行实时的协作与评论：
+
+<ReviewDemo startAt={0} endAt={17} note="协作、评论、实时" />
+
+每一条评论会对应一个元素，可以全部复制：
+
+<ReviewDemo startAt={17} note="评论列表" />
+
+导出的是一份详尽的交给 AI 的走查报告：
+
+```markdown
+# 页面走查意见汇总（供 AI / 编码 Agent）
+
+你正在处理一批协作走查留下的 UI 意见。
+请逐条处理：用 DOM 锚点（`data-review-id` / `id` / 选择器 / 文本）定位目标。
+优先做局部、最小改动，并保持与宿主产品现有模式一致。
+
+## 会话信息
+- 页面地址：https://wxad-design.woa.com/wxad-od-template/home
+- 当前房间：`/home`
+- 导出时间：2026-07-22T04:18:02.878Z
+- 评论总数：2
+
+## 评论列表
+
+### 房间 `/home`（2 条）
+
+## 评论 1（880852b3-21f9-4c2f-800f-48483391311a）
+
+### 基本信息
+- 房间 / 路由：`/home`
+...
+```
+
+为了通用，我们可以提供 sdk 接入，通过中台统一维护数据 —— 有一点像一个简易的数据上报系统。这样我们就可以在多个项目中快速接入：
+
+<ReviewDemo src={facingAgentsVideoSrc.reviewDemo2} note="在多个项目中快速接入" />
+
+在鼠标位置的处理上，有一个有意思的细节：因为 Figma 是固定尺寸的画布，所以每个人的鼠标位置是可以确定的。但是网页却不同，每个人的窗口大小不同，鼠标位置如何确定？我们就需要根据元素的尺寸和位置来计算：
+
+<ReviewDemo src={facingAgentsVideoSrc.reviewDemo3} note="根据元素的尺寸和位置来计算" />
+
+---
+
+讨论与走查，是面向 Agent，也面向设计师 —— 面向 Agent 的，是评论导出；面向设计师的，是协作、评论、实时。
+
+## 设计语言的维护
+
+在以往的桌面端项目中，我们都是先维护一个稳定的设计语言，再去搭页面。但如果这件事反过来 —— 当我们“先开发再设计” —— 如何进行组件治理呢？这并不是一个假设，而是一个现实问题，一个如果你不断堆砌功能后会面临的问题。
+
+我们做了一个 **比较和校准设计语言的 Playground**。
+
+AI 让“增加变体”变得容易，UI 为什么不可以像生图一样“抽卡”？不仅仅是字体、圆角这些 CSS Variables，如今完全还可以是 Icon 库、组件变体、间距、版式等等。我们本来就是野蛮生长起来的。那就让 AI 帮我们看看 UI 可以长成什么样：
+
+<ReviewDemo src={facingAgentsVideoSrc.reviewDemo4} note="UI “抽卡”" aspectClassName="aspect-square w-1/2 min-w-[300px]" />
+
+在做差异化的 UI 前，先提供可以差异化的选项：
+
+<div className="flex flex-col sm:flex-row gap-6 justify-center items-center mt-4 mb-12">
+  <ReviewDemo
+    src={facingAgentsVideoSrc.reviewDemo5}
+    aspectClassName="aspect-square w-[300px]"
+    className="mt-0 mb-0 mx-0"
+  />
+  <ReviewDemo
+    src={facingAgentsVideoSrc.reviewDemo6}
+    aspectClassName="aspect-square w-[300px]"
+    className="mt-0 mb-0 mx-0"
+  />
+</div>

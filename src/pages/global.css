@@ -1692,3 +1692,29 @@ html {
   margin: 0;
   max-width: 100%;
 }
+
+
+/* 设计垂点 Pyramid logo：3D 四棱锥绕竖轴转 */
+.abc-pyramid {
+  transform: rotateX(-22deg) rotateY(25deg);
+  transform-style: preserve-3d;
+  animation: abc-pyramid-spin 4s linear infinite;
+  will-change: transform;
+}
+
+.abc-pyramid-face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+@keyframes abc-pyramid-spin {
+  to {
+    transform: rotateX(-22deg) rotateY(385deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .abc-pyramid {
+    animation: none;
+  }
+}

@@ -22,7 +22,8 @@ import {
 } from "@/components/MdxComponents"
 import { Comments } from "@/components/Comments"
 import { siteConfig } from "@/lib/config"
-import { Pyramid, Calendar, CalendarSync, Signature } from "lucide-react"
+import { Calendar, CalendarSync, Signature } from "lucide-react"
+import PyramidLogo from "@/components/PyramidLogo"
 
 export default function PostPage({ content }: { content: Post }) {
   const { frontmatter, headings, slug, code } = content
@@ -44,7 +45,7 @@ export default function PostPage({ content }: { content: Post }) {
             href="/"
             className="inline-flex flex-col items-center font-[Weixin] text-sm font-medium"
           >
-            <Pyramid className="size-12" />
+            <PyramidLogo className="size-12 text-neutral-700" />
             设计垂点
           </NextLink>
         </h2>

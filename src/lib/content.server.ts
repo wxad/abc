@@ -84,7 +84,9 @@ export const getPost = async (slug: string): Promise<Post> => {
 }
 
 const getHeadings = (content: string): Heading[] => {
-  return content
+  // 忽略 fenced code block（``` ... ```）里的标题，避免示例 markdown 进目录
+  const withoutCodeBlocks = content.replace(/```[\s\S]*?```/g, "")
+  return withoutCodeBlocks
     .split("\n")
     .filter((line) => line.match(/^##\s/))
     .map((line) => line.replace("##", "").trim())

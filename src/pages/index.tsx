@@ -27,16 +27,27 @@ import Wxad12Clock from "@/components/wxad12/Wxad12Clock"
 import FigmaMakeCover from "@/components/figma-make/FigmaMakeCover"
 import SmallPCover from "@/components/small-p/Cover"
 import InteractiveDesignInAICover from "@/components/interactive-design-in-ai/Cover"
+import FacingAgentsAndDesignersCover from "@/components/facing-agents-and-designers/Cover"
 import NextLink from "next/link"
 import {
   ArrowRight,
-  Pyramid,
   Calendar,
   CalendarSync,
   Signature,
 } from "lucide-react"
+import PyramidLogo from "@/components/PyramidLogo"
 
 const posts = [
+  {
+    title: "面向 Agent，也面向设计师",
+    description:
+      "过去，我们面向「工程」，也面向「设计」；现在，我们面向「Agent」，也面向「设计师」。",
+    slug: "facing-agents-and-designers",
+    publishedAt: "2026-11-11",
+    author: "Aragakey.",
+    authorLink: "https://codepen.io/aragakey",
+    children: <FacingAgentsAndDesignersCover />,
+  },
   {
     title: "微广 12 周年活动记录",
     description:
@@ -357,7 +368,7 @@ const Home = () => {
       <div className="mx-auto mb-36 px-4 md:px-16 max-w-[1088px]">
         <div className="flex items-end justify-between mb-8 py-6 md:py-10">
           <div className="flex-1 flex flex-col items-center 74:flex-row">
-            <Pyramid className="relative w-12 h-12 74:top-[0.15rem] 74:mr-2 74:w-10 74:h-10 opacity-80" />
+            <PyramidLogo className="relative w-12 h-12 74:top-[0.15rem] 74:mr-2 74:w-10 74:h-10 opacity-80 text-neutral-800" />
             <div className="text-center 74:text-left">
               <h1 className="relative -left-px font-[Weixin] text-sm font-medium text-neutral-600 74:text-base 74:text-neutral-800">
                 设计垂点
