@@ -7,6 +7,8 @@ import { cn } from "@/lib/utils"
  * 不是 CSS 3D 拼贴：每帧对四棱锥做真实正交投影（视角仰角与 Lucide Pyramid
  * 一致），剔除背向面，只画可见面的棱 —— 静止时恰好是 Lucide Pyramid 的
  * 五条线，转起来是真正的线稿 3D 旋转，描边粗细始终均匀。
+ * 节奏：静止一段时间展示原形，再缓入缓出转完一圈停回静止。
+ * 圆角：底边棱连成一条 polyline 吃 round join，侧棱端点重合吃 round cap。
  */
 
 /* 由 Lucide Pyramid 的 24×24 静止坐标反推模型：
@@ -17,7 +19,9 @@ const R = 9.5 // 底面外接半径（屏幕半宽）
 const SIN_E = 5.5 / R // 视角仰角 sin
 const COS_E = Math.sqrt(1 - SIN_E * SIN_E)
 const H = 14.5 / COS_E // 锥高
-const PERIOD_MS = 10_000 // 一圈 10s；同页所有实例共用同一相位
+const DWELL_MS = 2_200 // 静止时长（停回 Lucide 原形）
+const SPIN_MS = 3_800 // 转一圈时长（缓入缓出）
+const CYCLE_MS = DWELL_MS + SPIN_MS // 同页所有实例共用同一相位
 
 type P3 = readonly [number, number, number]
 
@@ -51,16 +55,13 @@ const wirePath = (theta: number): string => {
     z * c - x * s,
   ])
 
-  const segs: string[] = []
-  const seen = new Set<string>()
-  const edge = (key: string, p: P3, q: P3) => {
-    if (seen.has(key)) return
-    seen.add(key)
-    const [x1, y1] = project(p)
-    const [x2, y2] = project(q)
-    segs.push(`M${x1.toFixed(2)} ${y1.toFixed(2)}L${x2.toFixed(2)} ${y2.toFixed(2)}`)
+  const pt = (p: P3) => {
+    const [x, y] = project(p)
+    return `${x.toFixed(2)} ${y.toFixed(2)}`
   }
 
+  // 可见面（背向观察者的整面消隐）
+  const visible: number[] = []
   for (let i = 0; i < 4; i++) {
     const j = (i + 1) % 4
     // 面 (apex, c_i, c_j) 的朝外法线
@@ -83,11 +84,34 @@ const wirePath = (theta: number): string => {
     ) {
       n = [-n[0], -n[1], -n[2]]
     }
-    // 背向观察者的面整面消隐
-    if (n[0] * VIEW[0] + n[1] * VIEW[1] + n[2] * VIEW[2] <= 0) continue
-    edge(`s${i}`, APEX, corners[i])
-    edge(`s${j}`, APEX, corners[j])
-    edge(`b${i}`, corners[i], corners[j])
+    if (n[0] * VIEW[0] + n[1] * VIEW[1] + n[2] * VIEW[2] > 0) visible.push(i)
+  }
+
+  const segs: string[] = []
+  // 侧棱：各一条线段，端点汇于顶点，由 round cap 收圆
+  const slants = new Set<number>()
+  visible.forEach((i) => {
+    slants.add(i)
+    slants.add((i + 1) % 4)
+  })
+  const apex = pt(APEX)
+  slants.forEach((i) => segs.push(`M${apex}L${pt(corners[i])}`))
+
+  // 底边棱：可见底边连成一条 polyline，拐角由 round join 收圆
+  // （至多 3 面可见，底边链不会闭合成环）
+  const vis = new Set(visible)
+  let start = -1
+  for (let i = 0; i < 4 && start < 0; i++) {
+    if (vis.has(i) && !vis.has((i + 3) % 4)) start = i
+  }
+  if (start >= 0) {
+    const pts = [pt(corners[start])]
+    let e = start
+    while (vis.has(e)) {
+      e = (e + 1) % 4
+      pts.push(pt(corners[e]))
+    }
+    segs.push(`M${pts.join("L")}`)
   }
   return segs.join("")
 }
@@ -102,7 +126,14 @@ const PyramidLogo = ({ className }: { className?: string }) => {
 
     let raf = 0
     const tick = () => {
-      const theta = ((performance.now() % PERIOD_MS) / PERIOD_MS) * Math.PI * 2
+      const u = performance.now() % CYCLE_MS
+      let theta = 0
+      if (u > DWELL_MS) {
+        const p = (u - DWELL_MS) / SPIN_MS
+        // ease-in-out cubic：慢起、慢收，停得稳
+        const e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2
+        theta = e * Math.PI * 2
+      }
       path.setAttribute("d", wirePath(theta))
       raf = requestAnimationFrame(tick)
     }
