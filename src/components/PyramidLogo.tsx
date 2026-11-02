@@ -7,8 +7,10 @@ import { cn } from "@/lib/utils"
  * 不是 CSS 3D 拼贴：每帧对四棱锥做真实正交投影（视角仰角与 Lucide Pyramid
  * 一致），剔除背向面，只画可见面的棱 —— 静止时恰好是 Lucide Pyramid 的
  * 五条线，转起来是真正的线稿 3D 旋转，描边粗细始终均匀。
- * 节奏：静止一段时间展示原形，再缓入缓出转完一圈停回静止。
- * 圆角：底边棱连成一条 polyline 吃 round join，侧棱端点重合吃 round cap。
+ *
+ * 节奏：入场进入视口时缓动转一圈、停回原形，之后保持静止；hover 再转一圈。
+ * 圆角：底边棱连成一条 polyline 吃 round join；另在每个顶点垫一枚比描边
+ * 半宽更大的圆点，让尖角 visibly 圆润。
  */
 
 /* 由 Lucide Pyramid 的 24×24 静止坐标反推模型：
@@ -19,9 +21,8 @@ const R = 9.5 // 底面外接半径（屏幕半宽）
 const SIN_E = 5.5 / R // 视角仰角 sin
 const COS_E = Math.sqrt(1 - SIN_E * SIN_E)
 const H = 14.5 / COS_E // 锥高
-const DWELL_MS = 2_200 // 静止时长（停回 Lucide 原形）
-const SPIN_MS = 3_800 // 转一圈时长（缓入缓出）
-const CYCLE_MS = DWELL_MS + SPIN_MS // 同页所有实例共用同一相位
+const DOT_R = 1.25 // 顶点圆点半径（描边半宽为 1，略大一点才显圆又不突兀）
+const SPIN_MS = 1_800 // 转一圈时长（缓入缓出）
 
 type P3 = readonly [number, number, number]
 
@@ -45,8 +46,8 @@ const cross = (u: P3, v: P3): P3 => [
   u[0] * v[1] - u[1] * v[0],
 ]
 
-/** 旋转角 theta 下，消隐后的线框可见棱 */
-const wirePath = (theta: number): string => {
+/** 旋转角 theta 下的线框：消隐后的棱 + 顶点圆点 */
+const wireFrame = (theta: number): { d: string; dots: string } => {
   const c = Math.cos(theta)
   const s = Math.sin(theta)
   const corners: P3[] = BASE_XZ.map(([x, z]) => [
@@ -113,36 +114,86 @@ const wirePath = (theta: number): string => {
     }
     segs.push(`M${pts.join("L")}`)
   }
-  return segs.join("")
+
+  // 顶点圆点：apex + 各可见底角，比描边半宽大，尖角因此圆润
+  const dotPts: (readonly [number, number])[] = [
+    project(APEX),
+    ...[...slants].map((i) => project(corners[i])),
+  ]
+  const dots = dotPts.map(
+    ([x, y]) =>
+      `M${(x - DOT_R).toFixed(2)} ${y.toFixed(2)}` +
+      `a${DOT_R} ${DOT_R} 0 1 0 ${DOT_R * 2} 0` +
+      `a${DOT_R} ${DOT_R} 0 1 0 ${-DOT_R * 2} 0`,
+  )
+
+  return { d: segs.join(""), dots: dots.join("") }
 }
 
+const REST = wireFrame(0)
+
 const PyramidLogo = ({ className }: { className?: string }) => {
+  const svgRef = useRef<SVGSVGElement>(null)
   const pathRef = useRef<SVGPathElement>(null)
+  const dotsRef = useRef<SVGPathElement>(null)
 
   useEffect(() => {
+    const svg = svgRef.current
     const path = pathRef.current
-    if (!path) return
+    const dots = dotsRef.current
+    if (!svg || !path || !dots) return
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
 
     let raf = 0
+    let spinStart = -1
+
+    const render = (theta: number) => {
+      const f = wireFrame(theta)
+      path.setAttribute("d", f.d)
+      dots.setAttribute("d", f.dots)
+    }
     const tick = () => {
-      const u = performance.now() % CYCLE_MS
-      let theta = 0
-      if (u > DWELL_MS) {
-        const p = (u - DWELL_MS) / SPIN_MS
-        // ease-in-out cubic：慢起、慢收，停得稳
-        const e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2
-        theta = e * Math.PI * 2
+      const p = (performance.now() - spinStart) / SPIN_MS
+      if (p >= 1) {
+        spinStart = -1
+        render(0)
+        return
       }
-      path.setAttribute("d", wirePath(theta))
+      // ease-in-out cubic：慢起、慢收，停得稳
+      const e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2
+      render(e * Math.PI * 2)
       raf = requestAnimationFrame(tick)
     }
-    raf = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(raf)
+    const startSpin = () => {
+      if (spinStart >= 0) return
+      spinStart = performance.now()
+      raf = requestAnimationFrame(tick)
+    }
+
+    // hover 再转一圈
+    svg.addEventListener("mouseenter", startSpin)
+    // 入场：首次进入视口转一圈
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((en) => en.isIntersecting)) {
+          io.disconnect()
+          startSpin()
+        }
+      },
+      { threshold: 0.4 },
+    )
+    io.observe(svg)
+
+    return () => {
+      cancelAnimationFrame(raf)
+      svg.removeEventListener("mouseenter", startSpin)
+      io.disconnect()
+    }
   }, [])
 
   return (
     <svg
+      ref={svgRef}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -152,7 +203,8 @@ const PyramidLogo = ({ className }: { className?: string }) => {
       aria-hidden
       className={cn("shrink-0 text-neutral-800", className)}
     >
-      <path ref={pathRef} d={wirePath(0)} />
+      <path ref={pathRef} d={REST.d} />
+      <path ref={dotsRef} d={REST.dots} fill="currentColor" stroke="none" />
     </svg>
   )
 }
