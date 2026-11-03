@@ -5,10 +5,13 @@ import { wireFrame } from "@/lib/pyramidWire"
  * 动效 favicon：把 logo 的「转一面」做成循环版写回 link[rel=icon]。
  *
  * 节奏：缓动转过一面（90°，1.2s）→ 停 2s → 再转一面，循环往复。
- * 实现：初始化时把旋转各帧预编码成 PNG data URL（动画期间不再 toDataURL，
- * 主线程零编码开销），动画中只按帧号换 href（一圈 ~17 次、间隔均匀），
- * 相同帧跳过。prefers-reduced-motion 下不接管，保留 _app 里的静态 SVG
- * favicon（Safari 等不响应动态 favicon 的浏览器同）。
+ * 形态：定格动画——一圈 8 个姿势、每格停留 ~150ms。桌面 Chrome 的 favicon
+ * 走 FaviconService 低优先级通道、更新会被合并且到达不规则；定格+停留让
+ * 丢帧只表现为某格稍停，观感仍然是有意的节奏。
+ * 实现：初始化时把各姿势预编码成 PNG data URL（动画期间不再 toDataURL，
+ * 主线程零编码开销），动画中只按帧号换 href，相同帧跳过。
+ * prefers-reduced-motion 下不接管，保留 _app 里的静态 SVG favicon
+ * （Safari 等不响应动态 favicon 的浏览器同）。
  */
 
 const SIZE = 64
@@ -16,7 +19,8 @@ const SCALE = SIZE / 24
 const SPIN_MS = 1_200
 const DWELL_MS = 2_000
 const CYCLE_MS = SPIN_MS + DWELL_MS
-const STEPS = 20 // 转一面的帧数
+const STEPS = 8 // 转一面的定格数（~7fps 更新：Chrome 的 favicon 通道低优先级，
+// 定格+停留让被合并/丢弃的更新只表现为某格稍停，而不是卡顿抖动）
 const COLOR = "#262626"
 
 const PyramidFavicon = () => {
