@@ -4,10 +4,11 @@ import { wireFrame } from "@/lib/pyramidWire"
 /**
  * 动效 favicon：把 logo 的「转一面」做成循环版写回 link[rel=icon]。
  *
- * 节奏：缓动转过一面（90°）→ 停 2s → 再转一面，循环往复。
- * 实现：64×64 canvas 按线框数学描边，导出 PNG data URL 替换 favicon；
- * 旋转期间节流到 ~20fps，停顿时只写一帧。prefers-reduced-motion 下不接管，
- * 保留 _app 里的静态 SVG favicon（Safari 等不响应动态 favicon 的浏览器同）。
+ * 节奏：缓动转过一面（90°，1.2s）→ 停 2s → 再转一面，循环往复。
+ * 实现：初始化时把旋转各帧预编码成 PNG data URL（动画期间不再 toDataURL，
+ * 主线程零编码开销），动画中只按帧号换 href（一圈 ~17 次、间隔均匀），
+ * 相同帧跳过。prefers-reduced-motion 下不接管，保留 _app 里的静态 SVG
+ * favicon（Safari 等不响应动态 favicon 的浏览器同）。
  */
 
 const SIZE = 64
@@ -15,6 +16,7 @@ const SCALE = SIZE / 24
 const SPIN_MS = 1_200
 const DWELL_MS = 2_000
 const CYCLE_MS = SPIN_MS + DWELL_MS
+const STEPS = 20 // 转一面的帧数
 const COLOR = "#262626"
 
 const PyramidFavicon = () => {
@@ -35,7 +37,7 @@ const PyramidFavicon = () => {
     const ctx = canvas.getContext("2d")
     if (!ctx) return
 
-    const draw = (theta: number) => {
+    const encode = (theta: number) => {
       const { slants, chain } = wireFrame(theta)
       ctx.clearRect(0, 0, SIZE, SIZE)
       ctx.strokeStyle = COLOR
@@ -54,30 +56,50 @@ const PyramidFavicon = () => {
         }
       }
       ctx.stroke()
-      link.type = "image/png"
-      link.href = canvas.toDataURL("image/png")
+      return canvas.toDataURL("image/png")
     }
 
+    // 预编码旋转帧，丢弃相邻重复帧（缓动两端步长极小）
+    const frames: { t: number; url: string }[] = []
+    for (let k = 0; k <= STEPS; k++) {
+      const p = k / STEPS
+      // ease-in-out cubic：与 logo 同一条缓动曲线
+      const e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2
+      const url = encode(e * (Math.PI / 2))
+      if (!frames.length || frames[frames.length - 1].url !== url) {
+        frames.push({ t: p * SPIN_MS, url })
+      }
+    }
+    const REST_URL = frames[0].url
+
+    link.type = "image/png"
+    link.href = REST_URL
+    let current = REST_URL
+    let lastKey = ""
+
     let raf = 0
-    let lastDraw = -2 // -2 = 已写停顿帧
     const tick = () => {
       const u = performance.now() % CYCLE_MS
-      const now = performance.now()
+      let key: string
+      let url: string
       if (u < SPIN_MS) {
-        if (now - lastDraw > 50) {
-          const p = u / SPIN_MS
-          // ease-in-out cubic：慢起、慢收，停得稳
-          const e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2
-          draw(e * (Math.PI / 2)) // 只转过一面
-          lastDraw = now
+        let i = 0
+        while (i + 1 < frames.length && frames[i + 1].t <= u) i++
+        key = `s${i}`
+        url = frames[i].url
+      } else {
+        key = "d"
+        url = REST_URL
+      }
+      if (key !== lastKey) {
+        lastKey = key
+        if (url !== current) {
+          current = url
+          link.href = url
         }
-      } else if (lastDraw !== -2) {
-        draw(0)
-        lastDraw = -2
       }
       raf = requestAnimationFrame(tick)
     }
-    draw(0)
     raf = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(raf)
   }, [])
