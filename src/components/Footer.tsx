@@ -7,9 +7,9 @@ import { useSpring, animated } from "@react-spring/web"
 import {
   DraftingCompass,
   Paintbrush,
-  Pyramid,
   ContactRound,
 } from "lucide-react"
+import PyramidLogo from "@/components/PyramidLogo"
 
 const FooterItem = ({
   link,
@@ -102,11 +102,7 @@ const Footer = () => {
           onMouseLeave={handleMouseLeave}
         >
           <FooterItem leftOffset={leftOffset} link="/">
-            <Pyramid
-              width={undefined}
-              height={undefined}
-              className="size-1/2 text-neutral-600"
-            />
+            <PyramidLogo className="size-1/2 text-neutral-600" />
           </FooterItem>
           <FooterItem leftOffset={leftOffset} link="/crafts">
             <DraftingCompass

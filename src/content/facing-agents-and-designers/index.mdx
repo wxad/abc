@@ -1,0 +1,244 @@
+---
+title: "面向 Agent，也面向设计师"
+description: "过去，我们面向「工程」，也面向「设计」；现在，我们面向「Agent」，也面向「设计师」。"
+slug: "facing-agents-and-designers"
+publishedAt: "2026-11-06"
+author: "Aragakey."
+authorLink: "https://codepen.io/aragakey"
+---
+
+import ReviewDemo from "@/components/facing-agents-and-designers/ReviewDemo"
+import { facingAgentsVideoSrc } from "@/components/facing-agents-and-designers/videoCdn"
+
+在 [小 p: 一次关于 AI 的交互实验](https://wxad.design/abc/small-p) 中，我探索了**和** AI 做些事情，赋予了 AI 鼠标指针（当时 OpenAI 的 Computer Use 还没有发布）：
+
+> 对我来说什么是有趣呢？与 AI 的联系和交互方式。大部分人在用 AI 去做东西，用 AI 去完成其他事，却很少探索和 AI 做什么 —— 真是“无聊”（不负面的中性词）。
+
+回到真实的工作流程后，我发现我们每个人都在做许多事，但好像它们只面向 Agent。我们把个人知识库、Skill、代码 Snippets 都灌给 Agent，期待它回复我们一份惊喜，尽管往往会感到失望。
+
+通过接下来的三个项目，我尝试面向 Agent，也面向设计师，希望能给你一些启发。
+
+
+## 动画词汇表
+
+关于如何更好地制作交互动画，我在寻找一些和 Agent 更高效沟通的方式。我是想蒸馏一些东西出来的，但是一直找不到方法。我遇到了以下两个问题：
+
+1. 拿来就用的效果库有很多：[fancycomponents](https://fancycomponents.dev)、[magicui](https://magicui.design)、[aceternity](https://ui.aceternity.com)、[cult-ui](https://cult-ui.com)，但：  
+   它们更多面向 SaaS 产品、看似丰富，有多少是实用的？以及，实际业务的动画每次都不同，一键复制的意义大吗？  
+   我自己也很少需要过去做过的案例。大家的项目都不同，期望它们通用是一件不太现实的事情。  
+   我们往往能做到反过来剖析一个动画的感觉或品味，但是面对每次不同的需求，这种反向的经验和“成品”很少有用。  
+      
+   —— **有什么比一键复制“成品”更可能有用？**
+   <br />
+
+2. 我们和 Agent 的对话过程，经常伴随没有信息量的输入输出：“参考一下这个视频”、“我要流畅一点”、“做个轮播”、“看一下这个网站的效果”。  
+   我在 [这篇文章](https://wxad.design/abc/interactive-design-in-ai#%E5%88%B6%E4%BD%9C%E5%89%8D) 提到过自己是怎么提供信息量的。长篇大论、生怕漏考虑了什么，几乎把实现逻辑说完，就差动手做了。  
+
+   —— **不能长篇大论，但是如何提高沟通的信息量？**
+
+---
+
+我看到了 Emil 的 [Animation Vocabulary](https://github.com/emilkowalski/skills/blob/main/skills/animation-vocabulary/SKILL.md)，一下就觉得特别有意思 —— 他在解释词汇，这很少有人在干。词汇就是沟通的媒介。但我在想如何更有用？面向设计师，也面向 Agent。
+
+受其启发，我做了一本更加面向设计师、更丰富的 [动画词汇表](https://wxad-design.woa.com/animation-vocabulary)，涵盖 80+ 动画词汇，在解释的基础上加上了使用场景、技巧、小心、提示词，以及案例 —— 业务中实际完成过的案例，而不是 demo：
+
+<ReviewDemo src={facingAgentsVideoSrc.reviewDemo10} note="动画词汇表" clipInset="3px 0 0 0" />
+
+这一份内容，在面向 Agent 时则是一份 Skill，包含了沟通、实现和检测。其中沟通最重要：
+
+1. 建议做什么？
+2. 具体用什么方法做？
+3. 不建议怎么做？为什么？
+
+### 案例一：视频复刻
+
+同事给我发了一个 X 上的案例，和我讨论复刻它的技术要点：
+
+<ReviewDemo
+  src={facingAgentsVideoSrc.reviewDemo11}
+  aspectClassName="aspect-[1174/720]"
+  clipInset="2px 3px 2px 3px"
+/>
+
+这个案例并不算困难，要点是图片的放大缩小和其他元素的位移消失。如果是我自己的话，可能又会语音输入几百字，现在我希望这个 Skill 能说出那些话。
+
+在调用 Skill 后，Agent 首先会输出一个“建议做什么”的表格，继而是“具体用什么方法做”：
+
+<ReviewDemo src={facingAgentsVideoSrc.reviewDemo12} note="Skill 输出的方法是可跳转的" clipInset="3px 0 0 0" />
+
+在上面的输出中，有一个我认为很有用的点，就是会列举具体的方法。如果你不确定它的意思，你可以点击跳转到具体的页面，查看刚才说到的解释与案例。
+
+1. 对于放大的过程，Agent 提到的词有：[共享元素过渡](https://wxad-design.woa.com/animation-vocabulary#term-3-3)、[形状变化](https://wxad-design.woa.com/animation-vocabulary#term-3-2)、[感知源动画](https://wxad-design.woa.com/animation-vocabulary#term-2-7)、[连续性过渡](https://wxad-design.woa.com/animation-vocabulary#term-3-1)；
+2. 对于其他的元素，Agent 提到的词有：[平移](https://wxad-design.woa.com/animation-vocabulary#term-2-0)、[淡入/淡出](https://wxad-design.woa.com/animation-vocabulary#term-0-0)、[隐喻](https://wxad-design.woa.com/animation-vocabulary#term-11-10)、[阻尼](https://wxad-design.woa.com/animation-vocabulary#term-7-2)；
+3. 对于关闭的动画，Agent 提到的词有：[可中断动画](https://wxad-design.woa.com/animation-vocabulary#term-7-8)。
+
+其中，可中断动画是令我比较意外的，因为我没有要求，且这是一个通常在移动端上需要注意的原则。下面录屏的后半段就展示了我在动画过程中按下 ESC 的效果：
+
+<ReviewDemo
+  src={facingAgentsVideoSrc.reviewDemo13}
+  note="One Shot 结果，且可按下 ESC 后中断动画"
+  aspectClassName="aspect-[2072/1080]"
+  clipInset="3px 0 0 0"
+/>
+
+---
+
+One Shot 的结果不错，并不让人意外。因为那些词是我自己写的，Agent 列举的方法正是我准备使用的方法。它只要能在执行前列出这些词，我就知道不会差太多了，我就知道 **这个 Skill 还真的有用**。
+
+### 案例二：动画优化
+
+从 0 到 1 的实现之后，我想试试对已完成动画的优化：
+
+<ReviewDemo
+  src={facingAgentsVideoSrc.reviewDemo14}
+  note="❌ 文字排版跳动 + 头像未共享"
+  aspectClassName="aspect-[2136/2160]"
+  clipInset="3px 0 0 0"
+  speedToggle
+/>
+
+在上面的过渡动画中，有两个我能看见的可优化点：
+
+1. 宽度变化的时候，文字的排版也在实时变化，产生了多余的跳动；
+2. Agent 头像会在过程中消失又出现，实际上可以被复用，作为整个过程中的共享元素。
+
+在使用 Skill 优化后，就得到了一个更理想的结果：
+
+<ReviewDemo
+  src={facingAgentsVideoSrc.reviewDemo15}
+  note="✅ 文字排版不变 + 头像共享"
+  aspectClassName="aspect-[2136/2160]"
+  clipInset="3px 0 0 0"
+  speedToggle
+/>
+
+### 案例三：添加动画
+
+接下来，在下面的体验中，寻找可以添加动画的方向：
+
+<ReviewDemo src={facingAgentsVideoSrc.reviewDemo16} clipInset="3px 0 0 0" />
+
+Skill 给出的建议是 Tab 下划线 + 卡片列表，具体实现相关的名词有：[布局动画](https://wxad-design.woa.com/animation-vocabulary#term-3-4)、[方向感知过渡](https://wxad-design.woa.com/animation-vocabulary#term-3-6)、[进入/退出](https://wxad-design.woa.com/animation-vocabulary#term-0-5)、[缓出](https://wxad-design.woa.com/animation-vocabulary#term-6-1)：
+
+![Skill 建议](https://wxa.wxs.qq.com/wxad-design/yijie/1793948738146-c0d3bf2716bdfd03.png)
+
+最终得到的结果是这样的：
+
+<ReviewDemo src={facingAgentsVideoSrc.reviewDemo17} clipInset="3px 0 0 0" />
+
+---
+
+动画词汇表，是面向 Agent，也面向设计师 —— 面向 Agent 的，是一份增加沟通信息量的 Skill；面向设计师的，是一份可以查阅参考的手册。
+
+## 讨论与走查
+
+过去的走查，是 [比对设计稿和页面](https://wxad.design/pixie/#/review?url=https://wxa.wxs.qq.com/wxad-design/wxad/22-09-16-check/index.html#/cash&breakpoints=375,1440)，现在我们往往可以给到一个预览链接。所有角色（产品、设计、开发）都围绕着这个链接，那么有什么可以尝试的呢？
+
+源于 Figma 的协作方式，我们也可以在页面中进行实时的协作与评论：
+
+<ReviewDemo startAt={0} endAt={17} note="协作、评论、实时" />
+
+每一条评论会对应一个元素，可以全部复制：
+
+<ReviewDemo startAt={17} note="评论列表" />
+
+导出的是一份详尽的交给 AI 的走查报告：
+
+```markdown
+# 页面走查意见汇总（供 AI / 编码 Agent）
+
+你正在处理一批协作走查留下的 UI 意见。
+请逐条处理：用 DOM 锚点（`data-review-id` / `id` / 选择器 / 文本）定位目标。
+优先做局部、最小改动，并保持与宿主产品现有模式一致。
+
+## 会话信息
+- 页面地址：https://wxad-design.woa.com/wxad-od-template/home
+- 当前房间：`/home`
+- 导出时间：2026-07-22T04:18:02.878Z
+- 评论总数：2
+
+## 评论列表
+
+### 房间 `/home`（2 条）
+
+## 评论 1（880852b3-21f9-4c2f-800f-48483391311a）
+
+### 基本信息
+- 房间 / 路由：`/home`
+...
+```
+
+为了通用，我们可以提供 SDK 接入，通过中台统一维护数据 —— 有一点像一个简易的数据上报系统。这样我们就可以在多个项目中快速接入：
+
+<ReviewDemo src={facingAgentsVideoSrc.reviewDemo2} note="在多个项目中快速接入" />
+
+在鼠标位置的处理上，有一个有意思的细节：因为 Figma 是固定尺寸的画布，所以每个人的鼠标位置是可以确定的。但是网页却不同，每个人的窗口大小不同，鼠标位置如何确定？我们就需要根据元素的尺寸和位置来计算：
+
+<ReviewDemo src={facingAgentsVideoSrc.reviewDemo3} note="根据元素的尺寸和位置来计算" />
+
+---
+
+讨论与走查，是面向 Agent，也面向设计师 —— 面向 Agent 的，是评论导出；面向设计师的，是协作、评论、实时。
+
+## 设计语言的维护
+
+在以往的桌面端项目中，我们都是先维护一个稳定的设计语言，再去搭页面。但如果这件事反过来 —— 当我们“先开发再设计” —— 如何进行组件治理呢？这并不是一个假设，而是一个现实问题，一个如果你不断堆砌功能后会面临的问题。
+
+我们做了一个 **比较和校准设计语言的 Playground**。
+
+AI 让“增加变体”变得容易，UI 为什么不可以像生图一样“抽卡”？不仅仅是字体、圆角这些 CSS Variables，如今完全还可以是 Icon 库、组件变体、间距、版式等等。我们本来就是野蛮生长起来的。那就让 AI 帮我们看看 UI 可以长成什么样：
+
+<ReviewDemo src={facingAgentsVideoSrc.reviewDemo4} note="UI “抽卡”" aspectClassName="aspect-square w-1/2 min-w-[300px]" />
+
+在做差异化的 UI 前，先提供可以差异化的选项：
+
+<div className="flex flex-col sm:flex-row gap-6 justify-center items-center mt-4 mb-12">
+  <ReviewDemo
+    src={facingAgentsVideoSrc.reviewDemo5}
+    aspectClassName="aspect-square w-[300px]"
+    className="mt-0 mb-0 mx-0"
+  />
+  <ReviewDemo
+    src={facingAgentsVideoSrc.reviewDemo6}
+    aspectClassName="aspect-square w-[300px]"
+    className="mt-0 mb-0 mx-0"
+  />
+</div>
+
+我们在开发的时候，可以在每一个真实的页面中配置：
+
+<ReviewDemo src={facingAgentsVideoSrc.reviewDemo7} note="Theme Builder" clipInset="3px 0 3px 0" />
+
+也可以按住 Option，像在 Figma 一样 “Go to main component” 以直接跳转到组件文档：
+
+<ReviewDemo src={facingAgentsVideoSrc.reviewDemo8} note="Go to main component" clipInset="3px 0 3px 0" />
+
+---
+
+我们本来就是野蛮生长起来的。那就让 AI 帮我们看看 UI 可以长成什么样，以新的视角、新的方法、新的可能性。从前把组件设计放在 Figma，现在在网页上抽卡。
+
+<ReviewDemo
+  src={facingAgentsVideoSrc.reviewDemo9}
+  aspectClassName="aspect-[1366/1080]"
+/>
+
+设计语言的维护，是面向 Agent，也面向设计师 —— 面向 Agent 的，是 Design.md 和 Rules；面向设计师的，是校准设计系统的新方式。
+
+## 最后
+
+昨天，Ryo 在 AI Engineer 上分享 [《当我们什么都能做，还知道自己想做什么吗？》](https://x.com/ZinkLu2/status/2118357855782965560)，说了许多让我共鸣的话：
+
+> 我不是先想成为设计师，才做这些事。我只是喜欢、好奇、想靠近一点，想看看自己能不能也做出那种感觉。  
+> 后来，喜欢真的变成了工作。这很幸运。  
+> 可以靠自己在意的事情工作、生活，也可以遇到一群同样在意的人。  
+> 但慢慢地，好奇变成规划，游戏变成产出，品味变成了你必须替别人负责而做出的决定。  
+> 你越来越能回答：这有没有价值？什么时候能上线？  
+> 却不一定还记得，当没有人需要你做这些事的时候，你为什么已经想做了。  
+> 我不想用“机器永远不会有某种能力”来安慰自己，因为这个界限一直在变。  
+> 我比较想保留的是，我跟“做东西”这件事情的关系。
+
+我们做了许多只面向 Agent 的事，我们把个人知识库、Skill、代码 Snippets 都灌给 Agent。我们恨不得一次对话就给出一个完美的结果，因为和 Agent 沟通的过程实在太痛苦了。
+
+但是现在 AI 做交互就是很差劲。你想要靠描述、一个截图、一个视频，还原都还原不好。比起这样不合适的期望，我更希望做一些面向 Agent、也面向设计师的事。这样的事也会更加有趣，就像走查的小工具、组件的探索方式。
+
+过去，我面向工程，也面向设计；现在，我面向 Agent，也面向设计师。
