@@ -36,7 +36,7 @@ const posts = [
   {
     title: "面向 Agent，也面向设计师",
     description:
-      "过去，我们面向「工程」，也面向「设计」；现在，我们面向「Agent」，也面向「设计师」。",
+      "过去，我面向「工程」，也面向「设计」；现在，我面向「Agent」，也面向「设计师」。",
     slug: "facing-agents-and-designers",
     publishedAt: "2026-11-06",
     author: "Aragakey.",
