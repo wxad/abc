@@ -1,6 +1,7 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { useIntersectionObserver } from "react-intersection-observer-hook"
 
+import DemoBox from "@/components/DemoBox"
 import { cn } from "@/lib/utils"
 
 import { facingAgentsVideoSrc } from "./videoCdn"
@@ -12,6 +13,9 @@ const ReviewDemo = ({
   note,
   aspectClassName = "aspect-2032/1080",
   className,
+  // 录屏边裁：默认裁底 3px；个别片裁顶
+  clipInset = "0 0 3px 0",
+  speedToggle = false,
 }: {
   src?: string
   startAt?: number
@@ -19,9 +23,15 @@ const ReviewDemo = ({
   note?: string
   aspectClassName?: string
   className?: string
+  clipInset?: string
+  speedToggle?: boolean
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null)
   const coverRef = useRef<HTMLDivElement>(null)
+  const speedListRef = useRef<HTMLDivElement>(null)
+  const speedIndicatorRef = useRef<HTMLDivElement>(null)
+  const userPickedSpeedRef = useRef(false)
+  const [playbackRate, setPlaybackRate] = useState(1)
 
   const [ref, { entry }] = useIntersectionObserver({
     threshold: 0,
@@ -40,10 +50,15 @@ const ReviewDemo = ({
     }
   }
 
+  const applyRate = (video: HTMLVideoElement) => {
+    video.playbackRate = playbackRate
+  }
+
   const playVideo = () => {
     const video = videoRef.current
     if (!video) return
     cue()
+    applyRate(video)
     video.play().catch(() => {
       coverRef.current!.style.display = "flex"
     })
@@ -59,6 +74,13 @@ const ReviewDemo = ({
   const handleEnded = () => {
     const video = videoRef.current
     if (!video) return
+    if (speedToggle && !userPickedSpeedRef.current) {
+      setPlaybackRate((rate) => {
+        const next = rate === 0.5 ? 1 : 0.5
+        video.playbackRate = next
+        return next
+      })
+    }
     video.currentTime = startAt
     video.play().catch(() => {})
   }
@@ -71,15 +93,60 @@ const ReviewDemo = ({
     }
   }, [inView])
 
-  return (
+  useEffect(() => {
+    const video = videoRef.current
+    if (video) applyRate(video)
+  }, [playbackRate])
+
+  useLayoutEffect(() => {
+    if (!speedToggle) return
+    const list = speedListRef.current
+    const indicator = speedIndicatorRef.current
+    if (!list || !indicator) return
+    const active = list.querySelector<HTMLElement>('[data-active="true"]')
+    if (!active) return
+    const inset = 8
+    indicator.style.width = `${Math.max(active.offsetWidth - inset * 2, 0)}px`
+    indicator.style.transform = `translateX(${active.offsetLeft + inset}px)`
+  }, [playbackRate, speedToggle])
+
+  const speedControl = speedToggle ? (
     <div
-      ref={ref}
-      className={cn(
-        "relative mt-4 mb-12 mx-auto max-w-full",
-        aspectClassName,
-        className,
-      )}
+      ref={speedListRef}
+      className="absolute top-3 right-3 z-10 flex items-center text-sm font-medium"
     >
+      <span
+        ref={speedIndicatorRef}
+        className="pointer-events-none absolute bottom-0 left-0 h-0.5 rounded-full bg-neutral-900 transition-[transform,width] duration-300 ease-out"
+        aria-hidden
+      />
+      {([0.5, 1] as const).map((rate) => {
+        const active = playbackRate === rate
+        return (
+          <button
+            key={rate}
+            type="button"
+            data-active={active}
+            className={cn(
+              "px-2 py-1 transition-colors duration-300",
+              active
+                ? "text-neutral-900"
+                : "text-neutral-400 hover:text-neutral-600",
+            )}
+            onClick={() => {
+              userPickedSpeedRef.current = true
+              setPlaybackRate(rate)
+            }}
+          >
+            {rate === 1 ? "1x" : "0.5x"}
+          </button>
+        )
+      })}
+    </div>
+  ) : null
+
+  const media = (
+    <>
       <video
         ref={videoRef}
         className="absolute-full rounded-xl"
@@ -88,21 +155,23 @@ const ReviewDemo = ({
         x-webkit-airplay="true"
         webkit-playsinline="true"
         playsInline
-        loop={!clipped}
+        loop={!clipped && !speedToggle}
         src={src}
         onLoadedMetadata={cue}
         onTimeUpdate={handleTimeUpdate}
-        onEnded={clipped ? handleEnded : undefined}
+        onEnded={clipped || speedToggle ? handleEnded : undefined}
         style={{
-          // 录屏底部有 3px 黑边，裁掉
-          clipPath: "inset(0 0 3px 0 round 12px)",
+          clipPath: `inset(${clipInset} round 12px)`,
         }}
       />
       <div
         ref={coverRef}
         className="absolute-full hidden items-center justify-center font-medium text-sm text-neutral-500 bg-linear-to-bl from-white to-neutral-100 border border-sold border-neutral-200 cursor-pointer rounded-xl opacity-95 backdrop-blur-xl"
         onClick={() => {
-          videoRef.current?.play()
+          const video = videoRef.current
+          if (!video) return
+          applyRate(video)
+          video.play()
           coverRef.current!.style.display = "none"
         }}
       >
@@ -114,11 +183,53 @@ const ReviewDemo = ({
         </svg>
         播放视频
       </div>
-      {note ? (
-        <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 text-sm text-neutral-400 whitespace-nowrap">
-          {note}
-        </div>
-      ) : null}
+    </>
+  )
+
+  const caption = note ? (
+    <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 text-sm text-neutral-400 whitespace-nowrap">
+      {note}
+    </div>
+  ) : null
+
+  if (speedToggle) {
+    return (
+      <div className="relative mb-12">
+        <DemoBox
+          ref={ref}
+          className={cn(
+            "flex flex-col items-center justify-center overflow-hidden pt-10 pb-6",
+            className,
+          )}
+        >
+          {speedControl}
+          <div
+            className={cn(
+              "relative w-[420px] sm:w-[480px] max-w-full",
+              aspectClassName,
+            )}
+          >
+            {media}
+          </div>
+          {note ? (
+            <div className="mt-4 text-sm text-neutral-500">{note}</div>
+          ) : null}
+        </DemoBox>
+      </div>
+    )
+  }
+
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        "relative mt-4 mb-12 mx-auto max-w-full",
+        aspectClassName,
+        className,
+      )}
+    >
+      {media}
+      {caption}
     </div>
   )
 }

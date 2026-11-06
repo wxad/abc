@@ -29,12 +29,7 @@ import SmallPCover from "@/components/small-p/Cover"
 import InteractiveDesignInAICover from "@/components/interactive-design-in-ai/Cover"
 import FacingAgentsAndDesignersCover from "@/components/facing-agents-and-designers/Cover"
 import NextLink from "next/link"
-import {
-  ArrowRight,
-  Calendar,
-  CalendarSync,
-  Signature,
-} from "lucide-react"
+import { ArrowRight, Calendar, CalendarSync, Signature } from "lucide-react"
 import PyramidLogo from "@/components/PyramidLogo"
 
 const posts = [
@@ -43,7 +38,7 @@ const posts = [
     description:
       "过去，我们面向「工程」，也面向「设计」；现在，我们面向「Agent」，也面向「设计师」。",
     slug: "facing-agents-and-designers",
-    publishedAt: "2026-11-11",
+    publishedAt: "2026-11-06",
     author: "Aragakey.",
     authorLink: "https://codepen.io/aragakey",
     children: <FacingAgentsAndDesignersCover />,
